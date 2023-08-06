@@ -4,6 +4,7 @@
  */
 
 import {
+  EnumConstantDecl,
   generateMetadata,
   Metadata,
   TypeMetadata,
@@ -12,21 +13,37 @@ import {
 async function main() {
   const metadata = loadMetadata();
   const functions = extractFunctions(metadata);
-  await dumpFfiFile(functions);
+  const constants = extractConstants(metadata);
+  await dumpFfiFile(functions, constants);
 }
 
-async function dumpFfiFile(functions: Deno.ForeignLibraryInterface) {
+async function dumpFfiFile(
+  functions: Deno.ForeignLibraryInterface,
+  constants: EnumConstantDecl[],
+) {
   await Deno.writeTextFile(
     new URL("../src/ffi.ts", import.meta.url),
     `import { prepare } from "./prepare.ts";
 
 const libPath = await prepare();
 
+${constants.map((c) => `export const ${c.name} = ${c.value};`).join("\n")}
+
 export const lib = Deno.dlopen(libPath, ${
       JSON.stringify(functions, undefined, 2)
     } as const);
-    `,
+`,
   );
+}
+
+function extractConstants(metadata: Metadata): EnumConstantDecl[] {
+  const res: EnumConstantDecl[] = [];
+  for (const e of metadata.enumDecls) {
+    for (const c of e.constants) {
+      res.push(c);
+    }
+  }
+  return res;
 }
 
 /**
