@@ -5,40 +5,59 @@
 
 import {
   generateMetadata,
+  Metadata,
   TypeMetadata,
 } from "https://denopkg.com/shirakaba/clang_metagen_deno@master/mod.ts";
 
-if (import.meta.main) main();
+async function main() {
+  const metadata = loadMetadata();
+  const functions = extractFunctions(metadata);
+  await dumpFfiFile(functions);
+}
 
-function main() {
-  const metadata = generateMetadata({
-    umbrellaHeader: new URL("../vendor/wgpu.h", import.meta.url),
-  });
-  const symbols: Deno.ForeignLibraryInterface = {};
-  for (const fn of metadata.functionDecls) {
-    symbols[fn.name] = {
-      parameters: fn.parameters.map((p) =>
-        toFFIType(p.type) as Deno.NativeType
-      ),
-      result: toFFIType(fn.result),
-    };
-  }
-  Deno.writeTextFileSync(
+async function dumpFfiFile(functions: Deno.ForeignLibraryInterface) {
+  await Deno.writeTextFile(
     new URL("../src/ffi.ts", import.meta.url),
     `import { prepare } from "./prepare.ts";
 
 const libPath = await prepare();
 
 export const lib = Deno.dlopen(libPath, ${
-      JSON.stringify(symbols, undefined, 2)
+      JSON.stringify(functions, undefined, 2)
     } as const);
     `,
   );
-
-  JSON.stringify(symbols, undefined, 2);
 }
 
-function toFFIType(type: TypeMetadata): Deno.NativeResultType {
+/**
+ * Extract FFI function definitions from metadata
+ */
+function extractFunctions(metadata: Metadata): Deno.ForeignLibraryInterface {
+  const symbols: Deno.ForeignLibraryInterface = {};
+  for (const fn of metadata.functionDecls) {
+    symbols[fn.name] = {
+      parameters: fn.parameters.map((p) =>
+        getFfiType(p.type) as Deno.NativeType
+      ),
+      result: getFfiType(fn.result),
+    };
+  }
+  return symbols;
+}
+
+/**
+ * Load metadata from hard-coded header file path
+ */
+function loadMetadata() {
+  return generateMetadata({
+    umbrellaHeader: new URL("../vendor/wgpu.h", import.meta.url),
+  });
+}
+
+/**
+ * Extract Deno FFI native type from type metadata
+ */
+function getFfiType(type: TypeMetadata): Deno.NativeResultType {
   switch (type.canonicalKind) {
     case "Pointer":
       return "pointer";
@@ -48,6 +67,7 @@ function toFFIType(type: TypeMetadata): Deno.NativeResultType {
       return "f32";
     case "Double":
       return "f64";
+    // XXX: use actual record
     case "Record":
       if (type.size > 0) return { struct: Array(type.size).fill("u8") };
       else {
@@ -75,3 +95,5 @@ function toFFIType(type: TypeMetadata): Deno.NativeResultType {
     }
   }
 }
+
+if (import.meta.main) await main();
