@@ -3,47 +3,38 @@ export const WGPUAdapterProperties = {
   size: 64,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     vendorID: {
-      size: 4,
       offset: 8,
       kind: "UInt",
     },
     vendorName: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     architecture: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
     deviceID: {
-      size: 4,
       offset: 32,
       kind: "UInt",
     },
     name: {
-      size: 8,
       offset: 40,
       kind: "Pointer",
     },
     driverDescription: {
-      size: 8,
       offset: 48,
       kind: "Pointer",
     },
     adapterType: {
-      size: 4,
       offset: 56,
       kind: "Enum",
     },
     backendType: {
-      size: 4,
       offset: 60,
       kind: "Enum",
     },
@@ -55,37 +46,30 @@ export const WGPUBindGroupEntry = {
   size: 56,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     binding: {
-      size: 4,
       offset: 8,
       kind: "UInt",
     },
     buffer: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     offset: {
-      size: 8,
       offset: 24,
       kind: "ULongLong",
     },
     size: {
-      size: 8,
       offset: 32,
       kind: "ULongLong",
     },
     sampler: {
-      size: 8,
       offset: 40,
       kind: "Pointer",
     },
     textureView: {
-      size: 8,
       offset: 48,
       kind: "Pointer",
     },
@@ -97,17 +81,14 @@ export const WGPUBlendComponent = {
   size: 12,
   fields: {
     operation: {
-      size: 4,
       offset: 0,
       kind: "Enum",
     },
     srcFactor: {
-      size: 4,
       offset: 4,
       kind: "Enum",
     },
     dstFactor: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
@@ -119,22 +100,18 @@ export const WGPUBufferBindingLayout = {
   size: 24,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     type: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
     hasDynamicOffset: {
-      size: 1,
       offset: 12,
       kind: "Bool",
     },
     minBindingSize: {
-      size: 8,
       offset: 16,
       kind: "ULongLong",
     },
@@ -146,27 +123,22 @@ export const WGPUBufferDescriptor = {
   size: 40,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     usage: {
-      size: 4,
       offset: 16,
       kind: "UInt",
     },
     size: {
-      size: 8,
       offset: 24,
       kind: "ULongLong",
     },
     mappedAtCreation: {
-      size: 1,
       offset: 32,
       kind: "Bool",
     },
@@ -178,22 +150,18 @@ export const WGPUColor = {
   size: 32,
   fields: {
     r: {
-      size: 8,
       offset: 0,
       kind: "Double",
     },
     g: {
-      size: 8,
       offset: 8,
       kind: "Double",
     },
     b: {
-      size: 8,
       offset: 16,
       kind: "Double",
     },
     a: {
-      size: 8,
       offset: 24,
       kind: "Double",
     },
@@ -205,12 +173,10 @@ export const WGPUCommandBufferDescriptor = {
   size: 16,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
@@ -222,12 +188,10 @@ export const WGPUCommandEncoderDescriptor = {
   size: 16,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
@@ -239,52 +203,42 @@ export const WGPUCompilationMessage = {
   size: 80,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     message: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     type: {
-      size: 4,
       offset: 16,
       kind: "Enum",
     },
     lineNum: {
-      size: 8,
       offset: 24,
       kind: "ULongLong",
     },
     linePos: {
-      size: 8,
       offset: 32,
       kind: "ULongLong",
     },
     offset: {
-      size: 8,
       offset: 40,
       kind: "ULongLong",
     },
     length: {
-      size: 8,
       offset: 48,
       kind: "ULongLong",
     },
     utf16LinePos: {
-      size: 8,
       offset: 56,
       kind: "ULongLong",
     },
     utf16Offset: {
-      size: 8,
       offset: 64,
       kind: "ULongLong",
     },
     utf16Length: {
-      size: 8,
       offset: 72,
       kind: "ULongLong",
     },
@@ -296,17 +250,14 @@ export const WGPUComputePassTimestampWrite = {
   size: 16,
   fields: {
     querySet: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     queryIndex: {
-      size: 4,
       offset: 8,
       kind: "UInt",
     },
     location: {
-      size: 4,
       offset: 12,
       kind: "Enum",
     },
@@ -318,17 +269,14 @@ export const WGPUConstantEntry = {
   size: 24,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     key: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     value: {
-      size: 8,
       offset: 16,
       kind: "Double",
     },
@@ -340,17 +288,14 @@ export const WGPUExtent3D = {
   size: 12,
   fields: {
     width: {
-      size: 4,
       offset: 0,
       kind: "UInt",
     },
     height: {
-      size: 4,
       offset: 4,
       kind: "UInt",
     },
     depthOrArrayLayers: {
-      size: 4,
       offset: 8,
       kind: "UInt",
     },
@@ -362,7 +307,6 @@ export const WGPUInstanceDescriptor = {
   size: 8,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
@@ -374,157 +318,126 @@ export const WGPULimits = {
   size: 144,
   fields: {
     maxTextureDimension1D: {
-      size: 4,
       offset: 0,
       kind: "UInt",
     },
     maxTextureDimension2D: {
-      size: 4,
       offset: 4,
       kind: "UInt",
     },
     maxTextureDimension3D: {
-      size: 4,
       offset: 8,
       kind: "UInt",
     },
     maxTextureArrayLayers: {
-      size: 4,
       offset: 12,
       kind: "UInt",
     },
     maxBindGroups: {
-      size: 4,
       offset: 16,
       kind: "UInt",
     },
     maxBindingsPerBindGroup: {
-      size: 4,
       offset: 20,
       kind: "UInt",
     },
     maxDynamicUniformBuffersPerPipelineLayout: {
-      size: 4,
       offset: 24,
       kind: "UInt",
     },
     maxDynamicStorageBuffersPerPipelineLayout: {
-      size: 4,
       offset: 28,
       kind: "UInt",
     },
     maxSampledTexturesPerShaderStage: {
-      size: 4,
       offset: 32,
       kind: "UInt",
     },
     maxSamplersPerShaderStage: {
-      size: 4,
       offset: 36,
       kind: "UInt",
     },
     maxStorageBuffersPerShaderStage: {
-      size: 4,
       offset: 40,
       kind: "UInt",
     },
     maxStorageTexturesPerShaderStage: {
-      size: 4,
       offset: 44,
       kind: "UInt",
     },
     maxUniformBuffersPerShaderStage: {
-      size: 4,
       offset: 48,
       kind: "UInt",
     },
     maxUniformBufferBindingSize: {
-      size: 8,
       offset: 56,
       kind: "ULongLong",
     },
     maxStorageBufferBindingSize: {
-      size: 8,
       offset: 64,
       kind: "ULongLong",
     },
     minUniformBufferOffsetAlignment: {
-      size: 4,
       offset: 72,
       kind: "UInt",
     },
     minStorageBufferOffsetAlignment: {
-      size: 4,
       offset: 76,
       kind: "UInt",
     },
     maxVertexBuffers: {
-      size: 4,
       offset: 80,
       kind: "UInt",
     },
     maxBufferSize: {
-      size: 8,
       offset: 88,
       kind: "ULongLong",
     },
     maxVertexAttributes: {
-      size: 4,
       offset: 96,
       kind: "UInt",
     },
     maxVertexBufferArrayStride: {
-      size: 4,
       offset: 100,
       kind: "UInt",
     },
     maxInterStageShaderComponents: {
-      size: 4,
       offset: 104,
       kind: "UInt",
     },
     maxInterStageShaderVariables: {
-      size: 4,
       offset: 108,
       kind: "UInt",
     },
     maxColorAttachments: {
-      size: 4,
       offset: 112,
       kind: "UInt",
     },
     maxColorAttachmentBytesPerSample: {
-      size: 4,
       offset: 116,
       kind: "UInt",
     },
     maxComputeWorkgroupStorageSize: {
-      size: 4,
       offset: 120,
       kind: "UInt",
     },
     maxComputeInvocationsPerWorkgroup: {
-      size: 4,
       offset: 124,
       kind: "UInt",
     },
     maxComputeWorkgroupSizeX: {
-      size: 4,
       offset: 128,
       kind: "UInt",
     },
     maxComputeWorkgroupSizeY: {
-      size: 4,
       offset: 132,
       kind: "UInt",
     },
     maxComputeWorkgroupSizeZ: {
-      size: 4,
       offset: 136,
       kind: "UInt",
     },
     maxComputeWorkgroupsPerDimension: {
-      size: 4,
       offset: 140,
       kind: "UInt",
     },
@@ -536,22 +449,18 @@ export const WGPUMultisampleState = {
   size: 24,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     count: {
-      size: 4,
       offset: 8,
       kind: "UInt",
     },
     mask: {
-      size: 4,
       offset: 12,
       kind: "UInt",
     },
     alphaToCoverageEnabled: {
-      size: 1,
       offset: 16,
       kind: "Bool",
     },
@@ -563,17 +472,14 @@ export const WGPUOrigin3D = {
   size: 12,
   fields: {
     x: {
-      size: 4,
       offset: 0,
       kind: "UInt",
     },
     y: {
-      size: 4,
       offset: 4,
       kind: "UInt",
     },
     z: {
-      size: 4,
       offset: 8,
       kind: "UInt",
     },
@@ -585,22 +491,18 @@ export const WGPUPipelineLayoutDescriptor = {
   size: 32,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     bindGroupLayoutCount: {
-      size: 8,
       offset: 16,
       kind: "ULong",
     },
     bindGroupLayouts: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
@@ -612,13 +514,12 @@ export const WGPUPrimitiveDepthClipControl = {
   size: 24,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     unclippedDepth: {
-      size: 1,
       offset: 16,
       kind: "Bool",
     },
@@ -630,27 +531,22 @@ export const WGPUPrimitiveState = {
   size: 24,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     topology: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
     stripIndexFormat: {
-      size: 4,
       offset: 12,
       kind: "Enum",
     },
     frontFace: {
-      size: 4,
       offset: 16,
       kind: "Enum",
     },
     cullMode: {
-      size: 4,
       offset: 20,
       kind: "Enum",
     },
@@ -662,32 +558,26 @@ export const WGPUQuerySetDescriptor = {
   size: 40,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     type: {
-      size: 4,
       offset: 16,
       kind: "Enum",
     },
     count: {
-      size: 4,
       offset: 20,
       kind: "UInt",
     },
     pipelineStatistics: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
     pipelineStatisticsCount: {
-      size: 8,
       offset: 32,
       kind: "ULong",
     },
@@ -699,12 +589,10 @@ export const WGPUQueueDescriptor = {
   size: 16,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
@@ -716,12 +604,10 @@ export const WGPURenderBundleDescriptor = {
   size: 16,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
@@ -733,42 +619,34 @@ export const WGPURenderBundleEncoderDescriptor = {
   size: 48,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     colorFormatsCount: {
-      size: 8,
       offset: 16,
       kind: "ULong",
     },
     colorFormats: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
     depthStencilFormat: {
-      size: 4,
       offset: 32,
       kind: "Enum",
     },
     sampleCount: {
-      size: 4,
       offset: 36,
       kind: "UInt",
     },
     depthReadOnly: {
-      size: 1,
       offset: 40,
       kind: "Bool",
     },
     stencilReadOnly: {
-      size: 1,
       offset: 41,
       kind: "Bool",
     },
@@ -780,47 +658,38 @@ export const WGPURenderPassDepthStencilAttachment = {
   size: 40,
   fields: {
     view: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     depthLoadOp: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
     depthStoreOp: {
-      size: 4,
       offset: 12,
       kind: "Enum",
     },
     depthClearValue: {
-      size: 4,
       offset: 16,
       kind: "Float",
     },
     depthReadOnly: {
-      size: 1,
       offset: 20,
       kind: "Bool",
     },
     stencilLoadOp: {
-      size: 4,
       offset: 24,
       kind: "Enum",
     },
     stencilStoreOp: {
-      size: 4,
       offset: 28,
       kind: "Enum",
     },
     stencilClearValue: {
-      size: 4,
       offset: 32,
       kind: "UInt",
     },
     stencilReadOnly: {
-      size: 1,
       offset: 36,
       kind: "Bool",
     },
@@ -832,13 +701,12 @@ export const WGPURenderPassDescriptorMaxDrawCount = {
   size: 24,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     maxDrawCount: {
-      size: 8,
       offset: 16,
       kind: "ULongLong",
     },
@@ -850,17 +718,14 @@ export const WGPURenderPassTimestampWrite = {
   size: 16,
   fields: {
     querySet: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     queryIndex: {
-      size: 4,
       offset: 8,
       kind: "UInt",
     },
     location: {
-      size: 4,
       offset: 12,
       kind: "Enum",
     },
@@ -872,27 +737,22 @@ export const WGPURequestAdapterOptions = {
   size: 32,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     compatibleSurface: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     powerPreference: {
-      size: 4,
       offset: 16,
       kind: "Enum",
     },
     backendType: {
-      size: 4,
       offset: 20,
       kind: "Enum",
     },
     forceFallbackAdapter: {
-      size: 1,
       offset: 24,
       kind: "Bool",
     },
@@ -904,12 +764,10 @@ export const WGPUSamplerBindingLayout = {
   size: 16,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     type: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
@@ -921,62 +779,50 @@ export const WGPUSamplerDescriptor = {
   size: 56,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     addressModeU: {
-      size: 4,
       offset: 16,
       kind: "Enum",
     },
     addressModeV: {
-      size: 4,
       offset: 20,
       kind: "Enum",
     },
     addressModeW: {
-      size: 4,
       offset: 24,
       kind: "Enum",
     },
     magFilter: {
-      size: 4,
       offset: 28,
       kind: "Enum",
     },
     minFilter: {
-      size: 4,
       offset: 32,
       kind: "Enum",
     },
     mipmapFilter: {
-      size: 4,
       offset: 36,
       kind: "Enum",
     },
     lodMinClamp: {
-      size: 4,
       offset: 40,
       kind: "Float",
     },
     lodMaxClamp: {
-      size: 4,
       offset: 44,
       kind: "Float",
     },
     compare: {
-      size: 4,
       offset: 48,
       kind: "Enum",
     },
     maxAnisotropy: {
-      size: 2,
       offset: 52,
       kind: "UShort",
     },
@@ -988,17 +834,14 @@ export const WGPUShaderModuleCompilationHint = {
   size: 24,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     entryPoint: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     layout: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
@@ -1010,18 +853,16 @@ export const WGPUShaderModuleSPIRVDescriptor = {
   size: 32,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     codeSize: {
-      size: 4,
       offset: 16,
       kind: "UInt",
     },
     code: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
@@ -1033,13 +874,12 @@ export const WGPUShaderModuleWGSLDescriptor = {
   size: 24,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     code: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
@@ -1051,22 +891,18 @@ export const WGPUStencilFaceState = {
   size: 16,
   fields: {
     compare: {
-      size: 4,
       offset: 0,
       kind: "Enum",
     },
     failOp: {
-      size: 4,
       offset: 4,
       kind: "Enum",
     },
     depthFailOp: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
     passOp: {
-      size: 4,
       offset: 12,
       kind: "Enum",
     },
@@ -1078,22 +914,18 @@ export const WGPUStorageTextureBindingLayout = {
   size: 24,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     access: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
     format: {
-      size: 4,
       offset: 12,
       kind: "Enum",
     },
     viewDimension: {
-      size: 4,
       offset: 16,
       kind: "Enum",
     },
@@ -1105,12 +937,10 @@ export const WGPUSurfaceDescriptor = {
   size: 16,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
@@ -1122,13 +952,12 @@ export const WGPUSurfaceDescriptorFromAndroidNativeWindow = {
   size: 24,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     window: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
@@ -1140,13 +969,12 @@ export const WGPUSurfaceDescriptorFromCanvasHTMLSelector = {
   size: 24,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     selector: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
@@ -1158,13 +986,12 @@ export const WGPUSurfaceDescriptorFromMetalLayer = {
   size: 24,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     layer: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
@@ -1176,18 +1003,16 @@ export const WGPUSurfaceDescriptorFromWaylandSurface = {
   size: 32,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     display: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     surface: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
@@ -1199,18 +1024,16 @@ export const WGPUSurfaceDescriptorFromWindowsHWND = {
   size: 32,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     hinstance: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     hwnd: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
@@ -1222,18 +1045,16 @@ export const WGPUSurfaceDescriptorFromXcbWindow = {
   size: 32,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     connection: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     window: {
-      size: 4,
       offset: 24,
       kind: "UInt",
     },
@@ -1245,18 +1066,16 @@ export const WGPUSurfaceDescriptorFromXlibWindow = {
   size: 32,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     display: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     window: {
-      size: 4,
       offset: 24,
       kind: "UInt",
     },
@@ -1268,37 +1087,30 @@ export const WGPUSwapChainDescriptor = {
   size: 40,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     usage: {
-      size: 4,
       offset: 16,
       kind: "UInt",
     },
     format: {
-      size: 4,
       offset: 20,
       kind: "Enum",
     },
     width: {
-      size: 4,
       offset: 24,
       kind: "UInt",
     },
     height: {
-      size: 4,
       offset: 28,
       kind: "UInt",
     },
     presentMode: {
-      size: 4,
       offset: 32,
       kind: "Enum",
     },
@@ -1310,22 +1122,18 @@ export const WGPUTextureBindingLayout = {
   size: 24,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     sampleType: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
     viewDimension: {
-      size: 4,
       offset: 12,
       kind: "Enum",
     },
     multisampled: {
-      size: 1,
       offset: 16,
       kind: "Bool",
     },
@@ -1337,22 +1145,18 @@ export const WGPUTextureDataLayout = {
   size: 24,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     offset: {
-      size: 8,
       offset: 8,
       kind: "ULongLong",
     },
     bytesPerRow: {
-      size: 4,
       offset: 16,
       kind: "UInt",
     },
     rowsPerImage: {
-      size: 4,
       offset: 20,
       kind: "UInt",
     },
@@ -1364,47 +1168,38 @@ export const WGPUTextureViewDescriptor = {
   size: 48,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     format: {
-      size: 4,
       offset: 16,
       kind: "Enum",
     },
     dimension: {
-      size: 4,
       offset: 20,
       kind: "Enum",
     },
     baseMipLevel: {
-      size: 4,
       offset: 24,
       kind: "UInt",
     },
     mipLevelCount: {
-      size: 4,
       offset: 28,
       kind: "UInt",
     },
     baseArrayLayer: {
-      size: 4,
       offset: 32,
       kind: "UInt",
     },
     arrayLayerCount: {
-      size: 4,
       offset: 36,
       kind: "UInt",
     },
     aspect: {
-      size: 4,
       offset: 40,
       kind: "Enum",
     },
@@ -1416,17 +1211,14 @@ export const WGPUVertexAttribute = {
   size: 24,
   fields: {
     format: {
-      size: 4,
       offset: 0,
       kind: "Enum",
     },
     offset: {
-      size: 8,
       offset: 8,
       kind: "ULongLong",
     },
     shaderLocation: {
-      size: 4,
       offset: 16,
       kind: "UInt",
     },
@@ -1438,27 +1230,22 @@ export const WGPUBindGroupDescriptor = {
   size: 40,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     layout: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     entryCount: {
-      size: 8,
       offset: 24,
       kind: "ULong",
     },
     entries: {
-      size: 8,
       offset: 32,
       kind: "Pointer",
     },
@@ -1470,42 +1257,39 @@ export const WGPUBindGroupLayoutEntry = {
   size: 104,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     binding: {
-      size: 4,
       offset: 8,
       kind: "UInt",
     },
     visibility: {
-      size: 4,
       offset: 12,
       kind: "UInt",
     },
     buffer: {
-      size: 24,
       offset: 16,
       kind: "Record",
+      size: 24,
       type: () => WGPUBufferBindingLayout,
     },
     sampler: {
-      size: 16,
       offset: 40,
       kind: "Record",
+      size: 16,
       type: () => WGPUSamplerBindingLayout,
     },
     texture: {
-      size: 24,
       offset: 56,
       kind: "Record",
+      size: 24,
       type: () => WGPUTextureBindingLayout,
     },
     storageTexture: {
-      size: 24,
       offset: 80,
       kind: "Record",
+      size: 24,
       type: () => WGPUStorageTextureBindingLayout,
     },
   },
@@ -1516,15 +1300,15 @@ export const WGPUBlendState = {
   size: 24,
   fields: {
     color: {
-      size: 12,
       offset: 0,
       kind: "Record",
+      size: 12,
       type: () => WGPUBlendComponent,
     },
     alpha: {
-      size: 12,
       offset: 12,
       kind: "Record",
+      size: 12,
       type: () => WGPUBlendComponent,
     },
   },
@@ -1535,17 +1319,14 @@ export const WGPUCompilationInfo = {
   size: 24,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     messageCount: {
-      size: 8,
       offset: 8,
       kind: "ULong",
     },
     messages: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
@@ -1557,22 +1338,18 @@ export const WGPUComputePassDescriptor = {
   size: 32,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     timestampWriteCount: {
-      size: 8,
       offset: 16,
       kind: "ULong",
     },
     timestampWrites: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
@@ -1584,59 +1361,50 @@ export const WGPUDepthStencilState = {
   size: 72,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     format: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
     depthWriteEnabled: {
-      size: 1,
       offset: 12,
       kind: "Bool",
     },
     depthCompare: {
-      size: 4,
       offset: 16,
       kind: "Enum",
     },
     stencilFront: {
-      size: 16,
       offset: 20,
       kind: "Record",
+      size: 16,
       type: () => WGPUStencilFaceState,
     },
     stencilBack: {
-      size: 16,
       offset: 36,
       kind: "Record",
+      size: 16,
       type: () => WGPUStencilFaceState,
     },
     stencilReadMask: {
-      size: 4,
       offset: 52,
       kind: "UInt",
     },
     stencilWriteMask: {
-      size: 4,
       offset: 56,
       kind: "UInt",
     },
     depthBias: {
-      size: 4,
       offset: 60,
       kind: "Int",
     },
     depthBiasSlopeScale: {
-      size: 4,
       offset: 64,
       kind: "Float",
     },
     depthBiasClamp: {
-      size: 4,
       offset: 68,
       kind: "Float",
     },
@@ -1648,18 +1416,16 @@ export const WGPUImageCopyBuffer = {
   size: 40,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     layout: {
-      size: 24,
       offset: 8,
       kind: "Record",
+      size: 24,
       type: () => WGPUTextureDataLayout,
     },
     buffer: {
-      size: 8,
       offset: 32,
       kind: "Pointer",
     },
@@ -1671,28 +1437,24 @@ export const WGPUImageCopyTexture = {
   size: 40,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     texture: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     mipLevel: {
-      size: 4,
       offset: 16,
       kind: "UInt",
     },
     origin: {
-      size: 12,
       offset: 20,
       kind: "Record",
+      size: 12,
       type: () => WGPUOrigin3D,
     },
     aspect: {
-      size: 4,
       offset: 32,
       kind: "Enum",
     },
@@ -1704,27 +1466,22 @@ export const WGPUProgrammableStageDescriptor = {
   size: 40,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     module: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     entryPoint: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     constantCount: {
-      size: 8,
       offset: 24,
       kind: "ULong",
     },
     constants: {
-      size: 8,
       offset: 32,
       kind: "Pointer",
     },
@@ -1736,29 +1493,25 @@ export const WGPURenderPassColorAttachment = {
   size: 56,
   fields: {
     view: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     resolveTarget: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     loadOp: {
-      size: 4,
       offset: 16,
       kind: "Enum",
     },
     storeOp: {
-      size: 4,
       offset: 20,
       kind: "Enum",
     },
     clearValue: {
-      size: 32,
       offset: 24,
       kind: "Record",
+      size: 32,
       type: () => WGPUColor,
     },
   },
@@ -1769,14 +1522,13 @@ export const WGPURequiredLimits = {
   size: 152,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     limits: {
-      size: 144,
       offset: 8,
       kind: "Record",
+      size: 144,
       type: () => WGPULimits,
     },
   },
@@ -1787,22 +1539,18 @@ export const WGPUShaderModuleDescriptor = {
   size: 32,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     hintCount: {
-      size: 8,
       offset: 16,
       kind: "ULong",
     },
     hints: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
@@ -1814,14 +1562,13 @@ export const WGPUSupportedLimits = {
   size: 152,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     limits: {
-      size: 144,
       offset: 8,
       kind: "Record",
+      size: 144,
       type: () => WGPULimits,
     },
   },
@@ -1832,53 +1579,44 @@ export const WGPUTextureDescriptor = {
   size: 64,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     usage: {
-      size: 4,
       offset: 16,
       kind: "UInt",
     },
     dimension: {
-      size: 4,
       offset: 20,
       kind: "Enum",
     },
     size: {
-      size: 12,
       offset: 24,
       kind: "Record",
+      size: 12,
       type: () => WGPUExtent3D,
     },
     format: {
-      size: 4,
       offset: 36,
       kind: "Enum",
     },
     mipLevelCount: {
-      size: 4,
       offset: 40,
       kind: "UInt",
     },
     sampleCount: {
-      size: 4,
       offset: 44,
       kind: "UInt",
     },
     viewFormatCount: {
-      size: 8,
       offset: 48,
       kind: "ULong",
     },
     viewFormats: {
-      size: 8,
       offset: 56,
       kind: "Pointer",
     },
@@ -1890,22 +1628,18 @@ export const WGPUVertexBufferLayout = {
   size: 32,
   fields: {
     arrayStride: {
-      size: 8,
       offset: 0,
       kind: "ULongLong",
     },
     stepMode: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
     attributeCount: {
-      size: 8,
       offset: 16,
       kind: "ULong",
     },
     attributes: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
@@ -1917,22 +1651,18 @@ export const WGPUBindGroupLayoutDescriptor = {
   size: 32,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     entryCount: {
-      size: 8,
       offset: 16,
       kind: "ULong",
     },
     entries: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
@@ -1944,22 +1674,18 @@ export const WGPUColorTargetState = {
   size: 32,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     format: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
     blend: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     writeMask: {
-      size: 4,
       offset: 24,
       kind: "UInt",
     },
@@ -1971,24 +1697,21 @@ export const WGPUComputePipelineDescriptor = {
   size: 64,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     layout: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     compute: {
-      size: 40,
       offset: 24,
       kind: "Record",
+      size: 40,
       type: () => WGPUProgrammableStageDescriptor,
     },
   },
@@ -1999,43 +1722,36 @@ export const WGPUDeviceDescriptor = {
   size: 72,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     requiredFeaturesCount: {
-      size: 8,
       offset: 16,
       kind: "ULong",
     },
     requiredFeatures: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
     requiredLimits: {
-      size: 8,
       offset: 32,
       kind: "Pointer",
     },
     defaultQueue: {
-      size: 16,
       offset: 40,
       kind: "Record",
+      size: 16,
       type: () => WGPUQueueDescriptor,
     },
     deviceLostCallback: {
-      size: 8,
       offset: 56,
       kind: "Pointer",
     },
     deviceLostUserdata: {
-      size: 8,
       offset: 64,
       kind: "Pointer",
     },
@@ -2047,42 +1763,34 @@ export const WGPURenderPassDescriptor = {
   size: 64,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     colorAttachmentCount: {
-      size: 8,
       offset: 16,
       kind: "ULong",
     },
     colorAttachments: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
     depthStencilAttachment: {
-      size: 8,
       offset: 32,
       kind: "Pointer",
     },
     occlusionQuerySet: {
-      size: 8,
       offset: 40,
       kind: "Pointer",
     },
     timestampWriteCount: {
-      size: 8,
       offset: 48,
       kind: "ULong",
     },
     timestampWrites: {
-      size: 8,
       offset: 56,
       kind: "Pointer",
     },
@@ -2094,37 +1802,30 @@ export const WGPUVertexState = {
   size: 56,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     module: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     entryPoint: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     constantCount: {
-      size: 8,
       offset: 24,
       kind: "ULong",
     },
     constants: {
-      size: 8,
       offset: 32,
       kind: "Pointer",
     },
     bufferCount: {
-      size: 8,
       offset: 40,
       kind: "ULong",
     },
     buffers: {
-      size: 8,
       offset: 48,
       kind: "Pointer",
     },
@@ -2136,37 +1837,30 @@ export const WGPUFragmentState = {
   size: 56,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     module: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     entryPoint: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     constantCount: {
-      size: 8,
       offset: 24,
       kind: "ULong",
     },
     constants: {
-      size: 8,
       offset: 32,
       kind: "Pointer",
     },
     targetCount: {
-      size: 8,
       offset: 40,
       kind: "ULong",
     },
     targets: {
-      size: 8,
       offset: 48,
       kind: "Pointer",
     },
@@ -2178,45 +1872,40 @@ export const WGPURenderPipelineDescriptor = {
   size: 144,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     label: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     layout: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
     vertex: {
-      size: 56,
       offset: 24,
       kind: "Record",
+      size: 56,
       type: () => WGPUVertexState,
     },
     primitive: {
-      size: 24,
       offset: 80,
       kind: "Record",
+      size: 24,
       type: () => WGPUPrimitiveState,
     },
     depthStencil: {
-      size: 8,
       offset: 104,
       kind: "Pointer",
     },
     multisample: {
-      size: 24,
       offset: 112,
       kind: "Record",
+      size: 24,
       type: () => WGPUMultisampleState,
     },
     fragment: {
-      size: 8,
       offset: 136,
       kind: "Pointer",
     },
@@ -2228,12 +1917,10 @@ export const WGPUChainedStruct = {
   size: 16,
   fields: {
     next: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     sType: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
@@ -2245,12 +1932,10 @@ export const WGPUChainedStructOut = {
   size: 16,
   fields: {
     next: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     sType: {
-      size: 4,
       offset: 8,
       kind: "Enum",
     },
@@ -2262,28 +1947,24 @@ export const WGPUInstanceExtras = {
   size: 40,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     backends: {
-      size: 4,
       offset: 16,
       kind: "UInt",
     },
     dx12ShaderCompiler: {
-      size: 4,
       offset: 20,
       kind: "Enum",
     },
     dxilPath: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
     dxcPath: {
-      size: 8,
       offset: 32,
       kind: "Pointer",
     },
@@ -2295,13 +1976,12 @@ export const WGPUDeviceExtras = {
   size: 24,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     tracePath: {
-      size: 8,
       offset: 16,
       kind: "Pointer",
     },
@@ -2313,13 +1993,12 @@ export const WGPURequiredLimitsExtras = {
   size: 24,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     maxPushConstantSize: {
-      size: 4,
       offset: 16,
       kind: "UInt",
     },
@@ -2331,13 +2010,12 @@ export const WGPUSupportedLimitsExtras = {
   size: 24,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStructOut,
     },
     maxPushConstantSize: {
-      size: 4,
       offset: 16,
       kind: "UInt",
     },
@@ -2349,17 +2027,14 @@ export const WGPUPushConstantRange = {
   size: 12,
   fields: {
     stages: {
-      size: 4,
       offset: 0,
       kind: "UInt",
     },
     start: {
-      size: 4,
       offset: 4,
       kind: "UInt",
     },
     end: {
-      size: 4,
       offset: 8,
       kind: "UInt",
     },
@@ -2371,18 +2046,16 @@ export const WGPUPipelineLayoutExtras = {
   size: 32,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     pushConstantRangeCount: {
-      size: 4,
       offset: 16,
       kind: "UInt",
     },
     pushConstantRanges: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
@@ -2394,12 +2067,10 @@ export const WGPUWrappedSubmissionIndex = {
   size: 16,
   fields: {
     queue: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     submissionIndex: {
-      size: 8,
       offset: 8,
       kind: "ULongLong",
     },
@@ -2411,12 +2082,10 @@ export const WGPUShaderDefine = {
   size: 16,
   fields: {
     name: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     value: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
@@ -2428,28 +2097,24 @@ export const WGPUShaderModuleGLSLDescriptor = {
   size: 48,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     stage: {
-      size: 4,
       offset: 16,
       kind: "Enum",
     },
     code: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
     defineCount: {
-      size: 4,
       offset: 32,
       kind: "UInt",
     },
     defines: {
-      size: 8,
       offset: 40,
       kind: "Pointer",
     },
@@ -2461,22 +2126,18 @@ export const WGPUStorageReport = {
   size: 32,
   fields: {
     numOccupied: {
-      size: 8,
       offset: 0,
       kind: "ULong",
     },
     numVacant: {
-      size: 8,
       offset: 8,
       kind: "ULong",
     },
     numError: {
-      size: 8,
       offset: 16,
       kind: "ULong",
     },
     elementSize: {
-      size: 8,
       offset: 24,
       kind: "ULong",
     },
@@ -2488,93 +2149,93 @@ export const WGPUHubReport = {
   size: 480,
   fields: {
     adapters: {
-      size: 32,
       offset: 0,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     devices: {
-      size: 32,
       offset: 32,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     pipelineLayouts: {
-      size: 32,
       offset: 64,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     shaderModules: {
-      size: 32,
       offset: 96,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     bindGroupLayouts: {
-      size: 32,
       offset: 128,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     bindGroups: {
-      size: 32,
       offset: 160,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     commandBuffers: {
-      size: 32,
       offset: 192,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     renderBundles: {
-      size: 32,
       offset: 224,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     renderPipelines: {
-      size: 32,
       offset: 256,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     computePipelines: {
-      size: 32,
       offset: 288,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     querySets: {
-      size: 32,
       offset: 320,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     buffers: {
-      size: 32,
       offset: 352,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     textures: {
-      size: 32,
       offset: 384,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     textureViews: {
-      size: 32,
       offset: 416,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     samplers: {
-      size: 32,
       offset: 448,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
   },
@@ -2585,44 +2246,43 @@ export const WGPUGlobalReport = {
   size: 2440,
   fields: {
     surfaces: {
-      size: 32,
       offset: 0,
       kind: "Record",
+      size: 32,
       type: () => WGPUStorageReport,
     },
     backendType: {
-      size: 4,
       offset: 32,
       kind: "Enum",
     },
     vulkan: {
-      size: 480,
       offset: 40,
       kind: "Record",
+      size: 480,
       type: () => WGPUHubReport,
     },
     metal: {
-      size: 480,
       offset: 520,
       kind: "Record",
+      size: 480,
       type: () => WGPUHubReport,
     },
     dx12: {
-      size: 480,
       offset: 1000,
       kind: "Record",
+      size: 480,
       type: () => WGPUHubReport,
     },
     dx11: {
-      size: 480,
       offset: 1480,
       kind: "Record",
+      size: 480,
       type: () => WGPUHubReport,
     },
     gl: {
-      size: 480,
       offset: 1960,
       kind: "Record",
+      size: 480,
       type: () => WGPUHubReport,
     },
   },
@@ -2633,32 +2293,26 @@ export const WGPUSurfaceCapabilities = {
   size: 48,
   fields: {
     formatCount: {
-      size: 8,
       offset: 0,
       kind: "ULong",
     },
     formats: {
-      size: 8,
       offset: 8,
       kind: "Pointer",
     },
     presentModeCount: {
-      size: 8,
       offset: 16,
       kind: "ULong",
     },
     presentModes: {
-      size: 8,
       offset: 24,
       kind: "Pointer",
     },
     alphaModeCount: {
-      size: 8,
       offset: 32,
       kind: "ULong",
     },
     alphaModes: {
-      size: 8,
       offset: 40,
       kind: "Pointer",
     },
@@ -2670,23 +2324,20 @@ export const WGPUSwapChainDescriptorExtras = {
   size: 40,
   fields: {
     chain: {
-      size: 16,
       offset: 0,
       kind: "Record",
+      size: 16,
       type: () => WGPUChainedStruct,
     },
     alphaMode: {
-      size: 4,
       offset: 16,
       kind: "Enum",
     },
     viewFormatCount: {
-      size: 8,
       offset: 24,
       kind: "ULong",
     },
     viewFormats: {
-      size: 8,
       offset: 32,
       kind: "Pointer",
     },
@@ -2698,12 +2349,10 @@ export const WGPUInstanceEnumerateAdapterOptions = {
   size: 16,
   fields: {
     nextInChain: {
-      size: 8,
       offset: 0,
       kind: "Pointer",
     },
     backends: {
-      size: 4,
       offset: 8,
       kind: "UInt",
     },

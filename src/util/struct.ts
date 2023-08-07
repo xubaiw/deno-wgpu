@@ -40,9 +40,13 @@ export type FieldKindMap = {
   Int: number;
 };
 
-export type FieldSpecBase = { offset: number; size: number };
+export type FieldSpecBase = { offset: number };
 export type FixedFieldExtra = { kind: keyof FieldKindMap };
-export type RecordFieldExtra<T> = { kind: "Record"; type: () => T };
+export type RecordFieldExtra<T> = {
+  kind: "Record";
+  type: () => T;
+  size: number;
+};
 
 export type FieldSpec<T> =
   & FieldSpecBase

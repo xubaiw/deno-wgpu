@@ -11,7 +11,7 @@ type StructDecl = {
 };
 
 type FieldDecl = {
-  size: number;
+  size?: number;
   offset: number;
   kind: string;
   type?: string;
@@ -27,12 +27,12 @@ export const genStructs = async (tu: CXTranslationUnit, path: string) => {
       cursor.visitChildren((cursor) => {
         if (cursor.kind == CXCursorKind.CXCursor_FieldDecl) {
           const name = cursor.getSpelling();
-          const size = cursor.getType()!.getSizeOf();
           const offset = cursor.getOffsetOfField() / 8;
           const kind = cursor.getType()!.getCanonicalType().getKindSpelling();
-          fields[name] = { size, offset, kind };
+          fields[name] = { offset, kind };
           if (kind == "Record") {
             fields[name]["type"] = cursor.getType()!.getSpelling();
+            fields[name]["size"] = cursor.getType()!.getSizeOf();
           }
         }
         return CXChildVisitResult.CXChildVisit_Continue;
@@ -51,10 +51,10 @@ export const genStructs = async (tu: CXTranslationUnit, path: string) => {
       text += `  fields: {\n`;
       for (const [fname, fd] of Object.entries(sd.fields)) {
         text += `    ${fname}: {\n`;
-        text += `      size: ${fd.size},\n`;
         text += `      offset: ${fd.offset},\n`;
         text += `      kind: "${fd.kind}",\n`;
         if (fd.kind == "Record") {
+          text += `      size: ${fd.size},\n`;
           text += `      type: () => ${fd.type!},\n`;
         }
         text += `    },\n`;
