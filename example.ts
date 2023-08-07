@@ -1,25 +1,20 @@
-import { lib } from "./src/ffi.ts";
-import { struct } from "https://denopkg.com/xubaiw/struct@master/mod.ts";
+#!/usr/bin/env -S deno run -A --unstable
+
+import { lib, WGPUInstanceDescriptor, WGPUSupportedLimits } from "./src/ffi.ts";
 
 const NULL = Deno.UnsafePointer.create(0);
 
 // Create Instance
-const descripter = struct({ nextInChain: "ptr" });
-descripter.nextInChain = 0;
-const instance = lib.symbols.wgpuCreateInstance(
-  Deno.UnsafePointer.of(descripter._buffer),
-);
+const desc = new WGPUInstanceDescriptor()
+desc.nextInChain = NULL;
+const instance = lib.symbols.wgpuCreateInstance(desc.pointer);
 
 const adapter = await requestAdapter(instance);
 
-const limits = new Uint8Array(152);
-lib.symbols.wgpuAdapterGetLimits(adapter, Deno.UnsafePointer.of(limits));
+const slimits = new WGPUSupportedLimits();
+lib.symbols.wgpuAdapterGetLimits(adapter, slimits.pointer);
 
-// print limits
-// TODO: generate record from metadata
-for (let off = 8; off < 152; off += 4) {
-  console.log(off, new DataView(limits.buffer).getUint32(off, true));
-}
+console.log(slimits.limits.maxBindGroups);
 
 // Release instance
 lib.symbols.wgpuInstanceRelease(instance);
@@ -44,5 +39,3 @@ function requestAdapter(
     );
   });
 }
-
-
