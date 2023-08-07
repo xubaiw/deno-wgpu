@@ -1,0 +1,5 @@
+{
+  "tasks": {
+    "gen": "deno run -A --unstable tool/gen/mod.ts"
+  }
+}
