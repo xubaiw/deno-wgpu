@@ -605,3 +605,4 @@ export enum WGPUCompositeAlphaMode {
   WGPUCompositeAlphaMode_Inherit = 4,
   WGPUCompositeAlphaMode_Force32 = 2147483647,
 }
+

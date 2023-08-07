@@ -103,17 +103,42 @@ if (Deno.args[0] == "function") {
     if (cursor.kind == CXCursorKind.CXCursor_FunctionDecl) {
       const name = cursor.getSpelling();
       const params: unknown[] = [];
-      cursor.visitChildren((cursor) => {
-        if (cursor.kind == CXCursorKind.CXCursor_ParmDecl) {
-          const name = cursor.getSpelling();
-          const type = extractType(cursor.getType());
-          const t2 = extractType(cursor.getType()?.getCanonicalType());
-          params.push({ name, type, t2 });
-        }
-        return CXChildVisitResult.CXChildVisit_Continue;
-      });
+      const narg = cursor.getNumberOfArguments();
+      for (let i = 0; i < narg; i++) {
+        const ac = cursor.getArgument(i);
+        params.push(ac?.getSpelling());
+      }
+      // cursor.visitChildren((cursor) => {
+      //   if (cursor.kind == CXCursorKind.CXCursor_ParmDecl) {
+      //     const name = cursor.getSpelling();
+      //     const type = extractType(cursor.getType());
+      //     const t2 = extractType(cursor.getType()?.getCanonicalType());
+      //     params.push({ name, type, t2 });
+      //   }
+      //   return CXChildVisitResult.CXChildVisit_Continue;
+      // });
       console.log({ name, params });
     }
     return CXChildVisitResult.CXChildVisit_Continue;
+  });
+}
+if (Deno.args[0] == "struct") {
+  tu.getCursor().visitChildren((cursor) => {
+    if (cursor.kind == CXCursorKind.CXCursor_StructDecl) {
+      const name = cursor.getSpelling();
+      const size = cursor.getType()?.getSizeOf();
+      const fields = [];
+      cursor.visitChildren((cursor) => {
+        if (cursor.kind == CXCursorKind.CXCursor_FieldDecl) {
+          const name = cursor.getSpelling();
+          const size = cursor.getType()?.getSizeOf();
+          const offset = cursor.getOffsetOfField();
+          fields.push({ name, size, offset });
+        }
+        return CXChildVisitResult.CXChildVisit_Continue;
+      });
+      console.log({ name, size, fields });
+    }
+    return CXChildVisitResult.CXChildVisit_Recurse;
   });
 }
