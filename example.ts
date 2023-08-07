@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run -A --unstable
 
-import { lib, WGPUInstanceDescriptor, WGPUSupportedLimits } from "./src/mod.ts";
+import { lib, WGPUInstanceDescriptor, WGPUSupportedLimits } from "./mod.ts";
 
 const NULL = Deno.UnsafePointer.create(0);
 
