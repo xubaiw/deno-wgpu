@@ -6,7 +6,7 @@ import {
   ref,
   WGPUInstanceDescriptor,
   WGPUSupportedLimits,
-} from "./mod.ts";
+} from "../mod.ts";
 
 // Create Instance
 const desc = alloc(WGPUInstanceDescriptor);
