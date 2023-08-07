@@ -31,7 +31,7 @@ export type FieldTypeMap = {
   Pointer: Deno.PointerValue;
   Record: DataView;
   Enum: number;
-  UInt: 4;
+  UInt: number;
   ULongLong: bigint;
   Bool: boolean;
   Double: number;
