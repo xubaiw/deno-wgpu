@@ -59,9 +59,8 @@ export const genStructs = async (tu: CXTranslationUnit, path: string) => {
         }
         text += `    },\n`;
       }
-      text += `  },`;
+      text += `  },\n`;
       text += `} as const;\n\n`;
-      text += `export type ${sname} = typeof ${sname};\n\n`;
     }
   }
   await Deno.writeTextFile(path, text);

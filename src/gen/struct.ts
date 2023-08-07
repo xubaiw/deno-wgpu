@@ -47,9 +47,8 @@ export const WGPUAdapterProperties = {
       offset: 60,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPUAdapterProperties = typeof WGPUAdapterProperties;
+  },
+} as const;
 
 export const WGPUBindGroupEntry = {
   name: "WGPUBindGroupEntry",
@@ -90,9 +89,8 @@ export const WGPUBindGroupEntry = {
       offset: 48,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUBindGroupEntry = typeof WGPUBindGroupEntry;
+  },
+} as const;
 
 export const WGPUBlendComponent = {
   name: "WGPUBlendComponent",
@@ -113,9 +111,8 @@ export const WGPUBlendComponent = {
       offset: 8,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPUBlendComponent = typeof WGPUBlendComponent;
+  },
+} as const;
 
 export const WGPUBufferBindingLayout = {
   name: "WGPUBufferBindingLayout",
@@ -141,9 +138,8 @@ export const WGPUBufferBindingLayout = {
       offset: 16,
       kind: "ULongLong",
     },
-  },} as const;
-
-export type WGPUBufferBindingLayout = typeof WGPUBufferBindingLayout;
+  },
+} as const;
 
 export const WGPUBufferDescriptor = {
   name: "WGPUBufferDescriptor",
@@ -174,9 +170,8 @@ export const WGPUBufferDescriptor = {
       offset: 32,
       kind: "Bool",
     },
-  },} as const;
-
-export type WGPUBufferDescriptor = typeof WGPUBufferDescriptor;
+  },
+} as const;
 
 export const WGPUColor = {
   name: "WGPUColor",
@@ -202,9 +197,8 @@ export const WGPUColor = {
       offset: 24,
       kind: "Double",
     },
-  },} as const;
-
-export type WGPUColor = typeof WGPUColor;
+  },
+} as const;
 
 export const WGPUCommandBufferDescriptor = {
   name: "WGPUCommandBufferDescriptor",
@@ -220,9 +214,8 @@ export const WGPUCommandBufferDescriptor = {
       offset: 8,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUCommandBufferDescriptor = typeof WGPUCommandBufferDescriptor;
+  },
+} as const;
 
 export const WGPUCommandEncoderDescriptor = {
   name: "WGPUCommandEncoderDescriptor",
@@ -238,9 +231,8 @@ export const WGPUCommandEncoderDescriptor = {
       offset: 8,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUCommandEncoderDescriptor = typeof WGPUCommandEncoderDescriptor;
+  },
+} as const;
 
 export const WGPUCompilationMessage = {
   name: "WGPUCompilationMessage",
@@ -296,9 +288,8 @@ export const WGPUCompilationMessage = {
       offset: 72,
       kind: "ULongLong",
     },
-  },} as const;
-
-export type WGPUCompilationMessage = typeof WGPUCompilationMessage;
+  },
+} as const;
 
 export const WGPUComputePassTimestampWrite = {
   name: "WGPUComputePassTimestampWrite",
@@ -319,9 +310,8 @@ export const WGPUComputePassTimestampWrite = {
       offset: 12,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPUComputePassTimestampWrite = typeof WGPUComputePassTimestampWrite;
+  },
+} as const;
 
 export const WGPUConstantEntry = {
   name: "WGPUConstantEntry",
@@ -342,9 +332,8 @@ export const WGPUConstantEntry = {
       offset: 16,
       kind: "Double",
     },
-  },} as const;
-
-export type WGPUConstantEntry = typeof WGPUConstantEntry;
+  },
+} as const;
 
 export const WGPUExtent3D = {
   name: "WGPUExtent3D",
@@ -365,9 +354,8 @@ export const WGPUExtent3D = {
       offset: 8,
       kind: "UInt",
     },
-  },} as const;
-
-export type WGPUExtent3D = typeof WGPUExtent3D;
+  },
+} as const;
 
 export const WGPUInstanceDescriptor = {
   name: "WGPUInstanceDescriptor",
@@ -378,9 +366,8 @@ export const WGPUInstanceDescriptor = {
       offset: 0,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUInstanceDescriptor = typeof WGPUInstanceDescriptor;
+  },
+} as const;
 
 export const WGPULimits = {
   name: "WGPULimits",
@@ -541,9 +528,8 @@ export const WGPULimits = {
       offset: 140,
       kind: "UInt",
     },
-  },} as const;
-
-export type WGPULimits = typeof WGPULimits;
+  },
+} as const;
 
 export const WGPUMultisampleState = {
   name: "WGPUMultisampleState",
@@ -569,9 +555,8 @@ export const WGPUMultisampleState = {
       offset: 16,
       kind: "Bool",
     },
-  },} as const;
-
-export type WGPUMultisampleState = typeof WGPUMultisampleState;
+  },
+} as const;
 
 export const WGPUOrigin3D = {
   name: "WGPUOrigin3D",
@@ -592,9 +577,8 @@ export const WGPUOrigin3D = {
       offset: 8,
       kind: "UInt",
     },
-  },} as const;
-
-export type WGPUOrigin3D = typeof WGPUOrigin3D;
+  },
+} as const;
 
 export const WGPUPipelineLayoutDescriptor = {
   name: "WGPUPipelineLayoutDescriptor",
@@ -620,9 +604,8 @@ export const WGPUPipelineLayoutDescriptor = {
       offset: 24,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUPipelineLayoutDescriptor = typeof WGPUPipelineLayoutDescriptor;
+  },
+} as const;
 
 export const WGPUPrimitiveDepthClipControl = {
   name: "WGPUPrimitiveDepthClipControl",
@@ -639,9 +622,8 @@ export const WGPUPrimitiveDepthClipControl = {
       offset: 16,
       kind: "Bool",
     },
-  },} as const;
-
-export type WGPUPrimitiveDepthClipControl = typeof WGPUPrimitiveDepthClipControl;
+  },
+} as const;
 
 export const WGPUPrimitiveState = {
   name: "WGPUPrimitiveState",
@@ -672,9 +654,8 @@ export const WGPUPrimitiveState = {
       offset: 20,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPUPrimitiveState = typeof WGPUPrimitiveState;
+  },
+} as const;
 
 export const WGPUQuerySetDescriptor = {
   name: "WGPUQuerySetDescriptor",
@@ -710,9 +691,8 @@ export const WGPUQuerySetDescriptor = {
       offset: 32,
       kind: "ULong",
     },
-  },} as const;
-
-export type WGPUQuerySetDescriptor = typeof WGPUQuerySetDescriptor;
+  },
+} as const;
 
 export const WGPUQueueDescriptor = {
   name: "WGPUQueueDescriptor",
@@ -728,9 +708,8 @@ export const WGPUQueueDescriptor = {
       offset: 8,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUQueueDescriptor = typeof WGPUQueueDescriptor;
+  },
+} as const;
 
 export const WGPURenderBundleDescriptor = {
   name: "WGPURenderBundleDescriptor",
@@ -746,9 +725,8 @@ export const WGPURenderBundleDescriptor = {
       offset: 8,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPURenderBundleDescriptor = typeof WGPURenderBundleDescriptor;
+  },
+} as const;
 
 export const WGPURenderBundleEncoderDescriptor = {
   name: "WGPURenderBundleEncoderDescriptor",
@@ -794,9 +772,8 @@ export const WGPURenderBundleEncoderDescriptor = {
       offset: 41,
       kind: "Bool",
     },
-  },} as const;
-
-export type WGPURenderBundleEncoderDescriptor = typeof WGPURenderBundleEncoderDescriptor;
+  },
+} as const;
 
 export const WGPURenderPassDepthStencilAttachment = {
   name: "WGPURenderPassDepthStencilAttachment",
@@ -847,9 +824,8 @@ export const WGPURenderPassDepthStencilAttachment = {
       offset: 36,
       kind: "Bool",
     },
-  },} as const;
-
-export type WGPURenderPassDepthStencilAttachment = typeof WGPURenderPassDepthStencilAttachment;
+  },
+} as const;
 
 export const WGPURenderPassDescriptorMaxDrawCount = {
   name: "WGPURenderPassDescriptorMaxDrawCount",
@@ -866,9 +842,8 @@ export const WGPURenderPassDescriptorMaxDrawCount = {
       offset: 16,
       kind: "ULongLong",
     },
-  },} as const;
-
-export type WGPURenderPassDescriptorMaxDrawCount = typeof WGPURenderPassDescriptorMaxDrawCount;
+  },
+} as const;
 
 export const WGPURenderPassTimestampWrite = {
   name: "WGPURenderPassTimestampWrite",
@@ -889,9 +864,8 @@ export const WGPURenderPassTimestampWrite = {
       offset: 12,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPURenderPassTimestampWrite = typeof WGPURenderPassTimestampWrite;
+  },
+} as const;
 
 export const WGPURequestAdapterOptions = {
   name: "WGPURequestAdapterOptions",
@@ -922,9 +896,8 @@ export const WGPURequestAdapterOptions = {
       offset: 24,
       kind: "Bool",
     },
-  },} as const;
-
-export type WGPURequestAdapterOptions = typeof WGPURequestAdapterOptions;
+  },
+} as const;
 
 export const WGPUSamplerBindingLayout = {
   name: "WGPUSamplerBindingLayout",
@@ -940,9 +913,8 @@ export const WGPUSamplerBindingLayout = {
       offset: 8,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPUSamplerBindingLayout = typeof WGPUSamplerBindingLayout;
+  },
+} as const;
 
 export const WGPUSamplerDescriptor = {
   name: "WGPUSamplerDescriptor",
@@ -1008,9 +980,8 @@ export const WGPUSamplerDescriptor = {
       offset: 52,
       kind: "UShort",
     },
-  },} as const;
-
-export type WGPUSamplerDescriptor = typeof WGPUSamplerDescriptor;
+  },
+} as const;
 
 export const WGPUShaderModuleCompilationHint = {
   name: "WGPUShaderModuleCompilationHint",
@@ -1031,9 +1002,8 @@ export const WGPUShaderModuleCompilationHint = {
       offset: 16,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUShaderModuleCompilationHint = typeof WGPUShaderModuleCompilationHint;
+  },
+} as const;
 
 export const WGPUShaderModuleSPIRVDescriptor = {
   name: "WGPUShaderModuleSPIRVDescriptor",
@@ -1055,9 +1025,8 @@ export const WGPUShaderModuleSPIRVDescriptor = {
       offset: 24,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUShaderModuleSPIRVDescriptor = typeof WGPUShaderModuleSPIRVDescriptor;
+  },
+} as const;
 
 export const WGPUShaderModuleWGSLDescriptor = {
   name: "WGPUShaderModuleWGSLDescriptor",
@@ -1074,9 +1043,8 @@ export const WGPUShaderModuleWGSLDescriptor = {
       offset: 16,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUShaderModuleWGSLDescriptor = typeof WGPUShaderModuleWGSLDescriptor;
+  },
+} as const;
 
 export const WGPUStencilFaceState = {
   name: "WGPUStencilFaceState",
@@ -1102,9 +1070,8 @@ export const WGPUStencilFaceState = {
       offset: 12,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPUStencilFaceState = typeof WGPUStencilFaceState;
+  },
+} as const;
 
 export const WGPUStorageTextureBindingLayout = {
   name: "WGPUStorageTextureBindingLayout",
@@ -1130,9 +1097,8 @@ export const WGPUStorageTextureBindingLayout = {
       offset: 16,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPUStorageTextureBindingLayout = typeof WGPUStorageTextureBindingLayout;
+  },
+} as const;
 
 export const WGPUSurfaceDescriptor = {
   name: "WGPUSurfaceDescriptor",
@@ -1148,9 +1114,8 @@ export const WGPUSurfaceDescriptor = {
       offset: 8,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUSurfaceDescriptor = typeof WGPUSurfaceDescriptor;
+  },
+} as const;
 
 export const WGPUSurfaceDescriptorFromAndroidNativeWindow = {
   name: "WGPUSurfaceDescriptorFromAndroidNativeWindow",
@@ -1167,9 +1132,8 @@ export const WGPUSurfaceDescriptorFromAndroidNativeWindow = {
       offset: 16,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUSurfaceDescriptorFromAndroidNativeWindow = typeof WGPUSurfaceDescriptorFromAndroidNativeWindow;
+  },
+} as const;
 
 export const WGPUSurfaceDescriptorFromCanvasHTMLSelector = {
   name: "WGPUSurfaceDescriptorFromCanvasHTMLSelector",
@@ -1186,9 +1150,8 @@ export const WGPUSurfaceDescriptorFromCanvasHTMLSelector = {
       offset: 16,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUSurfaceDescriptorFromCanvasHTMLSelector = typeof WGPUSurfaceDescriptorFromCanvasHTMLSelector;
+  },
+} as const;
 
 export const WGPUSurfaceDescriptorFromMetalLayer = {
   name: "WGPUSurfaceDescriptorFromMetalLayer",
@@ -1205,9 +1168,8 @@ export const WGPUSurfaceDescriptorFromMetalLayer = {
       offset: 16,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUSurfaceDescriptorFromMetalLayer = typeof WGPUSurfaceDescriptorFromMetalLayer;
+  },
+} as const;
 
 export const WGPUSurfaceDescriptorFromWaylandSurface = {
   name: "WGPUSurfaceDescriptorFromWaylandSurface",
@@ -1229,9 +1191,8 @@ export const WGPUSurfaceDescriptorFromWaylandSurface = {
       offset: 24,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUSurfaceDescriptorFromWaylandSurface = typeof WGPUSurfaceDescriptorFromWaylandSurface;
+  },
+} as const;
 
 export const WGPUSurfaceDescriptorFromWindowsHWND = {
   name: "WGPUSurfaceDescriptorFromWindowsHWND",
@@ -1253,9 +1214,8 @@ export const WGPUSurfaceDescriptorFromWindowsHWND = {
       offset: 24,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUSurfaceDescriptorFromWindowsHWND = typeof WGPUSurfaceDescriptorFromWindowsHWND;
+  },
+} as const;
 
 export const WGPUSurfaceDescriptorFromXcbWindow = {
   name: "WGPUSurfaceDescriptorFromXcbWindow",
@@ -1277,9 +1237,8 @@ export const WGPUSurfaceDescriptorFromXcbWindow = {
       offset: 24,
       kind: "UInt",
     },
-  },} as const;
-
-export type WGPUSurfaceDescriptorFromXcbWindow = typeof WGPUSurfaceDescriptorFromXcbWindow;
+  },
+} as const;
 
 export const WGPUSurfaceDescriptorFromXlibWindow = {
   name: "WGPUSurfaceDescriptorFromXlibWindow",
@@ -1301,9 +1260,8 @@ export const WGPUSurfaceDescriptorFromXlibWindow = {
       offset: 24,
       kind: "UInt",
     },
-  },} as const;
-
-export type WGPUSurfaceDescriptorFromXlibWindow = typeof WGPUSurfaceDescriptorFromXlibWindow;
+  },
+} as const;
 
 export const WGPUSwapChainDescriptor = {
   name: "WGPUSwapChainDescriptor",
@@ -1344,9 +1302,8 @@ export const WGPUSwapChainDescriptor = {
       offset: 32,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPUSwapChainDescriptor = typeof WGPUSwapChainDescriptor;
+  },
+} as const;
 
 export const WGPUTextureBindingLayout = {
   name: "WGPUTextureBindingLayout",
@@ -1372,9 +1329,8 @@ export const WGPUTextureBindingLayout = {
       offset: 16,
       kind: "Bool",
     },
-  },} as const;
-
-export type WGPUTextureBindingLayout = typeof WGPUTextureBindingLayout;
+  },
+} as const;
 
 export const WGPUTextureDataLayout = {
   name: "WGPUTextureDataLayout",
@@ -1400,9 +1356,8 @@ export const WGPUTextureDataLayout = {
       offset: 20,
       kind: "UInt",
     },
-  },} as const;
-
-export type WGPUTextureDataLayout = typeof WGPUTextureDataLayout;
+  },
+} as const;
 
 export const WGPUTextureViewDescriptor = {
   name: "WGPUTextureViewDescriptor",
@@ -1453,9 +1408,8 @@ export const WGPUTextureViewDescriptor = {
       offset: 40,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPUTextureViewDescriptor = typeof WGPUTextureViewDescriptor;
+  },
+} as const;
 
 export const WGPUVertexAttribute = {
   name: "WGPUVertexAttribute",
@@ -1476,9 +1430,8 @@ export const WGPUVertexAttribute = {
       offset: 16,
       kind: "UInt",
     },
-  },} as const;
-
-export type WGPUVertexAttribute = typeof WGPUVertexAttribute;
+  },
+} as const;
 
 export const WGPUBindGroupDescriptor = {
   name: "WGPUBindGroupDescriptor",
@@ -1509,9 +1462,8 @@ export const WGPUBindGroupDescriptor = {
       offset: 32,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUBindGroupDescriptor = typeof WGPUBindGroupDescriptor;
+  },
+} as const;
 
 export const WGPUBindGroupLayoutEntry = {
   name: "WGPUBindGroupLayoutEntry",
@@ -1556,9 +1508,8 @@ export const WGPUBindGroupLayoutEntry = {
       kind: "Record",
       type: () => WGPUStorageTextureBindingLayout,
     },
-  },} as const;
-
-export type WGPUBindGroupLayoutEntry = typeof WGPUBindGroupLayoutEntry;
+  },
+} as const;
 
 export const WGPUBlendState = {
   name: "WGPUBlendState",
@@ -1576,9 +1527,8 @@ export const WGPUBlendState = {
       kind: "Record",
       type: () => WGPUBlendComponent,
     },
-  },} as const;
-
-export type WGPUBlendState = typeof WGPUBlendState;
+  },
+} as const;
 
 export const WGPUCompilationInfo = {
   name: "WGPUCompilationInfo",
@@ -1599,9 +1549,8 @@ export const WGPUCompilationInfo = {
       offset: 16,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUCompilationInfo = typeof WGPUCompilationInfo;
+  },
+} as const;
 
 export const WGPUComputePassDescriptor = {
   name: "WGPUComputePassDescriptor",
@@ -1627,9 +1576,8 @@ export const WGPUComputePassDescriptor = {
       offset: 24,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUComputePassDescriptor = typeof WGPUComputePassDescriptor;
+  },
+} as const;
 
 export const WGPUDepthStencilState = {
   name: "WGPUDepthStencilState",
@@ -1692,9 +1640,8 @@ export const WGPUDepthStencilState = {
       offset: 68,
       kind: "Float",
     },
-  },} as const;
-
-export type WGPUDepthStencilState = typeof WGPUDepthStencilState;
+  },
+} as const;
 
 export const WGPUImageCopyBuffer = {
   name: "WGPUImageCopyBuffer",
@@ -1716,9 +1663,8 @@ export const WGPUImageCopyBuffer = {
       offset: 32,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUImageCopyBuffer = typeof WGPUImageCopyBuffer;
+  },
+} as const;
 
 export const WGPUImageCopyTexture = {
   name: "WGPUImageCopyTexture",
@@ -1750,9 +1696,8 @@ export const WGPUImageCopyTexture = {
       offset: 32,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPUImageCopyTexture = typeof WGPUImageCopyTexture;
+  },
+} as const;
 
 export const WGPUProgrammableStageDescriptor = {
   name: "WGPUProgrammableStageDescriptor",
@@ -1783,9 +1728,8 @@ export const WGPUProgrammableStageDescriptor = {
       offset: 32,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUProgrammableStageDescriptor = typeof WGPUProgrammableStageDescriptor;
+  },
+} as const;
 
 export const WGPURenderPassColorAttachment = {
   name: "WGPURenderPassColorAttachment",
@@ -1817,9 +1761,8 @@ export const WGPURenderPassColorAttachment = {
       kind: "Record",
       type: () => WGPUColor,
     },
-  },} as const;
-
-export type WGPURenderPassColorAttachment = typeof WGPURenderPassColorAttachment;
+  },
+} as const;
 
 export const WGPURequiredLimits = {
   name: "WGPURequiredLimits",
@@ -1836,9 +1779,8 @@ export const WGPURequiredLimits = {
       kind: "Record",
       type: () => WGPULimits,
     },
-  },} as const;
-
-export type WGPURequiredLimits = typeof WGPURequiredLimits;
+  },
+} as const;
 
 export const WGPUShaderModuleDescriptor = {
   name: "WGPUShaderModuleDescriptor",
@@ -1864,9 +1806,8 @@ export const WGPUShaderModuleDescriptor = {
       offset: 24,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUShaderModuleDescriptor = typeof WGPUShaderModuleDescriptor;
+  },
+} as const;
 
 export const WGPUSupportedLimits = {
   name: "WGPUSupportedLimits",
@@ -1883,9 +1824,8 @@ export const WGPUSupportedLimits = {
       kind: "Record",
       type: () => WGPULimits,
     },
-  },} as const;
-
-export type WGPUSupportedLimits = typeof WGPUSupportedLimits;
+  },
+} as const;
 
 export const WGPUTextureDescriptor = {
   name: "WGPUTextureDescriptor",
@@ -1942,9 +1882,8 @@ export const WGPUTextureDescriptor = {
       offset: 56,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUTextureDescriptor = typeof WGPUTextureDescriptor;
+  },
+} as const;
 
 export const WGPUVertexBufferLayout = {
   name: "WGPUVertexBufferLayout",
@@ -1970,9 +1909,8 @@ export const WGPUVertexBufferLayout = {
       offset: 24,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUVertexBufferLayout = typeof WGPUVertexBufferLayout;
+  },
+} as const;
 
 export const WGPUBindGroupLayoutDescriptor = {
   name: "WGPUBindGroupLayoutDescriptor",
@@ -1998,9 +1936,8 @@ export const WGPUBindGroupLayoutDescriptor = {
       offset: 24,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUBindGroupLayoutDescriptor = typeof WGPUBindGroupLayoutDescriptor;
+  },
+} as const;
 
 export const WGPUColorTargetState = {
   name: "WGPUColorTargetState",
@@ -2026,9 +1963,8 @@ export const WGPUColorTargetState = {
       offset: 24,
       kind: "UInt",
     },
-  },} as const;
-
-export type WGPUColorTargetState = typeof WGPUColorTargetState;
+  },
+} as const;
 
 export const WGPUComputePipelineDescriptor = {
   name: "WGPUComputePipelineDescriptor",
@@ -2055,9 +1991,8 @@ export const WGPUComputePipelineDescriptor = {
       kind: "Record",
       type: () => WGPUProgrammableStageDescriptor,
     },
-  },} as const;
-
-export type WGPUComputePipelineDescriptor = typeof WGPUComputePipelineDescriptor;
+  },
+} as const;
 
 export const WGPUDeviceDescriptor = {
   name: "WGPUDeviceDescriptor",
@@ -2104,9 +2039,8 @@ export const WGPUDeviceDescriptor = {
       offset: 64,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUDeviceDescriptor = typeof WGPUDeviceDescriptor;
+  },
+} as const;
 
 export const WGPURenderPassDescriptor = {
   name: "WGPURenderPassDescriptor",
@@ -2152,9 +2086,8 @@ export const WGPURenderPassDescriptor = {
       offset: 56,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPURenderPassDescriptor = typeof WGPURenderPassDescriptor;
+  },
+} as const;
 
 export const WGPUVertexState = {
   name: "WGPUVertexState",
@@ -2195,9 +2128,8 @@ export const WGPUVertexState = {
       offset: 48,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUVertexState = typeof WGPUVertexState;
+  },
+} as const;
 
 export const WGPUFragmentState = {
   name: "WGPUFragmentState",
@@ -2238,9 +2170,8 @@ export const WGPUFragmentState = {
       offset: 48,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUFragmentState = typeof WGPUFragmentState;
+  },
+} as const;
 
 export const WGPURenderPipelineDescriptor = {
   name: "WGPURenderPipelineDescriptor",
@@ -2289,9 +2220,8 @@ export const WGPURenderPipelineDescriptor = {
       offset: 136,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPURenderPipelineDescriptor = typeof WGPURenderPipelineDescriptor;
+  },
+} as const;
 
 export const WGPUChainedStruct = {
   name: "WGPUChainedStruct",
@@ -2307,9 +2237,8 @@ export const WGPUChainedStruct = {
       offset: 8,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPUChainedStruct = typeof WGPUChainedStruct;
+  },
+} as const;
 
 export const WGPUChainedStructOut = {
   name: "WGPUChainedStructOut",
@@ -2325,9 +2254,8 @@ export const WGPUChainedStructOut = {
       offset: 8,
       kind: "Enum",
     },
-  },} as const;
-
-export type WGPUChainedStructOut = typeof WGPUChainedStructOut;
+  },
+} as const;
 
 export const WGPUInstanceExtras = {
   name: "WGPUInstanceExtras",
@@ -2359,9 +2287,8 @@ export const WGPUInstanceExtras = {
       offset: 32,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUInstanceExtras = typeof WGPUInstanceExtras;
+  },
+} as const;
 
 export const WGPUDeviceExtras = {
   name: "WGPUDeviceExtras",
@@ -2378,9 +2305,8 @@ export const WGPUDeviceExtras = {
       offset: 16,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUDeviceExtras = typeof WGPUDeviceExtras;
+  },
+} as const;
 
 export const WGPURequiredLimitsExtras = {
   name: "WGPURequiredLimitsExtras",
@@ -2397,9 +2323,8 @@ export const WGPURequiredLimitsExtras = {
       offset: 16,
       kind: "UInt",
     },
-  },} as const;
-
-export type WGPURequiredLimitsExtras = typeof WGPURequiredLimitsExtras;
+  },
+} as const;
 
 export const WGPUSupportedLimitsExtras = {
   name: "WGPUSupportedLimitsExtras",
@@ -2416,9 +2341,8 @@ export const WGPUSupportedLimitsExtras = {
       offset: 16,
       kind: "UInt",
     },
-  },} as const;
-
-export type WGPUSupportedLimitsExtras = typeof WGPUSupportedLimitsExtras;
+  },
+} as const;
 
 export const WGPUPushConstantRange = {
   name: "WGPUPushConstantRange",
@@ -2439,9 +2363,8 @@ export const WGPUPushConstantRange = {
       offset: 8,
       kind: "UInt",
     },
-  },} as const;
-
-export type WGPUPushConstantRange = typeof WGPUPushConstantRange;
+  },
+} as const;
 
 export const WGPUPipelineLayoutExtras = {
   name: "WGPUPipelineLayoutExtras",
@@ -2463,9 +2386,8 @@ export const WGPUPipelineLayoutExtras = {
       offset: 24,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUPipelineLayoutExtras = typeof WGPUPipelineLayoutExtras;
+  },
+} as const;
 
 export const WGPUWrappedSubmissionIndex = {
   name: "WGPUWrappedSubmissionIndex",
@@ -2481,9 +2403,8 @@ export const WGPUWrappedSubmissionIndex = {
       offset: 8,
       kind: "ULongLong",
     },
-  },} as const;
-
-export type WGPUWrappedSubmissionIndex = typeof WGPUWrappedSubmissionIndex;
+  },
+} as const;
 
 export const WGPUShaderDefine = {
   name: "WGPUShaderDefine",
@@ -2499,9 +2420,8 @@ export const WGPUShaderDefine = {
       offset: 8,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUShaderDefine = typeof WGPUShaderDefine;
+  },
+} as const;
 
 export const WGPUShaderModuleGLSLDescriptor = {
   name: "WGPUShaderModuleGLSLDescriptor",
@@ -2533,9 +2453,8 @@ export const WGPUShaderModuleGLSLDescriptor = {
       offset: 40,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUShaderModuleGLSLDescriptor = typeof WGPUShaderModuleGLSLDescriptor;
+  },
+} as const;
 
 export const WGPUStorageReport = {
   name: "WGPUStorageReport",
@@ -2561,9 +2480,8 @@ export const WGPUStorageReport = {
       offset: 24,
       kind: "ULong",
     },
-  },} as const;
-
-export type WGPUStorageReport = typeof WGPUStorageReport;
+  },
+} as const;
 
 export const WGPUHubReport = {
   name: "WGPUHubReport",
@@ -2659,9 +2577,8 @@ export const WGPUHubReport = {
       kind: "Record",
       type: () => WGPUStorageReport,
     },
-  },} as const;
-
-export type WGPUHubReport = typeof WGPUHubReport;
+  },
+} as const;
 
 export const WGPUGlobalReport = {
   name: "WGPUGlobalReport",
@@ -2708,9 +2625,8 @@ export const WGPUGlobalReport = {
       kind: "Record",
       type: () => WGPUHubReport,
     },
-  },} as const;
-
-export type WGPUGlobalReport = typeof WGPUGlobalReport;
+  },
+} as const;
 
 export const WGPUSurfaceCapabilities = {
   name: "WGPUSurfaceCapabilities",
@@ -2746,9 +2662,8 @@ export const WGPUSurfaceCapabilities = {
       offset: 40,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUSurfaceCapabilities = typeof WGPUSurfaceCapabilities;
+  },
+} as const;
 
 export const WGPUSwapChainDescriptorExtras = {
   name: "WGPUSwapChainDescriptorExtras",
@@ -2775,9 +2690,8 @@ export const WGPUSwapChainDescriptorExtras = {
       offset: 32,
       kind: "Pointer",
     },
-  },} as const;
-
-export type WGPUSwapChainDescriptorExtras = typeof WGPUSwapChainDescriptorExtras;
+  },
+} as const;
 
 export const WGPUInstanceEnumerateAdapterOptions = {
   name: "WGPUInstanceEnumerateAdapterOptions",
@@ -2793,7 +2707,6 @@ export const WGPUInstanceEnumerateAdapterOptions = {
       offset: 8,
       kind: "UInt",
     },
-  },} as const;
-
-export type WGPUInstanceEnumerateAdapterOptions = typeof WGPUInstanceEnumerateAdapterOptions;
+  },
+} as const;
 
