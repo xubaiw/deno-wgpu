@@ -2,11 +2,9 @@
 
 import {
   alloc,
-  deref,
   lib,
   ref,
   WGPUInstanceDescriptor,
-  WGPULimits,
   WGPUSupportedLimits,
 } from "./mod.ts";
 
@@ -20,9 +18,6 @@ const adapter = await requestAdapter(instance);
 const slimits = alloc(WGPUSupportedLimits);
 lib.symbols.wgpuAdapterGetLimits(adapter, ref(slimits));
 console.log(slimits);
-
-const limits = deref(WGPULimits, slimits.limits);
-console.log(limits);
 
 // Release instance
 lib.symbols.wgpuInstanceRelease(instance);

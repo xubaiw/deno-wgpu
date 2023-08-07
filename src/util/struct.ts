@@ -27,9 +27,8 @@ import { endianness } from "node:os";
 const LE = endianness() == "LE" ? true : false;
 
 /** Map field type to Deno types. */
-export type FieldTypeMap = {
+export type FieldKindMap = {
   Pointer: Deno.PointerValue;
-  Record: DataView;
   Enum: number;
   UInt: number;
   ULongLong: bigint;
@@ -41,26 +40,43 @@ export type FieldTypeMap = {
   Int: number;
 };
 
-export type FieldSpec = {
-  offset: number;
-  kind: keyof FieldTypeMap;
-  size: number;
-};
+export type FieldSpecBase = { offset: number; size: number };
+export type FixedFieldExtra = { kind: keyof FieldKindMap };
+export type RecordFieldExtra<T> = { kind: "Record"; type: () => T };
+
+export type FieldSpec<T> =
+  & FieldSpecBase
+  & (FixedFieldExtra | RecordFieldExtra<T>);
 
 export type StructSpec = {
   name: string;
   /** The overall size of a struct */
   size: number;
   /** Fields of the struct */
-  fields: Record<string, FieldSpec>;
+  fields: Record<string, FieldSpec<unknown>>;
 };
 
 export type StructBase = { readonly view: DataView };
 
+type Fields<T extends StructSpec> = T["fields"];
+type FieldKeys<T extends StructSpec> = keyof Fields<T>;
+type Field<T extends StructSpec, K extends FieldKeys<T>> = Fields<T>[K];
+type FieldKind<T extends StructSpec, K extends FieldKeys<T>> = Field<
+  T,
+  K
+>["kind"];
+
 export type Struct<S extends StructSpec> =
   & StructBase
   & {
-    -readonly [K in keyof S["fields"]]: FieldTypeMap[S["fields"][K]["kind"]];
+    -readonly [
+      // XXX: need clearer type arith
+      FN in FieldKeys<S>
+    ]: Field<S, FN> extends RecordFieldExtra<infer T>
+      ? (T extends StructSpec ? Struct<T> : never)
+      : FieldKind<S, FN> extends keyof FieldKindMap
+        ? FieldKindMap[FieldKind<S, FN>]
+      : never;
   };
 
 export const alloc = <S extends StructSpec>(spec: S): Struct<S> => {
@@ -70,15 +86,11 @@ export const alloc = <S extends StructSpec>(spec: S): Struct<S> => {
 
 export const deref = <S extends StructSpec>(
   spec: S,
-  viewOrPtr: DataView | NonNullable<Deno.PointerValue>,
+  ptr: NonNullable<Deno.PointerValue>,
 ): Struct<S> => {
-  let view: DataView;
-  if (viewOrPtr instanceof DataView) view = viewOrPtr;
-  else {
-    view = new DataView(
-      new Deno.UnsafePointerView(viewOrPtr).getArrayBuffer(spec.size),
-    );
-  }
+  const view = new DataView(
+    new Deno.UnsafePointerView(ptr).getArrayBuffer(spec.size),
+  );
   return defineSpecProperties(spec, { view });
 };
 
@@ -146,30 +158,37 @@ const defineSpecProperties = <S extends StructSpec>(
         get = (): number => view.getInt32(fd.offset, LE);
         set = (v: number) => view.setInt32(fd.offset, v, LE);
         break;
-      case "Record":
-        get = (): DataView =>
-          new DataView(view.buffer, view.byteOffset + fd.offset, fd.size);
-        set = (v: DataView) =>
-          new Uint8Array(view.buffer, view.byteOffset, fd.size).set(
-            new Uint8Array(v.buffer, v.byteOffset, v.byteLength),
+      case "Record": {
+        // XXX: better typing
+        const fspec = fd.type() as StructSpec;
+        get = () => {
+          const fview = new DataView(
+            view.buffer,
+            view.byteOffset + fd.offset,
+            fd.size,
           );
+          return defineSpecProperties(fspec, { view: fview });
+        };
+        set = (v) => {
+          const fview = v.view;
+          new Uint8Array(view.buffer, view.byteOffset, fd.size).set(
+            new Uint8Array(fview.buffer, fview.byteOffset, fview.byteLength),
+          );
+        };
+      }
     }
     Object.defineProperty(base, fname, { get, set });
   }
   Object.defineProperty(base, Symbol.for("Deno.customInspect"), {
-    value: () => {
-      let ins = `${spec.name} {\n`;
-      for (const [fname, fd] of Object.entries(spec.fields)) {
-        const depth = fd.kind == "Record" ? 0 : 4;
-        ins += `  ${fname}: ` +
-          Deno.inspect((base as Struct<S>)[fname], {
-            compact: true,
-            colors: true,
-            depth,
-          }) + ",\n";
+    value: (
+      inspect: typeof Deno.inspect,
+      options: Deno.InspectOptions,
+    ) => {
+      const ins: Record<string, unknown> = {};
+      for (const fname of Object.keys(spec.fields)) {
+        ins[fname] = (base as Struct<S>)[fname];
       }
-      ins += `}`;
-      return ins;
+      return spec.name + " " + inspect(ins, options);
     },
   });
   return base as Struct<S>;

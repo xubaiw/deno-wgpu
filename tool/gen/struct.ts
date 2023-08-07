@@ -5,7 +5,7 @@ import {
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
 
 type StructDecl = {
-  name: string
+  name: string;
   size: number;
   fields: Record<string, FieldDecl>;
 };
@@ -14,6 +14,7 @@ type FieldDecl = {
   size: number;
   offset: number;
   kind: string;
+  type?: string;
 };
 
 export const genStructs = async (tu: CXTranslationUnit, path: string) => {
@@ -30,6 +31,9 @@ export const genStructs = async (tu: CXTranslationUnit, path: string) => {
           const offset = cursor.getOffsetOfField() / 8;
           const kind = cursor.getType()!.getCanonicalType().getKindSpelling();
           fields[name] = { size, offset, kind };
+          if (kind == "Record") {
+            fields[name]["type"] = cursor.getType()!.getSpelling();
+          }
         }
         return CXChildVisitResult.CXChildVisit_Continue;
       });
@@ -41,10 +45,23 @@ export const genStructs = async (tu: CXTranslationUnit, path: string) => {
   let text = ``;
   for (const [sname, sd] of Object.entries(structs)) {
     if (sd.size > 0) {
-      text += `export const ${sname} = ${
-        JSON.stringify(sd, undefined, 2)
-      } as const;\n\n`;
-      text += `export type ${sname} = typeof ${sname};\n\n`
+      text += `export const ${sname} = {\n`;
+      text += `  name: "${sname}",\n`;
+      text += `  size: ${sd.size},\n`;
+      text += `  fields: {\n`;
+      for (const [fname, fd] of Object.entries(sd.fields)) {
+        text += `    ${fname}: {\n`;
+        text += `      size: ${fd.size},\n`;
+        text += `      offset: ${fd.offset},\n`;
+        text += `      kind: "${fd.kind}",\n`;
+        if (fd.kind == "Record") {
+          text += `      type: () => ${fd.type!},\n`;
+        }
+        text += `    },\n`;
+      }
+      text += `  },`;
+      text += `} as const;\n\n`;
+      text += `export type ${sname} = typeof ${sname};\n\n`;
     }
   }
   await Deno.writeTextFile(path, text);
