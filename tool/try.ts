@@ -123,6 +123,7 @@ if (Deno.args[0] == "function") {
   });
 }
 if (Deno.args[0] == "struct") {
+  const rec = {};
   tu.getCursor().visitChildren((cursor) => {
     if (cursor.kind == CXCursorKind.CXCursor_StructDecl) {
       const name = cursor.getSpelling();
@@ -134,11 +135,13 @@ if (Deno.args[0] == "struct") {
           const size = cursor.getType()?.getSizeOf();
           const offset = cursor.getOffsetOfField();
           fields.push({ name, size, offset });
+          rec[cursor.getType()!.getCanonicalType().getKindSpelling()] = cursor
+            .getType()?.getSizeOf();
         }
         return CXChildVisitResult.CXChildVisit_Continue;
       });
-      console.log({ name, size, fields });
     }
     return CXChildVisitResult.CXChildVisit_Recurse;
   });
+  console.log(rec);
 }

@@ -1,20 +1,28 @@
 #!/usr/bin/env -S deno run -A --unstable
 
-import { lib, WGPUInstanceDescriptor, WGPUSupportedLimits } from "./mod.ts";
-
-const NULL = Deno.UnsafePointer.create(0);
+import {
+  alloc,
+  deref,
+  lib,
+  ref,
+  WGPUInstanceDescriptor,
+  WGPULimits,
+  WGPUSupportedLimits,
+} from "./mod.ts";
 
 // Create Instance
-const desc = new WGPUInstanceDescriptor()
-desc.nextInChain = NULL;
-const instance = lib.symbols.wgpuCreateInstance(desc.pointer);
+const desc = alloc(WGPUInstanceDescriptor);
+desc.nextInChain = null;
+const instance = lib.symbols.wgpuCreateInstance(ref(desc));
 
 const adapter = await requestAdapter(instance);
 
-const slimits = new WGPUSupportedLimits();
-lib.symbols.wgpuAdapterGetLimits(adapter, slimits.pointer);
+const slimits = alloc(WGPUSupportedLimits);
+lib.symbols.wgpuAdapterGetLimits(adapter, ref(slimits));
+console.log(slimits);
 
-console.log(slimits.limits.maxBindGroups);
+const limits = deref(WGPULimits, slimits.limits);
+console.log(limits);
 
 // Release instance
 lib.symbols.wgpuInstanceRelease(instance);
@@ -33,9 +41,9 @@ function requestAdapter(
     });
     lib.symbols.wgpuInstanceRequestAdapter(
       instance,
-      NULL,
+      null,
       callback.pointer,
-      NULL,
+      null,
     );
   });
 }
