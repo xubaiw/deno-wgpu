@@ -26,15 +26,20 @@ export const wrap = <
     D["parameters"],
     D["result"]
   >;
+  let callback: Deno.UnsafeCallback<D>;
   return new Promise<Parameters<CallbackFunction>>((res) => {
-    const callback = new Deno.UnsafeCallback<D>(
+    callback = new Deno.UnsafeCallback<D>(
       // deno-lint-ignore no-explicit-any
       spec as any,
       // deno-lint-ignore no-explicit-any
       ((...ret) => res(ret as any)) as CallbackFunction,
     );
+    callback.ref();
     const shallow = [...args];
     shallow.splice(n, 0, callback.pointer);
     fn(...(shallow as T));
+  }).then((v) => {
+    callback.unref();
+    return v;
   });
 };

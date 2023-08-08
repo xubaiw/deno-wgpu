@@ -1,4 +1,4 @@
-export const WGPUBufferMapCallback = {
+export const BufferMapCallback = {
   "result": "void",
   "parameters": [
     "u32",
@@ -6,7 +6,7 @@ export const WGPUBufferMapCallback = {
   ]
 } as const;
 
-export const WGPUCompilationInfoCallback = {
+export const CompilationInfoCallback = {
   "result": "void",
   "parameters": [
     "u32",
@@ -15,17 +15,7 @@ export const WGPUCompilationInfoCallback = {
   ]
 } as const;
 
-export const WGPUCreateComputePipelineAsyncCallback = {
-  "result": "void",
-  "parameters": [
-    "u32",
-    "pointer",
-    "pointer",
-    "pointer"
-  ]
-} as const;
-
-export const WGPUCreateRenderPipelineAsyncCallback = {
+export const CreateComputePipelineAsyncCallback = {
   "result": "void",
   "parameters": [
     "u32",
@@ -35,33 +25,7 @@ export const WGPUCreateRenderPipelineAsyncCallback = {
   ]
 } as const;
 
-export const WGPUDeviceLostCallback = {
-  "result": "void",
-  "parameters": [
-    "u32",
-    "pointer",
-    "pointer"
-  ]
-} as const;
-
-export const WGPUErrorCallback = {
-  "result": "void",
-  "parameters": [
-    "u32",
-    "pointer",
-    "pointer"
-  ]
-} as const;
-
-export const WGPUQueueWorkDoneCallback = {
-  "result": "void",
-  "parameters": [
-    "u32",
-    "pointer"
-  ]
-} as const;
-
-export const WGPURequestAdapterCallback = {
+export const CreateRenderPipelineAsyncCallback = {
   "result": "void",
   "parameters": [
     "u32",
@@ -71,7 +35,33 @@ export const WGPURequestAdapterCallback = {
   ]
 } as const;
 
-export const WGPURequestDeviceCallback = {
+export const DeviceLostCallback = {
+  "result": "void",
+  "parameters": [
+    "u32",
+    "pointer",
+    "pointer"
+  ]
+} as const;
+
+export const ErrorCallback = {
+  "result": "void",
+  "parameters": [
+    "u32",
+    "pointer",
+    "pointer"
+  ]
+} as const;
+
+export const QueueWorkDoneCallback = {
+  "result": "void",
+  "parameters": [
+    "u32",
+    "pointer"
+  ]
+} as const;
+
+export const RequestAdapterCallback = {
   "result": "void",
   "parameters": [
     "u32",
@@ -81,7 +71,17 @@ export const WGPURequestDeviceCallback = {
   ]
 } as const;
 
-export const WGPUProcDeviceSetUncapturedErrorCallback = {
+export const RequestDeviceCallback = {
+  "result": "void",
+  "parameters": [
+    "u32",
+    "pointer",
+    "pointer",
+    "pointer"
+  ]
+} as const;
+
+export const ProcDeviceSetUncapturedErrorCallback = {
   "result": "void",
   "parameters": [
     "pointer",
@@ -90,7 +90,7 @@ export const WGPUProcDeviceSetUncapturedErrorCallback = {
   ]
 } as const;
 
-export const WGPULogCallback = {
+export const LogCallback = {
   "result": "void",
   "parameters": [
     "u32",

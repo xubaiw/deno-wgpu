@@ -6,7 +6,7 @@ WebGPU ponyfill for Deno through FFI and wgpu-native.
 
 ## Example
 
-(`examples/limits.ts`(./examples/limits.ts))
+You can also see `./examples/compute.ts` for basic compute shader.
 
 ```ts
 import {

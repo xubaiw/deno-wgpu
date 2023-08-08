@@ -5,17 +5,17 @@ import {
 
 /** Generate TypeScript enum definition from c headers. */
 export const genEnums = async (tu, path) => {
-  const enums  = {};
+  const enums = {};
   tu.getCursor().visitChildren((cursor) => {
     // handle enums
     if (cursor.kind == CXCursorKind.CXCursor_EnumDecl) {
-      const name = cursor.getSpelling();
+      const name = cursor.getSpelling().replace(/^WGPU/, "");
       // empty record
       if (enums[name] == null) enums[name] = {};
       cursor.visitChildren((cursor) => {
         // handle constants
         if (cursor.kind == CXCursorKind.CXCursor_EnumConstantDecl) {
-          const key = cursor.getSpelling();
+          const key = cursor.getSpelling().replace(/^WGPU/, "");
           const value = cursor.getEnumConstantDeclarationUnsignedValue();
           enums[name][key] = value;
         }

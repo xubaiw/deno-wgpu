@@ -1,5 +1,5 @@
-export const WGPUAdapterProperties = {
-  name: "WGPUAdapterProperties",
+export const AdapterProperties = {
+  name: "AdapterProperties",
   size: 64,
   fields: {
     nextInChain: {
@@ -41,8 +41,8 @@ export const WGPUAdapterProperties = {
   },
 } as const;
 
-export const WGPUBindGroupEntry = {
-  name: "WGPUBindGroupEntry",
+export const BindGroupEntry = {
+  name: "BindGroupEntry",
   size: 56,
   fields: {
     nextInChain: {
@@ -76,8 +76,8 @@ export const WGPUBindGroupEntry = {
   },
 } as const;
 
-export const WGPUBlendComponent = {
-  name: "WGPUBlendComponent",
+export const BlendComponent = {
+  name: "BlendComponent",
   size: 12,
   fields: {
     operation: {
@@ -95,8 +95,8 @@ export const WGPUBlendComponent = {
   },
 } as const;
 
-export const WGPUBufferBindingLayout = {
-  name: "WGPUBufferBindingLayout",
+export const BufferBindingLayout = {
+  name: "BufferBindingLayout",
   size: 24,
   fields: {
     nextInChain: {
@@ -118,8 +118,8 @@ export const WGPUBufferBindingLayout = {
   },
 } as const;
 
-export const WGPUBufferDescriptor = {
-  name: "WGPUBufferDescriptor",
+export const BufferDescriptor = {
+  name: "BufferDescriptor",
   size: 40,
   fields: {
     nextInChain: {
@@ -145,8 +145,8 @@ export const WGPUBufferDescriptor = {
   },
 } as const;
 
-export const WGPUColor = {
-  name: "WGPUColor",
+export const Color = {
+  name: "Color",
   size: 32,
   fields: {
     r: {
@@ -168,8 +168,8 @@ export const WGPUColor = {
   },
 } as const;
 
-export const WGPUCommandBufferDescriptor = {
-  name: "WGPUCommandBufferDescriptor",
+export const CommandBufferDescriptor = {
+  name: "CommandBufferDescriptor",
   size: 16,
   fields: {
     nextInChain: {
@@ -183,8 +183,8 @@ export const WGPUCommandBufferDescriptor = {
   },
 } as const;
 
-export const WGPUCommandEncoderDescriptor = {
-  name: "WGPUCommandEncoderDescriptor",
+export const CommandEncoderDescriptor = {
+  name: "CommandEncoderDescriptor",
   size: 16,
   fields: {
     nextInChain: {
@@ -198,8 +198,8 @@ export const WGPUCommandEncoderDescriptor = {
   },
 } as const;
 
-export const WGPUCompilationMessage = {
-  name: "WGPUCompilationMessage",
+export const CompilationMessage = {
+  name: "CompilationMessage",
   size: 80,
   fields: {
     nextInChain: {
@@ -245,8 +245,8 @@ export const WGPUCompilationMessage = {
   },
 } as const;
 
-export const WGPUComputePassTimestampWrite = {
-  name: "WGPUComputePassTimestampWrite",
+export const ComputePassTimestampWrite = {
+  name: "ComputePassTimestampWrite",
   size: 16,
   fields: {
     querySet: {
@@ -264,8 +264,8 @@ export const WGPUComputePassTimestampWrite = {
   },
 } as const;
 
-export const WGPUConstantEntry = {
-  name: "WGPUConstantEntry",
+export const ConstantEntry = {
+  name: "ConstantEntry",
   size: 24,
   fields: {
     nextInChain: {
@@ -283,8 +283,8 @@ export const WGPUConstantEntry = {
   },
 } as const;
 
-export const WGPUExtent3D = {
-  name: "WGPUExtent3D",
+export const Extent3D = {
+  name: "Extent3D",
   size: 12,
   fields: {
     width: {
@@ -302,8 +302,8 @@ export const WGPUExtent3D = {
   },
 } as const;
 
-export const WGPUInstanceDescriptor = {
-  name: "WGPUInstanceDescriptor",
+export const InstanceDescriptor = {
+  name: "InstanceDescriptor",
   size: 8,
   fields: {
     nextInChain: {
@@ -313,8 +313,8 @@ export const WGPUInstanceDescriptor = {
   },
 } as const;
 
-export const WGPULimits = {
-  name: "WGPULimits",
+export const Limits = {
+  name: "Limits",
   size: 144,
   fields: {
     maxTextureDimension1D: {
@@ -444,8 +444,8 @@ export const WGPULimits = {
   },
 } as const;
 
-export const WGPUMultisampleState = {
-  name: "WGPUMultisampleState",
+export const MultisampleState = {
+  name: "MultisampleState",
   size: 24,
   fields: {
     nextInChain: {
@@ -467,8 +467,8 @@ export const WGPUMultisampleState = {
   },
 } as const;
 
-export const WGPUOrigin3D = {
-  name: "WGPUOrigin3D",
+export const Origin3D = {
+  name: "Origin3D",
   size: 12,
   fields: {
     x: {
@@ -486,8 +486,8 @@ export const WGPUOrigin3D = {
   },
 } as const;
 
-export const WGPUPipelineLayoutDescriptor = {
-  name: "WGPUPipelineLayoutDescriptor",
+export const PipelineLayoutDescriptor = {
+  name: "PipelineLayoutDescriptor",
   size: 32,
   fields: {
     nextInChain: {
@@ -509,15 +509,15 @@ export const WGPUPipelineLayoutDescriptor = {
   },
 } as const;
 
-export const WGPUPrimitiveDepthClipControl = {
-  name: "WGPUPrimitiveDepthClipControl",
+export const PrimitiveDepthClipControl = {
+  name: "PrimitiveDepthClipControl",
   size: 24,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     unclippedDepth: {
       offset: 16,
@@ -526,8 +526,8 @@ export const WGPUPrimitiveDepthClipControl = {
   },
 } as const;
 
-export const WGPUPrimitiveState = {
-  name: "WGPUPrimitiveState",
+export const PrimitiveState = {
+  name: "PrimitiveState",
   size: 24,
   fields: {
     nextInChain: {
@@ -553,8 +553,8 @@ export const WGPUPrimitiveState = {
   },
 } as const;
 
-export const WGPUQuerySetDescriptor = {
-  name: "WGPUQuerySetDescriptor",
+export const QuerySetDescriptor = {
+  name: "QuerySetDescriptor",
   size: 40,
   fields: {
     nextInChain: {
@@ -584,8 +584,8 @@ export const WGPUQuerySetDescriptor = {
   },
 } as const;
 
-export const WGPUQueueDescriptor = {
-  name: "WGPUQueueDescriptor",
+export const QueueDescriptor = {
+  name: "QueueDescriptor",
   size: 16,
   fields: {
     nextInChain: {
@@ -599,8 +599,8 @@ export const WGPUQueueDescriptor = {
   },
 } as const;
 
-export const WGPURenderBundleDescriptor = {
-  name: "WGPURenderBundleDescriptor",
+export const RenderBundleDescriptor = {
+  name: "RenderBundleDescriptor",
   size: 16,
   fields: {
     nextInChain: {
@@ -614,8 +614,8 @@ export const WGPURenderBundleDescriptor = {
   },
 } as const;
 
-export const WGPURenderBundleEncoderDescriptor = {
-  name: "WGPURenderBundleEncoderDescriptor",
+export const RenderBundleEncoderDescriptor = {
+  name: "RenderBundleEncoderDescriptor",
   size: 48,
   fields: {
     nextInChain: {
@@ -653,8 +653,8 @@ export const WGPURenderBundleEncoderDescriptor = {
   },
 } as const;
 
-export const WGPURenderPassDepthStencilAttachment = {
-  name: "WGPURenderPassDepthStencilAttachment",
+export const RenderPassDepthStencilAttachment = {
+  name: "RenderPassDepthStencilAttachment",
   size: 40,
   fields: {
     view: {
@@ -696,15 +696,15 @@ export const WGPURenderPassDepthStencilAttachment = {
   },
 } as const;
 
-export const WGPURenderPassDescriptorMaxDrawCount = {
-  name: "WGPURenderPassDescriptorMaxDrawCount",
+export const RenderPassDescriptorMaxDrawCount = {
+  name: "RenderPassDescriptorMaxDrawCount",
   size: 24,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     maxDrawCount: {
       offset: 16,
@@ -713,8 +713,8 @@ export const WGPURenderPassDescriptorMaxDrawCount = {
   },
 } as const;
 
-export const WGPURenderPassTimestampWrite = {
-  name: "WGPURenderPassTimestampWrite",
+export const RenderPassTimestampWrite = {
+  name: "RenderPassTimestampWrite",
   size: 16,
   fields: {
     querySet: {
@@ -732,8 +732,8 @@ export const WGPURenderPassTimestampWrite = {
   },
 } as const;
 
-export const WGPURequestAdapterOptions = {
-  name: "WGPURequestAdapterOptions",
+export const RequestAdapterOptions = {
+  name: "RequestAdapterOptions",
   size: 32,
   fields: {
     nextInChain: {
@@ -759,8 +759,8 @@ export const WGPURequestAdapterOptions = {
   },
 } as const;
 
-export const WGPUSamplerBindingLayout = {
-  name: "WGPUSamplerBindingLayout",
+export const SamplerBindingLayout = {
+  name: "SamplerBindingLayout",
   size: 16,
   fields: {
     nextInChain: {
@@ -774,8 +774,8 @@ export const WGPUSamplerBindingLayout = {
   },
 } as const;
 
-export const WGPUSamplerDescriptor = {
-  name: "WGPUSamplerDescriptor",
+export const SamplerDescriptor = {
+  name: "SamplerDescriptor",
   size: 56,
   fields: {
     nextInChain: {
@@ -829,8 +829,8 @@ export const WGPUSamplerDescriptor = {
   },
 } as const;
 
-export const WGPUShaderModuleCompilationHint = {
-  name: "WGPUShaderModuleCompilationHint",
+export const ShaderModuleCompilationHint = {
+  name: "ShaderModuleCompilationHint",
   size: 24,
   fields: {
     nextInChain: {
@@ -848,15 +848,15 @@ export const WGPUShaderModuleCompilationHint = {
   },
 } as const;
 
-export const WGPUShaderModuleSPIRVDescriptor = {
-  name: "WGPUShaderModuleSPIRVDescriptor",
+export const ShaderModuleSPIRVDescriptor = {
+  name: "ShaderModuleSPIRVDescriptor",
   size: 32,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     codeSize: {
       offset: 16,
@@ -869,15 +869,15 @@ export const WGPUShaderModuleSPIRVDescriptor = {
   },
 } as const;
 
-export const WGPUShaderModuleWGSLDescriptor = {
-  name: "WGPUShaderModuleWGSLDescriptor",
+export const ShaderModuleWGSLDescriptor = {
+  name: "ShaderModuleWGSLDescriptor",
   size: 24,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     code: {
       offset: 16,
@@ -886,8 +886,8 @@ export const WGPUShaderModuleWGSLDescriptor = {
   },
 } as const;
 
-export const WGPUStencilFaceState = {
-  name: "WGPUStencilFaceState",
+export const StencilFaceState = {
+  name: "StencilFaceState",
   size: 16,
   fields: {
     compare: {
@@ -909,8 +909,8 @@ export const WGPUStencilFaceState = {
   },
 } as const;
 
-export const WGPUStorageTextureBindingLayout = {
-  name: "WGPUStorageTextureBindingLayout",
+export const StorageTextureBindingLayout = {
+  name: "StorageTextureBindingLayout",
   size: 24,
   fields: {
     nextInChain: {
@@ -932,8 +932,8 @@ export const WGPUStorageTextureBindingLayout = {
   },
 } as const;
 
-export const WGPUSurfaceDescriptor = {
-  name: "WGPUSurfaceDescriptor",
+export const SurfaceDescriptor = {
+  name: "SurfaceDescriptor",
   size: 16,
   fields: {
     nextInChain: {
@@ -947,15 +947,15 @@ export const WGPUSurfaceDescriptor = {
   },
 } as const;
 
-export const WGPUSurfaceDescriptorFromAndroidNativeWindow = {
-  name: "WGPUSurfaceDescriptorFromAndroidNativeWindow",
+export const SurfaceDescriptorFromAndroidNativeWindow = {
+  name: "SurfaceDescriptorFromAndroidNativeWindow",
   size: 24,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     window: {
       offset: 16,
@@ -964,15 +964,15 @@ export const WGPUSurfaceDescriptorFromAndroidNativeWindow = {
   },
 } as const;
 
-export const WGPUSurfaceDescriptorFromCanvasHTMLSelector = {
-  name: "WGPUSurfaceDescriptorFromCanvasHTMLSelector",
+export const SurfaceDescriptorFromCanvasHTMLSelector = {
+  name: "SurfaceDescriptorFromCanvasHTMLSelector",
   size: 24,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     selector: {
       offset: 16,
@@ -981,15 +981,15 @@ export const WGPUSurfaceDescriptorFromCanvasHTMLSelector = {
   },
 } as const;
 
-export const WGPUSurfaceDescriptorFromMetalLayer = {
-  name: "WGPUSurfaceDescriptorFromMetalLayer",
+export const SurfaceDescriptorFromMetalLayer = {
+  name: "SurfaceDescriptorFromMetalLayer",
   size: 24,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     layer: {
       offset: 16,
@@ -998,15 +998,15 @@ export const WGPUSurfaceDescriptorFromMetalLayer = {
   },
 } as const;
 
-export const WGPUSurfaceDescriptorFromWaylandSurface = {
-  name: "WGPUSurfaceDescriptorFromWaylandSurface",
+export const SurfaceDescriptorFromWaylandSurface = {
+  name: "SurfaceDescriptorFromWaylandSurface",
   size: 32,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     display: {
       offset: 16,
@@ -1019,15 +1019,15 @@ export const WGPUSurfaceDescriptorFromWaylandSurface = {
   },
 } as const;
 
-export const WGPUSurfaceDescriptorFromWindowsHWND = {
-  name: "WGPUSurfaceDescriptorFromWindowsHWND",
+export const SurfaceDescriptorFromWindowsHWND = {
+  name: "SurfaceDescriptorFromWindowsHWND",
   size: 32,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     hinstance: {
       offset: 16,
@@ -1040,15 +1040,15 @@ export const WGPUSurfaceDescriptorFromWindowsHWND = {
   },
 } as const;
 
-export const WGPUSurfaceDescriptorFromXcbWindow = {
-  name: "WGPUSurfaceDescriptorFromXcbWindow",
+export const SurfaceDescriptorFromXcbWindow = {
+  name: "SurfaceDescriptorFromXcbWindow",
   size: 32,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     connection: {
       offset: 16,
@@ -1061,15 +1061,15 @@ export const WGPUSurfaceDescriptorFromXcbWindow = {
   },
 } as const;
 
-export const WGPUSurfaceDescriptorFromXlibWindow = {
-  name: "WGPUSurfaceDescriptorFromXlibWindow",
+export const SurfaceDescriptorFromXlibWindow = {
+  name: "SurfaceDescriptorFromXlibWindow",
   size: 32,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     display: {
       offset: 16,
@@ -1082,8 +1082,8 @@ export const WGPUSurfaceDescriptorFromXlibWindow = {
   },
 } as const;
 
-export const WGPUSwapChainDescriptor = {
-  name: "WGPUSwapChainDescriptor",
+export const SwapChainDescriptor = {
+  name: "SwapChainDescriptor",
   size: 40,
   fields: {
     nextInChain: {
@@ -1117,8 +1117,8 @@ export const WGPUSwapChainDescriptor = {
   },
 } as const;
 
-export const WGPUTextureBindingLayout = {
-  name: "WGPUTextureBindingLayout",
+export const TextureBindingLayout = {
+  name: "TextureBindingLayout",
   size: 24,
   fields: {
     nextInChain: {
@@ -1140,8 +1140,8 @@ export const WGPUTextureBindingLayout = {
   },
 } as const;
 
-export const WGPUTextureDataLayout = {
-  name: "WGPUTextureDataLayout",
+export const TextureDataLayout = {
+  name: "TextureDataLayout",
   size: 24,
   fields: {
     nextInChain: {
@@ -1163,8 +1163,8 @@ export const WGPUTextureDataLayout = {
   },
 } as const;
 
-export const WGPUTextureViewDescriptor = {
-  name: "WGPUTextureViewDescriptor",
+export const TextureViewDescriptor = {
+  name: "TextureViewDescriptor",
   size: 48,
   fields: {
     nextInChain: {
@@ -1206,8 +1206,8 @@ export const WGPUTextureViewDescriptor = {
   },
 } as const;
 
-export const WGPUVertexAttribute = {
-  name: "WGPUVertexAttribute",
+export const VertexAttribute = {
+  name: "VertexAttribute",
   size: 24,
   fields: {
     format: {
@@ -1225,8 +1225,8 @@ export const WGPUVertexAttribute = {
   },
 } as const;
 
-export const WGPUBindGroupDescriptor = {
-  name: "WGPUBindGroupDescriptor",
+export const BindGroupDescriptor = {
+  name: "BindGroupDescriptor",
   size: 40,
   fields: {
     nextInChain: {
@@ -1252,8 +1252,8 @@ export const WGPUBindGroupDescriptor = {
   },
 } as const;
 
-export const WGPUBindGroupLayoutEntry = {
-  name: "WGPUBindGroupLayoutEntry",
+export const BindGroupLayoutEntry = {
+  name: "BindGroupLayoutEntry",
   size: 104,
   fields: {
     nextInChain: {
@@ -1272,50 +1272,50 @@ export const WGPUBindGroupLayoutEntry = {
       offset: 16,
       kind: "Record",
       size: 24,
-      type: () => WGPUBufferBindingLayout,
+      type: () => BufferBindingLayout,
     },
     sampler: {
       offset: 40,
       kind: "Record",
       size: 16,
-      type: () => WGPUSamplerBindingLayout,
+      type: () => SamplerBindingLayout,
     },
     texture: {
       offset: 56,
       kind: "Record",
       size: 24,
-      type: () => WGPUTextureBindingLayout,
+      type: () => TextureBindingLayout,
     },
     storageTexture: {
       offset: 80,
       kind: "Record",
       size: 24,
-      type: () => WGPUStorageTextureBindingLayout,
+      type: () => StorageTextureBindingLayout,
     },
   },
 } as const;
 
-export const WGPUBlendState = {
-  name: "WGPUBlendState",
+export const BlendState = {
+  name: "BlendState",
   size: 24,
   fields: {
     color: {
       offset: 0,
       kind: "Record",
       size: 12,
-      type: () => WGPUBlendComponent,
+      type: () => BlendComponent,
     },
     alpha: {
       offset: 12,
       kind: "Record",
       size: 12,
-      type: () => WGPUBlendComponent,
+      type: () => BlendComponent,
     },
   },
 } as const;
 
-export const WGPUCompilationInfo = {
-  name: "WGPUCompilationInfo",
+export const CompilationInfo = {
+  name: "CompilationInfo",
   size: 24,
   fields: {
     nextInChain: {
@@ -1333,8 +1333,8 @@ export const WGPUCompilationInfo = {
   },
 } as const;
 
-export const WGPUComputePassDescriptor = {
-  name: "WGPUComputePassDescriptor",
+export const ComputePassDescriptor = {
+  name: "ComputePassDescriptor",
   size: 32,
   fields: {
     nextInChain: {
@@ -1356,8 +1356,8 @@ export const WGPUComputePassDescriptor = {
   },
 } as const;
 
-export const WGPUDepthStencilState = {
-  name: "WGPUDepthStencilState",
+export const DepthStencilState = {
+  name: "DepthStencilState",
   size: 72,
   fields: {
     nextInChain: {
@@ -1380,13 +1380,13 @@ export const WGPUDepthStencilState = {
       offset: 20,
       kind: "Record",
       size: 16,
-      type: () => WGPUStencilFaceState,
+      type: () => StencilFaceState,
     },
     stencilBack: {
       offset: 36,
       kind: "Record",
       size: 16,
-      type: () => WGPUStencilFaceState,
+      type: () => StencilFaceState,
     },
     stencilReadMask: {
       offset: 52,
@@ -1411,8 +1411,8 @@ export const WGPUDepthStencilState = {
   },
 } as const;
 
-export const WGPUImageCopyBuffer = {
-  name: "WGPUImageCopyBuffer",
+export const ImageCopyBuffer = {
+  name: "ImageCopyBuffer",
   size: 40,
   fields: {
     nextInChain: {
@@ -1423,7 +1423,7 @@ export const WGPUImageCopyBuffer = {
       offset: 8,
       kind: "Record",
       size: 24,
-      type: () => WGPUTextureDataLayout,
+      type: () => TextureDataLayout,
     },
     buffer: {
       offset: 32,
@@ -1432,8 +1432,8 @@ export const WGPUImageCopyBuffer = {
   },
 } as const;
 
-export const WGPUImageCopyTexture = {
-  name: "WGPUImageCopyTexture",
+export const ImageCopyTexture = {
+  name: "ImageCopyTexture",
   size: 40,
   fields: {
     nextInChain: {
@@ -1452,7 +1452,7 @@ export const WGPUImageCopyTexture = {
       offset: 20,
       kind: "Record",
       size: 12,
-      type: () => WGPUOrigin3D,
+      type: () => Origin3D,
     },
     aspect: {
       offset: 32,
@@ -1461,8 +1461,8 @@ export const WGPUImageCopyTexture = {
   },
 } as const;
 
-export const WGPUProgrammableStageDescriptor = {
-  name: "WGPUProgrammableStageDescriptor",
+export const ProgrammableStageDescriptor = {
+  name: "ProgrammableStageDescriptor",
   size: 40,
   fields: {
     nextInChain: {
@@ -1488,8 +1488,8 @@ export const WGPUProgrammableStageDescriptor = {
   },
 } as const;
 
-export const WGPURenderPassColorAttachment = {
-  name: "WGPURenderPassColorAttachment",
+export const RenderPassColorAttachment = {
+  name: "RenderPassColorAttachment",
   size: 56,
   fields: {
     view: {
@@ -1512,13 +1512,13 @@ export const WGPURenderPassColorAttachment = {
       offset: 24,
       kind: "Record",
       size: 32,
-      type: () => WGPUColor,
+      type: () => Color,
     },
   },
 } as const;
 
-export const WGPURequiredLimits = {
-  name: "WGPURequiredLimits",
+export const RequiredLimits = {
+  name: "RequiredLimits",
   size: 152,
   fields: {
     nextInChain: {
@@ -1529,13 +1529,13 @@ export const WGPURequiredLimits = {
       offset: 8,
       kind: "Record",
       size: 144,
-      type: () => WGPULimits,
+      type: () => Limits,
     },
   },
 } as const;
 
-export const WGPUShaderModuleDescriptor = {
-  name: "WGPUShaderModuleDescriptor",
+export const ShaderModuleDescriptor = {
+  name: "ShaderModuleDescriptor",
   size: 32,
   fields: {
     nextInChain: {
@@ -1557,8 +1557,8 @@ export const WGPUShaderModuleDescriptor = {
   },
 } as const;
 
-export const WGPUSupportedLimits = {
-  name: "WGPUSupportedLimits",
+export const SupportedLimits = {
+  name: "SupportedLimits",
   size: 152,
   fields: {
     nextInChain: {
@@ -1569,13 +1569,13 @@ export const WGPUSupportedLimits = {
       offset: 8,
       kind: "Record",
       size: 144,
-      type: () => WGPULimits,
+      type: () => Limits,
     },
   },
 } as const;
 
-export const WGPUTextureDescriptor = {
-  name: "WGPUTextureDescriptor",
+export const TextureDescriptor = {
+  name: "TextureDescriptor",
   size: 64,
   fields: {
     nextInChain: {
@@ -1598,7 +1598,7 @@ export const WGPUTextureDescriptor = {
       offset: 24,
       kind: "Record",
       size: 12,
-      type: () => WGPUExtent3D,
+      type: () => Extent3D,
     },
     format: {
       offset: 36,
@@ -1623,8 +1623,8 @@ export const WGPUTextureDescriptor = {
   },
 } as const;
 
-export const WGPUVertexBufferLayout = {
-  name: "WGPUVertexBufferLayout",
+export const VertexBufferLayout = {
+  name: "VertexBufferLayout",
   size: 32,
   fields: {
     arrayStride: {
@@ -1646,8 +1646,8 @@ export const WGPUVertexBufferLayout = {
   },
 } as const;
 
-export const WGPUBindGroupLayoutDescriptor = {
-  name: "WGPUBindGroupLayoutDescriptor",
+export const BindGroupLayoutDescriptor = {
+  name: "BindGroupLayoutDescriptor",
   size: 32,
   fields: {
     nextInChain: {
@@ -1669,8 +1669,8 @@ export const WGPUBindGroupLayoutDescriptor = {
   },
 } as const;
 
-export const WGPUColorTargetState = {
-  name: "WGPUColorTargetState",
+export const ColorTargetState = {
+  name: "ColorTargetState",
   size: 32,
   fields: {
     nextInChain: {
@@ -1692,8 +1692,8 @@ export const WGPUColorTargetState = {
   },
 } as const;
 
-export const WGPUComputePipelineDescriptor = {
-  name: "WGPUComputePipelineDescriptor",
+export const ComputePipelineDescriptor = {
+  name: "ComputePipelineDescriptor",
   size: 64,
   fields: {
     nextInChain: {
@@ -1712,13 +1712,13 @@ export const WGPUComputePipelineDescriptor = {
       offset: 24,
       kind: "Record",
       size: 40,
-      type: () => WGPUProgrammableStageDescriptor,
+      type: () => ProgrammableStageDescriptor,
     },
   },
 } as const;
 
-export const WGPUDeviceDescriptor = {
-  name: "WGPUDeviceDescriptor",
+export const DeviceDescriptor = {
+  name: "DeviceDescriptor",
   size: 72,
   fields: {
     nextInChain: {
@@ -1745,7 +1745,7 @@ export const WGPUDeviceDescriptor = {
       offset: 40,
       kind: "Record",
       size: 16,
-      type: () => WGPUQueueDescriptor,
+      type: () => QueueDescriptor,
     },
     deviceLostCallback: {
       offset: 56,
@@ -1758,8 +1758,8 @@ export const WGPUDeviceDescriptor = {
   },
 } as const;
 
-export const WGPURenderPassDescriptor = {
-  name: "WGPURenderPassDescriptor",
+export const RenderPassDescriptor = {
+  name: "RenderPassDescriptor",
   size: 64,
   fields: {
     nextInChain: {
@@ -1797,8 +1797,8 @@ export const WGPURenderPassDescriptor = {
   },
 } as const;
 
-export const WGPUVertexState = {
-  name: "WGPUVertexState",
+export const VertexState = {
+  name: "VertexState",
   size: 56,
   fields: {
     nextInChain: {
@@ -1832,8 +1832,8 @@ export const WGPUVertexState = {
   },
 } as const;
 
-export const WGPUFragmentState = {
-  name: "WGPUFragmentState",
+export const FragmentState = {
+  name: "FragmentState",
   size: 56,
   fields: {
     nextInChain: {
@@ -1867,8 +1867,8 @@ export const WGPUFragmentState = {
   },
 } as const;
 
-export const WGPURenderPipelineDescriptor = {
-  name: "WGPURenderPipelineDescriptor",
+export const RenderPipelineDescriptor = {
+  name: "RenderPipelineDescriptor",
   size: 144,
   fields: {
     nextInChain: {
@@ -1887,13 +1887,13 @@ export const WGPURenderPipelineDescriptor = {
       offset: 24,
       kind: "Record",
       size: 56,
-      type: () => WGPUVertexState,
+      type: () => VertexState,
     },
     primitive: {
       offset: 80,
       kind: "Record",
       size: 24,
-      type: () => WGPUPrimitiveState,
+      type: () => PrimitiveState,
     },
     depthStencil: {
       offset: 104,
@@ -1903,7 +1903,7 @@ export const WGPURenderPipelineDescriptor = {
       offset: 112,
       kind: "Record",
       size: 24,
-      type: () => WGPUMultisampleState,
+      type: () => MultisampleState,
     },
     fragment: {
       offset: 136,
@@ -1912,8 +1912,8 @@ export const WGPURenderPipelineDescriptor = {
   },
 } as const;
 
-export const WGPUChainedStruct = {
-  name: "WGPUChainedStruct",
+export const ChainedStruct = {
+  name: "ChainedStruct",
   size: 16,
   fields: {
     next: {
@@ -1927,8 +1927,8 @@ export const WGPUChainedStruct = {
   },
 } as const;
 
-export const WGPUChainedStructOut = {
-  name: "WGPUChainedStructOut",
+export const ChainedStructOut = {
+  name: "ChainedStructOut",
   size: 16,
   fields: {
     next: {
@@ -1942,15 +1942,15 @@ export const WGPUChainedStructOut = {
   },
 } as const;
 
-export const WGPUInstanceExtras = {
-  name: "WGPUInstanceExtras",
+export const InstanceExtras = {
+  name: "InstanceExtras",
   size: 40,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     backends: {
       offset: 16,
@@ -1971,15 +1971,15 @@ export const WGPUInstanceExtras = {
   },
 } as const;
 
-export const WGPUDeviceExtras = {
-  name: "WGPUDeviceExtras",
+export const DeviceExtras = {
+  name: "DeviceExtras",
   size: 24,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     tracePath: {
       offset: 16,
@@ -1988,15 +1988,15 @@ export const WGPUDeviceExtras = {
   },
 } as const;
 
-export const WGPURequiredLimitsExtras = {
-  name: "WGPURequiredLimitsExtras",
+export const RequiredLimitsExtras = {
+  name: "RequiredLimitsExtras",
   size: 24,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     maxPushConstantSize: {
       offset: 16,
@@ -2005,15 +2005,15 @@ export const WGPURequiredLimitsExtras = {
   },
 } as const;
 
-export const WGPUSupportedLimitsExtras = {
-  name: "WGPUSupportedLimitsExtras",
+export const SupportedLimitsExtras = {
+  name: "SupportedLimitsExtras",
   size: 24,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStructOut,
+      type: () => ChainedStructOut,
     },
     maxPushConstantSize: {
       offset: 16,
@@ -2022,8 +2022,8 @@ export const WGPUSupportedLimitsExtras = {
   },
 } as const;
 
-export const WGPUPushConstantRange = {
-  name: "WGPUPushConstantRange",
+export const PushConstantRange = {
+  name: "PushConstantRange",
   size: 12,
   fields: {
     stages: {
@@ -2041,15 +2041,15 @@ export const WGPUPushConstantRange = {
   },
 } as const;
 
-export const WGPUPipelineLayoutExtras = {
-  name: "WGPUPipelineLayoutExtras",
+export const PipelineLayoutExtras = {
+  name: "PipelineLayoutExtras",
   size: 32,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     pushConstantRangeCount: {
       offset: 16,
@@ -2062,8 +2062,8 @@ export const WGPUPipelineLayoutExtras = {
   },
 } as const;
 
-export const WGPUWrappedSubmissionIndex = {
-  name: "WGPUWrappedSubmissionIndex",
+export const WrappedSubmissionIndex = {
+  name: "WrappedSubmissionIndex",
   size: 16,
   fields: {
     queue: {
@@ -2077,8 +2077,8 @@ export const WGPUWrappedSubmissionIndex = {
   },
 } as const;
 
-export const WGPUShaderDefine = {
-  name: "WGPUShaderDefine",
+export const ShaderDefine = {
+  name: "ShaderDefine",
   size: 16,
   fields: {
     name: {
@@ -2092,15 +2092,15 @@ export const WGPUShaderDefine = {
   },
 } as const;
 
-export const WGPUShaderModuleGLSLDescriptor = {
-  name: "WGPUShaderModuleGLSLDescriptor",
+export const ShaderModuleGLSLDescriptor = {
+  name: "ShaderModuleGLSLDescriptor",
   size: 48,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     stage: {
       offset: 16,
@@ -2121,8 +2121,8 @@ export const WGPUShaderModuleGLSLDescriptor = {
   },
 } as const;
 
-export const WGPUStorageReport = {
-  name: "WGPUStorageReport",
+export const StorageReport = {
+  name: "StorageReport",
   size: 32,
   fields: {
     numOccupied: {
@@ -2144,112 +2144,112 @@ export const WGPUStorageReport = {
   },
 } as const;
 
-export const WGPUHubReport = {
-  name: "WGPUHubReport",
+export const HubReport = {
+  name: "HubReport",
   size: 480,
   fields: {
     adapters: {
       offset: 0,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     devices: {
       offset: 32,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     pipelineLayouts: {
       offset: 64,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     shaderModules: {
       offset: 96,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     bindGroupLayouts: {
       offset: 128,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     bindGroups: {
       offset: 160,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     commandBuffers: {
       offset: 192,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     renderBundles: {
       offset: 224,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     renderPipelines: {
       offset: 256,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     computePipelines: {
       offset: 288,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     querySets: {
       offset: 320,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     buffers: {
       offset: 352,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     textures: {
       offset: 384,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     textureViews: {
       offset: 416,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     samplers: {
       offset: 448,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
   },
 } as const;
 
-export const WGPUGlobalReport = {
-  name: "WGPUGlobalReport",
+export const GlobalReport = {
+  name: "GlobalReport",
   size: 2440,
   fields: {
     surfaces: {
       offset: 0,
       kind: "Record",
       size: 32,
-      type: () => WGPUStorageReport,
+      type: () => StorageReport,
     },
     backendType: {
       offset: 32,
@@ -2259,37 +2259,37 @@ export const WGPUGlobalReport = {
       offset: 40,
       kind: "Record",
       size: 480,
-      type: () => WGPUHubReport,
+      type: () => HubReport,
     },
     metal: {
       offset: 520,
       kind: "Record",
       size: 480,
-      type: () => WGPUHubReport,
+      type: () => HubReport,
     },
     dx12: {
       offset: 1000,
       kind: "Record",
       size: 480,
-      type: () => WGPUHubReport,
+      type: () => HubReport,
     },
     dx11: {
       offset: 1480,
       kind: "Record",
       size: 480,
-      type: () => WGPUHubReport,
+      type: () => HubReport,
     },
     gl: {
       offset: 1960,
       kind: "Record",
       size: 480,
-      type: () => WGPUHubReport,
+      type: () => HubReport,
     },
   },
 } as const;
 
-export const WGPUSurfaceCapabilities = {
-  name: "WGPUSurfaceCapabilities",
+export const SurfaceCapabilities = {
+  name: "SurfaceCapabilities",
   size: 48,
   fields: {
     formatCount: {
@@ -2319,15 +2319,15 @@ export const WGPUSurfaceCapabilities = {
   },
 } as const;
 
-export const WGPUSwapChainDescriptorExtras = {
-  name: "WGPUSwapChainDescriptorExtras",
+export const SwapChainDescriptorExtras = {
+  name: "SwapChainDescriptorExtras",
   size: 40,
   fields: {
     chain: {
       offset: 0,
       kind: "Record",
       size: 16,
-      type: () => WGPUChainedStruct,
+      type: () => ChainedStruct,
     },
     alphaMode: {
       offset: 16,
@@ -2344,8 +2344,8 @@ export const WGPUSwapChainDescriptorExtras = {
   },
 } as const;
 
-export const WGPUInstanceEnumerateAdapterOptions = {
-  name: "WGPUInstanceEnumerateAdapterOptions",
+export const InstanceEnumerateAdapterOptions = {
+  name: "InstanceEnumerateAdapterOptions",
   size: 16,
   fields: {
     nextInChain: {

@@ -1,13 +1,13 @@
 import { lib } from "./lib.js";
 
-export const wgpuCreateInstance = (
+export const createInstance = (
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
   lib.symbols.wgpuCreateInstance(
     descriptor,
   );
 
-export const wgpuGetProcAddress = (
+export const getProcAddress = (
   device: Deno.PointerValue,
   procName: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -16,7 +16,7 @@ export const wgpuGetProcAddress = (
     procName,
   );
 
-export const wgpuAdapterEnumerateFeatures = (
+export const adapterEnumerateFeatures = (
   adapter: Deno.PointerValue,
   features: Deno.PointerValue,
 ): number | bigint =>
@@ -25,7 +25,7 @@ export const wgpuAdapterEnumerateFeatures = (
     features,
   );
 
-export const wgpuAdapterGetLimits = (
+export const adapterGetLimits = (
   adapter: Deno.PointerValue,
   limits: Deno.PointerValue,
 ): boolean =>
@@ -34,7 +34,7 @@ export const wgpuAdapterGetLimits = (
     limits,
   ) == 1;
 
-export const wgpuAdapterGetProperties = (
+export const adapterGetProperties = (
   adapter: Deno.PointerValue,
   properties: Deno.PointerValue,
 ): void =>
@@ -43,7 +43,7 @@ export const wgpuAdapterGetProperties = (
     properties,
   );
 
-export const wgpuAdapterHasFeature = (
+export const adapterHasFeature = (
   adapter: Deno.PointerValue,
   feature: number,
 ): boolean =>
@@ -52,7 +52,7 @@ export const wgpuAdapterHasFeature = (
     feature,
   ) == 1;
 
-export const wgpuAdapterRequestDevice = (
+export const adapterRequestDevice = (
   adapter: Deno.PointerValue,
   descriptor: Deno.PointerValue,
   callback: Deno.PointerValue,
@@ -65,21 +65,21 @@ export const wgpuAdapterRequestDevice = (
     userdata,
   );
 
-export const wgpuAdapterReference = (
+export const adapterReference = (
   adapter: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuAdapterReference(
     adapter,
   );
 
-export const wgpuAdapterRelease = (
+export const adapterRelease = (
   adapter: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuAdapterRelease(
     adapter,
   );
 
-export const wgpuBindGroupSetLabel = (
+export const bindGroupSetLabel = (
   bindGroup: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -88,21 +88,21 @@ export const wgpuBindGroupSetLabel = (
     label,
   );
 
-export const wgpuBindGroupReference = (
+export const bindGroupReference = (
   bindGroup: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuBindGroupReference(
     bindGroup,
   );
 
-export const wgpuBindGroupRelease = (
+export const bindGroupRelease = (
   bindGroup: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuBindGroupRelease(
     bindGroup,
   );
 
-export const wgpuBindGroupLayoutSetLabel = (
+export const bindGroupLayoutSetLabel = (
   bindGroupLayout: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -111,28 +111,28 @@ export const wgpuBindGroupLayoutSetLabel = (
     label,
   );
 
-export const wgpuBindGroupLayoutReference = (
+export const bindGroupLayoutReference = (
   bindGroupLayout: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuBindGroupLayoutReference(
     bindGroupLayout,
   );
 
-export const wgpuBindGroupLayoutRelease = (
+export const bindGroupLayoutRelease = (
   bindGroupLayout: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuBindGroupLayoutRelease(
     bindGroupLayout,
   );
 
-export const wgpuBufferDestroy = (
+export const bufferDestroy = (
   buffer: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuBufferDestroy(
     buffer,
   );
 
-export const wgpuBufferGetConstMappedRange = (
+export const bufferGetConstMappedRange = (
   buffer: Deno.PointerValue,
   offset: number | bigint,
   size: number | bigint,
@@ -143,14 +143,14 @@ export const wgpuBufferGetConstMappedRange = (
     size,
   );
 
-export const wgpuBufferGetMapState = (
+export const bufferGetMapState = (
   buffer: Deno.PointerValue,
 ): number =>
   lib.symbols.wgpuBufferGetMapState(
     buffer,
   );
 
-export const wgpuBufferGetMappedRange = (
+export const bufferGetMappedRange = (
   buffer: Deno.PointerValue,
   offset: number | bigint,
   size: number | bigint,
@@ -161,21 +161,21 @@ export const wgpuBufferGetMappedRange = (
     size,
   );
 
-export const wgpuBufferGetSize = (
+export const bufferGetSize = (
   buffer: Deno.PointerValue,
 ): number | bigint =>
   lib.symbols.wgpuBufferGetSize(
     buffer,
   );
 
-export const wgpuBufferGetUsage = (
+export const bufferGetUsage = (
   buffer: Deno.PointerValue,
 ): number =>
   lib.symbols.wgpuBufferGetUsage(
     buffer,
   );
 
-export const wgpuBufferMapAsync = (
+export const bufferMapAsync = (
   buffer: Deno.PointerValue,
   mode: number,
   offset: number | bigint,
@@ -192,7 +192,7 @@ export const wgpuBufferMapAsync = (
     userdata,
   );
 
-export const wgpuBufferSetLabel = (
+export const bufferSetLabel = (
   buffer: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -201,28 +201,28 @@ export const wgpuBufferSetLabel = (
     label,
   );
 
-export const wgpuBufferUnmap = (
+export const bufferUnmap = (
   buffer: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuBufferUnmap(
     buffer,
   );
 
-export const wgpuBufferReference = (
+export const bufferReference = (
   buffer: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuBufferReference(
     buffer,
   );
 
-export const wgpuBufferRelease = (
+export const bufferRelease = (
   buffer: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuBufferRelease(
     buffer,
   );
 
-export const wgpuCommandBufferSetLabel = (
+export const commandBufferSetLabel = (
   commandBuffer: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -231,21 +231,21 @@ export const wgpuCommandBufferSetLabel = (
     label,
   );
 
-export const wgpuCommandBufferReference = (
+export const commandBufferReference = (
   commandBuffer: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuCommandBufferReference(
     commandBuffer,
   );
 
-export const wgpuCommandBufferRelease = (
+export const commandBufferRelease = (
   commandBuffer: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuCommandBufferRelease(
     commandBuffer,
   );
 
-export const wgpuCommandEncoderBeginComputePass = (
+export const commandEncoderBeginComputePass = (
   commandEncoder: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -254,7 +254,7 @@ export const wgpuCommandEncoderBeginComputePass = (
     descriptor,
   );
 
-export const wgpuCommandEncoderBeginRenderPass = (
+export const commandEncoderBeginRenderPass = (
   commandEncoder: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -263,7 +263,7 @@ export const wgpuCommandEncoderBeginRenderPass = (
     descriptor,
   );
 
-export const wgpuCommandEncoderClearBuffer = (
+export const commandEncoderClearBuffer = (
   commandEncoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
   offset: number | bigint,
@@ -276,7 +276,7 @@ export const wgpuCommandEncoderClearBuffer = (
     size,
   );
 
-export const wgpuCommandEncoderCopyBufferToBuffer = (
+export const commandEncoderCopyBufferToBuffer = (
   commandEncoder: Deno.PointerValue,
   source: Deno.PointerValue,
   sourceOffset: number | bigint,
@@ -293,7 +293,7 @@ export const wgpuCommandEncoderCopyBufferToBuffer = (
     size,
   );
 
-export const wgpuCommandEncoderCopyBufferToTexture = (
+export const commandEncoderCopyBufferToTexture = (
   commandEncoder: Deno.PointerValue,
   source: Deno.PointerValue,
   destination: Deno.PointerValue,
@@ -306,7 +306,7 @@ export const wgpuCommandEncoderCopyBufferToTexture = (
     copySize,
   );
 
-export const wgpuCommandEncoderCopyTextureToBuffer = (
+export const commandEncoderCopyTextureToBuffer = (
   commandEncoder: Deno.PointerValue,
   source: Deno.PointerValue,
   destination: Deno.PointerValue,
@@ -319,7 +319,7 @@ export const wgpuCommandEncoderCopyTextureToBuffer = (
     copySize,
   );
 
-export const wgpuCommandEncoderCopyTextureToTexture = (
+export const commandEncoderCopyTextureToTexture = (
   commandEncoder: Deno.PointerValue,
   source: Deno.PointerValue,
   destination: Deno.PointerValue,
@@ -332,7 +332,7 @@ export const wgpuCommandEncoderCopyTextureToTexture = (
     copySize,
   );
 
-export const wgpuCommandEncoderFinish = (
+export const commandEncoderFinish = (
   commandEncoder: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -341,7 +341,7 @@ export const wgpuCommandEncoderFinish = (
     descriptor,
   );
 
-export const wgpuCommandEncoderInsertDebugMarker = (
+export const commandEncoderInsertDebugMarker = (
   commandEncoder: Deno.PointerValue,
   markerLabel: Deno.PointerValue,
 ): void =>
@@ -350,14 +350,14 @@ export const wgpuCommandEncoderInsertDebugMarker = (
     markerLabel,
   );
 
-export const wgpuCommandEncoderPopDebugGroup = (
+export const commandEncoderPopDebugGroup = (
   commandEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuCommandEncoderPopDebugGroup(
     commandEncoder,
   );
 
-export const wgpuCommandEncoderPushDebugGroup = (
+export const commandEncoderPushDebugGroup = (
   commandEncoder: Deno.PointerValue,
   groupLabel: Deno.PointerValue,
 ): void =>
@@ -366,7 +366,7 @@ export const wgpuCommandEncoderPushDebugGroup = (
     groupLabel,
   );
 
-export const wgpuCommandEncoderResolveQuerySet = (
+export const commandEncoderResolveQuerySet = (
   commandEncoder: Deno.PointerValue,
   querySet: Deno.PointerValue,
   firstQuery: number,
@@ -383,7 +383,7 @@ export const wgpuCommandEncoderResolveQuerySet = (
     destinationOffset,
   );
 
-export const wgpuCommandEncoderSetLabel = (
+export const commandEncoderSetLabel = (
   commandEncoder: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -392,7 +392,7 @@ export const wgpuCommandEncoderSetLabel = (
     label,
   );
 
-export const wgpuCommandEncoderWriteTimestamp = (
+export const commandEncoderWriteTimestamp = (
   commandEncoder: Deno.PointerValue,
   querySet: Deno.PointerValue,
   queryIndex: number,
@@ -403,21 +403,21 @@ export const wgpuCommandEncoderWriteTimestamp = (
     queryIndex,
   );
 
-export const wgpuCommandEncoderReference = (
+export const commandEncoderReference = (
   commandEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuCommandEncoderReference(
     commandEncoder,
   );
 
-export const wgpuCommandEncoderRelease = (
+export const commandEncoderRelease = (
   commandEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuCommandEncoderRelease(
     commandEncoder,
   );
 
-export const wgpuComputePassEncoderBeginPipelineStatisticsQuery = (
+export const computePassEncoderBeginPipelineStatisticsQuery = (
   computePassEncoder: Deno.PointerValue,
   querySet: Deno.PointerValue,
   queryIndex: number,
@@ -428,7 +428,7 @@ export const wgpuComputePassEncoderBeginPipelineStatisticsQuery = (
     queryIndex,
   );
 
-export const wgpuComputePassEncoderDispatchWorkgroups = (
+export const computePassEncoderDispatchWorkgroups = (
   computePassEncoder: Deno.PointerValue,
   workgroupCountX: number,
   workgroupCountY: number,
@@ -441,7 +441,7 @@ export const wgpuComputePassEncoderDispatchWorkgroups = (
     workgroupCountZ,
   );
 
-export const wgpuComputePassEncoderDispatchWorkgroupsIndirect = (
+export const computePassEncoderDispatchWorkgroupsIndirect = (
   computePassEncoder: Deno.PointerValue,
   indirectBuffer: Deno.PointerValue,
   indirectOffset: number | bigint,
@@ -452,21 +452,21 @@ export const wgpuComputePassEncoderDispatchWorkgroupsIndirect = (
     indirectOffset,
   );
 
-export const wgpuComputePassEncoderEnd = (
+export const computePassEncoderEnd = (
   computePassEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuComputePassEncoderEnd(
     computePassEncoder,
   );
 
-export const wgpuComputePassEncoderEndPipelineStatisticsQuery = (
+export const computePassEncoderEndPipelineStatisticsQuery = (
   computePassEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuComputePassEncoderEndPipelineStatisticsQuery(
     computePassEncoder,
   );
 
-export const wgpuComputePassEncoderInsertDebugMarker = (
+export const computePassEncoderInsertDebugMarker = (
   computePassEncoder: Deno.PointerValue,
   markerLabel: Deno.PointerValue,
 ): void =>
@@ -475,14 +475,14 @@ export const wgpuComputePassEncoderInsertDebugMarker = (
     markerLabel,
   );
 
-export const wgpuComputePassEncoderPopDebugGroup = (
+export const computePassEncoderPopDebugGroup = (
   computePassEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuComputePassEncoderPopDebugGroup(
     computePassEncoder,
   );
 
-export const wgpuComputePassEncoderPushDebugGroup = (
+export const computePassEncoderPushDebugGroup = (
   computePassEncoder: Deno.PointerValue,
   groupLabel: Deno.PointerValue,
 ): void =>
@@ -491,7 +491,7 @@ export const wgpuComputePassEncoderPushDebugGroup = (
     groupLabel,
   );
 
-export const wgpuComputePassEncoderSetBindGroup = (
+export const computePassEncoderSetBindGroup = (
   computePassEncoder: Deno.PointerValue,
   groupIndex: number,
   group: Deno.PointerValue,
@@ -506,7 +506,7 @@ export const wgpuComputePassEncoderSetBindGroup = (
     dynamicOffsets,
   );
 
-export const wgpuComputePassEncoderSetLabel = (
+export const computePassEncoderSetLabel = (
   computePassEncoder: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -515,7 +515,7 @@ export const wgpuComputePassEncoderSetLabel = (
     label,
   );
 
-export const wgpuComputePassEncoderSetPipeline = (
+export const computePassEncoderSetPipeline = (
   computePassEncoder: Deno.PointerValue,
   pipeline: Deno.PointerValue,
 ): void =>
@@ -524,21 +524,21 @@ export const wgpuComputePassEncoderSetPipeline = (
     pipeline,
   );
 
-export const wgpuComputePassEncoderReference = (
+export const computePassEncoderReference = (
   computePassEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuComputePassEncoderReference(
     computePassEncoder,
   );
 
-export const wgpuComputePassEncoderRelease = (
+export const computePassEncoderRelease = (
   computePassEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuComputePassEncoderRelease(
     computePassEncoder,
   );
 
-export const wgpuComputePipelineGetBindGroupLayout = (
+export const computePipelineGetBindGroupLayout = (
   computePipeline: Deno.PointerValue,
   groupIndex: number,
 ): Deno.PointerValue =>
@@ -547,7 +547,7 @@ export const wgpuComputePipelineGetBindGroupLayout = (
     groupIndex,
   );
 
-export const wgpuComputePipelineSetLabel = (
+export const computePipelineSetLabel = (
   computePipeline: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -556,21 +556,21 @@ export const wgpuComputePipelineSetLabel = (
     label,
   );
 
-export const wgpuComputePipelineReference = (
+export const computePipelineReference = (
   computePipeline: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuComputePipelineReference(
     computePipeline,
   );
 
-export const wgpuComputePipelineRelease = (
+export const computePipelineRelease = (
   computePipeline: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuComputePipelineRelease(
     computePipeline,
   );
 
-export const wgpuDeviceCreateBindGroup = (
+export const deviceCreateBindGroup = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -579,7 +579,7 @@ export const wgpuDeviceCreateBindGroup = (
     descriptor,
   );
 
-export const wgpuDeviceCreateBindGroupLayout = (
+export const deviceCreateBindGroupLayout = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -588,7 +588,7 @@ export const wgpuDeviceCreateBindGroupLayout = (
     descriptor,
   );
 
-export const wgpuDeviceCreateBuffer = (
+export const deviceCreateBuffer = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -597,7 +597,7 @@ export const wgpuDeviceCreateBuffer = (
     descriptor,
   );
 
-export const wgpuDeviceCreateCommandEncoder = (
+export const deviceCreateCommandEncoder = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -606,7 +606,7 @@ export const wgpuDeviceCreateCommandEncoder = (
     descriptor,
   );
 
-export const wgpuDeviceCreateComputePipeline = (
+export const deviceCreateComputePipeline = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -615,7 +615,7 @@ export const wgpuDeviceCreateComputePipeline = (
     descriptor,
   );
 
-export const wgpuDeviceCreateComputePipelineAsync = (
+export const deviceCreateComputePipelineAsync = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
   callback: Deno.PointerValue,
@@ -628,7 +628,7 @@ export const wgpuDeviceCreateComputePipelineAsync = (
     userdata,
   );
 
-export const wgpuDeviceCreatePipelineLayout = (
+export const deviceCreatePipelineLayout = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -637,7 +637,7 @@ export const wgpuDeviceCreatePipelineLayout = (
     descriptor,
   );
 
-export const wgpuDeviceCreateQuerySet = (
+export const deviceCreateQuerySet = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -646,7 +646,7 @@ export const wgpuDeviceCreateQuerySet = (
     descriptor,
   );
 
-export const wgpuDeviceCreateRenderBundleEncoder = (
+export const deviceCreateRenderBundleEncoder = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -655,7 +655,7 @@ export const wgpuDeviceCreateRenderBundleEncoder = (
     descriptor,
   );
 
-export const wgpuDeviceCreateRenderPipeline = (
+export const deviceCreateRenderPipeline = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -664,7 +664,7 @@ export const wgpuDeviceCreateRenderPipeline = (
     descriptor,
   );
 
-export const wgpuDeviceCreateRenderPipelineAsync = (
+export const deviceCreateRenderPipelineAsync = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
   callback: Deno.PointerValue,
@@ -677,7 +677,7 @@ export const wgpuDeviceCreateRenderPipelineAsync = (
     userdata,
   );
 
-export const wgpuDeviceCreateSampler = (
+export const deviceCreateSampler = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -686,7 +686,7 @@ export const wgpuDeviceCreateSampler = (
     descriptor,
   );
 
-export const wgpuDeviceCreateShaderModule = (
+export const deviceCreateShaderModule = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -695,7 +695,7 @@ export const wgpuDeviceCreateShaderModule = (
     descriptor,
   );
 
-export const wgpuDeviceCreateSwapChain = (
+export const deviceCreateSwapChain = (
   device: Deno.PointerValue,
   surface: Deno.PointerValue,
   descriptor: Deno.PointerValue,
@@ -706,7 +706,7 @@ export const wgpuDeviceCreateSwapChain = (
     descriptor,
   );
 
-export const wgpuDeviceCreateTexture = (
+export const deviceCreateTexture = (
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -715,14 +715,14 @@ export const wgpuDeviceCreateTexture = (
     descriptor,
   );
 
-export const wgpuDeviceDestroy = (
+export const deviceDestroy = (
   device: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuDeviceDestroy(
     device,
   );
 
-export const wgpuDeviceEnumerateFeatures = (
+export const deviceEnumerateFeatures = (
   device: Deno.PointerValue,
   features: Deno.PointerValue,
 ): number | bigint =>
@@ -731,7 +731,7 @@ export const wgpuDeviceEnumerateFeatures = (
     features,
   );
 
-export const wgpuDeviceGetLimits = (
+export const deviceGetLimits = (
   device: Deno.PointerValue,
   limits: Deno.PointerValue,
 ): boolean =>
@@ -740,14 +740,14 @@ export const wgpuDeviceGetLimits = (
     limits,
   ) == 1;
 
-export const wgpuDeviceGetQueue = (
+export const deviceGetQueue = (
   device: Deno.PointerValue,
 ): Deno.PointerValue =>
   lib.symbols.wgpuDeviceGetQueue(
     device,
   );
 
-export const wgpuDeviceHasFeature = (
+export const deviceHasFeature = (
   device: Deno.PointerValue,
   feature: number,
 ): boolean =>
@@ -756,7 +756,7 @@ export const wgpuDeviceHasFeature = (
     feature,
   ) == 1;
 
-export const wgpuDevicePopErrorScope = (
+export const devicePopErrorScope = (
   device: Deno.PointerValue,
   callback: Deno.PointerValue,
   userdata: Deno.PointerValue,
@@ -767,7 +767,7 @@ export const wgpuDevicePopErrorScope = (
     userdata,
   );
 
-export const wgpuDevicePushErrorScope = (
+export const devicePushErrorScope = (
   device: Deno.PointerValue,
   filter: number,
 ): void =>
@@ -776,7 +776,7 @@ export const wgpuDevicePushErrorScope = (
     filter,
   );
 
-export const wgpuDeviceSetLabel = (
+export const deviceSetLabel = (
   device: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -785,7 +785,7 @@ export const wgpuDeviceSetLabel = (
     label,
   );
 
-export const wgpuDeviceSetUncapturedErrorCallback = (
+export const deviceSetUncapturedErrorCallback = (
   device: Deno.PointerValue,
   callback: Deno.PointerValue,
   userdata: Deno.PointerValue,
@@ -796,21 +796,21 @@ export const wgpuDeviceSetUncapturedErrorCallback = (
     userdata,
   );
 
-export const wgpuDeviceReference = (
+export const deviceReference = (
   device: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuDeviceReference(
     device,
   );
 
-export const wgpuDeviceRelease = (
+export const deviceRelease = (
   device: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuDeviceRelease(
     device,
   );
 
-export const wgpuInstanceCreateSurface = (
+export const instanceCreateSurface = (
   instance: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -819,14 +819,14 @@ export const wgpuInstanceCreateSurface = (
     descriptor,
   );
 
-export const wgpuInstanceProcessEvents = (
+export const instanceProcessEvents = (
   instance: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuInstanceProcessEvents(
     instance,
   );
 
-export const wgpuInstanceRequestAdapter = (
+export const instanceRequestAdapter = (
   instance: Deno.PointerValue,
   options: Deno.PointerValue,
   callback: Deno.PointerValue,
@@ -839,21 +839,21 @@ export const wgpuInstanceRequestAdapter = (
     userdata,
   );
 
-export const wgpuInstanceReference = (
+export const instanceReference = (
   instance: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuInstanceReference(
     instance,
   );
 
-export const wgpuInstanceRelease = (
+export const instanceRelease = (
   instance: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuInstanceRelease(
     instance,
   );
 
-export const wgpuPipelineLayoutSetLabel = (
+export const pipelineLayoutSetLabel = (
   pipelineLayout: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -862,42 +862,42 @@ export const wgpuPipelineLayoutSetLabel = (
     label,
   );
 
-export const wgpuPipelineLayoutReference = (
+export const pipelineLayoutReference = (
   pipelineLayout: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuPipelineLayoutReference(
     pipelineLayout,
   );
 
-export const wgpuPipelineLayoutRelease = (
+export const pipelineLayoutRelease = (
   pipelineLayout: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuPipelineLayoutRelease(
     pipelineLayout,
   );
 
-export const wgpuQuerySetDestroy = (
+export const querySetDestroy = (
   querySet: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuQuerySetDestroy(
     querySet,
   );
 
-export const wgpuQuerySetGetCount = (
+export const querySetGetCount = (
   querySet: Deno.PointerValue,
 ): number =>
   lib.symbols.wgpuQuerySetGetCount(
     querySet,
   );
 
-export const wgpuQuerySetGetType = (
+export const querySetGetType = (
   querySet: Deno.PointerValue,
 ): number =>
   lib.symbols.wgpuQuerySetGetType(
     querySet,
   );
 
-export const wgpuQuerySetSetLabel = (
+export const querySetSetLabel = (
   querySet: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -906,21 +906,21 @@ export const wgpuQuerySetSetLabel = (
     label,
   );
 
-export const wgpuQuerySetReference = (
+export const querySetReference = (
   querySet: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuQuerySetReference(
     querySet,
   );
 
-export const wgpuQuerySetRelease = (
+export const querySetRelease = (
   querySet: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuQuerySetRelease(
     querySet,
   );
 
-export const wgpuQueueOnSubmittedWorkDone = (
+export const queueOnSubmittedWorkDone = (
   queue: Deno.PointerValue,
   callback: Deno.PointerValue,
   userdata: Deno.PointerValue,
@@ -931,7 +931,7 @@ export const wgpuQueueOnSubmittedWorkDone = (
     userdata,
   );
 
-export const wgpuQueueSetLabel = (
+export const queueSetLabel = (
   queue: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -940,7 +940,7 @@ export const wgpuQueueSetLabel = (
     label,
   );
 
-export const wgpuQueueSubmit = (
+export const queueSubmit = (
   queue: Deno.PointerValue,
   commandCount: number | bigint,
   commands: Deno.PointerValue,
@@ -951,7 +951,7 @@ export const wgpuQueueSubmit = (
     commands,
   );
 
-export const wgpuQueueWriteBuffer = (
+export const queueWriteBuffer = (
   queue: Deno.PointerValue,
   buffer: Deno.PointerValue,
   bufferOffset: number | bigint,
@@ -966,7 +966,7 @@ export const wgpuQueueWriteBuffer = (
     size,
   );
 
-export const wgpuQueueWriteTexture = (
+export const queueWriteTexture = (
   queue: Deno.PointerValue,
   destination: Deno.PointerValue,
   data: Deno.PointerValue,
@@ -983,21 +983,21 @@ export const wgpuQueueWriteTexture = (
     writeSize,
   );
 
-export const wgpuQueueReference = (
+export const queueReference = (
   queue: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuQueueReference(
     queue,
   );
 
-export const wgpuQueueRelease = (
+export const queueRelease = (
   queue: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuQueueRelease(
     queue,
   );
 
-export const wgpuRenderBundleSetLabel = (
+export const renderBundleSetLabel = (
   renderBundle: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -1006,21 +1006,21 @@ export const wgpuRenderBundleSetLabel = (
     label,
   );
 
-export const wgpuRenderBundleReference = (
+export const renderBundleReference = (
   renderBundle: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderBundleReference(
     renderBundle,
   );
 
-export const wgpuRenderBundleRelease = (
+export const renderBundleRelease = (
   renderBundle: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderBundleRelease(
     renderBundle,
   );
 
-export const wgpuRenderBundleEncoderDraw = (
+export const renderBundleEncoderDraw = (
   renderBundleEncoder: Deno.PointerValue,
   vertexCount: number,
   instanceCount: number,
@@ -1035,7 +1035,7 @@ export const wgpuRenderBundleEncoderDraw = (
     firstInstance,
   );
 
-export const wgpuRenderBundleEncoderDrawIndexed = (
+export const renderBundleEncoderDrawIndexed = (
   renderBundleEncoder: Deno.PointerValue,
   indexCount: number,
   instanceCount: number,
@@ -1052,7 +1052,7 @@ export const wgpuRenderBundleEncoderDrawIndexed = (
     firstInstance,
   );
 
-export const wgpuRenderBundleEncoderDrawIndexedIndirect = (
+export const renderBundleEncoderDrawIndexedIndirect = (
   renderBundleEncoder: Deno.PointerValue,
   indirectBuffer: Deno.PointerValue,
   indirectOffset: number | bigint,
@@ -1063,7 +1063,7 @@ export const wgpuRenderBundleEncoderDrawIndexedIndirect = (
     indirectOffset,
   );
 
-export const wgpuRenderBundleEncoderDrawIndirect = (
+export const renderBundleEncoderDrawIndirect = (
   renderBundleEncoder: Deno.PointerValue,
   indirectBuffer: Deno.PointerValue,
   indirectOffset: number | bigint,
@@ -1074,7 +1074,7 @@ export const wgpuRenderBundleEncoderDrawIndirect = (
     indirectOffset,
   );
 
-export const wgpuRenderBundleEncoderFinish = (
+export const renderBundleEncoderFinish = (
   renderBundleEncoder: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -1083,7 +1083,7 @@ export const wgpuRenderBundleEncoderFinish = (
     descriptor,
   );
 
-export const wgpuRenderBundleEncoderInsertDebugMarker = (
+export const renderBundleEncoderInsertDebugMarker = (
   renderBundleEncoder: Deno.PointerValue,
   markerLabel: Deno.PointerValue,
 ): void =>
@@ -1092,14 +1092,14 @@ export const wgpuRenderBundleEncoderInsertDebugMarker = (
     markerLabel,
   );
 
-export const wgpuRenderBundleEncoderPopDebugGroup = (
+export const renderBundleEncoderPopDebugGroup = (
   renderBundleEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderBundleEncoderPopDebugGroup(
     renderBundleEncoder,
   );
 
-export const wgpuRenderBundleEncoderPushDebugGroup = (
+export const renderBundleEncoderPushDebugGroup = (
   renderBundleEncoder: Deno.PointerValue,
   groupLabel: Deno.PointerValue,
 ): void =>
@@ -1108,7 +1108,7 @@ export const wgpuRenderBundleEncoderPushDebugGroup = (
     groupLabel,
   );
 
-export const wgpuRenderBundleEncoderSetBindGroup = (
+export const renderBundleEncoderSetBindGroup = (
   renderBundleEncoder: Deno.PointerValue,
   groupIndex: number,
   group: Deno.PointerValue,
@@ -1123,7 +1123,7 @@ export const wgpuRenderBundleEncoderSetBindGroup = (
     dynamicOffsets,
   );
 
-export const wgpuRenderBundleEncoderSetIndexBuffer = (
+export const renderBundleEncoderSetIndexBuffer = (
   renderBundleEncoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
   format: number,
@@ -1138,7 +1138,7 @@ export const wgpuRenderBundleEncoderSetIndexBuffer = (
     size,
   );
 
-export const wgpuRenderBundleEncoderSetLabel = (
+export const renderBundleEncoderSetLabel = (
   renderBundleEncoder: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -1147,7 +1147,7 @@ export const wgpuRenderBundleEncoderSetLabel = (
     label,
   );
 
-export const wgpuRenderBundleEncoderSetPipeline = (
+export const renderBundleEncoderSetPipeline = (
   renderBundleEncoder: Deno.PointerValue,
   pipeline: Deno.PointerValue,
 ): void =>
@@ -1156,7 +1156,7 @@ export const wgpuRenderBundleEncoderSetPipeline = (
     pipeline,
   );
 
-export const wgpuRenderBundleEncoderSetVertexBuffer = (
+export const renderBundleEncoderSetVertexBuffer = (
   renderBundleEncoder: Deno.PointerValue,
   slot: number,
   buffer: Deno.PointerValue,
@@ -1171,21 +1171,21 @@ export const wgpuRenderBundleEncoderSetVertexBuffer = (
     size,
   );
 
-export const wgpuRenderBundleEncoderReference = (
+export const renderBundleEncoderReference = (
   renderBundleEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderBundleEncoderReference(
     renderBundleEncoder,
   );
 
-export const wgpuRenderBundleEncoderRelease = (
+export const renderBundleEncoderRelease = (
   renderBundleEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderBundleEncoderRelease(
     renderBundleEncoder,
   );
 
-export const wgpuRenderPassEncoderBeginOcclusionQuery = (
+export const renderPassEncoderBeginOcclusionQuery = (
   renderPassEncoder: Deno.PointerValue,
   queryIndex: number,
 ): void =>
@@ -1194,7 +1194,7 @@ export const wgpuRenderPassEncoderBeginOcclusionQuery = (
     queryIndex,
   );
 
-export const wgpuRenderPassEncoderBeginPipelineStatisticsQuery = (
+export const renderPassEncoderBeginPipelineStatisticsQuery = (
   renderPassEncoder: Deno.PointerValue,
   querySet: Deno.PointerValue,
   queryIndex: number,
@@ -1205,7 +1205,7 @@ export const wgpuRenderPassEncoderBeginPipelineStatisticsQuery = (
     queryIndex,
   );
 
-export const wgpuRenderPassEncoderDraw = (
+export const renderPassEncoderDraw = (
   renderPassEncoder: Deno.PointerValue,
   vertexCount: number,
   instanceCount: number,
@@ -1220,7 +1220,7 @@ export const wgpuRenderPassEncoderDraw = (
     firstInstance,
   );
 
-export const wgpuRenderPassEncoderDrawIndexed = (
+export const renderPassEncoderDrawIndexed = (
   renderPassEncoder: Deno.PointerValue,
   indexCount: number,
   instanceCount: number,
@@ -1237,7 +1237,7 @@ export const wgpuRenderPassEncoderDrawIndexed = (
     firstInstance,
   );
 
-export const wgpuRenderPassEncoderDrawIndexedIndirect = (
+export const renderPassEncoderDrawIndexedIndirect = (
   renderPassEncoder: Deno.PointerValue,
   indirectBuffer: Deno.PointerValue,
   indirectOffset: number | bigint,
@@ -1248,7 +1248,7 @@ export const wgpuRenderPassEncoderDrawIndexedIndirect = (
     indirectOffset,
   );
 
-export const wgpuRenderPassEncoderDrawIndirect = (
+export const renderPassEncoderDrawIndirect = (
   renderPassEncoder: Deno.PointerValue,
   indirectBuffer: Deno.PointerValue,
   indirectOffset: number | bigint,
@@ -1259,28 +1259,28 @@ export const wgpuRenderPassEncoderDrawIndirect = (
     indirectOffset,
   );
 
-export const wgpuRenderPassEncoderEnd = (
+export const renderPassEncoderEnd = (
   renderPassEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderPassEncoderEnd(
     renderPassEncoder,
   );
 
-export const wgpuRenderPassEncoderEndOcclusionQuery = (
+export const renderPassEncoderEndOcclusionQuery = (
   renderPassEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderPassEncoderEndOcclusionQuery(
     renderPassEncoder,
   );
 
-export const wgpuRenderPassEncoderEndPipelineStatisticsQuery = (
+export const renderPassEncoderEndPipelineStatisticsQuery = (
   renderPassEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderPassEncoderEndPipelineStatisticsQuery(
     renderPassEncoder,
   );
 
-export const wgpuRenderPassEncoderExecuteBundles = (
+export const renderPassEncoderExecuteBundles = (
   renderPassEncoder: Deno.PointerValue,
   bundleCount: number | bigint,
   bundles: Deno.PointerValue,
@@ -1291,7 +1291,7 @@ export const wgpuRenderPassEncoderExecuteBundles = (
     bundles,
   );
 
-export const wgpuRenderPassEncoderInsertDebugMarker = (
+export const renderPassEncoderInsertDebugMarker = (
   renderPassEncoder: Deno.PointerValue,
   markerLabel: Deno.PointerValue,
 ): void =>
@@ -1300,14 +1300,14 @@ export const wgpuRenderPassEncoderInsertDebugMarker = (
     markerLabel,
   );
 
-export const wgpuRenderPassEncoderPopDebugGroup = (
+export const renderPassEncoderPopDebugGroup = (
   renderPassEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderPassEncoderPopDebugGroup(
     renderPassEncoder,
   );
 
-export const wgpuRenderPassEncoderPushDebugGroup = (
+export const renderPassEncoderPushDebugGroup = (
   renderPassEncoder: Deno.PointerValue,
   groupLabel: Deno.PointerValue,
 ): void =>
@@ -1316,7 +1316,7 @@ export const wgpuRenderPassEncoderPushDebugGroup = (
     groupLabel,
   );
 
-export const wgpuRenderPassEncoderSetBindGroup = (
+export const renderPassEncoderSetBindGroup = (
   renderPassEncoder: Deno.PointerValue,
   groupIndex: number,
   group: Deno.PointerValue,
@@ -1331,7 +1331,7 @@ export const wgpuRenderPassEncoderSetBindGroup = (
     dynamicOffsets,
   );
 
-export const wgpuRenderPassEncoderSetBlendConstant = (
+export const renderPassEncoderSetBlendConstant = (
   renderPassEncoder: Deno.PointerValue,
   color: Deno.PointerValue,
 ): void =>
@@ -1340,7 +1340,7 @@ export const wgpuRenderPassEncoderSetBlendConstant = (
     color,
   );
 
-export const wgpuRenderPassEncoderSetIndexBuffer = (
+export const renderPassEncoderSetIndexBuffer = (
   renderPassEncoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
   format: number,
@@ -1355,7 +1355,7 @@ export const wgpuRenderPassEncoderSetIndexBuffer = (
     size,
   );
 
-export const wgpuRenderPassEncoderSetLabel = (
+export const renderPassEncoderSetLabel = (
   renderPassEncoder: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -1364,7 +1364,7 @@ export const wgpuRenderPassEncoderSetLabel = (
     label,
   );
 
-export const wgpuRenderPassEncoderSetPipeline = (
+export const renderPassEncoderSetPipeline = (
   renderPassEncoder: Deno.PointerValue,
   pipeline: Deno.PointerValue,
 ): void =>
@@ -1373,7 +1373,7 @@ export const wgpuRenderPassEncoderSetPipeline = (
     pipeline,
   );
 
-export const wgpuRenderPassEncoderSetScissorRect = (
+export const renderPassEncoderSetScissorRect = (
   renderPassEncoder: Deno.PointerValue,
   x: number,
   y: number,
@@ -1388,7 +1388,7 @@ export const wgpuRenderPassEncoderSetScissorRect = (
     height,
   );
 
-export const wgpuRenderPassEncoderSetStencilReference = (
+export const renderPassEncoderSetStencilReference = (
   renderPassEncoder: Deno.PointerValue,
   reference: number,
 ): void =>
@@ -1397,7 +1397,7 @@ export const wgpuRenderPassEncoderSetStencilReference = (
     reference,
   );
 
-export const wgpuRenderPassEncoderSetVertexBuffer = (
+export const renderPassEncoderSetVertexBuffer = (
   renderPassEncoder: Deno.PointerValue,
   slot: number,
   buffer: Deno.PointerValue,
@@ -1412,7 +1412,7 @@ export const wgpuRenderPassEncoderSetVertexBuffer = (
     size,
   );
 
-export const wgpuRenderPassEncoderSetViewport = (
+export const renderPassEncoderSetViewport = (
   renderPassEncoder: Deno.PointerValue,
   x: bigint,
   y: bigint,
@@ -1431,21 +1431,21 @@ export const wgpuRenderPassEncoderSetViewport = (
     maxDepth,
   );
 
-export const wgpuRenderPassEncoderReference = (
+export const renderPassEncoderReference = (
   renderPassEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderPassEncoderReference(
     renderPassEncoder,
   );
 
-export const wgpuRenderPassEncoderRelease = (
+export const renderPassEncoderRelease = (
   renderPassEncoder: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderPassEncoderRelease(
     renderPassEncoder,
   );
 
-export const wgpuRenderPipelineGetBindGroupLayout = (
+export const renderPipelineGetBindGroupLayout = (
   renderPipeline: Deno.PointerValue,
   groupIndex: number,
 ): Deno.PointerValue =>
@@ -1454,7 +1454,7 @@ export const wgpuRenderPipelineGetBindGroupLayout = (
     groupIndex,
   );
 
-export const wgpuRenderPipelineSetLabel = (
+export const renderPipelineSetLabel = (
   renderPipeline: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -1463,21 +1463,21 @@ export const wgpuRenderPipelineSetLabel = (
     label,
   );
 
-export const wgpuRenderPipelineReference = (
+export const renderPipelineReference = (
   renderPipeline: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderPipelineReference(
     renderPipeline,
   );
 
-export const wgpuRenderPipelineRelease = (
+export const renderPipelineRelease = (
   renderPipeline: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuRenderPipelineRelease(
     renderPipeline,
   );
 
-export const wgpuSamplerSetLabel = (
+export const samplerSetLabel = (
   sampler: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -1486,21 +1486,21 @@ export const wgpuSamplerSetLabel = (
     label,
   );
 
-export const wgpuSamplerReference = (
+export const samplerReference = (
   sampler: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuSamplerReference(
     sampler,
   );
 
-export const wgpuSamplerRelease = (
+export const samplerRelease = (
   sampler: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuSamplerRelease(
     sampler,
   );
 
-export const wgpuShaderModuleGetCompilationInfo = (
+export const shaderModuleGetCompilationInfo = (
   shaderModule: Deno.PointerValue,
   callback: Deno.PointerValue,
   userdata: Deno.PointerValue,
@@ -1511,7 +1511,7 @@ export const wgpuShaderModuleGetCompilationInfo = (
     userdata,
   );
 
-export const wgpuShaderModuleSetLabel = (
+export const shaderModuleSetLabel = (
   shaderModule: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -1520,21 +1520,21 @@ export const wgpuShaderModuleSetLabel = (
     label,
   );
 
-export const wgpuShaderModuleReference = (
+export const shaderModuleReference = (
   shaderModule: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuShaderModuleReference(
     shaderModule,
   );
 
-export const wgpuShaderModuleRelease = (
+export const shaderModuleRelease = (
   shaderModule: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuShaderModuleRelease(
     shaderModule,
   );
 
-export const wgpuSurfaceGetPreferredFormat = (
+export const surfaceGetPreferredFormat = (
   surface: Deno.PointerValue,
   adapter: Deno.PointerValue,
 ): number =>
@@ -1543,49 +1543,49 @@ export const wgpuSurfaceGetPreferredFormat = (
     adapter,
   );
 
-export const wgpuSurfaceReference = (
+export const surfaceReference = (
   surface: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuSurfaceReference(
     surface,
   );
 
-export const wgpuSurfaceRelease = (
+export const surfaceRelease = (
   surface: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuSurfaceRelease(
     surface,
   );
 
-export const wgpuSwapChainGetCurrentTextureView = (
+export const swapChainGetCurrentTextureView = (
   swapChain: Deno.PointerValue,
 ): Deno.PointerValue =>
   lib.symbols.wgpuSwapChainGetCurrentTextureView(
     swapChain,
   );
 
-export const wgpuSwapChainPresent = (
+export const swapChainPresent = (
   swapChain: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuSwapChainPresent(
     swapChain,
   );
 
-export const wgpuSwapChainReference = (
+export const swapChainReference = (
   swapChain: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuSwapChainReference(
     swapChain,
   );
 
-export const wgpuSwapChainRelease = (
+export const swapChainRelease = (
   swapChain: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuSwapChainRelease(
     swapChain,
   );
 
-export const wgpuTextureCreateView = (
+export const textureCreateView = (
   texture: Deno.PointerValue,
   descriptor: Deno.PointerValue,
 ): Deno.PointerValue =>
@@ -1594,70 +1594,70 @@ export const wgpuTextureCreateView = (
     descriptor,
   );
 
-export const wgpuTextureDestroy = (
+export const textureDestroy = (
   texture: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuTextureDestroy(
     texture,
   );
 
-export const wgpuTextureGetDepthOrArrayLayers = (
+export const textureGetDepthOrArrayLayers = (
   texture: Deno.PointerValue,
 ): number =>
   lib.symbols.wgpuTextureGetDepthOrArrayLayers(
     texture,
   );
 
-export const wgpuTextureGetDimension = (
+export const textureGetDimension = (
   texture: Deno.PointerValue,
 ): number =>
   lib.symbols.wgpuTextureGetDimension(
     texture,
   );
 
-export const wgpuTextureGetFormat = (
+export const textureGetFormat = (
   texture: Deno.PointerValue,
 ): number =>
   lib.symbols.wgpuTextureGetFormat(
     texture,
   );
 
-export const wgpuTextureGetHeight = (
+export const textureGetHeight = (
   texture: Deno.PointerValue,
 ): number =>
   lib.symbols.wgpuTextureGetHeight(
     texture,
   );
 
-export const wgpuTextureGetMipLevelCount = (
+export const textureGetMipLevelCount = (
   texture: Deno.PointerValue,
 ): number =>
   lib.symbols.wgpuTextureGetMipLevelCount(
     texture,
   );
 
-export const wgpuTextureGetSampleCount = (
+export const textureGetSampleCount = (
   texture: Deno.PointerValue,
 ): number =>
   lib.symbols.wgpuTextureGetSampleCount(
     texture,
   );
 
-export const wgpuTextureGetUsage = (
+export const textureGetUsage = (
   texture: Deno.PointerValue,
 ): number =>
   lib.symbols.wgpuTextureGetUsage(
     texture,
   );
 
-export const wgpuTextureGetWidth = (
+export const textureGetWidth = (
   texture: Deno.PointerValue,
 ): number =>
   lib.symbols.wgpuTextureGetWidth(
     texture,
   );
 
-export const wgpuTextureSetLabel = (
+export const textureSetLabel = (
   texture: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -1666,21 +1666,21 @@ export const wgpuTextureSetLabel = (
     label,
   );
 
-export const wgpuTextureReference = (
+export const textureReference = (
   texture: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuTextureReference(
     texture,
   );
 
-export const wgpuTextureRelease = (
+export const textureRelease = (
   texture: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuTextureRelease(
     texture,
   );
 
-export const wgpuTextureViewSetLabel = (
+export const textureViewSetLabel = (
   textureView: Deno.PointerValue,
   label: Deno.PointerValue,
 ): void =>
@@ -1689,21 +1689,21 @@ export const wgpuTextureViewSetLabel = (
     label,
   );
 
-export const wgpuTextureViewReference = (
+export const textureViewReference = (
   textureView: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuTextureViewReference(
     textureView,
   );
 
-export const wgpuTextureViewRelease = (
+export const textureViewRelease = (
   textureView: Deno.PointerValue,
 ): void =>
   lib.symbols.wgpuTextureViewRelease(
     textureView,
   );
 
-export const wgpuGenerateReport = (
+export const generateReport = (
   instance: Deno.PointerValue,
   report: Deno.PointerValue,
 ): void =>
@@ -1712,7 +1712,7 @@ export const wgpuGenerateReport = (
     report,
   );
 
-export const wgpuInstanceEnumerateAdapters = (
+export const instanceEnumerateAdapters = (
   instance: Deno.PointerValue,
   options: Deno.PointerValue,
   adapters: Deno.PointerValue,
@@ -1723,7 +1723,7 @@ export const wgpuInstanceEnumerateAdapters = (
     adapters,
   );
 
-export const wgpuQueueSubmitForIndex = (
+export const queueSubmitForIndex = (
   queue: Deno.PointerValue,
   commandCount: number | bigint,
   commands: Deno.PointerValue,
@@ -1734,7 +1734,7 @@ export const wgpuQueueSubmitForIndex = (
     commands,
   );
 
-export const wgpuDevicePoll = (
+export const devicePoll = (
   device: Deno.PointerValue,
   wait: boolean,
   wrappedSubmissionIndex: Deno.PointerValue,
@@ -1745,7 +1745,7 @@ export const wgpuDevicePoll = (
     wrappedSubmissionIndex,
   ) == 1;
 
-export const wgpuSetLogCallback = (
+export const setLogCallback = (
   callback: Deno.PointerValue,
   userdata: Deno.PointerValue,
 ): void =>
@@ -1754,16 +1754,19 @@ export const wgpuSetLogCallback = (
     userdata,
   );
 
-export const wgpuSetLogLevel = (
+export const setLogLevel = (
   level: number,
 ): void =>
   lib.symbols.wgpuSetLogLevel(
     level,
   );
 
-export const wgpuGetVersion = (): number => lib.symbols.wgpuGetVersion();
+export const getVersion = (
+): number =>
+  lib.symbols.wgpuGetVersion(
+  );
 
-export const wgpuSurfaceGetCapabilities = (
+export const surfaceGetCapabilities = (
   surface: Deno.PointerValue,
   adapter: Deno.PointerValue,
   capabilities: Deno.PointerValue,
@@ -1774,7 +1777,7 @@ export const wgpuSurfaceGetCapabilities = (
     capabilities,
   );
 
-export const wgpuRenderPassEncoderSetPushConstants = (
+export const renderPassEncoderSetPushConstants = (
   encoder: Deno.PointerValue,
   stages: number,
   offset: number,
@@ -1789,7 +1792,7 @@ export const wgpuRenderPassEncoderSetPushConstants = (
     data,
   );
 
-export const wgpuRenderPassEncoderMultiDrawIndirect = (
+export const renderPassEncoderMultiDrawIndirect = (
   encoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
   offset: number | bigint,
@@ -1802,7 +1805,7 @@ export const wgpuRenderPassEncoderMultiDrawIndirect = (
     count,
   );
 
-export const wgpuRenderPassEncoderMultiDrawIndexedIndirect = (
+export const renderPassEncoderMultiDrawIndexedIndirect = (
   encoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
   offset: number | bigint,
@@ -1815,7 +1818,7 @@ export const wgpuRenderPassEncoderMultiDrawIndexedIndirect = (
     count,
   );
 
-export const wgpuRenderPassEncoderMultiDrawIndirectCount = (
+export const renderPassEncoderMultiDrawIndirectCount = (
   encoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
   offset: number | bigint,
@@ -1832,7 +1835,7 @@ export const wgpuRenderPassEncoderMultiDrawIndirectCount = (
     max_count,
   );
 
-export const wgpuRenderPassEncoderMultiDrawIndexedIndirectCount = (
+export const renderPassEncoderMultiDrawIndexedIndirectCount = (
   encoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
   offset: number | bigint,
@@ -1848,3 +1851,4 @@ export const wgpuRenderPassEncoderMultiDrawIndexedIndirectCount = (
     count_buffer_offset,
     max_count,
   );
+

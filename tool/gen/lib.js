@@ -3,6 +3,7 @@ import {
   CXChildVisitResult,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
 import { dedent } from "npm:@qnighy/dedent";
+import { camelCase } from "https://deno.land/x/case/mod.ts";
 
 const TYPE_MAP = {
   Pointer: "Deno.PointerValue",
@@ -22,7 +23,7 @@ const TYPE_MAP = {
 export const genLibAndFunctions = async (
   tu,
   lpath,
-  fpath
+  fpath,
 ) => {
   const symbols = {};
   const s2 = {};
@@ -70,7 +71,7 @@ export const genLibAndFunctions = async (
 
   let ftext = `import { lib } from "./lib.js";\n\n`;
   for (const [sn, sd] of Object.entries(s2)) {
-    ftext += `export const ${sn} = (\n`;
+    ftext += `export const ${camelCase(sn.replace(/^wgpu/, ""))} = (\n`;
     for (const p of sd.p2) {
       ftext += `  ${p[0]}: ${p[1]},\n`;
     }
@@ -80,7 +81,7 @@ export const genLibAndFunctions = async (
       if (p[1] == "boolean") {
         ftext += ` ? 1 : 0`;
       }
-      ftext += `,\n`
+      ftext += `,\n`;
     }
     ftext += `  )`;
     if (sd.r2 == "boolean") ftext += " == 1";

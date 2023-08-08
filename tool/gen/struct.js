@@ -1,14 +1,13 @@
 import {
   CXChildVisitResult,
   CXCursorKind,
-  CXTranslationUnit,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
 
 export const genStructs = async (tu, path) => {
   const structs = {};
   tu.getCursor().visitChildren((cursor) => {
     if (cursor.kind == CXCursorKind.CXCursor_StructDecl) {
-      const name = cursor.getSpelling();
+      const name = cursor.getSpelling().replace(/^WGPU/, "");
       const size = cursor.getType().getSizeOf();
       const fields = {};
       cursor.visitChildren((cursor) => {
@@ -18,7 +17,7 @@ export const genStructs = async (tu, path) => {
           const kind = cursor.getType().getCanonicalType().getKindSpelling();
           fields[name] = { offset, kind };
           if (kind == "Record") {
-            fields[name]["type"] = cursor.getType().getSpelling();
+            fields[name]["type"] = cursor.getType().getSpelling().replace(/^WGPU/, "");
             fields[name]["size"] = cursor.getType().getSizeOf();
           }
         }

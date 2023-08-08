@@ -14,7 +14,7 @@ const main = async () => {
   await ensureDir(dir);
   // parse and gen
   const tu = new CXIndex().parseTranslationUnit(header);
-  await genLibAndFunctions(tu, join(dir, "lib.js"), join(dir, "functions.ts"));
+  await genLibAndFunctions(tu, join(dir, "lib.js"), join(dir, "function.ts"));
   await genEnums(tu, join(dir, "enum.ts"));
   await genStructs(tu, join(dir, "struct.ts"));
   await genCallbacks(tu, join(dir, "callback.ts"))

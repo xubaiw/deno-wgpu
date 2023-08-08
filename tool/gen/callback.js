@@ -7,7 +7,7 @@ export const genCallbacks = async (tu, path) => {
   const cbs = {};
   tu.getCursor().visitChildren((cursor) => {
     if (cursor.kind == CXCursorKind.CXCursor_TypedefDecl) {
-      const name = cursor.getSpelling();
+      const name = cursor.getSpelling().replace(/^WGPU/, "");
       if (name.match(/[cC]allback/)) {
         const under = cursor.getTypedefDeclarationOfUnderlyingType();
         const pointee = under?.getPointeeType();
@@ -36,5 +36,4 @@ export const genCallbacks = async (tu, path) => {
   await Deno.writeTextFile(path, text);
 };
 
-const getNativeType = (kind) =>
-  kind == "Enum" ? "u32" : kind?.toLowerCase();
+const getNativeType = (kind) => kind == "Enum" ? "u32" : kind?.toLowerCase();
