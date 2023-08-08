@@ -1,31 +1,24 @@
 #!/usr/bin/env -S deno run -A --unstable
 
-import {
-  alloc,
-  lib,
-  ref,
-  WGPUInstanceDescriptor,
-  WGPURequestAdapterCallback,
-  WGPUSupportedLimits,
-  wrap,
-} from "../mod.ts";
+import * as W from "../mod.ts";
+import { alloc, ref, wrap } from "../mod.ts";
 
 // Create Instance
-const desc = alloc(WGPUInstanceDescriptor);
+const desc = W.alloc(W.WGPUInstanceDescriptor);
 desc.nextInChain = null;
-const instance = lib.symbols.wgpuCreateInstance(ref(desc));
+const instance = W.wgpuCreateInstance(W.ref(desc));
 
 // Request adapter
 const [_, adapter] = await wrap(
-  WGPURequestAdapterCallback,
-  lib.symbols.wgpuInstanceRequestAdapter,
+  W.WGPURequestAdapterCallback,
+  W.wgpuInstanceRequestAdapter,
   2,
 )(instance, null, null);
 
 // Get Limits
-const slimits = alloc(WGPUSupportedLimits);
-lib.symbols.wgpuAdapterGetLimits(adapter, ref(slimits));
+const slimits = alloc(W.WGPUSupportedLimits);
+W.wgpuAdapterGetLimits(adapter, ref(slimits));
 console.log(slimits);
 
 // Release instance
-lib.symbols.wgpuInstanceRelease(instance);
+W.wgpuInstanceRelease(instance);

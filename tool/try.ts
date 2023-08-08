@@ -90,10 +90,12 @@ if (Deno.args[0] == "callback") {
         while (true) {
           const arg = pointee?.getArgumentType(i)?.getSpelling();
           const argk = pointee?.getArgumentType(i)?.getKindSpelling();
-          const a2 = pointee?.getArgumentType(i)?.getCanonicalType().getSpelling();
-          const a2k = pointee?.getArgumentType(i)?.getCanonicalType().getKindSpelling();
+          const a2 = pointee?.getArgumentType(i)?.getCanonicalType()
+            .getSpelling();
+          const a2k = pointee?.getArgumentType(i)?.getCanonicalType()
+            .getKindSpelling();
           if (!arg) break;
-          args.push([arg,argk, a2, a2k]);
+          args.push([arg, argk, a2, a2k]);
           i += 1;
         }
         console.log({ name, under, pointee, res, resK, args });
@@ -110,17 +112,14 @@ if (Deno.args[0] == "function") {
       const narg = cursor.getNumberOfArguments();
       for (let i = 0; i < narg; i++) {
         const ac = cursor.getArgument(i);
-        params.push(ac?.getSpelling());
+        const t = ac?.getType();
+        params.push([
+          t?.getSpelling(),
+          t?.getKindSpelling(),
+          t?.getCanonicalType().getSpelling(),
+          t?.getCanonicalType().getKindSpelling(),
+        ]);
       }
-      // cursor.visitChildren((cursor) => {
-      //   if (cursor.kind == CXCursorKind.CXCursor_ParmDecl) {
-      //     const name = cursor.getSpelling();
-      //     const type = extractType(cursor.getType());
-      //     const t2 = extractType(cursor.getType()?.getCanonicalType());
-      //     params.push({ name, type, t2 });
-      //   }
-      //   return CXChildVisitResult.CXChildVisit_Continue;
-      // });
       console.log({ name, params });
     }
     return CXChildVisitResult.CXChildVisit_Continue;

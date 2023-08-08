@@ -1,31 +1,22 @@
-import {
-  alloc,
-  lib,
-  ref,
-  WGPUDeviceDescriptor,
-  WGPUInstanceDescriptor,
-  WGPURequestAdapterCallback,
-  WGPURequestDeviceCallback,
-  WGPUShaderModuleDescriptor,
-  wrap,
-} from "../mod.ts";
+import { alloc, ref, wrap } from "../mod.ts";
+import * as W from "../mod.ts";
 
 // Create Instance
-const idesc = alloc(WGPUInstanceDescriptor);
-const instance = lib.symbols.wgpuCreateInstance(ref(idesc));
+const idesc = alloc(W.WGPUInstanceDescriptor);
+const instance = W.wgpuCreateInstance(ref(idesc));
 
 // Request adapter
 const [, adapter] = await wrap(
-  WGPURequestAdapterCallback,
-  lib.symbols.wgpuInstanceRequestAdapter,
+  W.WGPURequestAdapterCallback,
+  W.wgpuInstanceRequestAdapter,
   2,
 )(instance, null, null);
 
 // Request device
-const ddesc = alloc(WGPUDeviceDescriptor);
+const ddesc = alloc(W.WGPUDeviceDescriptor);
 const [, device] = await wrap(
-  WGPURequestDeviceCallback,
-  lib.symbols.wgpuAdapterRequestDevice,
+  W.WGPURequestDeviceCallback,
+  W.wgpuAdapterRequestDevice,
   2,
 )(adapter, ref(ddesc), null);
 
@@ -71,10 +62,10 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
 `;
 
 // Create shader module
-const smdesc = alloc(WGPUShaderModuleDescriptor)
-lib.symbols.wgpuDeviceCreateShaderModule(device, ref(smdesc));
+const smdesc = alloc(W.WGPUShaderModuleDescriptor);
+W.wgpuDeviceCreateShaderModule(device, ref(smdesc));
 
 // Cleanup
-lib.symbols.wgpuDeviceRelease(device);
-lib.symbols.wgpuAdapterRelease(adapter);
-lib.symbols.wgpuInstanceRelease(instance);
+W.wgpuDeviceRelease(device);
+W.wgpuAdapterRelease(adapter);
+W.wgpuInstanceRelease(instance);

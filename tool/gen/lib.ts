@@ -6,38 +6,61 @@ import {
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
 import { dedent } from "npm:@qnighy/dedent";
 
-export const genLib = async (tu: CXTranslationUnit, path: string) => {
+const TYPE_MAP = {
+  Pointer: "Deno.PointerValue",
+  Void: "void",
+  Enum: "number",
+  UInt: "number",
+  Record: "Uint8Array",
+  ULongLong: "number | bigint",
+  Bool: "boolean",
+  Double: "number",
+  ULong: "number | bigint",
+  Float: "bigint",
+  UShort: "number",
+  Int: "number",
+};
+
+export const genLibAndFunctions = async (
+  tu: CXTranslationUnit,
+  lpath: string,
+  fpath: string,
+) => {
   const symbols: Deno.ForeignLibraryInterface = {};
+  const s2 = {};
 
   tu.getCursor().visitChildren((cursor) => {
     // handle function decl
     if (cursor.kind == CXCursorKind.CXCursor_FunctionDecl) {
       const name = cursor.getSpelling();
       const result = getNativeType(cursor.getResultType()!);
+      const r2 =
+        TYPE_MAP[cursor.getResultType()!.getCanonicalType().getKindSpelling()];
       const parameters: Deno.NativeType[] = [];
+      const p2 = [];
       const nArgs = cursor.getNumberOfArguments();
       for (let i = 0; i < nArgs; i++) {
         const argCursor = cursor.getArgument(i)!;
         const type = getNativeType(argCursor.getType()!) as Deno.NativeType;
         parameters.push(type);
+        p2.push([
+          argCursor.getSpelling(),
+          TYPE_MAP[argCursor.getType()?.getCanonicalType().getKindSpelling()],
+        ]);
       }
       symbols[name] = {
         result,
         parameters,
       };
+      s2[name] = {
+        r2,
+        p2,
+      };
     }
     return CXChildVisitResult.CXChildVisit_Continue;
   });
 
-  // for (const fn of ctx.metadata.functionDecls) {
-  //   symbols[fn.name] = {
-  //     parameters: fn.parameters.map((p) =>
-  //       getNativeType(p.type) as Deno.NativeType
-  //     ),
-  //     result: getNativeType(fn.result),
-  //   };
-  // }
-  const text = dedent`\
+  const ltext = dedent`\
     import { prepare } from "../util/prepare.ts";
 
     const libPath = await prepare();
@@ -45,7 +68,27 @@ export const genLib = async (tu: CXTranslationUnit, path: string) => {
     export const lib = Deno.dlopen(libPath, ${
     JSON.stringify(symbols, undefined, 2)
   }); \n\n`;
-  await Deno.writeTextFile(path, text);
+  await Deno.writeTextFile(lpath, ltext);
+
+  let ftext = `import { lib } from "./lib.js";\n\n`;
+  for (const [sn, sd] of Object.entries(s2)) {
+    ftext += `export const ${sn} = (\n`;
+    for (const p of sd.p2) {
+      ftext += `  ${p[0]}: ${p[1]},\n`;
+    }
+    ftext += `): ${sd.r2} =>\n  lib.symbols.${sn}(\n`;
+    for (const p of sd.p2) {
+      ftext += `    ${p[0]}`;
+      if (p[1] == "boolean") {
+        ftext += ` ? 1 : 0`;
+      }
+      ftext += `,\n`
+    }
+    ftext += `  )`;
+    if (sd.r2 == "boolean") ftext += " == 1";
+    ftext += `;\n\n`;
+  }
+  await Deno.writeTextFile(fpath, ftext);
 };
 
 /**
