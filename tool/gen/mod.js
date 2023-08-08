@@ -2,10 +2,10 @@
 import { ensureDir } from "https://deno.land/std@0.197.0/fs/ensure_dir.ts";
 import { fromFileUrl, join } from "https://deno.land/std@0.197.0/path/mod.ts";
 import { CXIndex } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
-import { genLibAndFunctions } from "./lib.ts";
-import { genEnums } from "./enum.ts";
-import { genStructs } from "./struct.ts";
-import { genCallbacks } from "./callback.ts";
+import { genLibAndFunctions } from "./lib.js";
+import { genEnums } from "./enum.js";
+import { genStructs } from "./struct.js";
+import { genCallbacks } from "./callback.js";
 
 const main = async () => {
   // dirs

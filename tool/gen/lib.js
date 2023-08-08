@@ -1,8 +1,6 @@
 import { CXCursorKind } from "https://deno.land/x/libclang@1.0.0-beta.8/include/typeDefinitions.ts";
 import {
   CXChildVisitResult,
-  CXTranslationUnit,
-  CXType,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
 import { dedent } from "npm:@qnighy/dedent";
 
@@ -22,26 +20,26 @@ const TYPE_MAP = {
 };
 
 export const genLibAndFunctions = async (
-  tu: CXTranslationUnit,
-  lpath: string,
-  fpath: string,
+  tu,
+  lpath,
+  fpath
 ) => {
-  const symbols: Deno.ForeignLibraryInterface = {};
+  const symbols = {};
   const s2 = {};
 
   tu.getCursor().visitChildren((cursor) => {
     // handle function decl
     if (cursor.kind == CXCursorKind.CXCursor_FunctionDecl) {
       const name = cursor.getSpelling();
-      const result = getNativeType(cursor.getResultType()!);
+      const result = getNativeType(cursor.getResultType());
       const r2 =
-        TYPE_MAP[cursor.getResultType()!.getCanonicalType().getKindSpelling()];
-      const parameters: Deno.NativeType[] = [];
+        TYPE_MAP[cursor.getResultType().getCanonicalType().getKindSpelling()];
+      const parameters = [];
       const p2 = [];
       const nArgs = cursor.getNumberOfArguments();
       for (let i = 0; i < nArgs; i++) {
-        const argCursor = cursor.getArgument(i)!;
-        const type = getNativeType(argCursor.getType()!) as Deno.NativeType;
+        const argCursor = cursor.getArgument(i);
+        const type = getNativeType(argCursor.getType());
         parameters.push(type);
         p2.push([
           argCursor.getSpelling(),
@@ -94,7 +92,7 @@ export const genLibAndFunctions = async (
 /**
  * Extract Deno FFI native type from type metadata
  */
-const getNativeType = (type: CXType): Deno.NativeResultType => {
+const getNativeType = (type) => {
   const name = type.getSpelling();
   const canonicalKind = type.getCanonicalType().getKindSpelling();
   const size = type.getSizeOf();

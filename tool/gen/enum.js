@@ -1,12 +1,11 @@
 import {
   CXChildVisitResult,
   CXCursorKind,
-  CXTranslationUnit,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
 
 /** Generate TypeScript enum definition from c headers. */
-export const genEnums = async (tu: CXTranslationUnit, path: string) => {
-  const enums: Record<string, Record<string, number | bigint>> = {};
+export const genEnums = async (tu, path) => {
+  const enums  = {};
   tu.getCursor().visitChildren((cursor) => {
     // handle enums
     if (cursor.kind == CXCursorKind.CXCursor_EnumDecl) {

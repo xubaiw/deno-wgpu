@@ -4,35 +4,22 @@ import {
   CXTranslationUnit,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
 
-type StructDecl = {
-  name: string;
-  size: number;
-  fields: Record<string, FieldDecl>;
-};
-
-type FieldDecl = {
-  size?: number;
-  offset: number;
-  kind: string;
-  type?: string;
-};
-
-export const genStructs = async (tu: CXTranslationUnit, path: string) => {
-  const structs: Record<string, StructDecl> = {};
+export const genStructs = async (tu, path) => {
+  const structs = {};
   tu.getCursor().visitChildren((cursor) => {
     if (cursor.kind == CXCursorKind.CXCursor_StructDecl) {
       const name = cursor.getSpelling();
-      const size = cursor.getType()!.getSizeOf();
-      const fields: Record<string, FieldDecl> = {};
+      const size = cursor.getType().getSizeOf();
+      const fields = {};
       cursor.visitChildren((cursor) => {
         if (cursor.kind == CXCursorKind.CXCursor_FieldDecl) {
           const name = cursor.getSpelling();
           const offset = cursor.getOffsetOfField() / 8;
-          const kind = cursor.getType()!.getCanonicalType().getKindSpelling();
+          const kind = cursor.getType().getCanonicalType().getKindSpelling();
           fields[name] = { offset, kind };
           if (kind == "Record") {
-            fields[name]["type"] = cursor.getType()!.getSpelling();
-            fields[name]["size"] = cursor.getType()!.getSizeOf();
+            fields[name]["type"] = cursor.getType().getSpelling();
+            fields[name]["size"] = cursor.getType().getSizeOf();
           }
         }
         return CXChildVisitResult.CXChildVisit_Continue;
@@ -55,7 +42,7 @@ export const genStructs = async (tu: CXTranslationUnit, path: string) => {
         text += `      kind: "${fd.kind}",\n`;
         if (fd.kind == "Record") {
           text += `      size: ${fd.size},\n`;
-          text += `      type: () => ${fd.type!},\n`;
+          text += `      type: () => ${fd.type},\n`;
         }
         text += `    },\n`;
       }
