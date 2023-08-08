@@ -11,7 +11,7 @@ type Remove<TS extends unknown[], U extends number> = TS extends
   ? (U extends 0 ? Tail : [Head, ...Remove<Tail, Dec<U>>])
   : never;
 
-export const wrapcb = <
+export const withcb = <
   T extends unknown[],
   S,
   N extends number,

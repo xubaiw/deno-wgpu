@@ -16,7 +16,7 @@ import {
   WGPUInstanceDescriptor,
   WGPURequestAdapterCallback,
   WGPUSupportedLimits,
-  wrapcb,
+  withcb,
 } from "https://denopkg.com/xubaiw/deno-wgpu/mod.ts";
 
 // Create Instance
@@ -25,7 +25,7 @@ desc.nextInChain = null;
 const instance = lib.symbols.wgpuCreateInstance(ptr(desc));
 
 // Request adapter
-const [_, adapter] = await wrapcb(
+const [_, adapter] = await withcb(
   WGPURequestAdapterCallback,
   lib.symbols.wgpuInstanceRequestAdapter,
   2,
