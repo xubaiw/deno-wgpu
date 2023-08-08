@@ -8,7 +8,7 @@ WebGPU ponyfill for Deno through FFI and wgpu-native.
 
 (`examples/limits.ts`(./examples/limits.ts))
 
-```
+```ts
 import {
   alloc,
   lib,
