@@ -17,7 +17,7 @@ import {
   WGPURequestAdapterCallback,
   WGPUSupportedLimits,
   wrapcb,
-} from "../mod.ts";
+} from "https://denopkg.com/xubaiw/deno-wgpu/mod.ts";
 
 // Create Instance
 const desc = alloc(WGPUInstanceDescriptor);
