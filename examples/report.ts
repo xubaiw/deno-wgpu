@@ -3,7 +3,7 @@
 import {
   alloc,
   lib,
-  ptr,
+  ref,
   WGPUInstanceDescriptor,
   WGPUGlobalReport
 } from "../mod.ts";
@@ -11,11 +11,11 @@ import {
 // Create Instance
 const desc = alloc(WGPUInstanceDescriptor);
 desc.nextInChain = null;
-const instance = lib.symbols.wgpuCreateInstance(ptr(desc));
+const instance = lib.symbols.wgpuCreateInstance(ref(desc));
 
 // Generate Report
 const report = alloc(WGPUGlobalReport);
-lib.symbols.wgpuGenerateReport(instance, ptr(report));
+lib.symbols.wgpuGenerateReport(instance, ref(report));
 console.log(report);
 
 // Release instance
