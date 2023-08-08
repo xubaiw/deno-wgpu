@@ -83,16 +83,20 @@ if (Deno.args[0] == "callback") {
       if (name.match(/[cC]allback/)) {
         const under = cursor.getTypedefDeclarationOfUnderlyingType();
         const pointee = under?.getPointeeType();
-        const res = pointee?.getResultType();
+        const res = pointee?.getResultType()?.getSpelling();
+        const resK = pointee?.getResultType()?.getKindSpelling();
         const args = [];
         let i = 0;
         while (true) {
-          const arg = pointee?.getArgumentType(i);
+          const arg = pointee?.getArgumentType(i)?.getSpelling();
+          const argk = pointee?.getArgumentType(i)?.getKindSpelling();
+          const a2 = pointee?.getArgumentType(i)?.getCanonicalType().getSpelling();
+          const a2k = pointee?.getArgumentType(i)?.getCanonicalType().getKindSpelling();
           if (!arg) break;
-          args.push(arg);
+          args.push([arg,argk, a2, a2k]);
           i += 1;
         }
-        logType({ name, under, pointee, res, args });
+        console.log({ name, under, pointee, res, resK, args });
       }
     }
     return CXChildVisitResult.CXChildVisit_Recurse;

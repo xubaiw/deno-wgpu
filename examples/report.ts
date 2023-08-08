@@ -13,6 +13,7 @@ const desc = alloc(WGPUInstanceDescriptor);
 desc.nextInChain = null;
 const instance = lib.symbols.wgpuCreateInstance(ptr(desc));
 
+// Generate Report
 const report = alloc(WGPUGlobalReport);
 lib.symbols.wgpuGenerateReport(instance, ptr(report));
 console.log(report);

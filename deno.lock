@@ -101,11 +101,16 @@
   },
   "npm": {
     "specifiers": {
-      "@qnighy/dedent": "@qnighy/dedent@0.1.1"
+      "@qnighy/dedent": "@qnighy/dedent@0.1.1",
+      "ts-arithmetic": "ts-arithmetic@0.1.1"
     },
     "packages": {
       "@qnighy/dedent@0.1.1": {
         "integrity": "sha512-1TogcOCQlxSL4fS2n3jUtwoTHIlXJN3cw3FmQKSdmVpbVr03gKeXTEskPxqqMT24xkid59bEGv4ZB6oUQqq2fw==",
+        "dependencies": {}
+      },
+      "ts-arithmetic@0.1.1": {
+        "integrity": "sha512-3VqgsRgzaYfj+zKWn+7O66ifHwbOOnT2BoOrHwdEUBz7az0DetoZOS20+juNJh1klgzvWEi2Qxden41pomOUAQ==",
         "dependencies": {}
       }
     }

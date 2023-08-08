@@ -5,6 +5,7 @@ import { CXIndex } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
 import { genLib } from "./lib.ts";
 import { genEnums } from "./enum.ts";
 import { genStructs } from "./struct.ts";
+import { genCallbacks } from "./callback.ts";
 
 const main = async () => {
   // dirs
@@ -16,6 +17,7 @@ const main = async () => {
   await genLib(tu, join(dir, "lib.ts"));
   await genEnums(tu, join(dir, "enum.ts"));
   await genStructs(tu, join(dir, "struct.ts"));
+  await genCallbacks(tu, join(dir, "callback.ts"))
 };
 
 // Run!
