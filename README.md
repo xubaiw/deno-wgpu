@@ -4,6 +4,42 @@ WebGPU ponyfill for Deno through FFI and wgpu-native.
 
 **Note: The polyfill part is not done, but can be viewed as Deno binding to wgpu-native.**
 
+## Example
+
+(`examples/limits.ts`(./examples/limits.ts))
+
+```
+import {
+  alloc,
+  lib,
+  ptr,
+  WGPUInstanceDescriptor,
+  WGPURequestAdapterCallback,
+  WGPUSupportedLimits,
+  wrapcb,
+} from "../mod.ts";
+
+// Create Instance
+const desc = alloc(WGPUInstanceDescriptor);
+desc.nextInChain = null;
+const instance = lib.symbols.wgpuCreateInstance(ptr(desc));
+
+// Request adapter
+const [_, adapter] = await wrapcb(
+  WGPURequestAdapterCallback,
+  lib.symbols.wgpuInstanceRequestAdapter,
+  2,
+)(instance, null, null);
+
+// Get Limits
+const slimits = alloc(WGPUSupportedLimits);
+lib.symbols.wgpuAdapterGetLimits(adapter, ptr(slimits));
+console.log(slimits);
+
+// Release instance
+lib.symbols.wgpuInstanceRelease(instance);
+```
+
 ## Credits
 
 - [wgpu-native](https://github.com/gfx-rs/wgpu-native): awesome WebGPU implementation, C headers and prebuilt binaries
