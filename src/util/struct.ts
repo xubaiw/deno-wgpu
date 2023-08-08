@@ -98,7 +98,7 @@ export const deref = <S extends StructSpec>(
   return defineSpecProperties(spec, { view });
 };
 
-export const ref = <S extends StructSpec>(s: Struct<S>): Deno.PointerValue => {
+export const ptr = <S extends StructSpec>(s: Struct<S>): Deno.PointerValue => {
   const bufPtr = Deno.UnsafePointer.of(s.view.buffer);
   if (bufPtr == null) return null;
   return Deno.UnsafePointer.offset(bufPtr, s.view.byteOffset);
