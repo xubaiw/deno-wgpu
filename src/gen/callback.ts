@@ -2,8 +2,8 @@ export const BufferMapCallback = {
   "result": "void",
   "parameters": [
     "u32",
-    "pointer"
-  ]
+    "pointer",
+  ],
 } as const;
 
 export const CompilationInfoCallback = {
@@ -11,8 +11,8 @@ export const CompilationInfoCallback = {
   "parameters": [
     "u32",
     "pointer",
-    "pointer"
-  ]
+    "pointer",
+  ],
 } as const;
 
 export const CreateComputePipelineAsyncCallback = {
@@ -21,8 +21,8 @@ export const CreateComputePipelineAsyncCallback = {
     "u32",
     "pointer",
     "pointer",
-    "pointer"
-  ]
+    "pointer",
+  ],
 } as const;
 
 export const CreateRenderPipelineAsyncCallback = {
@@ -31,8 +31,8 @@ export const CreateRenderPipelineAsyncCallback = {
     "u32",
     "pointer",
     "pointer",
-    "pointer"
-  ]
+    "pointer",
+  ],
 } as const;
 
 export const DeviceLostCallback = {
@@ -40,8 +40,8 @@ export const DeviceLostCallback = {
   "parameters": [
     "u32",
     "pointer",
-    "pointer"
-  ]
+    "pointer",
+  ],
 } as const;
 
 export const ErrorCallback = {
@@ -49,16 +49,16 @@ export const ErrorCallback = {
   "parameters": [
     "u32",
     "pointer",
-    "pointer"
-  ]
+    "pointer",
+  ],
 } as const;
 
 export const QueueWorkDoneCallback = {
   "result": "void",
   "parameters": [
     "u32",
-    "pointer"
-  ]
+    "pointer",
+  ],
 } as const;
 
 export const RequestAdapterCallback = {
@@ -67,8 +67,8 @@ export const RequestAdapterCallback = {
     "u32",
     "pointer",
     "pointer",
-    "pointer"
-  ]
+    "pointer",
+  ],
 } as const;
 
 export const RequestDeviceCallback = {
@@ -77,8 +77,8 @@ export const RequestDeviceCallback = {
     "u32",
     "pointer",
     "pointer",
-    "pointer"
-  ]
+    "pointer",
+  ],
 } as const;
 
 export const ProcDeviceSetUncapturedErrorCallback = {
@@ -86,8 +86,8 @@ export const ProcDeviceSetUncapturedErrorCallback = {
   "parameters": [
     "pointer",
     "pointer",
-    "pointer"
-  ]
+    "pointer",
+  ],
 } as const;
 
 export const LogCallback = {
@@ -95,7 +95,6 @@ export const LogCallback = {
   "parameters": [
     "u32",
     "pointer",
-    "pointer"
-  ]
+    "pointer",
+  ],
 } as const;
-

@@ -2358,4 +2358,3 @@ export const InstanceEnumerateAdapterOptions = {
     },
   },
 } as const;
-

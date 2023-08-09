@@ -6,43 +6,43 @@ export default Deno.dlopen(libPath, {
   "wgpuCreateInstance": {
     "result": "pointer",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuGetProcAddress": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuAdapterEnumerateFeatures": {
     "result": "u64",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuAdapterGetLimits": {
     "result": "u8",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuAdapterGetProperties": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuAdapterHasFeature": {
     "result": "u8",
     "parameters": [
       "pointer",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuAdapterRequestDevice": {
     "result": "void",
@@ -50,98 +50,98 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuAdapterReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuAdapterRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBindGroupSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBindGroupReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBindGroupRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBindGroupLayoutSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBindGroupLayoutReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBindGroupLayoutRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBufferDestroy": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBufferGetConstMappedRange": {
     "result": "pointer",
     "parameters": [
       "pointer",
       "u64",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuBufferGetMapState": {
     "result": "u32",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBufferGetMappedRange": {
     "result": "pointer",
     "parameters": [
       "pointer",
       "u64",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuBufferGetSize": {
     "result": "u64",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBufferGetUsage": {
     "result": "u32",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBufferMapAsync": {
     "result": "void",
@@ -151,66 +151,66 @@ export default Deno.dlopen(libPath, {
       "u64",
       "u64",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBufferSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBufferUnmap": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBufferReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuBufferRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandBufferSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandBufferReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandBufferRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandEncoderBeginComputePass": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandEncoderBeginRenderPass": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandEncoderClearBuffer": {
     "result": "void",
@@ -218,8 +218,8 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "pointer",
       "u64",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuCommandEncoderCopyBufferToBuffer": {
     "result": "void",
@@ -229,8 +229,8 @@ export default Deno.dlopen(libPath, {
       "u64",
       "pointer",
       "u64",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuCommandEncoderCopyBufferToTexture": {
     "result": "void",
@@ -238,8 +238,8 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandEncoderCopyTextureToBuffer": {
     "result": "void",
@@ -247,8 +247,8 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandEncoderCopyTextureToTexture": {
     "result": "void",
@@ -256,35 +256,35 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandEncoderFinish": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandEncoderInsertDebugMarker": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandEncoderPopDebugGroup": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandEncoderPushDebugGroup": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandEncoderResolveQuerySet": {
     "result": "void",
@@ -294,43 +294,43 @@ export default Deno.dlopen(libPath, {
       "u32",
       "u32",
       "pointer",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuCommandEncoderSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandEncoderWriteTimestamp": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuCommandEncoderReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuCommandEncoderRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePassEncoderBeginPipelineStatisticsQuery": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuComputePassEncoderDispatchWorkgroups": {
     "result": "void",
@@ -338,48 +338,48 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "u32",
       "u32",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuComputePassEncoderDispatchWorkgroupsIndirect": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuComputePassEncoderEnd": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePassEncoderEndPipelineStatisticsQuery": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePassEncoderInsertDebugMarker": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePassEncoderPopDebugGroup": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePassEncoderPushDebugGroup": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePassEncoderSetBindGroup": {
     "result": "void",
@@ -388,95 +388,95 @@ export default Deno.dlopen(libPath, {
       "u32",
       "pointer",
       "u64",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePassEncoderSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePassEncoderSetPipeline": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePassEncoderReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePassEncoderRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePipelineGetBindGroupLayout": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuComputePipelineSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePipelineReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuComputePipelineRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateBindGroup": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateBindGroupLayout": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateBuffer": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateCommandEncoder": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateComputePipeline": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateComputePipelineAsync": {
     "result": "void",
@@ -484,36 +484,36 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreatePipelineLayout": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateQuerySet": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateRenderBundleEncoder": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateRenderPipeline": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateRenderPipelineAsync": {
     "result": "void",
@@ -521,125 +521,125 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateSampler": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateShaderModule": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateSwapChain": {
     "result": "pointer",
     "parameters": [
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceCreateTexture": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceDestroy": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceEnumerateFeatures": {
     "result": "u64",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceGetLimits": {
     "result": "u8",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceGetQueue": {
     "result": "pointer",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceHasFeature": {
     "result": "u8",
     "parameters": [
       "pointer",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuDevicePopErrorScope": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDevicePushErrorScope": {
     "result": "void",
     "parameters": [
       "pointer",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuDeviceSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceSetUncapturedErrorCallback": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDeviceRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuInstanceCreateSurface": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuInstanceProcessEvents": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuInstanceRequestAdapter": {
     "result": "void",
@@ -647,99 +647,99 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuInstanceReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuInstanceRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuPipelineLayoutSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuPipelineLayoutReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuPipelineLayoutRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQuerySetDestroy": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQuerySetGetCount": {
     "result": "u32",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQuerySetGetType": {
     "result": "u32",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQuerySetSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQuerySetReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQuerySetRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQueueOnSubmittedWorkDone": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQueueSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQueueSubmit": {
     "result": "void",
     "parameters": [
       "pointer",
       "u64",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQueueWriteBuffer": {
     "result": "void",
@@ -748,8 +748,8 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "u64",
       "pointer",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuQueueWriteTexture": {
     "result": "void",
@@ -759,39 +759,39 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "u64",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQueueReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQueueRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderBundleSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderBundleReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderBundleRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderBundleEncoderDraw": {
     "result": "void",
@@ -800,8 +800,8 @@ export default Deno.dlopen(libPath, {
       "u32",
       "u32",
       "u32",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuRenderBundleEncoderDrawIndexed": {
     "result": "void",
@@ -811,51 +811,51 @@ export default Deno.dlopen(libPath, {
       "u32",
       "u32",
       "i32",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuRenderBundleEncoderDrawIndexedIndirect": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuRenderBundleEncoderDrawIndirect": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuRenderBundleEncoderFinish": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderBundleEncoderInsertDebugMarker": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderBundleEncoderPopDebugGroup": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderBundleEncoderPushDebugGroup": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderBundleEncoderSetBindGroup": {
     "result": "void",
@@ -864,8 +864,8 @@ export default Deno.dlopen(libPath, {
       "u32",
       "pointer",
       "u64",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderBundleEncoderSetIndexBuffer": {
     "result": "void",
@@ -874,22 +874,22 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "u32",
       "u64",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuRenderBundleEncoderSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderBundleEncoderSetPipeline": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderBundleEncoderSetVertexBuffer": {
     "result": "void",
@@ -898,35 +898,35 @@ export default Deno.dlopen(libPath, {
       "u32",
       "pointer",
       "u64",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuRenderBundleEncoderReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderBundleEncoderRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderBeginOcclusionQuery": {
     "result": "void",
     "parameters": [
       "pointer",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuRenderPassEncoderBeginPipelineStatisticsQuery": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuRenderPassEncoderDraw": {
     "result": "void",
@@ -935,8 +935,8 @@ export default Deno.dlopen(libPath, {
       "u32",
       "u32",
       "u32",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuRenderPassEncoderDrawIndexed": {
     "result": "void",
@@ -946,70 +946,70 @@ export default Deno.dlopen(libPath, {
       "u32",
       "u32",
       "i32",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuRenderPassEncoderDrawIndexedIndirect": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuRenderPassEncoderDrawIndirect": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuRenderPassEncoderEnd": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderEndOcclusionQuery": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderEndPipelineStatisticsQuery": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderExecuteBundles": {
     "result": "void",
     "parameters": [
       "pointer",
       "u64",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderInsertDebugMarker": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderPopDebugGroup": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderPushDebugGroup": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderSetBindGroup": {
     "result": "void",
@@ -1018,15 +1018,15 @@ export default Deno.dlopen(libPath, {
       "u32",
       "pointer",
       "u64",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderSetBlendConstant": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderSetIndexBuffer": {
     "result": "void",
@@ -1035,22 +1035,22 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "u32",
       "u64",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuRenderPassEncoderSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderSetPipeline": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderSetScissorRect": {
     "result": "void",
@@ -1059,15 +1059,15 @@ export default Deno.dlopen(libPath, {
       "u32",
       "u32",
       "u32",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuRenderPassEncoderSetStencilReference": {
     "result": "void",
     "parameters": [
       "pointer",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuRenderPassEncoderSetVertexBuffer": {
     "result": "void",
@@ -1076,8 +1076,8 @@ export default Deno.dlopen(libPath, {
       "u32",
       "pointer",
       "u64",
-      "u64"
-    ]
+      "u64",
+    ],
   },
   "wgpuRenderPassEncoderSetViewport": {
     "result": "void",
@@ -1088,290 +1088,290 @@ export default Deno.dlopen(libPath, {
       "f32",
       "f32",
       "f32",
-      "f32"
-    ]
+      "f32",
+    ],
   },
   "wgpuRenderPassEncoderReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPipelineGetBindGroupLayout": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuRenderPipelineSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPipelineReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPipelineRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuSamplerSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuSamplerReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuSamplerRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuShaderModuleGetCompilationInfo": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuShaderModuleSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuShaderModuleReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuShaderModuleRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuSurfaceGetPreferredFormat": {
     "result": "u32",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuSurfaceReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuSurfaceRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuSwapChainGetCurrentTextureView": {
     "result": "pointer",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuSwapChainPresent": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuSwapChainReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuSwapChainRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureCreateView": {
     "result": "pointer",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureDestroy": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureGetDepthOrArrayLayers": {
     "result": "u32",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureGetDimension": {
     "result": "u32",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureGetFormat": {
     "result": "u32",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureGetHeight": {
     "result": "u32",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureGetMipLevelCount": {
     "result": "u32",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureGetSampleCount": {
     "result": "u32",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureGetUsage": {
     "result": "u32",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureGetWidth": {
     "result": "u32",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureViewSetLabel": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureViewReference": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuTextureViewRelease": {
     "result": "void",
     "parameters": [
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuGenerateReport": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuInstanceEnumerateAdapters": {
     "result": "u64",
     "parameters": [
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuQueueSubmitForIndex": {
     "result": "u64",
     "parameters": [
       "pointer",
       "u64",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuDevicePoll": {
     "result": "u8",
     "parameters": [
       "pointer",
       "u8",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuSetLogCallback": {
     "result": "void",
     "parameters": [
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuSetLogLevel": {
     "result": "void",
     "parameters": [
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuGetVersion": {
     "result": "u32",
-    "parameters": []
+    "parameters": [],
   },
   "wgpuSurfaceGetCapabilities": {
     "result": "void",
     "parameters": [
       "pointer",
       "pointer",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderSetPushConstants": {
     "result": "void",
@@ -1380,8 +1380,8 @@ export default Deno.dlopen(libPath, {
       "u32",
       "u32",
       "u32",
-      "pointer"
-    ]
+      "pointer",
+    ],
   },
   "wgpuRenderPassEncoderMultiDrawIndirect": {
     "result": "void",
@@ -1389,8 +1389,8 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "pointer",
       "u64",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuRenderPassEncoderMultiDrawIndexedIndirect": {
     "result": "void",
@@ -1398,8 +1398,8 @@ export default Deno.dlopen(libPath, {
       "pointer",
       "pointer",
       "u64",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuRenderPassEncoderMultiDrawIndirectCount": {
     "result": "void",
@@ -1409,8 +1409,8 @@ export default Deno.dlopen(libPath, {
       "u64",
       "pointer",
       "u64",
-      "u32"
-    ]
+      "u32",
+    ],
   },
   "wgpuRenderPassEncoderMultiDrawIndexedIndirectCount": {
     "result": "void",
@@ -1420,7 +1420,7 @@ export default Deno.dlopen(libPath, {
       "u64",
       "pointer",
       "u64",
-      "u32"
-    ]
-  }
+      "u32",
+    ],
+  },
 });

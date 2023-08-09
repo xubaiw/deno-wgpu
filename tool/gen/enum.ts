@@ -39,4 +39,4 @@ export const genEnums = async (ctx: Ctx) => {
   await Deno.writeTextFile(join(dir, "enum.ts"), text);
 };
 
-const removePrefix = (text: string) => text.replace(/^WGPU/, "")
+const removePrefix = (text: string) => text.replace(/^WGPU/, "");

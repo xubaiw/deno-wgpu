@@ -2136,10 +2136,8 @@ export function setLogLevel(
   return result;
 }
 
-export function getVersion(
-): number {
-  const result = lib.symbols.wgpuGetVersion(
-  );
+export function getVersion(): number {
+  const result = lib.symbols.wgpuGetVersion();
   return result;
 }
 
@@ -2240,4 +2238,3 @@ export function renderPassEncoderMultiDrawIndexedIndirectCount(
   );
   return result;
 }
-

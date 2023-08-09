@@ -107,7 +107,9 @@ declare namespace Deno {
    *
    * @category FFI
    */
-  export type ToNativeResultTypeMap = ToNativeTypeMap & Record<NativeVoidType, void>;
+  export type ToNativeResultTypeMap =
+    & ToNativeTypeMap
+    & Record<NativeVoidType, void>;
 
   /** **UNSTABLE**: New API, yet to be vetted.
    *
@@ -115,9 +117,10 @@ declare namespace Deno {
    *
    * @category FFI
    */
-  export type ToNativeResultType<T extends NativeResultType = NativeResultType> =
-    T extends NativeStructType ? BufferSource
-      : ToNativeResultTypeMap[Exclude<T, NativeStructType>];
+  export type ToNativeResultType<
+    T extends NativeResultType = NativeResultType,
+  > = T extends NativeStructType ? BufferSource
+    : ToNativeResultTypeMap[Exclude<T, NativeStructType>];
 
   /** **UNSTABLE**: New API, yet to be vetted.
    *
@@ -177,9 +180,10 @@ declare namespace Deno {
    *
    * @category FFI
    */
-  export type FromNativeResultType<T extends NativeResultType = NativeResultType> =
-    T extends NativeStructType ? Uint8Array
-      : FromNativeResultTypeMap[Exclude<T, NativeStructType>];
+  export type FromNativeResultType<
+    T extends NativeResultType = NativeResultType,
+  > = T extends NativeStructType ? Uint8Array
+    : FromNativeResultTypeMap[Exclude<T, NativeStructType>];
 
   /** **UNSTABLE**: New API, yet to be vetted.
    *
@@ -212,11 +216,11 @@ declare namespace Deno {
    *
    *  @category FFI
    */
-  export type FromForeignFunction<T extends ForeignFunction> = T["parameters"] extends
-    readonly [] ? () => StaticForeignSymbolReturnType<T>
-    : (
-      ...args: ToNativeParameterTypes<T["parameters"]>
-    ) => StaticForeignSymbolReturnType<T>;
+  export type FromForeignFunction<T extends ForeignFunction> =
+    T["parameters"] extends readonly [] ? () => StaticForeignSymbolReturnType<T>
+      : (
+        ...args: ToNativeParameterTypes<T["parameters"]>
+      ) => StaticForeignSymbolReturnType<T>;
 
   /** **UNSTABLE**: New API, yet to be vetted.
    *
@@ -238,11 +242,12 @@ declare namespace Deno {
    *
    * @category FFI
    */
-  export type StaticForeignLibraryInterface<T extends ForeignLibraryInterface> = {
-    [K in keyof T]: T[K]["optional"] extends true
-      ? StaticForeignSymbol<T[K]> | null
-      : StaticForeignSymbol<T[K]>;
-  };
+  export type StaticForeignLibraryInterface<T extends ForeignLibraryInterface> =
+    {
+      [K in keyof T]: T[K]["optional"] extends true
+        ? StaticForeignSymbol<T[K]> | null
+        : StaticForeignSymbol<T[K]>;
+    };
 
   /** @category FFI */
   const brand: unique symbol;
@@ -275,4 +280,4 @@ declare namespace Deno {
     | { [K in keyof T]: Const<T[K]> }
     | []
   >;
-} 
+}

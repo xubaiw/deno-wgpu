@@ -605,4 +605,3 @@ export enum CompositeAlphaMode {
   CompositeAlphaMode_Inherit = 4,
   CompositeAlphaMode_Force32 = 2147483647,
 }
-
