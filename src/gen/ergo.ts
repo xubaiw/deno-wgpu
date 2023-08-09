@@ -1,290 +1,355 @@
 import lib from "./symbol.ts";
+import * as C from "../util/conv.ts";
+import * as E from "./enum.ts";
+import * as CB from "./callback.ts";
 
-export const createInstance = (
+export function createInstance(
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuCreateInstance(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuCreateInstance(
     descriptor,
   );
+  return result;
+}
 
-export const getProcAddress = (
+export function getProcAddress(
   device: Deno.PointerValue,
   procName: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuGetProcAddress(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuGetProcAddress(
     device,
     procName,
   );
+  return result;
+}
 
-export const adapterEnumerateFeatures = (
+export function adapterEnumerateFeatures(
   adapter: Deno.PointerValue,
   features: Deno.PointerValue,
-): number | bigint =>
-  lib.symbols.wgpuAdapterEnumerateFeatures(
+): number | bigint {
+  const result = lib.symbols.wgpuAdapterEnumerateFeatures(
     adapter,
     features,
   );
+  return result;
+}
 
-export const adapterGetLimits = (
+export function adapterGetLimits(
   adapter: Deno.PointerValue,
   limits: Deno.PointerValue,
-): boolean =>
-  lib.symbols.wgpuAdapterGetLimits(
+): boolean {
+  const result = lib.symbols.wgpuAdapterGetLimits(
     adapter,
     limits,
-  ) == 1;
+  );
+  return C.toBool(result);
+}
 
-export const adapterGetProperties = (
+export function adapterGetProperties(
   adapter: Deno.PointerValue,
   properties: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuAdapterGetProperties(
+): void {
+  const result = lib.symbols.wgpuAdapterGetProperties(
     adapter,
     properties,
   );
+  return result;
+}
 
-export const adapterHasFeature = (
+export function adapterHasFeature(
   adapter: Deno.PointerValue,
-  feature: number,
-): boolean =>
-  lib.symbols.wgpuAdapterHasFeature(
+  feature: E.FeatureName,
+): boolean {
+  const result = lib.symbols.wgpuAdapterHasFeature(
     adapter,
     feature,
-  ) == 1;
+  );
+  return C.toBool(result);
+}
 
-export const adapterRequestDevice = (
+export function adapterRequestDevice(
   adapter: Deno.PointerValue,
   descriptor: Deno.PointerValue,
   callback: Deno.PointerValue,
-  userdata: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuAdapterRequestDevice(
+): void {
+  const result = lib.symbols.wgpuAdapterRequestDevice(
     adapter,
     descriptor,
     callback,
-    userdata,
+    null,
   );
+  return result;
+}
 
-export const adapterReference = (
+export function adapterReference(
   adapter: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuAdapterReference(
+): void {
+  const result = lib.symbols.wgpuAdapterReference(
     adapter,
   );
+  return result;
+}
 
-export const adapterRelease = (
+export function adapterRelease(
   adapter: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuAdapterRelease(
+): void {
+  const result = lib.symbols.wgpuAdapterRelease(
     adapter,
   );
+  return result;
+}
 
-export const bindGroupSetLabel = (
+export function bindGroupSetLabel(
   bindGroup: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuBindGroupSetLabel(
+): void {
+  const result = lib.symbols.wgpuBindGroupSetLabel(
     bindGroup,
     label,
   );
+  return result;
+}
 
-export const bindGroupReference = (
+export function bindGroupReference(
   bindGroup: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuBindGroupReference(
+): void {
+  const result = lib.symbols.wgpuBindGroupReference(
     bindGroup,
   );
+  return result;
+}
 
-export const bindGroupRelease = (
+export function bindGroupRelease(
   bindGroup: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuBindGroupRelease(
+): void {
+  const result = lib.symbols.wgpuBindGroupRelease(
     bindGroup,
   );
+  return result;
+}
 
-export const bindGroupLayoutSetLabel = (
+export function bindGroupLayoutSetLabel(
   bindGroupLayout: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuBindGroupLayoutSetLabel(
+): void {
+  const result = lib.symbols.wgpuBindGroupLayoutSetLabel(
     bindGroupLayout,
     label,
   );
+  return result;
+}
 
-export const bindGroupLayoutReference = (
+export function bindGroupLayoutReference(
   bindGroupLayout: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuBindGroupLayoutReference(
+): void {
+  const result = lib.symbols.wgpuBindGroupLayoutReference(
     bindGroupLayout,
   );
+  return result;
+}
 
-export const bindGroupLayoutRelease = (
+export function bindGroupLayoutRelease(
   bindGroupLayout: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuBindGroupLayoutRelease(
+): void {
+  const result = lib.symbols.wgpuBindGroupLayoutRelease(
     bindGroupLayout,
   );
+  return result;
+}
 
-export const bufferDestroy = (
+export function bufferDestroy(
   buffer: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuBufferDestroy(
+): void {
+  const result = lib.symbols.wgpuBufferDestroy(
     buffer,
   );
+  return result;
+}
 
-export const bufferGetConstMappedRange = (
+export function bufferGetConstMappedRange(
   buffer: Deno.PointerValue,
   offset: number | bigint,
   size: number | bigint,
-): Deno.PointerValue =>
-  lib.symbols.wgpuBufferGetConstMappedRange(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuBufferGetConstMappedRange(
     buffer,
     offset,
     size,
   );
+  return result;
+}
 
-export const bufferGetMapState = (
+export function bufferGetMapState(
   buffer: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuBufferGetMapState(
+): number {
+  const result = lib.symbols.wgpuBufferGetMapState(
     buffer,
   );
+  return C.toEnum<E.BufferMapState>(result);
+}
 
-export const bufferGetMappedRange = (
+export function bufferGetMappedRange(
   buffer: Deno.PointerValue,
   offset: number | bigint,
   size: number | bigint,
-): Deno.PointerValue =>
-  lib.symbols.wgpuBufferGetMappedRange(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuBufferGetMappedRange(
     buffer,
     offset,
     size,
   );
+  return result;
+}
 
-export const bufferGetSize = (
+export function bufferGetSize(
   buffer: Deno.PointerValue,
-): number | bigint =>
-  lib.symbols.wgpuBufferGetSize(
+): number | bigint {
+  const result = lib.symbols.wgpuBufferGetSize(
     buffer,
   );
+  return result;
+}
 
-export const bufferGetUsage = (
+export function bufferGetUsage(
   buffer: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuBufferGetUsage(
+): number {
+  const result = lib.symbols.wgpuBufferGetUsage(
     buffer,
   );
+  return result;
+}
 
-export const bufferMapAsync = (
+export function bufferMapAsync(
   buffer: Deno.PointerValue,
   mode: number,
   offset: number | bigint,
   size: number | bigint,
   callback: Deno.PointerValue,
-  userdata: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuBufferMapAsync(
+): void {
+  const result = lib.symbols.wgpuBufferMapAsync(
     buffer,
     mode,
     offset,
     size,
     callback,
-    userdata,
+    null,
   );
+  return result;
+}
 
-export const bufferSetLabel = (
+export function bufferSetLabel(
   buffer: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuBufferSetLabel(
+): void {
+  const result = lib.symbols.wgpuBufferSetLabel(
     buffer,
     label,
   );
+  return result;
+}
 
-export const bufferUnmap = (
+export function bufferUnmap(
   buffer: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuBufferUnmap(
+): void {
+  const result = lib.symbols.wgpuBufferUnmap(
     buffer,
   );
+  return result;
+}
 
-export const bufferReference = (
+export function bufferReference(
   buffer: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuBufferReference(
+): void {
+  const result = lib.symbols.wgpuBufferReference(
     buffer,
   );
+  return result;
+}
 
-export const bufferRelease = (
+export function bufferRelease(
   buffer: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuBufferRelease(
+): void {
+  const result = lib.symbols.wgpuBufferRelease(
     buffer,
   );
+  return result;
+}
 
-export const commandBufferSetLabel = (
+export function commandBufferSetLabel(
   commandBuffer: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuCommandBufferSetLabel(
+): void {
+  const result = lib.symbols.wgpuCommandBufferSetLabel(
     commandBuffer,
     label,
   );
+  return result;
+}
 
-export const commandBufferReference = (
+export function commandBufferReference(
   commandBuffer: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuCommandBufferReference(
+): void {
+  const result = lib.symbols.wgpuCommandBufferReference(
     commandBuffer,
   );
+  return result;
+}
 
-export const commandBufferRelease = (
+export function commandBufferRelease(
   commandBuffer: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuCommandBufferRelease(
+): void {
+  const result = lib.symbols.wgpuCommandBufferRelease(
     commandBuffer,
   );
+  return result;
+}
 
-export const commandEncoderBeginComputePass = (
+export function commandEncoderBeginComputePass(
   commandEncoder: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuCommandEncoderBeginComputePass(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuCommandEncoderBeginComputePass(
     commandEncoder,
     descriptor,
   );
+  return result;
+}
 
-export const commandEncoderBeginRenderPass = (
+export function commandEncoderBeginRenderPass(
   commandEncoder: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuCommandEncoderBeginRenderPass(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuCommandEncoderBeginRenderPass(
     commandEncoder,
     descriptor,
   );
+  return result;
+}
 
-export const commandEncoderClearBuffer = (
+export function commandEncoderClearBuffer(
   commandEncoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
   offset: number | bigint,
   size: number | bigint,
-): void =>
-  lib.symbols.wgpuCommandEncoderClearBuffer(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderClearBuffer(
     commandEncoder,
     buffer,
     offset,
     size,
   );
+  return result;
+}
 
-export const commandEncoderCopyBufferToBuffer = (
+export function commandEncoderCopyBufferToBuffer(
   commandEncoder: Deno.PointerValue,
   source: Deno.PointerValue,
   sourceOffset: number | bigint,
   destination: Deno.PointerValue,
   destinationOffset: number | bigint,
   size: number | bigint,
-): void =>
-  lib.symbols.wgpuCommandEncoderCopyBufferToBuffer(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderCopyBufferToBuffer(
     commandEncoder,
     source,
     sourceOffset,
@@ -292,89 +357,105 @@ export const commandEncoderCopyBufferToBuffer = (
     destinationOffset,
     size,
   );
+  return result;
+}
 
-export const commandEncoderCopyBufferToTexture = (
+export function commandEncoderCopyBufferToTexture(
   commandEncoder: Deno.PointerValue,
   source: Deno.PointerValue,
   destination: Deno.PointerValue,
   copySize: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuCommandEncoderCopyBufferToTexture(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderCopyBufferToTexture(
     commandEncoder,
     source,
     destination,
     copySize,
   );
+  return result;
+}
 
-export const commandEncoderCopyTextureToBuffer = (
+export function commandEncoderCopyTextureToBuffer(
   commandEncoder: Deno.PointerValue,
   source: Deno.PointerValue,
   destination: Deno.PointerValue,
   copySize: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuCommandEncoderCopyTextureToBuffer(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderCopyTextureToBuffer(
     commandEncoder,
     source,
     destination,
     copySize,
   );
+  return result;
+}
 
-export const commandEncoderCopyTextureToTexture = (
+export function commandEncoderCopyTextureToTexture(
   commandEncoder: Deno.PointerValue,
   source: Deno.PointerValue,
   destination: Deno.PointerValue,
   copySize: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuCommandEncoderCopyTextureToTexture(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderCopyTextureToTexture(
     commandEncoder,
     source,
     destination,
     copySize,
   );
+  return result;
+}
 
-export const commandEncoderFinish = (
+export function commandEncoderFinish(
   commandEncoder: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuCommandEncoderFinish(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuCommandEncoderFinish(
     commandEncoder,
     descriptor,
   );
+  return result;
+}
 
-export const commandEncoderInsertDebugMarker = (
+export function commandEncoderInsertDebugMarker(
   commandEncoder: Deno.PointerValue,
   markerLabel: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuCommandEncoderInsertDebugMarker(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderInsertDebugMarker(
     commandEncoder,
     markerLabel,
   );
+  return result;
+}
 
-export const commandEncoderPopDebugGroup = (
+export function commandEncoderPopDebugGroup(
   commandEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuCommandEncoderPopDebugGroup(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderPopDebugGroup(
     commandEncoder,
   );
+  return result;
+}
 
-export const commandEncoderPushDebugGroup = (
+export function commandEncoderPushDebugGroup(
   commandEncoder: Deno.PointerValue,
   groupLabel: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuCommandEncoderPushDebugGroup(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderPushDebugGroup(
     commandEncoder,
     groupLabel,
   );
+  return result;
+}
 
-export const commandEncoderResolveQuerySet = (
+export function commandEncoderResolveQuerySet(
   commandEncoder: Deno.PointerValue,
   querySet: Deno.PointerValue,
   firstQuery: number,
   queryCount: number,
   destination: Deno.PointerValue,
   destinationOffset: number | bigint,
-): void =>
-  lib.symbols.wgpuCommandEncoderResolveQuerySet(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderResolveQuerySet(
     commandEncoder,
     querySet,
     firstQuery,
@@ -382,599 +463,725 @@ export const commandEncoderResolveQuerySet = (
     destination,
     destinationOffset,
   );
+  return result;
+}
 
-export const commandEncoderSetLabel = (
+export function commandEncoderSetLabel(
   commandEncoder: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuCommandEncoderSetLabel(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderSetLabel(
     commandEncoder,
     label,
   );
+  return result;
+}
 
-export const commandEncoderWriteTimestamp = (
+export function commandEncoderWriteTimestamp(
   commandEncoder: Deno.PointerValue,
   querySet: Deno.PointerValue,
   queryIndex: number,
-): void =>
-  lib.symbols.wgpuCommandEncoderWriteTimestamp(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderWriteTimestamp(
     commandEncoder,
     querySet,
     queryIndex,
   );
+  return result;
+}
 
-export const commandEncoderReference = (
+export function commandEncoderReference(
   commandEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuCommandEncoderReference(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderReference(
     commandEncoder,
   );
+  return result;
+}
 
-export const commandEncoderRelease = (
+export function commandEncoderRelease(
   commandEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuCommandEncoderRelease(
+): void {
+  const result = lib.symbols.wgpuCommandEncoderRelease(
     commandEncoder,
   );
+  return result;
+}
 
-export const computePassEncoderBeginPipelineStatisticsQuery = (
+export function computePassEncoderBeginPipelineStatisticsQuery(
   computePassEncoder: Deno.PointerValue,
   querySet: Deno.PointerValue,
   queryIndex: number,
-): void =>
-  lib.symbols.wgpuComputePassEncoderBeginPipelineStatisticsQuery(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderBeginPipelineStatisticsQuery(
     computePassEncoder,
     querySet,
     queryIndex,
   );
+  return result;
+}
 
-export const computePassEncoderDispatchWorkgroups = (
+export function computePassEncoderDispatchWorkgroups(
   computePassEncoder: Deno.PointerValue,
   workgroupCountX: number,
   workgroupCountY: number,
   workgroupCountZ: number,
-): void =>
-  lib.symbols.wgpuComputePassEncoderDispatchWorkgroups(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderDispatchWorkgroups(
     computePassEncoder,
     workgroupCountX,
     workgroupCountY,
     workgroupCountZ,
   );
+  return result;
+}
 
-export const computePassEncoderDispatchWorkgroupsIndirect = (
+export function computePassEncoderDispatchWorkgroupsIndirect(
   computePassEncoder: Deno.PointerValue,
   indirectBuffer: Deno.PointerValue,
   indirectOffset: number | bigint,
-): void =>
-  lib.symbols.wgpuComputePassEncoderDispatchWorkgroupsIndirect(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderDispatchWorkgroupsIndirect(
     computePassEncoder,
     indirectBuffer,
     indirectOffset,
   );
+  return result;
+}
 
-export const computePassEncoderEnd = (
+export function computePassEncoderEnd(
   computePassEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePassEncoderEnd(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderEnd(
     computePassEncoder,
   );
+  return result;
+}
 
-export const computePassEncoderEndPipelineStatisticsQuery = (
+export function computePassEncoderEndPipelineStatisticsQuery(
   computePassEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePassEncoderEndPipelineStatisticsQuery(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderEndPipelineStatisticsQuery(
     computePassEncoder,
   );
+  return result;
+}
 
-export const computePassEncoderInsertDebugMarker = (
+export function computePassEncoderInsertDebugMarker(
   computePassEncoder: Deno.PointerValue,
   markerLabel: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePassEncoderInsertDebugMarker(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderInsertDebugMarker(
     computePassEncoder,
     markerLabel,
   );
+  return result;
+}
 
-export const computePassEncoderPopDebugGroup = (
+export function computePassEncoderPopDebugGroup(
   computePassEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePassEncoderPopDebugGroup(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderPopDebugGroup(
     computePassEncoder,
   );
+  return result;
+}
 
-export const computePassEncoderPushDebugGroup = (
+export function computePassEncoderPushDebugGroup(
   computePassEncoder: Deno.PointerValue,
   groupLabel: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePassEncoderPushDebugGroup(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderPushDebugGroup(
     computePassEncoder,
     groupLabel,
   );
+  return result;
+}
 
-export const computePassEncoderSetBindGroup = (
+export function computePassEncoderSetBindGroup(
   computePassEncoder: Deno.PointerValue,
   groupIndex: number,
   group: Deno.PointerValue,
   dynamicOffsetCount: number | bigint,
   dynamicOffsets: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePassEncoderSetBindGroup(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderSetBindGroup(
     computePassEncoder,
     groupIndex,
     group,
     dynamicOffsetCount,
     dynamicOffsets,
   );
+  return result;
+}
 
-export const computePassEncoderSetLabel = (
+export function computePassEncoderSetLabel(
   computePassEncoder: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePassEncoderSetLabel(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderSetLabel(
     computePassEncoder,
     label,
   );
+  return result;
+}
 
-export const computePassEncoderSetPipeline = (
+export function computePassEncoderSetPipeline(
   computePassEncoder: Deno.PointerValue,
   pipeline: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePassEncoderSetPipeline(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderSetPipeline(
     computePassEncoder,
     pipeline,
   );
+  return result;
+}
 
-export const computePassEncoderReference = (
+export function computePassEncoderReference(
   computePassEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePassEncoderReference(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderReference(
     computePassEncoder,
   );
+  return result;
+}
 
-export const computePassEncoderRelease = (
+export function computePassEncoderRelease(
   computePassEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePassEncoderRelease(
+): void {
+  const result = lib.symbols.wgpuComputePassEncoderRelease(
     computePassEncoder,
   );
+  return result;
+}
 
-export const computePipelineGetBindGroupLayout = (
+export function computePipelineGetBindGroupLayout(
   computePipeline: Deno.PointerValue,
   groupIndex: number,
-): Deno.PointerValue =>
-  lib.symbols.wgpuComputePipelineGetBindGroupLayout(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuComputePipelineGetBindGroupLayout(
     computePipeline,
     groupIndex,
   );
+  return result;
+}
 
-export const computePipelineSetLabel = (
+export function computePipelineSetLabel(
   computePipeline: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePipelineSetLabel(
+): void {
+  const result = lib.symbols.wgpuComputePipelineSetLabel(
     computePipeline,
     label,
   );
+  return result;
+}
 
-export const computePipelineReference = (
+export function computePipelineReference(
   computePipeline: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePipelineReference(
+): void {
+  const result = lib.symbols.wgpuComputePipelineReference(
     computePipeline,
   );
+  return result;
+}
 
-export const computePipelineRelease = (
+export function computePipelineRelease(
   computePipeline: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuComputePipelineRelease(
+): void {
+  const result = lib.symbols.wgpuComputePipelineRelease(
     computePipeline,
   );
+  return result;
+}
 
-export const deviceCreateBindGroup = (
+export function deviceCreateBindGroup(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreateBindGroup(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreateBindGroup(
     device,
     descriptor,
   );
+  return result;
+}
 
-export const deviceCreateBindGroupLayout = (
+export function deviceCreateBindGroupLayout(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreateBindGroupLayout(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreateBindGroupLayout(
     device,
     descriptor,
   );
+  return result;
+}
 
-export const deviceCreateBuffer = (
+export function deviceCreateBuffer(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreateBuffer(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreateBuffer(
     device,
     descriptor,
   );
+  return result;
+}
 
-export const deviceCreateCommandEncoder = (
+export function deviceCreateCommandEncoder(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreateCommandEncoder(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreateCommandEncoder(
     device,
     descriptor,
   );
+  return result;
+}
 
-export const deviceCreateComputePipeline = (
+export function deviceCreateComputePipeline(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreateComputePipeline(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreateComputePipeline(
     device,
     descriptor,
   );
+  return result;
+}
 
-export const deviceCreateComputePipelineAsync = (
+export function deviceCreateComputePipelineAsync(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
   callback: Deno.PointerValue,
-  userdata: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuDeviceCreateComputePipelineAsync(
+): void {
+  const result = lib.symbols.wgpuDeviceCreateComputePipelineAsync(
     device,
     descriptor,
     callback,
-    userdata,
+    null,
   );
+  return result;
+}
 
-export const deviceCreatePipelineLayout = (
+export function deviceCreatePipelineLayout(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreatePipelineLayout(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreatePipelineLayout(
     device,
     descriptor,
   );
+  return result;
+}
 
-export const deviceCreateQuerySet = (
+export function deviceCreateQuerySet(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreateQuerySet(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreateQuerySet(
     device,
     descriptor,
   );
+  return result;
+}
 
-export const deviceCreateRenderBundleEncoder = (
+export function deviceCreateRenderBundleEncoder(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreateRenderBundleEncoder(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreateRenderBundleEncoder(
     device,
     descriptor,
   );
+  return result;
+}
 
-export const deviceCreateRenderPipeline = (
+export function deviceCreateRenderPipeline(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreateRenderPipeline(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreateRenderPipeline(
     device,
     descriptor,
   );
+  return result;
+}
 
-export const deviceCreateRenderPipelineAsync = (
+export function deviceCreateRenderPipelineAsync(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
   callback: Deno.PointerValue,
-  userdata: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuDeviceCreateRenderPipelineAsync(
+): void {
+  const result = lib.symbols.wgpuDeviceCreateRenderPipelineAsync(
     device,
     descriptor,
     callback,
-    userdata,
+    null,
   );
+  return result;
+}
 
-export const deviceCreateSampler = (
+export function deviceCreateSampler(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreateSampler(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreateSampler(
     device,
     descriptor,
   );
+  return result;
+}
 
-export const deviceCreateShaderModule = (
+export function deviceCreateShaderModule(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreateShaderModule(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreateShaderModule(
     device,
     descriptor,
   );
+  return result;
+}
 
-export const deviceCreateSwapChain = (
+export function deviceCreateSwapChain(
   device: Deno.PointerValue,
   surface: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreateSwapChain(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreateSwapChain(
     device,
     surface,
     descriptor,
   );
+  return result;
+}
 
-export const deviceCreateTexture = (
+export function deviceCreateTexture(
   device: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceCreateTexture(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceCreateTexture(
     device,
     descriptor,
   );
+  return result;
+}
 
-export const deviceDestroy = (
+export function deviceDestroy(
   device: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuDeviceDestroy(
+): void {
+  const result = lib.symbols.wgpuDeviceDestroy(
     device,
   );
+  return result;
+}
 
-export const deviceEnumerateFeatures = (
+export function deviceEnumerateFeatures(
   device: Deno.PointerValue,
   features: Deno.PointerValue,
-): number | bigint =>
-  lib.symbols.wgpuDeviceEnumerateFeatures(
+): number | bigint {
+  const result = lib.symbols.wgpuDeviceEnumerateFeatures(
     device,
     features,
   );
+  return result;
+}
 
-export const deviceGetLimits = (
+export function deviceGetLimits(
   device: Deno.PointerValue,
   limits: Deno.PointerValue,
-): boolean =>
-  lib.symbols.wgpuDeviceGetLimits(
+): boolean {
+  const result = lib.symbols.wgpuDeviceGetLimits(
     device,
     limits,
-  ) == 1;
+  );
+  return C.toBool(result);
+}
 
-export const deviceGetQueue = (
+export function deviceGetQueue(
   device: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuDeviceGetQueue(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuDeviceGetQueue(
     device,
   );
+  return result;
+}
 
-export const deviceHasFeature = (
+export function deviceHasFeature(
   device: Deno.PointerValue,
-  feature: number,
-): boolean =>
-  lib.symbols.wgpuDeviceHasFeature(
+  feature: E.FeatureName,
+): boolean {
+  const result = lib.symbols.wgpuDeviceHasFeature(
     device,
     feature,
-  ) == 1;
+  );
+  return C.toBool(result);
+}
 
-export const devicePopErrorScope = (
+export function devicePopErrorScope(
   device: Deno.PointerValue,
   callback: Deno.PointerValue,
-  userdata: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuDevicePopErrorScope(
+): void {
+  const result = lib.symbols.wgpuDevicePopErrorScope(
     device,
     callback,
-    userdata,
+    null,
   );
+  return result;
+}
 
-export const devicePushErrorScope = (
+export function devicePushErrorScope(
   device: Deno.PointerValue,
-  filter: number,
-): void =>
-  lib.symbols.wgpuDevicePushErrorScope(
+  filter: E.ErrorFilter,
+): void {
+  const result = lib.symbols.wgpuDevicePushErrorScope(
     device,
     filter,
   );
+  return result;
+}
 
-export const deviceSetLabel = (
+export function deviceSetLabel(
   device: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuDeviceSetLabel(
+): void {
+  const result = lib.symbols.wgpuDeviceSetLabel(
     device,
     label,
   );
+  return result;
+}
 
-export const deviceSetUncapturedErrorCallback = (
+export function deviceSetUncapturedErrorCallback(
   device: Deno.PointerValue,
   callback: Deno.PointerValue,
-  userdata: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuDeviceSetUncapturedErrorCallback(
+): void {
+  const result = lib.symbols.wgpuDeviceSetUncapturedErrorCallback(
     device,
     callback,
-    userdata,
+    null,
   );
+  return result;
+}
 
-export const deviceReference = (
+export function deviceReference(
   device: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuDeviceReference(
+): void {
+  const result = lib.symbols.wgpuDeviceReference(
     device,
   );
+  return result;
+}
 
-export const deviceRelease = (
+export function deviceRelease(
   device: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuDeviceRelease(
+): void {
+  const result = lib.symbols.wgpuDeviceRelease(
     device,
   );
+  return result;
+}
 
-export const instanceCreateSurface = (
+export function instanceCreateSurface(
   instance: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuInstanceCreateSurface(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuInstanceCreateSurface(
     instance,
     descriptor,
   );
+  return result;
+}
 
-export const instanceProcessEvents = (
+export function instanceProcessEvents(
   instance: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuInstanceProcessEvents(
+): void {
+  const result = lib.symbols.wgpuInstanceProcessEvents(
     instance,
   );
+  return result;
+}
 
-export const instanceRequestAdapter = (
+export function instanceRequestAdapter(
   instance: Deno.PointerValue,
   options: Deno.PointerValue,
   callback: Deno.PointerValue,
-  userdata: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuInstanceRequestAdapter(
+): void {
+  const result = lib.symbols.wgpuInstanceRequestAdapter(
     instance,
     options,
     callback,
-    userdata,
+    null,
   );
+  return result;
+}
 
-export const instanceReference = (
+export function instanceReference(
   instance: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuInstanceReference(
+): void {
+  const result = lib.symbols.wgpuInstanceReference(
     instance,
   );
+  return result;
+}
 
-export const instanceRelease = (
+export function instanceRelease(
   instance: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuInstanceRelease(
+): void {
+  const result = lib.symbols.wgpuInstanceRelease(
     instance,
   );
+  return result;
+}
 
-export const pipelineLayoutSetLabel = (
+export function pipelineLayoutSetLabel(
   pipelineLayout: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuPipelineLayoutSetLabel(
+): void {
+  const result = lib.symbols.wgpuPipelineLayoutSetLabel(
     pipelineLayout,
     label,
   );
+  return result;
+}
 
-export const pipelineLayoutReference = (
+export function pipelineLayoutReference(
   pipelineLayout: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuPipelineLayoutReference(
+): void {
+  const result = lib.symbols.wgpuPipelineLayoutReference(
     pipelineLayout,
   );
+  return result;
+}
 
-export const pipelineLayoutRelease = (
+export function pipelineLayoutRelease(
   pipelineLayout: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuPipelineLayoutRelease(
+): void {
+  const result = lib.symbols.wgpuPipelineLayoutRelease(
     pipelineLayout,
   );
+  return result;
+}
 
-export const querySetDestroy = (
+export function querySetDestroy(
   querySet: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuQuerySetDestroy(
+): void {
+  const result = lib.symbols.wgpuQuerySetDestroy(
     querySet,
   );
+  return result;
+}
 
-export const querySetGetCount = (
+export function querySetGetCount(
   querySet: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuQuerySetGetCount(
+): number {
+  const result = lib.symbols.wgpuQuerySetGetCount(
     querySet,
   );
+  return result;
+}
 
-export const querySetGetType = (
+export function querySetGetType(
   querySet: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuQuerySetGetType(
+): number {
+  const result = lib.symbols.wgpuQuerySetGetType(
     querySet,
   );
+  return C.toEnum<E.QueryType>(result);
+}
 
-export const querySetSetLabel = (
+export function querySetSetLabel(
   querySet: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuQuerySetSetLabel(
+): void {
+  const result = lib.symbols.wgpuQuerySetSetLabel(
     querySet,
     label,
   );
+  return result;
+}
 
-export const querySetReference = (
+export function querySetReference(
   querySet: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuQuerySetReference(
+): void {
+  const result = lib.symbols.wgpuQuerySetReference(
     querySet,
   );
+  return result;
+}
 
-export const querySetRelease = (
+export function querySetRelease(
   querySet: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuQuerySetRelease(
+): void {
+  const result = lib.symbols.wgpuQuerySetRelease(
     querySet,
   );
+  return result;
+}
 
-export const queueOnSubmittedWorkDone = (
+export function queueOnSubmittedWorkDone(
   queue: Deno.PointerValue,
   callback: Deno.PointerValue,
-  userdata: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuQueueOnSubmittedWorkDone(
+): void {
+  const result = lib.symbols.wgpuQueueOnSubmittedWorkDone(
     queue,
     callback,
-    userdata,
+    null,
   );
+  return result;
+}
 
-export const queueSetLabel = (
+export function queueSetLabel(
   queue: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuQueueSetLabel(
+): void {
+  const result = lib.symbols.wgpuQueueSetLabel(
     queue,
     label,
   );
+  return result;
+}
 
-export const queueSubmit = (
+export function queueSubmit(
   queue: Deno.PointerValue,
   commandCount: number | bigint,
   commands: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuQueueSubmit(
+): void {
+  const result = lib.symbols.wgpuQueueSubmit(
     queue,
     commandCount,
     commands,
   );
+  return result;
+}
 
-export const queueWriteBuffer = (
+export function queueWriteBuffer(
   queue: Deno.PointerValue,
   buffer: Deno.PointerValue,
   bufferOffset: number | bigint,
   data: Deno.PointerValue,
   size: number | bigint,
-): void =>
-  lib.symbols.wgpuQueueWriteBuffer(
+): void {
+  const result = lib.symbols.wgpuQueueWriteBuffer(
     queue,
     buffer,
     bufferOffset,
     data,
     size,
   );
+  return result;
+}
 
-export const queueWriteTexture = (
+export function queueWriteTexture(
   queue: Deno.PointerValue,
   destination: Deno.PointerValue,
   data: Deno.PointerValue,
   dataSize: number | bigint,
   dataLayout: Deno.PointerValue,
   writeSize: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuQueueWriteTexture(
+): void {
+  const result = lib.symbols.wgpuQueueWriteTexture(
     queue,
     destination,
     data,
@@ -982,68 +1189,82 @@ export const queueWriteTexture = (
     dataLayout,
     writeSize,
   );
+  return result;
+}
 
-export const queueReference = (
+export function queueReference(
   queue: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuQueueReference(
+): void {
+  const result = lib.symbols.wgpuQueueReference(
     queue,
   );
+  return result;
+}
 
-export const queueRelease = (
+export function queueRelease(
   queue: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuQueueRelease(
+): void {
+  const result = lib.symbols.wgpuQueueRelease(
     queue,
   );
+  return result;
+}
 
-export const renderBundleSetLabel = (
+export function renderBundleSetLabel(
   renderBundle: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderBundleSetLabel(
+): void {
+  const result = lib.symbols.wgpuRenderBundleSetLabel(
     renderBundle,
     label,
   );
+  return result;
+}
 
-export const renderBundleReference = (
+export function renderBundleReference(
   renderBundle: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderBundleReference(
+): void {
+  const result = lib.symbols.wgpuRenderBundleReference(
     renderBundle,
   );
+  return result;
+}
 
-export const renderBundleRelease = (
+export function renderBundleRelease(
   renderBundle: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderBundleRelease(
+): void {
+  const result = lib.symbols.wgpuRenderBundleRelease(
     renderBundle,
   );
+  return result;
+}
 
-export const renderBundleEncoderDraw = (
+export function renderBundleEncoderDraw(
   renderBundleEncoder: Deno.PointerValue,
   vertexCount: number,
   instanceCount: number,
   firstVertex: number,
   firstInstance: number,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderDraw(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderDraw(
     renderBundleEncoder,
     vertexCount,
     instanceCount,
     firstVertex,
     firstInstance,
   );
+  return result;
+}
 
-export const renderBundleEncoderDrawIndexed = (
+export function renderBundleEncoderDrawIndexed(
   renderBundleEncoder: Deno.PointerValue,
   indexCount: number,
   instanceCount: number,
   firstIndex: number,
   baseVertex: number,
   firstInstance: number,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderDrawIndexed(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderDrawIndexed(
     renderBundleEncoder,
     indexCount,
     instanceCount,
@@ -1051,184 +1272,218 @@ export const renderBundleEncoderDrawIndexed = (
     baseVertex,
     firstInstance,
   );
+  return result;
+}
 
-export const renderBundleEncoderDrawIndexedIndirect = (
+export function renderBundleEncoderDrawIndexedIndirect(
   renderBundleEncoder: Deno.PointerValue,
   indirectBuffer: Deno.PointerValue,
   indirectOffset: number | bigint,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderDrawIndexedIndirect(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderDrawIndexedIndirect(
     renderBundleEncoder,
     indirectBuffer,
     indirectOffset,
   );
+  return result;
+}
 
-export const renderBundleEncoderDrawIndirect = (
+export function renderBundleEncoderDrawIndirect(
   renderBundleEncoder: Deno.PointerValue,
   indirectBuffer: Deno.PointerValue,
   indirectOffset: number | bigint,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderDrawIndirect(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderDrawIndirect(
     renderBundleEncoder,
     indirectBuffer,
     indirectOffset,
   );
+  return result;
+}
 
-export const renderBundleEncoderFinish = (
+export function renderBundleEncoderFinish(
   renderBundleEncoder: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuRenderBundleEncoderFinish(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuRenderBundleEncoderFinish(
     renderBundleEncoder,
     descriptor,
   );
+  return result;
+}
 
-export const renderBundleEncoderInsertDebugMarker = (
+export function renderBundleEncoderInsertDebugMarker(
   renderBundleEncoder: Deno.PointerValue,
   markerLabel: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderInsertDebugMarker(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderInsertDebugMarker(
     renderBundleEncoder,
     markerLabel,
   );
+  return result;
+}
 
-export const renderBundleEncoderPopDebugGroup = (
+export function renderBundleEncoderPopDebugGroup(
   renderBundleEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderPopDebugGroup(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderPopDebugGroup(
     renderBundleEncoder,
   );
+  return result;
+}
 
-export const renderBundleEncoderPushDebugGroup = (
+export function renderBundleEncoderPushDebugGroup(
   renderBundleEncoder: Deno.PointerValue,
   groupLabel: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderPushDebugGroup(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderPushDebugGroup(
     renderBundleEncoder,
     groupLabel,
   );
+  return result;
+}
 
-export const renderBundleEncoderSetBindGroup = (
+export function renderBundleEncoderSetBindGroup(
   renderBundleEncoder: Deno.PointerValue,
   groupIndex: number,
   group: Deno.PointerValue,
   dynamicOffsetCount: number | bigint,
   dynamicOffsets: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderSetBindGroup(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderSetBindGroup(
     renderBundleEncoder,
     groupIndex,
     group,
     dynamicOffsetCount,
     dynamicOffsets,
   );
+  return result;
+}
 
-export const renderBundleEncoderSetIndexBuffer = (
+export function renderBundleEncoderSetIndexBuffer(
   renderBundleEncoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
-  format: number,
+  format: E.IndexFormat,
   offset: number | bigint,
   size: number | bigint,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderSetIndexBuffer(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderSetIndexBuffer(
     renderBundleEncoder,
     buffer,
     format,
     offset,
     size,
   );
+  return result;
+}
 
-export const renderBundleEncoderSetLabel = (
+export function renderBundleEncoderSetLabel(
   renderBundleEncoder: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderSetLabel(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderSetLabel(
     renderBundleEncoder,
     label,
   );
+  return result;
+}
 
-export const renderBundleEncoderSetPipeline = (
+export function renderBundleEncoderSetPipeline(
   renderBundleEncoder: Deno.PointerValue,
   pipeline: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderSetPipeline(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderSetPipeline(
     renderBundleEncoder,
     pipeline,
   );
+  return result;
+}
 
-export const renderBundleEncoderSetVertexBuffer = (
+export function renderBundleEncoderSetVertexBuffer(
   renderBundleEncoder: Deno.PointerValue,
   slot: number,
   buffer: Deno.PointerValue,
   offset: number | bigint,
   size: number | bigint,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderSetVertexBuffer(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderSetVertexBuffer(
     renderBundleEncoder,
     slot,
     buffer,
     offset,
     size,
   );
+  return result;
+}
 
-export const renderBundleEncoderReference = (
+export function renderBundleEncoderReference(
   renderBundleEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderReference(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderReference(
     renderBundleEncoder,
   );
+  return result;
+}
 
-export const renderBundleEncoderRelease = (
+export function renderBundleEncoderRelease(
   renderBundleEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderBundleEncoderRelease(
+): void {
+  const result = lib.symbols.wgpuRenderBundleEncoderRelease(
     renderBundleEncoder,
   );
+  return result;
+}
 
-export const renderPassEncoderBeginOcclusionQuery = (
+export function renderPassEncoderBeginOcclusionQuery(
   renderPassEncoder: Deno.PointerValue,
   queryIndex: number,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderBeginOcclusionQuery(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderBeginOcclusionQuery(
     renderPassEncoder,
     queryIndex,
   );
+  return result;
+}
 
-export const renderPassEncoderBeginPipelineStatisticsQuery = (
+export function renderPassEncoderBeginPipelineStatisticsQuery(
   renderPassEncoder: Deno.PointerValue,
   querySet: Deno.PointerValue,
   queryIndex: number,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderBeginPipelineStatisticsQuery(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderBeginPipelineStatisticsQuery(
     renderPassEncoder,
     querySet,
     queryIndex,
   );
+  return result;
+}
 
-export const renderPassEncoderDraw = (
+export function renderPassEncoderDraw(
   renderPassEncoder: Deno.PointerValue,
   vertexCount: number,
   instanceCount: number,
   firstVertex: number,
   firstInstance: number,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderDraw(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderDraw(
     renderPassEncoder,
     vertexCount,
     instanceCount,
     firstVertex,
     firstInstance,
   );
+  return result;
+}
 
-export const renderPassEncoderDrawIndexed = (
+export function renderPassEncoderDrawIndexed(
   renderPassEncoder: Deno.PointerValue,
   indexCount: number,
   instanceCount: number,
   firstIndex: number,
   baseVertex: number,
   firstInstance: number,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderDrawIndexed(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderDrawIndexed(
     renderPassEncoder,
     indexCount,
     instanceCount,
@@ -1236,183 +1491,219 @@ export const renderPassEncoderDrawIndexed = (
     baseVertex,
     firstInstance,
   );
+  return result;
+}
 
-export const renderPassEncoderDrawIndexedIndirect = (
+export function renderPassEncoderDrawIndexedIndirect(
   renderPassEncoder: Deno.PointerValue,
   indirectBuffer: Deno.PointerValue,
   indirectOffset: number | bigint,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderDrawIndexedIndirect(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderDrawIndexedIndirect(
     renderPassEncoder,
     indirectBuffer,
     indirectOffset,
   );
+  return result;
+}
 
-export const renderPassEncoderDrawIndirect = (
+export function renderPassEncoderDrawIndirect(
   renderPassEncoder: Deno.PointerValue,
   indirectBuffer: Deno.PointerValue,
   indirectOffset: number | bigint,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderDrawIndirect(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderDrawIndirect(
     renderPassEncoder,
     indirectBuffer,
     indirectOffset,
   );
+  return result;
+}
 
-export const renderPassEncoderEnd = (
+export function renderPassEncoderEnd(
   renderPassEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderEnd(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderEnd(
     renderPassEncoder,
   );
+  return result;
+}
 
-export const renderPassEncoderEndOcclusionQuery = (
+export function renderPassEncoderEndOcclusionQuery(
   renderPassEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderEndOcclusionQuery(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderEndOcclusionQuery(
     renderPassEncoder,
   );
+  return result;
+}
 
-export const renderPassEncoderEndPipelineStatisticsQuery = (
+export function renderPassEncoderEndPipelineStatisticsQuery(
   renderPassEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderEndPipelineStatisticsQuery(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderEndPipelineStatisticsQuery(
     renderPassEncoder,
   );
+  return result;
+}
 
-export const renderPassEncoderExecuteBundles = (
+export function renderPassEncoderExecuteBundles(
   renderPassEncoder: Deno.PointerValue,
   bundleCount: number | bigint,
   bundles: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderExecuteBundles(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderExecuteBundles(
     renderPassEncoder,
     bundleCount,
     bundles,
   );
+  return result;
+}
 
-export const renderPassEncoderInsertDebugMarker = (
+export function renderPassEncoderInsertDebugMarker(
   renderPassEncoder: Deno.PointerValue,
   markerLabel: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderInsertDebugMarker(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderInsertDebugMarker(
     renderPassEncoder,
     markerLabel,
   );
+  return result;
+}
 
-export const renderPassEncoderPopDebugGroup = (
+export function renderPassEncoderPopDebugGroup(
   renderPassEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderPopDebugGroup(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderPopDebugGroup(
     renderPassEncoder,
   );
+  return result;
+}
 
-export const renderPassEncoderPushDebugGroup = (
+export function renderPassEncoderPushDebugGroup(
   renderPassEncoder: Deno.PointerValue,
   groupLabel: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderPushDebugGroup(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderPushDebugGroup(
     renderPassEncoder,
     groupLabel,
   );
+  return result;
+}
 
-export const renderPassEncoderSetBindGroup = (
+export function renderPassEncoderSetBindGroup(
   renderPassEncoder: Deno.PointerValue,
   groupIndex: number,
   group: Deno.PointerValue,
   dynamicOffsetCount: number | bigint,
   dynamicOffsets: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderSetBindGroup(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderSetBindGroup(
     renderPassEncoder,
     groupIndex,
     group,
     dynamicOffsetCount,
     dynamicOffsets,
   );
+  return result;
+}
 
-export const renderPassEncoderSetBlendConstant = (
+export function renderPassEncoderSetBlendConstant(
   renderPassEncoder: Deno.PointerValue,
   color: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderSetBlendConstant(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderSetBlendConstant(
     renderPassEncoder,
     color,
   );
+  return result;
+}
 
-export const renderPassEncoderSetIndexBuffer = (
+export function renderPassEncoderSetIndexBuffer(
   renderPassEncoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
-  format: number,
+  format: E.IndexFormat,
   offset: number | bigint,
   size: number | bigint,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderSetIndexBuffer(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderSetIndexBuffer(
     renderPassEncoder,
     buffer,
     format,
     offset,
     size,
   );
+  return result;
+}
 
-export const renderPassEncoderSetLabel = (
+export function renderPassEncoderSetLabel(
   renderPassEncoder: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderSetLabel(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderSetLabel(
     renderPassEncoder,
     label,
   );
+  return result;
+}
 
-export const renderPassEncoderSetPipeline = (
+export function renderPassEncoderSetPipeline(
   renderPassEncoder: Deno.PointerValue,
   pipeline: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderSetPipeline(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderSetPipeline(
     renderPassEncoder,
     pipeline,
   );
+  return result;
+}
 
-export const renderPassEncoderSetScissorRect = (
+export function renderPassEncoderSetScissorRect(
   renderPassEncoder: Deno.PointerValue,
   x: number,
   y: number,
   width: number,
   height: number,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderSetScissorRect(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderSetScissorRect(
     renderPassEncoder,
     x,
     y,
     width,
     height,
   );
+  return result;
+}
 
-export const renderPassEncoderSetStencilReference = (
+export function renderPassEncoderSetStencilReference(
   renderPassEncoder: Deno.PointerValue,
   reference: number,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderSetStencilReference(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderSetStencilReference(
     renderPassEncoder,
     reference,
   );
+  return result;
+}
 
-export const renderPassEncoderSetVertexBuffer = (
+export function renderPassEncoderSetVertexBuffer(
   renderPassEncoder: Deno.PointerValue,
   slot: number,
   buffer: Deno.PointerValue,
   offset: number | bigint,
   size: number | bigint,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderSetVertexBuffer(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderSetVertexBuffer(
     renderPassEncoder,
     slot,
     buffer,
     offset,
     size,
   );
+  return result;
+}
 
-export const renderPassEncoderSetViewport = (
+export function renderPassEncoderSetViewport(
   renderPassEncoder: Deno.PointerValue,
   x: bigint,
   y: bigint,
@@ -1420,8 +1711,8 @@ export const renderPassEncoderSetViewport = (
   height: bigint,
   minDepth: bigint,
   maxDepth: bigint,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderSetViewport(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderSetViewport(
     renderPassEncoder,
     x,
     y,
@@ -1430,403 +1721,497 @@ export const renderPassEncoderSetViewport = (
     minDepth,
     maxDepth,
   );
+  return result;
+}
 
-export const renderPassEncoderReference = (
+export function renderPassEncoderReference(
   renderPassEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderReference(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderReference(
     renderPassEncoder,
   );
+  return result;
+}
 
-export const renderPassEncoderRelease = (
+export function renderPassEncoderRelease(
   renderPassEncoder: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderRelease(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderRelease(
     renderPassEncoder,
   );
+  return result;
+}
 
-export const renderPipelineGetBindGroupLayout = (
+export function renderPipelineGetBindGroupLayout(
   renderPipeline: Deno.PointerValue,
   groupIndex: number,
-): Deno.PointerValue =>
-  lib.symbols.wgpuRenderPipelineGetBindGroupLayout(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuRenderPipelineGetBindGroupLayout(
     renderPipeline,
     groupIndex,
   );
+  return result;
+}
 
-export const renderPipelineSetLabel = (
+export function renderPipelineSetLabel(
   renderPipeline: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPipelineSetLabel(
+): void {
+  const result = lib.symbols.wgpuRenderPipelineSetLabel(
     renderPipeline,
     label,
   );
+  return result;
+}
 
-export const renderPipelineReference = (
+export function renderPipelineReference(
   renderPipeline: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPipelineReference(
+): void {
+  const result = lib.symbols.wgpuRenderPipelineReference(
     renderPipeline,
   );
+  return result;
+}
 
-export const renderPipelineRelease = (
+export function renderPipelineRelease(
   renderPipeline: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPipelineRelease(
+): void {
+  const result = lib.symbols.wgpuRenderPipelineRelease(
     renderPipeline,
   );
+  return result;
+}
 
-export const samplerSetLabel = (
+export function samplerSetLabel(
   sampler: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuSamplerSetLabel(
+): void {
+  const result = lib.symbols.wgpuSamplerSetLabel(
     sampler,
     label,
   );
+  return result;
+}
 
-export const samplerReference = (
+export function samplerReference(
   sampler: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuSamplerReference(
+): void {
+  const result = lib.symbols.wgpuSamplerReference(
     sampler,
   );
+  return result;
+}
 
-export const samplerRelease = (
+export function samplerRelease(
   sampler: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuSamplerRelease(
+): void {
+  const result = lib.symbols.wgpuSamplerRelease(
     sampler,
   );
+  return result;
+}
 
-export const shaderModuleGetCompilationInfo = (
+export function shaderModuleGetCompilationInfo(
   shaderModule: Deno.PointerValue,
   callback: Deno.PointerValue,
-  userdata: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuShaderModuleGetCompilationInfo(
+): void {
+  const result = lib.symbols.wgpuShaderModuleGetCompilationInfo(
     shaderModule,
     callback,
-    userdata,
+    null,
   );
+  return result;
+}
 
-export const shaderModuleSetLabel = (
+export function shaderModuleSetLabel(
   shaderModule: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuShaderModuleSetLabel(
+): void {
+  const result = lib.symbols.wgpuShaderModuleSetLabel(
     shaderModule,
     label,
   );
+  return result;
+}
 
-export const shaderModuleReference = (
+export function shaderModuleReference(
   shaderModule: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuShaderModuleReference(
+): void {
+  const result = lib.symbols.wgpuShaderModuleReference(
     shaderModule,
   );
+  return result;
+}
 
-export const shaderModuleRelease = (
+export function shaderModuleRelease(
   shaderModule: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuShaderModuleRelease(
+): void {
+  const result = lib.symbols.wgpuShaderModuleRelease(
     shaderModule,
   );
+  return result;
+}
 
-export const surfaceGetPreferredFormat = (
+export function surfaceGetPreferredFormat(
   surface: Deno.PointerValue,
   adapter: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuSurfaceGetPreferredFormat(
+): number {
+  const result = lib.symbols.wgpuSurfaceGetPreferredFormat(
     surface,
     adapter,
   );
+  return C.toEnum<E.TextureFormat>(result);
+}
 
-export const surfaceReference = (
+export function surfaceReference(
   surface: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuSurfaceReference(
+): void {
+  const result = lib.symbols.wgpuSurfaceReference(
     surface,
   );
+  return result;
+}
 
-export const surfaceRelease = (
+export function surfaceRelease(
   surface: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuSurfaceRelease(
+): void {
+  const result = lib.symbols.wgpuSurfaceRelease(
     surface,
   );
+  return result;
+}
 
-export const swapChainGetCurrentTextureView = (
+export function swapChainGetCurrentTextureView(
   swapChain: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuSwapChainGetCurrentTextureView(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuSwapChainGetCurrentTextureView(
     swapChain,
   );
+  return result;
+}
 
-export const swapChainPresent = (
+export function swapChainPresent(
   swapChain: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuSwapChainPresent(
+): void {
+  const result = lib.symbols.wgpuSwapChainPresent(
     swapChain,
   );
+  return result;
+}
 
-export const swapChainReference = (
+export function swapChainReference(
   swapChain: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuSwapChainReference(
+): void {
+  const result = lib.symbols.wgpuSwapChainReference(
     swapChain,
   );
+  return result;
+}
 
-export const swapChainRelease = (
+export function swapChainRelease(
   swapChain: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuSwapChainRelease(
+): void {
+  const result = lib.symbols.wgpuSwapChainRelease(
     swapChain,
   );
+  return result;
+}
 
-export const textureCreateView = (
+export function textureCreateView(
   texture: Deno.PointerValue,
   descriptor: Deno.PointerValue,
-): Deno.PointerValue =>
-  lib.symbols.wgpuTextureCreateView(
+): Deno.PointerValue {
+  const result = lib.symbols.wgpuTextureCreateView(
     texture,
     descriptor,
   );
+  return result;
+}
 
-export const textureDestroy = (
+export function textureDestroy(
   texture: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuTextureDestroy(
+): void {
+  const result = lib.symbols.wgpuTextureDestroy(
     texture,
   );
+  return result;
+}
 
-export const textureGetDepthOrArrayLayers = (
+export function textureGetDepthOrArrayLayers(
   texture: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuTextureGetDepthOrArrayLayers(
+): number {
+  const result = lib.symbols.wgpuTextureGetDepthOrArrayLayers(
     texture,
   );
+  return result;
+}
 
-export const textureGetDimension = (
+export function textureGetDimension(
   texture: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuTextureGetDimension(
+): number {
+  const result = lib.symbols.wgpuTextureGetDimension(
     texture,
   );
+  return C.toEnum<E.TextureDimension>(result);
+}
 
-export const textureGetFormat = (
+export function textureGetFormat(
   texture: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuTextureGetFormat(
+): number {
+  const result = lib.symbols.wgpuTextureGetFormat(
     texture,
   );
+  return C.toEnum<E.TextureFormat>(result);
+}
 
-export const textureGetHeight = (
+export function textureGetHeight(
   texture: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuTextureGetHeight(
+): number {
+  const result = lib.symbols.wgpuTextureGetHeight(
     texture,
   );
+  return result;
+}
 
-export const textureGetMipLevelCount = (
+export function textureGetMipLevelCount(
   texture: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuTextureGetMipLevelCount(
+): number {
+  const result = lib.symbols.wgpuTextureGetMipLevelCount(
     texture,
   );
+  return result;
+}
 
-export const textureGetSampleCount = (
+export function textureGetSampleCount(
   texture: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuTextureGetSampleCount(
+): number {
+  const result = lib.symbols.wgpuTextureGetSampleCount(
     texture,
   );
+  return result;
+}
 
-export const textureGetUsage = (
+export function textureGetUsage(
   texture: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuTextureGetUsage(
+): number {
+  const result = lib.symbols.wgpuTextureGetUsage(
     texture,
   );
+  return result;
+}
 
-export const textureGetWidth = (
+export function textureGetWidth(
   texture: Deno.PointerValue,
-): number =>
-  lib.symbols.wgpuTextureGetWidth(
+): number {
+  const result = lib.symbols.wgpuTextureGetWidth(
     texture,
   );
+  return result;
+}
 
-export const textureSetLabel = (
+export function textureSetLabel(
   texture: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuTextureSetLabel(
+): void {
+  const result = lib.symbols.wgpuTextureSetLabel(
     texture,
     label,
   );
+  return result;
+}
 
-export const textureReference = (
+export function textureReference(
   texture: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuTextureReference(
+): void {
+  const result = lib.symbols.wgpuTextureReference(
     texture,
   );
+  return result;
+}
 
-export const textureRelease = (
+export function textureRelease(
   texture: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuTextureRelease(
+): void {
+  const result = lib.symbols.wgpuTextureRelease(
     texture,
   );
+  return result;
+}
 
-export const textureViewSetLabel = (
+export function textureViewSetLabel(
   textureView: Deno.PointerValue,
   label: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuTextureViewSetLabel(
+): void {
+  const result = lib.symbols.wgpuTextureViewSetLabel(
     textureView,
     label,
   );
+  return result;
+}
 
-export const textureViewReference = (
+export function textureViewReference(
   textureView: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuTextureViewReference(
+): void {
+  const result = lib.symbols.wgpuTextureViewReference(
     textureView,
   );
+  return result;
+}
 
-export const textureViewRelease = (
+export function textureViewRelease(
   textureView: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuTextureViewRelease(
+): void {
+  const result = lib.symbols.wgpuTextureViewRelease(
     textureView,
   );
+  return result;
+}
 
-export const generateReport = (
+export function generateReport(
   instance: Deno.PointerValue,
   report: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuGenerateReport(
+): void {
+  const result = lib.symbols.wgpuGenerateReport(
     instance,
     report,
   );
+  return result;
+}
 
-export const instanceEnumerateAdapters = (
+export function instanceEnumerateAdapters(
   instance: Deno.PointerValue,
   options: Deno.PointerValue,
   adapters: Deno.PointerValue,
-): number | bigint =>
-  lib.symbols.wgpuInstanceEnumerateAdapters(
+): number | bigint {
+  const result = lib.symbols.wgpuInstanceEnumerateAdapters(
     instance,
     options,
     adapters,
   );
+  return result;
+}
 
-export const queueSubmitForIndex = (
+export function queueSubmitForIndex(
   queue: Deno.PointerValue,
   commandCount: number | bigint,
   commands: Deno.PointerValue,
-): number | bigint =>
-  lib.symbols.wgpuQueueSubmitForIndex(
+): number | bigint {
+  const result = lib.symbols.wgpuQueueSubmitForIndex(
     queue,
     commandCount,
     commands,
   );
+  return result;
+}
 
-export const devicePoll = (
+export function devicePoll(
   device: Deno.PointerValue,
   wait: boolean,
   wrappedSubmissionIndex: Deno.PointerValue,
-): boolean =>
-  lib.symbols.wgpuDevicePoll(
+): boolean {
+  const result = lib.symbols.wgpuDevicePoll(
     device,
-    wait ? 1 : 0,
+    C.toNum(wait),
     wrappedSubmissionIndex,
-  ) == 1;
-
-export const setLogCallback = (
-  callback: Deno.PointerValue,
-  userdata: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuSetLogCallback(
-    callback,
-    userdata,
   );
+  return C.toBool(result);
+}
 
-export const setLogLevel = (
-  level: number,
-): void =>
-  lib.symbols.wgpuSetLogLevel(
+export function setLogCallback(
+  callback: Deno.PointerValue,
+): void {
+  const result = lib.symbols.wgpuSetLogCallback(
+    callback,
+    null,
+  );
+  return result;
+}
+
+export function setLogLevel(
+  level: E.LogLevel,
+): void {
+  const result = lib.symbols.wgpuSetLogLevel(
     level,
   );
+  return result;
+}
 
-export const getVersion = (
-): number =>
-  lib.symbols.wgpuGetVersion(
+export function getVersion(
+): number {
+  const result = lib.symbols.wgpuGetVersion(
   );
+  return result;
+}
 
-export const surfaceGetCapabilities = (
+export function surfaceGetCapabilities(
   surface: Deno.PointerValue,
   adapter: Deno.PointerValue,
   capabilities: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuSurfaceGetCapabilities(
+): void {
+  const result = lib.symbols.wgpuSurfaceGetCapabilities(
     surface,
     adapter,
     capabilities,
   );
+  return result;
+}
 
-export const renderPassEncoderSetPushConstants = (
+export function renderPassEncoderSetPushConstants(
   encoder: Deno.PointerValue,
   stages: number,
   offset: number,
   sizeBytes: number,
   data: Deno.PointerValue,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderSetPushConstants(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderSetPushConstants(
     encoder,
     stages,
     offset,
     sizeBytes,
     data,
   );
+  return result;
+}
 
-export const renderPassEncoderMultiDrawIndirect = (
+export function renderPassEncoderMultiDrawIndirect(
   encoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
   offset: number | bigint,
   count: number,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderMultiDrawIndirect(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderMultiDrawIndirect(
     encoder,
     buffer,
     offset,
     count,
   );
+  return result;
+}
 
-export const renderPassEncoderMultiDrawIndexedIndirect = (
+export function renderPassEncoderMultiDrawIndexedIndirect(
   encoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
   offset: number | bigint,
   count: number,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderMultiDrawIndexedIndirect(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderMultiDrawIndexedIndirect(
     encoder,
     buffer,
     offset,
     count,
   );
+  return result;
+}
 
-export const renderPassEncoderMultiDrawIndirectCount = (
+export function renderPassEncoderMultiDrawIndirectCount(
   encoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
   offset: number | bigint,
   count_buffer: Deno.PointerValue,
   count_buffer_offset: number | bigint,
   max_count: number,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderMultiDrawIndirectCount(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderMultiDrawIndirectCount(
     encoder,
     buffer,
     offset,
@@ -1834,16 +2219,18 @@ export const renderPassEncoderMultiDrawIndirectCount = (
     count_buffer_offset,
     max_count,
   );
+  return result;
+}
 
-export const renderPassEncoderMultiDrawIndexedIndirectCount = (
+export function renderPassEncoderMultiDrawIndexedIndirectCount(
   encoder: Deno.PointerValue,
   buffer: Deno.PointerValue,
   offset: number | bigint,
   count_buffer: Deno.PointerValue,
   count_buffer_offset: number | bigint,
   max_count: number,
-): void =>
-  lib.symbols.wgpuRenderPassEncoderMultiDrawIndexedIndirectCount(
+): void {
+  const result = lib.symbols.wgpuRenderPassEncoderMultiDrawIndexedIndirectCount(
     encoder,
     buffer,
     offset,
@@ -1851,4 +2238,6 @@ export const renderPassEncoderMultiDrawIndexedIndirectCount = (
     count_buffer_offset,
     max_count,
   );
+  return result;
+}
 

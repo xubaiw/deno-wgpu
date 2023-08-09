@@ -2,14 +2,14 @@ import {
   CXChildVisitResult,
   CXCursorKind,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
-import { Ctx, join } from "./util.ts";
+import { Ctx, join, removePrefix } from "./util.ts";
 
 export const genCallbacks = async (ctx: Ctx) => {
   const { tu, dir } = ctx;
   const cbs: Record<string, unknown> = {};
   tu.getCursor().visitChildren((cursor) => {
     if (cursor.kind == CXCursorKind.CXCursor_TypedefDecl) {
-      const name = cursor.getSpelling().replace(/^WGPU/, "");
+      const name = removePrefix(cursor.getSpelling());
       if (name.match(/[cC]allback/)) {
         const under = cursor.getTypedefDeclarationOfUnderlyingType()!;
         const pointee = under.getPointeeType()!;

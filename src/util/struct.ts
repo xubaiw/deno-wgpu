@@ -173,6 +173,7 @@ const defineSpecProperties = <S extends StructSpec>(
           );
           return defineSpecProperties(fspec, { view: fview });
         };
+        // FXIME: this setter does not work
         set = (v) => {
           const fview = v.view;
           new Uint8Array(view.buffer, view.byteOffset, fd.size).set(
