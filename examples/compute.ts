@@ -23,7 +23,7 @@ const [, adapter] = await wrap(
   w.RequestAdapterCallback,
   w.instanceRequestAdapter,
   2,
-)(instance, null, null);
+)(instance, null);
 console.log({ adapter });
 
 // Request device
@@ -32,7 +32,7 @@ const [, device] = await wrap(
   w.RequestDeviceCallback,
   w.adapterRequestDevice,
   2,
-)(adapter, ref(deviceDescriptor), null);
+)(adapter, ref(deviceDescriptor));
 
 const queue = w.deviceGetQueue(device);
 console.log({ queue });
@@ -189,7 +189,6 @@ async function mapAsync(
     offset,
     size,
     callback.pointer,
-    null,
   );
   let i = 0;
   while (!w.devicePoll(device, false, null)) {

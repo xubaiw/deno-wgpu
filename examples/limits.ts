@@ -13,7 +13,7 @@ const [_, adapter] = await wrap(
   w.RequestAdapterCallback,
   w.instanceRequestAdapter,
   2,
-)(instance, null, null);
+)(instance, null);
 
 // Get Limits
 const slimits = alloc(w.SupportedLimits);
