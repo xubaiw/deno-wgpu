@@ -2,7 +2,7 @@ import { prepare } from "../util/prepare.ts";
 
 const libPath = await prepare();
 
-export const lib = Deno.dlopen(libPath, {
+export default Deno.dlopen(libPath, {
   "wgpuCreateInstance": {
     "result": "pointer",
     "parameters": [
@@ -24,7 +24,7 @@ export const lib = Deno.dlopen(libPath, {
     ]
   },
   "wgpuAdapterGetLimits": {
-    "result": "i8",
+    "result": "u8",
     "parameters": [
       "pointer",
       "pointer"
@@ -38,7 +38,7 @@ export const lib = Deno.dlopen(libPath, {
     ]
   },
   "wgpuAdapterHasFeature": {
-    "result": "i8",
+    "result": "u8",
     "parameters": [
       "pointer",
       "u32"
@@ -567,7 +567,7 @@ export const lib = Deno.dlopen(libPath, {
     ]
   },
   "wgpuDeviceGetLimits": {
-    "result": "i8",
+    "result": "u8",
     "parameters": [
       "pointer",
       "pointer"
@@ -580,7 +580,7 @@ export const lib = Deno.dlopen(libPath, {
     ]
   },
   "wgpuDeviceHasFeature": {
-    "result": "i8",
+    "result": "u8",
     "parameters": [
       "pointer",
       "u32"
@@ -810,7 +810,7 @@ export const lib = Deno.dlopen(libPath, {
       "u32",
       "u32",
       "u32",
-      "u32",
+      "i32",
       "u32"
     ]
   },
@@ -945,7 +945,7 @@ export const lib = Deno.dlopen(libPath, {
       "u32",
       "u32",
       "u32",
-      "u32",
+      "i32",
       "u32"
     ]
   },
@@ -1341,10 +1341,10 @@ export const lib = Deno.dlopen(libPath, {
     ]
   },
   "wgpuDevicePoll": {
-    "result": "i8",
+    "result": "u8",
     "parameters": [
       "pointer",
-      "i8",
+      "u8",
       "pointer"
     ]
   },
@@ -1423,5 +1423,4 @@ export const lib = Deno.dlopen(libPath, {
       "u32"
     ]
   }
-}); 
-
+});

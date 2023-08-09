@@ -2,6 +2,7 @@
  * Adapted from https://github.com/gfx-rs/wgpu-native/blob/trunk/examples/compute/main.c
  */
 
+import { delay } from "https://deno.land/std@0.190.0/async/mod.ts";
 import { alloc, ref, wrap } from "../mod.ts";
 import * as w from "../mod.ts";
 
@@ -169,16 +170,37 @@ arr[0] = BigInt(Deno.UnsafePointer.value(commandBuffer));
 w.queueSubmit(queue, 1, Deno.UnsafePointer.of(arr));
 console.log("queue submited");
 
-const callback = new Deno.UnsafeCallback(w.BufferMapCallback, console.log);
-w.bufferMapAsync(
-  stagingBuffer,
-  w.MapMode.MapMode_Read,
-  0,
-  numbers.byteLength,
-  callback.pointer,
-  null,
-);
-w.devicePoll(device, true, null);
+async function mapAsync(
+  buffer: Deno.PointerValue,
+  mode: w.MapMode,
+  offset: number,
+  size: number,
+) {
+  let userdata: number;
+  const callback = new Deno.UnsafeCallback(
+    w.BufferMapCallback,
+    (status) => {
+      userdata = status;
+    },
+  );
+  w.bufferMapAsync(
+    buffer,
+    mode,
+    offset,
+    size,
+    callback.pointer,
+    null,
+  );
+  let i = 0;
+  while (!w.devicePoll(device, false, null)) {
+    await delay(10);
+    console.log("poll", i);
+    i += 1;
+  }
+  return userdata!;
+}
+
+await mapAsync(stagingBuffer, w.MapMode.MapMode_Read, 0, numbers.byteLength);
 
 const buf = w.bufferGetMappedRange(stagingBuffer, 0, numbers.byteLength);
 console.log({ buf });

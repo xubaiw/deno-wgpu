@@ -1,4 +1,4 @@
-import { lib } from "./lib.js";
+import lib from "./symbol.ts";
 
 export const createInstance = (
   descriptor: Deno.PointerValue,

@@ -1,5 +1,5 @@
 {
   "tasks": {
-    "gen": "deno run -A --unstable tool/gen/mod.js"
+    "gen": "deno run -A --unstable tool/gen/mod.ts"
   }
 }

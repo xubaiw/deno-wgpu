@@ -105,14 +105,17 @@ if (Deno.args[0] == "callback") {
   });
 }
 if (Deno.args[0] == "function") {
+  const set = new Set();
   tu.getCursor().visitChildren((cursor) => {
     if (cursor.kind == CXCursorKind.CXCursor_FunctionDecl) {
       const name = cursor.getSpelling();
+      set.add(cursor.getResultType()?.getCanonicalType().getKindSpelling());
       const params: unknown[] = [];
       const narg = cursor.getNumberOfArguments();
       for (let i = 0; i < narg; i++) {
         const ac = cursor.getArgument(i);
         const t = ac?.getType();
+        set.add(ac?.getType()?.getCanonicalType().getKindSpelling());
         params.push([
           t?.getSpelling(),
           t?.getKindSpelling(),
@@ -120,10 +123,10 @@ if (Deno.args[0] == "function") {
           t?.getCanonicalType().getKindSpelling(),
         ]);
       }
-      console.log({ name, params });
     }
     return CXChildVisitResult.CXChildVisit_Continue;
   });
+  console.log(set);
 }
 if (Deno.args[0] == "struct") {
   const rec = {};

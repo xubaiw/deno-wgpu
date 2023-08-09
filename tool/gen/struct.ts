@@ -1,24 +1,32 @@
+// deno-lint-ignore-file no-explicit-any
 import {
   CXChildVisitResult,
   CXCursorKind,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
+import { Ctx, join } from "./util.ts";
 
-export const genStructs = async (tu, path) => {
-  const structs = {};
+export const genStructs = async (ctx: Ctx) => {
+  const { tu, dir } = ctx;
+  const structs: Record<string, any> = {};
+  // visit
   tu.getCursor().visitChildren((cursor) => {
+    // only handle struct decl
     if (cursor.kind == CXCursorKind.CXCursor_StructDecl) {
       const name = cursor.getSpelling().replace(/^WGPU/, "");
-      const size = cursor.getType().getSizeOf();
-      const fields = {};
+      const size = cursor.getType()!.getSizeOf();
+      const fields: Record<string, any> = {};
       cursor.visitChildren((cursor) => {
         if (cursor.kind == CXCursorKind.CXCursor_FieldDecl) {
           const name = cursor.getSpelling();
           const offset = cursor.getOffsetOfField() / 8;
-          const kind = cursor.getType().getCanonicalType().getKindSpelling();
+          const kind = cursor.getType()!.getCanonicalType().getKindSpelling();
           fields[name] = { offset, kind };
           if (kind == "Record") {
-            fields[name]["type"] = cursor.getType().getSpelling().replace(/^WGPU/, "");
-            fields[name]["size"] = cursor.getType().getSizeOf();
+            fields[name]["type"] = cursor.getType()!.getSpelling().replace(
+              /^WGPU/,
+              "",
+            );
+            fields[name]["size"] = cursor.getType()!.getSizeOf();
           }
         }
         return CXChildVisitResult.CXChildVisit_Continue;
@@ -27,7 +35,7 @@ export const genStructs = async (tu, path) => {
     }
     return CXChildVisitResult.CXChildVisit_Recurse;
   });
-  // write struct to file
+  // generate file content
   let text = ``;
   for (const [sname, sd] of Object.entries(structs)) {
     if (sd.size > 0) {
@@ -37,11 +45,12 @@ export const genStructs = async (tu, path) => {
       text += `  fields: {\n`;
       for (const [fname, fd] of Object.entries(sd.fields)) {
         text += `    ${fname}: {\n`;
-        text += `      offset: ${fd.offset},\n`;
-        text += `      kind: "${fd.kind}",\n`;
-        if (fd.kind == "Record") {
-          text += `      size: ${fd.size},\n`;
-          text += `      type: () => ${fd.type},\n`;
+        const fda = fd as any;
+        text += `      offset: ${fda.offset},\n`;
+        text += `      kind: "${fda.kind}",\n`;
+        if (fda.kind == "Record") {
+          text += `      size: ${fda.size},\n`;
+          text += `      type: () => ${fda.type},\n`;
         }
         text += `    },\n`;
       }
@@ -49,5 +58,6 @@ export const genStructs = async (tu, path) => {
       text += `} as const;\n\n`;
     }
   }
-  await Deno.writeTextFile(path, text);
+  // actual write
+  await Deno.writeTextFile(join(dir, "struct.ts"), text);
 };
