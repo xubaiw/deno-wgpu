@@ -2,7 +2,7 @@ import {
   CXChildVisitResult,
   CXCursorKind,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
-import { Ctx, join, removePrefix } from "./util.ts";
+import { Ctx, join, nofix } from "./util.ts";
 
 export const genEnums = async (ctx: Ctx) => {
   const { tu, dir } = ctx;
@@ -11,13 +11,13 @@ export const genEnums = async (ctx: Ctx) => {
   tu.getCursor().visitChildren((cursor) => {
     // only handle enums
     if (cursor.kind == CXCursorKind.CXCursor_EnumDecl) {
-      const name = removePrefix(cursor.getSpelling());
+      const name = nofix(cursor.getSpelling());
       if (enums[name] == null) enums[name] = {};
       // visit sub constants
       cursor.visitChildren((cursor) => {
         // handle constants
         if (cursor.kind == CXCursorKind.CXCursor_EnumConstantDecl) {
-          const key = removePrefix(cursor.getSpelling());
+          const key = nofix(cursor.getSpelling());
           const value = cursor.getEnumConstantDeclarationUnsignedValue();
           enums[name][key] = value;
         }

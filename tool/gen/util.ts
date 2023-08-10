@@ -8,8 +8,17 @@ export type Ctx = {
   dir: string;
 };
 
-export const removePrefix = (name: string): string => {
+export const nofix = (name: string): string => {
   if (name.match(/^w/)) {
     return name.replace(/^wgpu/, "");
   } else return name.replace(/^WGPU/, "");
 };
+
+export const sep =
+  (s: string) => (...xs: (string | null | (string | null)[])[]): string =>
+    xs.filter(nn).map((x) => typeof x == "string" ? x : x.filter(nn).join(s))
+      .join(s);
+
+function nn<T>(x: T): x is NonNullable<T> {
+  return x !== null;
+}

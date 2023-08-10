@@ -1,44 +1,83 @@
-export const BufferMapCallback = {
+export const BufferMapCallbackDefinition = {
   "result": "void",
   "parameters": ["u32", "pointer"],
 } as const;
-export const CompilationInfoCallback = {
+
+export type BufferMapCallbackDefinition = typeof BufferMapCallbackDefinition;
+
+export const CompilationInfoCallbackDefinition = {
   "result": "void",
   "parameters": ["u32", "pointer", "pointer"],
 } as const;
-export const CreateComputePipelineAsyncCallback = {
+
+export type CompilationInfoCallbackDefinition =
+  typeof CompilationInfoCallbackDefinition;
+
+export const CreateComputePipelineAsyncCallbackDefinition = {
   "result": "void",
   "parameters": ["u32", "pointer", "pointer", "pointer"],
 } as const;
-export const CreateRenderPipelineAsyncCallback = {
+
+export type CreateComputePipelineAsyncCallbackDefinition =
+  typeof CreateComputePipelineAsyncCallbackDefinition;
+
+export const CreateRenderPipelineAsyncCallbackDefinition = {
   "result": "void",
   "parameters": ["u32", "pointer", "pointer", "pointer"],
 } as const;
-export const DeviceLostCallback = {
+
+export type CreateRenderPipelineAsyncCallbackDefinition =
+  typeof CreateRenderPipelineAsyncCallbackDefinition;
+
+export const DeviceLostCallbackDefinition = {
   "result": "void",
   "parameters": ["u32", "pointer", "pointer"],
 } as const;
-export const ErrorCallback = {
+
+export type DeviceLostCallbackDefinition = typeof DeviceLostCallbackDefinition;
+
+export const ErrorCallbackDefinition = {
   "result": "void",
   "parameters": ["u32", "pointer", "pointer"],
 } as const;
-export const QueueWorkDoneCallback = {
+
+export type ErrorCallbackDefinition = typeof ErrorCallbackDefinition;
+
+export const QueueWorkDoneCallbackDefinition = {
   "result": "void",
   "parameters": ["u32", "pointer"],
 } as const;
-export const RequestAdapterCallback = {
+
+export type QueueWorkDoneCallbackDefinition =
+  typeof QueueWorkDoneCallbackDefinition;
+
+export const RequestAdapterCallbackDefinition = {
   "result": "void",
   "parameters": ["u32", "pointer", "pointer", "pointer"],
 } as const;
-export const RequestDeviceCallback = {
+
+export type RequestAdapterCallbackDefinition =
+  typeof RequestAdapterCallbackDefinition;
+
+export const RequestDeviceCallbackDefinition = {
   "result": "void",
   "parameters": ["u32", "pointer", "pointer", "pointer"],
 } as const;
-export const ProcDeviceSetUncapturedErrorCallback = {
+
+export type RequestDeviceCallbackDefinition =
+  typeof RequestDeviceCallbackDefinition;
+
+export const ProcDeviceSetUncapturedErrorCallbackDefinition = {
   "result": "void",
   "parameters": ["pointer", "pointer", "pointer"],
 } as const;
-export const LogCallback = {
+
+export type ProcDeviceSetUncapturedErrorCallbackDefinition =
+  typeof ProcDeviceSetUncapturedErrorCallbackDefinition;
+
+export const LogCallbackDefinition = {
   "result": "void",
   "parameters": ["u32", "pointer", "pointer"],
 } as const;
+
+export type LogCallbackDefinition = typeof LogCallbackDefinition;

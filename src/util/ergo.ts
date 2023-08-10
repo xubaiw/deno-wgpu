@@ -2,6 +2,8 @@
 
 import { delay } from "https://deno.land/std@0.197.0/async/delay.ts";
 
+export const ptrs = Symbol("ptrs");
+
 export const wrapcallback = (
   spec: any,
   fn: any,
@@ -35,7 +37,7 @@ export const wrapcallback = (
       fn(...args, ncb.pointer);
       return cb;
     }
-    // NCB callback
+    // DUC callback
     if (cb instanceof Deno.UnsafeCallback) {
       fn(...args, cb.pointer);
     }
@@ -59,7 +61,7 @@ const wrappoll = async (
     ...args,
     callback.pointer,
   );
-  while (!poll(args[0].device, false, null)) {
+  while (!poll(args[0][ptrs].device, false, null)) {
     await delay(10);
   }
   return userdata!;

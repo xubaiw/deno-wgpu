@@ -63,6 +63,7 @@
     "https://deno.land/std@0.197.0/_util/os.ts": "d932f56d41e4f6a6093d56044e29ce637f8dcc43c5a90af43504a889cf1775e3",
     "https://deno.land/std@0.197.0/assert/assert.ts": "9a97dad6d98c238938e7540736b826440ad8c1c1e54430ca4c4e623e585607ee",
     "https://deno.land/std@0.197.0/assert/assertion_error.ts": "4d0bde9b374dfbcbe8ac23f54f567b77024fb67dbb1906a852d67fe050d42f56",
+    "https://deno.land/std@0.197.0/async/delay.ts": "a6142eb44cdd856b645086af2b811b1fcce08ec06bb7d50969e6a872ee9b8659",
     "https://deno.land/std@0.197.0/fs/_util.ts": "fbf57dcdc9f7bc8128d60301eece608246971a7836a3bb1e78da75314f08b978",
     "https://deno.land/std@0.197.0/fs/copy.ts": "b4f7fe87190d7b310c88a2d9ff845210c0a2b7b0a094ec509747359023beb7d6",
     "https://deno.land/std@0.197.0/fs/empty_dir.ts": "c3d2da4c7352fab1cf144a1ecfef58090769e8af633678e0f3fabaef98594688",
@@ -111,6 +112,7 @@
     "https://deno.land/x/download@v2.0.2/mod.ts": "ec1649bc70d41898baa1123743486dba40612581d2478243fe45e875233f6b6a",
     "https://deno.land/x/download@v2.0.2/types.ts": "564477c37f19599cc336678c6d26e8d0dac35fcef76db680cc5f5657523c2f94",
     "https://deno.land/x/jszip@0.11.0/mod.ts": "5661ddc18e9ac9c07e3c5d2483bc912a7022b6af0d784bb7b05035973e640ba1",
+    "https://deno.land/x/jszip@0.11.0/types.ts": "1528d1279fbb64dd118c371331c641a3a5eff2b594336fb38a7659cf4c53b2d1",
     "https://deno.land/x/libclang@1.0.0-beta.8/BuildSystem.ts": "02d72dd221396972e16cdbeaf6117a33ec5a4bfe1a134cb94c5a8aaaa5f7713e",
     "https://deno.land/x/libclang@1.0.0-beta.8/CXCompilationDatabase.ts": "16a82acf5de22d0220a9abeda2b23f78d7962b11975a00561a894ab56aafa127",
     "https://deno.land/x/libclang@1.0.0-beta.8/ffi.ts": "d3ca6faf774a2511afea3c686440fa6bf87cd0caa6bfc6a488854f539ad74a4d",
@@ -133,7 +135,8 @@
   "npm": {
     "specifiers": {
       "@qnighy/dedent": "@qnighy/dedent@0.1.1",
-      "ts-arithmetic": "ts-arithmetic@0.1.1"
+      "ts-arithmetic": "ts-arithmetic@0.1.1",
+      "type-fest": "type-fest@4.0.0"
     },
     "packages": {
       "@qnighy/dedent@0.1.1": {
@@ -142,6 +145,10 @@
       },
       "ts-arithmetic@0.1.1": {
         "integrity": "sha512-3VqgsRgzaYfj+zKWn+7O66ifHwbOOnT2BoOrHwdEUBz7az0DetoZOS20+juNJh1klgzvWEi2Qxden41pomOUAQ==",
+        "dependencies": {}
+      },
+      "type-fest@4.0.0": {
+        "integrity": "sha512-d/oYtUnPM9zar2fqqGLYPzgcY0qUlYK0evgNVti93xpzfjGkMgZHu9Lvgrkn0rqGXTgsFRxFamzjGoD9Uo+dgw==",
         "dependencies": {}
       }
     }

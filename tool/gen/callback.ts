@@ -2,14 +2,14 @@ import {
   CXChildVisitResult,
   CXCursorKind,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
-import { Ctx, join, removePrefix } from "./util.ts";
+import { Ctx, join, nofix } from "./util.ts";
 
 export const genCallbacks = async (ctx: Ctx) => {
   const { tu, dir } = ctx;
   const cbs: Record<string, unknown> = {};
   tu.getCursor().visitChildren((cursor) => {
     if (cursor.kind == CXCursorKind.CXCursor_TypedefDecl) {
-      const name = removePrefix(cursor.getSpelling());
+      const name = nofix(cursor.getSpelling());
       if (name.match(/[cC]allback/)) {
         const under = cursor.getTypedefDeclarationOfUnderlyingType()!;
         const pointee = under.getPointeeType()!;
@@ -31,7 +31,8 @@ export const genCallbacks = async (ctx: Ctx) => {
   });
   let text = ``;
   for (const [cn, cd] of Object.entries(cbs)) {
-    text += `export const ${cn} = ${JSON.stringify(cd)} as const;`;
+    text += `export const ${cn}Definition = ${JSON.stringify(cd)} as const;\n\n`;
+    text += `export type ${cn}Definition = typeof ${cn}Definition;\n\n`
   }
   await Deno.writeTextFile(join(dir, "callback.ts"), text);
 };

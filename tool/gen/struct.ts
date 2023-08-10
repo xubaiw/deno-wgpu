@@ -3,7 +3,7 @@ import {
   CXChildVisitResult,
   CXCursorKind,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
-import { Ctx, join, removePrefix } from "./util.ts";
+import { Ctx, join, nofix } from "./util.ts";
 
 export const genStructs = async (ctx: Ctx) => {
   const { tu, dir } = ctx;
@@ -12,7 +12,7 @@ export const genStructs = async (ctx: Ctx) => {
   tu.getCursor().visitChildren((cursor) => {
     // only handle struct decl
     if (cursor.kind == CXCursorKind.CXCursor_StructDecl) {
-      const name = removePrefix(cursor.getSpelling());
+      const name = nofix(cursor.getSpelling());
       const size = cursor.getType()!.getSizeOf();
       const fields: Record<string, any> = {};
       cursor.visitChildren((cursor) => {
@@ -22,7 +22,7 @@ export const genStructs = async (ctx: Ctx) => {
           const kind = cursor.getType()!.getCanonicalType().getKindSpelling();
           fields[name] = { offset, kind };
           if (kind == "Record") {
-            fields[name]["type"] = removePrefix(
+            fields[name]["type"] = nofix(
               cursor.getType()!.getSpelling(),
             );
             fields[name]["size"] = cursor.getType()!.getSizeOf();
