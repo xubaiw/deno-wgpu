@@ -2,7 +2,7 @@ import {
   CXChildVisitResult,
   CXCursorKind,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
-import { Ctx, join } from "./util.ts";
+import { Ctx, join, removePrefix } from "./util.ts";
 
 export const genEnums = async (ctx: Ctx) => {
   const { tu, dir } = ctx;
@@ -29,14 +29,12 @@ export const genEnums = async (ctx: Ctx) => {
   // generate text content
   let text = "";
   for (const [name, kv] of Object.entries(enums)) {
-    text += `export enum ${name} {\n`;
+    text += `export enum ${name} {`;
     for (const [k, v] of Object.entries(kv)) {
-      text += `  ${k} = ${v},\n`;
+      text += `${k} = ${v},`;
     }
-    text += `}\n\n`;
+    text += `}`;
   }
   // actual write
   await Deno.writeTextFile(join(dir, "enum.ts"), text);
 };
-
-const removePrefix = (text: string) => text.replace(/^WGPU/, "");

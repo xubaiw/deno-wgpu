@@ -31,9 +31,7 @@ export const genCallbacks = async (ctx: Ctx) => {
   });
   let text = ``;
   for (const [cn, cd] of Object.entries(cbs)) {
-    text += `export const ${cn} = ${
-      JSON.stringify(cd, undefined, 2)
-    } as const;\n\n`;
+    text += `export const ${cn} = ${JSON.stringify(cd)} as const;`;
   }
   await Deno.writeTextFile(join(dir, "callback.ts"), text);
 };

@@ -38,23 +38,23 @@ export const genStructs = async (ctx: Ctx) => {
   let text = ``;
   for (const [sname, sd] of Object.entries(structs)) {
     if (sd.size > 0) {
-      text += `export const ${sname} = {\n`;
-      text += `  name: "${sname}",\n`;
-      text += `  size: ${sd.size},\n`;
-      text += `  fields: {\n`;
+      text += `export const ${sname} = {`;
+      text += `name: "${sname}",`;
+      text += `size: ${sd.size},`;
+      text += `fields: {`;
       for (const [fname, fd] of Object.entries(sd.fields)) {
-        text += `    ${fname}: {\n`;
+        text += `${fname}: {`;
         const fda = fd as any;
-        text += `      offset: ${fda.offset},\n`;
-        text += `      kind: "${fda.kind}",\n`;
+        text += `offset: ${fda.offset},`;
+        text += `kind: "${fda.kind}",`;
         if (fda.kind == "Record") {
-          text += `      size: ${fda.size},\n`;
-          text += `      type: () => ${fda.type},\n`;
+          text += `size: ${fda.size},`;
+          text += `type: () => ${fda.type},`;
         }
-        text += `    },\n`;
+        text += `},`;
       }
-      text += `  },\n`;
-      text += `} as const;\n\n`;
+      text += `},`;
+      text += `} as const;`;
     }
   }
   // actual write

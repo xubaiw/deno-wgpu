@@ -3,7 +3,7 @@ import {
   CXCursorKind,
   CXType,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
-import { Ctx, dedent, join } from "./util.ts";
+import { Ctx, join } from "./util.ts";
 
 export const genSymbols = async (ctx: Ctx) => {
   const { tu, dir } = ctx;
@@ -26,14 +26,9 @@ export const genSymbols = async (ctx: Ctx) => {
     return CXChildVisitResult.CXChildVisit_Continue;
   });
   // generate file content
-  const json = JSON.stringify(symbols, undefined, 2);
-  const text = dedent`\
-    import { prepare } from "../util/prepare.ts";
-
-    const libPath = await prepare();
-
-    export default Deno.dlopen(libPath, ${json});
-  `;
+  const text = `import { prepare } from "../util/prepare.ts";` +
+    `const libPath = await prepare();` +
+    `export default Deno.dlopen(libPath, ${JSON.stringify(symbols)})`;
   // write
   await Deno.writeTextFile(join(dir, `symbol.ts`), text);
 };

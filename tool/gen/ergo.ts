@@ -51,29 +51,39 @@ export const genErgos = async (ctx: Ctx) => {
     return CXChildVisitResult.CXChildVisit_Continue;
   });
 
-  let ftext = dedent`\
-    import lib from "./symbol.ts";
-    import * as C from "../util/conv.ts";
-    import * as E from "./enum.ts";
-    import * as CB from "./callback.ts";` + `\n\n`;
+  let text = `import lib from "./symbol.ts";` +
+    `import * as C from "../util/conv.ts";` +
+    `import * as E from "./enum.ts";` +
+    `import * as CB from "./callback.ts";`;
   for (const [sname, sspec] of Object.entries(symbols)) {
-    ftext += `export function ${removePrefix(sname)}(\n`;
-    for (const p of sspec.parameters) {
-      if (p.name == "userdata") continue;
-      ftext += `  ${genParamSig(p)},\n`;
-    }
-    ftext += `): ${
-      genResSig(sspec.result)
-    } {\n  const result = lib.symbols.${sname}(\n`;
-    for (const p of sspec.parameters) {
-      ftext += `    ${genParam(p)},\n`;
-    }
-    ftext += `  );\n`;
-    ftext += `  return ${genRes(sspec.result)}`;
-    ftext += `;\n}\n\n`;
+    text += genFn(sname, sspec);
   }
   // actual write
-  await Deno.writeTextFile(join(dir, "ergo.ts"), ftext);
+  await Deno.writeTextFile(join(dir, "ergo.ts"), text);
+};
+
+const genFn = (name: string, spec: Fn): string => {
+  // def and name
+  let text = `export const ${removePrefix(name)} = `;
+  // parameters
+  text += `(`;
+  for (const p of spec.parameters) {
+    if (p.name == "userdata") continue;
+    text += `${genParamSig(p)},`;
+  }
+  text += `)`;
+  // result
+  text += `: ${genResSig(spec.result)}`;
+  // body
+  text += ` => { `;
+  text += `const result = lib.symbols.${name}(`;
+  for (const p of spec.parameters) {
+    text += `${genParam(p)},\n`;
+  }
+  text += `);\n`;
+  text += `return ${genRes(spec.result)}`;
+  text += `; };`;
+  return text;
 };
 
 const genResSig = (spec: Res): string => {

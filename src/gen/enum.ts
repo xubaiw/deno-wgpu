@@ -5,14 +5,12 @@ export enum AdapterType {
   AdapterType_Unknown = 3,
   AdapterType_Force32 = 2147483647,
 }
-
 export enum AddressMode {
   AddressMode_Repeat = 0,
   AddressMode_MirrorRepeat = 1,
   AddressMode_ClampToEdge = 2,
   AddressMode_Force32 = 2147483647,
 }
-
 export enum BackendType {
   BackendType_Undefined = 0,
   BackendType_Null = 1,
@@ -25,7 +23,6 @@ export enum BackendType {
   BackendType_OpenGLES = 8,
   BackendType_Force32 = 2147483647,
 }
-
 export enum BlendFactor {
   BlendFactor_Zero = 0,
   BlendFactor_One = 1,
@@ -42,7 +39,6 @@ export enum BlendFactor {
   BlendFactor_OneMinusConstant = 12,
   BlendFactor_Force32 = 2147483647,
 }
-
 export enum BlendOperation {
   BlendOperation_Add = 0,
   BlendOperation_Subtract = 1,
@@ -51,7 +47,6 @@ export enum BlendOperation {
   BlendOperation_Max = 4,
   BlendOperation_Force32 = 2147483647,
 }
-
 export enum BufferBindingType {
   BufferBindingType_Undefined = 0,
   BufferBindingType_Uniform = 1,
@@ -59,7 +54,6 @@ export enum BufferBindingType {
   BufferBindingType_ReadOnlyStorage = 3,
   BufferBindingType_Force32 = 2147483647,
 }
-
 export enum BufferMapAsyncStatus {
   BufferMapAsyncStatus_Success = 0,
   BufferMapAsyncStatus_ValidationError = 1,
@@ -72,14 +66,12 @@ export enum BufferMapAsyncStatus {
   BufferMapAsyncStatus_SizeOutOfRange = 8,
   BufferMapAsyncStatus_Force32 = 2147483647,
 }
-
 export enum BufferMapState {
   BufferMapState_Unmapped = 0,
   BufferMapState_Pending = 1,
   BufferMapState_Mapped = 2,
   BufferMapState_Force32 = 2147483647,
 }
-
 export enum CompareFunction {
   CompareFunction_Undefined = 0,
   CompareFunction_Never = 1,
@@ -92,7 +84,6 @@ export enum CompareFunction {
   CompareFunction_Always = 8,
   CompareFunction_Force32 = 2147483647,
 }
-
 export enum CompilationInfoRequestStatus {
   CompilationInfoRequestStatus_Success = 0,
   CompilationInfoRequestStatus_Error = 1,
@@ -100,20 +91,17 @@ export enum CompilationInfoRequestStatus {
   CompilationInfoRequestStatus_Unknown = 3,
   CompilationInfoRequestStatus_Force32 = 2147483647,
 }
-
 export enum CompilationMessageType {
   CompilationMessageType_Error = 0,
   CompilationMessageType_Warning = 1,
   CompilationMessageType_Info = 2,
   CompilationMessageType_Force32 = 2147483647,
 }
-
 export enum ComputePassTimestampLocation {
   ComputePassTimestampLocation_Beginning = 0,
   ComputePassTimestampLocation_End = 1,
   ComputePassTimestampLocation_Force32 = 2147483647,
 }
-
 export enum CreatePipelineAsyncStatus {
   CreatePipelineAsyncStatus_Success = 0,
   CreatePipelineAsyncStatus_ValidationError = 1,
@@ -123,27 +111,23 @@ export enum CreatePipelineAsyncStatus {
   CreatePipelineAsyncStatus_Unknown = 5,
   CreatePipelineAsyncStatus_Force32 = 2147483647,
 }
-
 export enum CullMode {
   CullMode_None = 0,
   CullMode_Front = 1,
   CullMode_Back = 2,
   CullMode_Force32 = 2147483647,
 }
-
 export enum DeviceLostReason {
   DeviceLostReason_Undefined = 0,
   DeviceLostReason_Destroyed = 1,
   DeviceLostReason_Force32 = 2147483647,
 }
-
 export enum ErrorFilter {
   ErrorFilter_Validation = 0,
   ErrorFilter_OutOfMemory = 1,
   ErrorFilter_Internal = 2,
   ErrorFilter_Force32 = 2147483647,
 }
-
 export enum ErrorType {
   ErrorType_NoError = 0,
   ErrorType_Validation = 1,
@@ -153,7 +137,6 @@ export enum ErrorType {
   ErrorType_DeviceLost = 5,
   ErrorType_Force32 = 2147483647,
 }
-
 export enum FeatureName {
   FeatureName_Undefined = 0,
   FeatureName_DepthClipControl = 1,
@@ -170,39 +153,33 @@ export enum FeatureName {
   FeatureName_Float32Filterable = 12,
   FeatureName_Force32 = 2147483647,
 }
-
 export enum FilterMode {
   FilterMode_Nearest = 0,
   FilterMode_Linear = 1,
   FilterMode_Force32 = 2147483647,
 }
-
 export enum FrontFace {
   FrontFace_CCW = 0,
   FrontFace_CW = 1,
   FrontFace_Force32 = 2147483647,
 }
-
 export enum IndexFormat {
   IndexFormat_Undefined = 0,
   IndexFormat_Uint16 = 1,
   IndexFormat_Uint32 = 2,
   IndexFormat_Force32 = 2147483647,
 }
-
 export enum LoadOp {
   LoadOp_Undefined = 0,
   LoadOp_Clear = 1,
   LoadOp_Load = 2,
   LoadOp_Force32 = 2147483647,
 }
-
 export enum MipmapFilterMode {
   MipmapFilterMode_Nearest = 0,
   MipmapFilterMode_Linear = 1,
   MipmapFilterMode_Force32 = 2147483647,
 }
-
 export enum PipelineStatisticName {
   PipelineStatisticName_VertexShaderInvocations = 0,
   PipelineStatisticName_ClipperInvocations = 1,
@@ -211,21 +188,18 @@ export enum PipelineStatisticName {
   PipelineStatisticName_ComputeShaderInvocations = 4,
   PipelineStatisticName_Force32 = 2147483647,
 }
-
 export enum PowerPreference {
   PowerPreference_Undefined = 0,
   PowerPreference_LowPower = 1,
   PowerPreference_HighPerformance = 2,
   PowerPreference_Force32 = 2147483647,
 }
-
 export enum PresentMode {
   PresentMode_Immediate = 0,
   PresentMode_Mailbox = 1,
   PresentMode_Fifo = 2,
   PresentMode_Force32 = 2147483647,
 }
-
 export enum PrimitiveTopology {
   PrimitiveTopology_PointList = 0,
   PrimitiveTopology_LineList = 1,
@@ -234,14 +208,12 @@ export enum PrimitiveTopology {
   PrimitiveTopology_TriangleStrip = 4,
   PrimitiveTopology_Force32 = 2147483647,
 }
-
 export enum QueryType {
   QueryType_Occlusion = 0,
   QueryType_PipelineStatistics = 1,
   QueryType_Timestamp = 2,
   QueryType_Force32 = 2147483647,
 }
-
 export enum QueueWorkDoneStatus {
   QueueWorkDoneStatus_Success = 0,
   QueueWorkDoneStatus_Error = 1,
@@ -249,13 +221,11 @@ export enum QueueWorkDoneStatus {
   QueueWorkDoneStatus_DeviceLost = 3,
   QueueWorkDoneStatus_Force32 = 2147483647,
 }
-
 export enum RenderPassTimestampLocation {
   RenderPassTimestampLocation_Beginning = 0,
   RenderPassTimestampLocation_End = 1,
   RenderPassTimestampLocation_Force32 = 2147483647,
 }
-
 export enum RequestAdapterStatus {
   RequestAdapterStatus_Success = 0,
   RequestAdapterStatus_Unavailable = 1,
@@ -263,14 +233,12 @@ export enum RequestAdapterStatus {
   RequestAdapterStatus_Unknown = 3,
   RequestAdapterStatus_Force32 = 2147483647,
 }
-
 export enum RequestDeviceStatus {
   RequestDeviceStatus_Success = 0,
   RequestDeviceStatus_Error = 1,
   RequestDeviceStatus_Unknown = 2,
   RequestDeviceStatus_Force32 = 2147483647,
 }
-
 export enum SType {
   SType_Invalid = 0,
   SType_SurfaceDescriptorFromMetalLayer = 1,
@@ -286,7 +254,6 @@ export enum SType {
   SType_RenderPassDescriptorMaxDrawCount = 15,
   SType_Force32 = 2147483647,
 }
-
 export enum SamplerBindingType {
   SamplerBindingType_Undefined = 0,
   SamplerBindingType_Filtering = 1,
@@ -294,7 +261,6 @@ export enum SamplerBindingType {
   SamplerBindingType_Comparison = 3,
   SamplerBindingType_Force32 = 2147483647,
 }
-
 export enum StencilOperation {
   StencilOperation_Keep = 0,
   StencilOperation_Zero = 1,
@@ -306,34 +272,29 @@ export enum StencilOperation {
   StencilOperation_DecrementWrap = 7,
   StencilOperation_Force32 = 2147483647,
 }
-
 export enum StorageTextureAccess {
   StorageTextureAccess_Undefined = 0,
   StorageTextureAccess_WriteOnly = 1,
   StorageTextureAccess_Force32 = 2147483647,
 }
-
 export enum StoreOp {
   StoreOp_Undefined = 0,
   StoreOp_Store = 1,
   StoreOp_Discard = 2,
   StoreOp_Force32 = 2147483647,
 }
-
 export enum TextureAspect {
   TextureAspect_All = 0,
   TextureAspect_StencilOnly = 1,
   TextureAspect_DepthOnly = 2,
   TextureAspect_Force32 = 2147483647,
 }
-
 export enum TextureDimension {
   TextureDimension_1D = 0,
   TextureDimension_2D = 1,
   TextureDimension_3D = 2,
   TextureDimension_Force32 = 2147483647,
 }
-
 export enum TextureFormat {
   TextureFormat_Undefined = 0,
   TextureFormat_R8Unorm = 1,
@@ -432,7 +393,6 @@ export enum TextureFormat {
   TextureFormat_ASTC12x12UnormSrgb = 94,
   TextureFormat_Force32 = 2147483647,
 }
-
 export enum TextureSampleType {
   TextureSampleType_Undefined = 0,
   TextureSampleType_Float = 1,
@@ -442,7 +402,6 @@ export enum TextureSampleType {
   TextureSampleType_Uint = 5,
   TextureSampleType_Force32 = 2147483647,
 }
-
 export enum TextureViewDimension {
   TextureViewDimension_Undefined = 0,
   TextureViewDimension_1D = 1,
@@ -453,7 +412,6 @@ export enum TextureViewDimension {
   TextureViewDimension_3D = 6,
   TextureViewDimension_Force32 = 2147483647,
 }
-
 export enum VertexFormat {
   VertexFormat_Undefined = 0,
   VertexFormat_Uint8x2 = 1,
@@ -488,14 +446,12 @@ export enum VertexFormat {
   VertexFormat_Sint32x4 = 30,
   VertexFormat_Force32 = 2147483647,
 }
-
 export enum VertexStepMode {
   VertexStepMode_Vertex = 0,
   VertexStepMode_Instance = 1,
   VertexStepMode_VertexBufferNotUsed = 2,
   VertexStepMode_Force32 = 2147483647,
 }
-
 export enum BufferUsage {
   BufferUsage_None = 0,
   BufferUsage_MapRead = 1,
@@ -510,7 +466,6 @@ export enum BufferUsage {
   BufferUsage_QueryResolve = 512,
   BufferUsage_Force32 = 2147483647,
 }
-
 export enum ColorWriteMask {
   ColorWriteMask_None = 0,
   ColorWriteMask_Red = 1,
@@ -520,14 +475,12 @@ export enum ColorWriteMask {
   ColorWriteMask_All = 15,
   ColorWriteMask_Force32 = 2147483647,
 }
-
 export enum MapMode {
   MapMode_None = 0,
   MapMode_Read = 1,
   MapMode_Write = 2,
   MapMode_Force32 = 2147483647,
 }
-
 export enum ShaderStage {
   ShaderStage_None = 0,
   ShaderStage_Vertex = 1,
@@ -535,7 +488,6 @@ export enum ShaderStage {
   ShaderStage_Compute = 4,
   ShaderStage_Force32 = 2147483647,
 }
-
 export enum TextureUsage {
   TextureUsage_None = 0,
   TextureUsage_CopySrc = 1,
@@ -545,7 +497,6 @@ export enum TextureUsage {
   TextureUsage_RenderAttachment = 16,
   TextureUsage_Force32 = 2147483647,
 }
-
 export enum NativeSType {
   SType_DeviceExtras = 1610612737,
   SType_AdapterExtras = 1610612738,
@@ -557,7 +508,6 @@ export enum NativeSType {
   SType_SwapChainDescriptorExtras = 1610612743,
   NativeSType_Force32 = 2147483647,
 }
-
 export enum NativeFeature {
   NativeFeature_PushConstants = 1610612737,
   NativeFeature_TextureAdapterSpecificFormatFeatures = 1610612738,
@@ -566,7 +516,6 @@ export enum NativeFeature {
   NativeFeature_VertexWritableStorage = 1610612741,
   NativeFeature_Force32 = 2147483647,
 }
-
 export enum LogLevel {
   LogLevel_Off = 0,
   LogLevel_Error = 1,
@@ -576,7 +525,6 @@ export enum LogLevel {
   LogLevel_Trace = 5,
   LogLevel_Force32 = 2147483647,
 }
-
 export enum InstanceBackend {
   InstanceBackend_Vulkan = 2,
   InstanceBackend_GL = 32,
@@ -589,14 +537,12 @@ export enum InstanceBackend {
   InstanceBackend_None = 0,
   InstanceBackend_Force32 = 2147483647,
 }
-
 export enum Dx12Compiler {
   Dx12Compiler_Undefined = 0,
   Dx12Compiler_Fxc = 1,
   Dx12Compiler_Dxc = 2,
   Dx12Compiler_Force32 = 2147483647,
 }
-
 export enum CompositeAlphaMode {
   CompositeAlphaMode_Auto = 0,
   CompositeAlphaMode_Opaque = 1,
