@@ -21,7 +21,7 @@ console.log({ instance });
 // Request adapter
 const [, adapter] = await wrap(
   w.RequestAdapterCallback,
-  w.instanceRequestAdapter,
+  w.Instance.requestAdapter,
   2,
 )(instance, null);
 console.log({ adapter });
@@ -30,11 +30,11 @@ console.log({ adapter });
 const deviceDescriptor = alloc(w.DeviceDescriptor);
 const [, device] = await wrap(
   w.RequestDeviceCallback,
-  w.adapterRequestDevice,
+  w.Adapter.requestDevice,
   2,
 )(adapter, ref(deviceDescriptor));
 
-const queue = w.deviceGetQueue(device);
+const queue = w.Device.getQueue(device);
 console.log({ queue });
 
 // Create shader module
@@ -50,7 +50,7 @@ wglsDescriptor.code = cstr(code);
 const shaderModuleDescriptor = alloc(w.ShaderModuleDescriptor);
 shaderModuleDescriptor.label = cstr("compute.wgsl");
 shaderModuleDescriptor.nextInChain = ref(wglsDescriptor);
-const shaderModule = w.deviceCreateShaderModule(
+const shaderModule = w.Device.createShaderModule(
   device,
   ref(shaderModuleDescriptor),
 );
@@ -63,7 +63,7 @@ stagingBufferDescriptor.usage = w.BufferUsage.BufferUsage_MapRead |
   w.BufferUsage.BufferUsage_CopyDst;
 stagingBufferDescriptor.size = BigInt(numbers.byteLength); // TODO: auto bigint conversion
 stagingBufferDescriptor.mappedAtCreation = false;
-const stagingBuffer = w.deviceCreateBuffer(
+const stagingBuffer = w.Device.createBuffer(
   device,
   ref(stagingBufferDescriptor),
 );
@@ -76,7 +76,7 @@ storageBufferDescriptor.usage = w.BufferUsage.BufferUsage_Storage |
   w.BufferUsage.BufferUsage_CopyDst | w.BufferUsage.BufferUsage_CopySrc;
 storageBufferDescriptor.size = BigInt(numbers.byteLength); // TODO: auto bigint conversion
 storageBufferDescriptor.mappedAtCreation = false;
-const storageBuffer = w.deviceCreateBuffer(
+const storageBuffer = w.Device.createBuffer(
   device,
   ref(storageBufferDescriptor),
 );
@@ -89,14 +89,14 @@ computePipelineDescriptor.label = cstr("compute_pipeline");
 computePipelineDescriptor.compute.module = shaderModule;
 computePipelineDescriptor.compute.entryPoint = cstr("main");
 console.log({ computePipelineDescriptor });
-const computePipeline = w.deviceCreateComputePipeline(
+const computePipeline = w.Device.createComputePipeline(
   device,
   ref(computePipelineDescriptor),
 );
 console.log({ computePipeline });
 
 // bind group layout
-const bindGroupLayout = w.computePipelineGetBindGroupLayout(computePipeline, 0);
+const bindGroupLayout = w.ComputePipeline.getBindGroupLayout(computePipeline, 0);
 console.log({ bindGroupLayout });
 
 // bind group
@@ -110,12 +110,12 @@ entry.buffer = storageBuffer;
 entry.offset = BigInt(0);
 entry.size = BigInt(numbers.byteLength);
 bindGroupDescriptor.entries = ref(entry);
-const bindGroup = w.deviceCreateBindGroup(device, ref(bindGroupDescriptor));
+const bindGroup = w.Device.createBindGroup(device, ref(bindGroupDescriptor));
 console.log({ bindGroup });
 
 const commandEncoderDescriptor = alloc(w.CommandEncoderDescriptor);
 commandEncoderDescriptor.label = cstr("command_encoder");
-const commandEncoder = w.deviceCreateCommandEncoder(
+const commandEncoder = w.Device.createCommandEncoder(
   device,
   ref(commandEncoderDescriptor),
 );
@@ -123,23 +123,23 @@ console.log({ commandEncoder });
 
 const computePassDescriptor = alloc(w.ComputePassDescriptor);
 computePassDescriptor.label = cstr("compute_pass");
-const computePassEncoder = w.commandEncoderBeginComputePass(
+const computePassEncoder = w.CommandEncoder.beginComputePass(
   commandEncoder,
   ref(computePassDescriptor),
 );
 console.log({ computePassEncoder });
 
-w.computePassEncoderSetPipeline(computePassEncoder, computePipeline);
-w.computePassEncoderSetBindGroup(computePassEncoder, 0, bindGroup, 0, null);
-w.computePassEncoderDispatchWorkgroups(
+w.ComputePassEncoder.setPipeline(computePassEncoder, computePipeline);
+w.ComputePassEncoder.setBindGroup(computePassEncoder, 0, bindGroup, 0, null);
+w.ComputePassEncoder.dispatchWorkgroups(
   computePassEncoder,
   numbers.length,
   1,
   1,
 );
-w.computePassEncoderEnd(computePassEncoder);
+w.ComputePassEncoder.end(computePassEncoder);
 
-w.commandEncoderCopyBufferToBuffer(
+w.CommandEncoder.copyBufferToBuffer(
   commandEncoder,
   storageBuffer,
   0,
@@ -150,13 +150,13 @@ w.commandEncoderCopyBufferToBuffer(
 
 const commandBufferDescriptor = alloc(w.CommandBufferDescriptor);
 commandEncoderDescriptor.label = cstr("command_buffer");
-const commandBuffer = w.commandEncoderFinish(
+const commandBuffer = w.CommandEncoder.finish(
   commandEncoder,
   ref(commandBufferDescriptor),
 );
 console.log({ commandBuffer });
 
-w.queueWriteBuffer(
+w.Queue.writeBuffer(
   queue,
   storageBuffer,
   0,
@@ -167,7 +167,7 @@ console.log("buffer written");
 // TODO: easier **ptr creation
 const arr = new BigUint64Array(1);
 arr[0] = BigInt(Deno.UnsafePointer.value(commandBuffer));
-w.queueSubmit(queue, 1, Deno.UnsafePointer.of(arr));
+w.Queue.submit(queue, 1, Deno.UnsafePointer.of(arr));
 console.log("queue submited");
 
 async function mapAsync(
@@ -183,7 +183,7 @@ async function mapAsync(
       userdata = status;
     },
   );
-  w.bufferMapAsync(
+  w.Buffer.mapAsync(
     buffer,
     mode,
     offset,
@@ -191,7 +191,7 @@ async function mapAsync(
     callback.pointer,
   );
   let i = 0;
-  while (!w.devicePoll(device, false, null)) {
+  while (!w.Device.poll(device, false, null)) {
     await delay(10);
     console.log("poll", i);
     i += 1;
@@ -201,7 +201,7 @@ async function mapAsync(
 
 await mapAsync(stagingBuffer, w.MapMode.MapMode_Read, 0, numbers.byteLength);
 
-const buf = w.bufferGetMappedRange(stagingBuffer, 0, numbers.byteLength);
+const buf = w.Buffer.getMappedRange(stagingBuffer, 0, numbers.byteLength);
 console.log({ buf });
 if (buf) {
   const view = new Deno.UnsafePointerView(buf);

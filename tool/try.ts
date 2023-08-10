@@ -74,6 +74,19 @@ if (Deno.args[0] == "enum") {
     return CXChildVisitResult.CXChildVisit_Continue;
   });
 }
+if (Deno.args[0] == "group") {
+  tu.getCursor().visitChildren((cursor) => {
+    if (cursor.kind == CXCursorKind.CXCursor_TypedefDecl) {
+      const name = cursor.getSpelling();
+      const type = cursor.getTypedefDeclarationOfUnderlyingType()
+        ?.getPointeeType()?.getSpelling();
+      if (type && type.includes("Impl")) {
+        console.log({ name, type });
+      }
+    }
+    return CXChildVisitResult.CXChildVisit_Recurse;
+  });
+}
 // Enum is only CXType_UInt = 9
 // Enum name and constant prefix may mismatch, e.g. WGPUNativeSType
 if (Deno.args[0] == "callback") {
