@@ -13,20 +13,35 @@ export type Cb = Deno.UnsafeCallback;
 export type ToCb<D extends CbDef = CbDef> = CbFn<D> | Cb;
 export type ToCbPtr<D extends CbDef = CbDef> = ToCb<D> | Ptr;
 
-export type BaseConstructor<T> = {
-  new (pointer: Deno.PointerValue, parent?: Base): T;
+export type ClassBaseConstructor<T> = {
+  new (pointer: Deno.PointerValue, parent?: ClassBase): T;
 };
 
-export class Base {
+export class ClassBase {
   pointer: Deno.PointerValue;
-  parent?: Base;
-  constructor(pointer: Deno.PointerValue, parent?: Base) {
+  parent?: ClassBase;
+  constructor(pointer: Deno.PointerValue, parent?: ClassBase) {
     this.pointer = pointer;
     this.parent = parent;
   }
-  findInFamily<T extends Base>(t: BaseConstructor<T>): T | null {
+  findInFamily<T extends ClassBase>(t: ClassBaseConstructor<T>): T | null {
     if (this instanceof t) return this;
     if (this.parent == null) return null;
     return this.parent.findInFamily(t);
+  }
+}
+
+export class StructBase {
+  view: DataView;
+  get pointer(): Deno.PointerValue {
+    const buffer = this.view.buffer;
+    const offset = this.view.byteOffset;
+    const pBuf = Deno.UnsafePointer.of(buffer);
+    if (!pBuf) return pBuf;
+    const pView = Deno.UnsafePointer.offset(pBuf, offset);
+    return pView;
+  }
+  constructor(view: DataView) {
+    this.view = view;
   }
 }

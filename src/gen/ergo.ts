@@ -30,7 +30,9 @@ export function setLogCallback(): Promise<
   [E.LogLevel, Deno.PointerValue, Deno.PointerValue]
 >;
 export function setLogCallback(
-  callback: UC.CbFn<C.LogCallbackDefinition>,
+  callback: (
+    ...args: [E.LogLevel, Deno.PointerValue, Deno.PointerValue]
+  ) => void,
 ): Deno.UnsafeCallback<C.LogCallbackDefinition>;
 export function setLogCallback(
   callback: Deno.UnsafeCallback<C.LogCallbackDefinition>,
@@ -38,7 +40,7 @@ export function setLogCallback(
 export function setLogCallback(callback: Deno.PointerValue): void;
 export function setLogCallback(
   callback?:
-    | UC.CbFn<C.LogCallbackDefinition>
+    | ((...args: [E.LogLevel, Deno.PointerValue, Deno.PointerValue]) => void)
     | Deno.UnsafeCallback<C.LogCallbackDefinition>
     | Deno.PointerValue,
 ):
@@ -64,7 +66,12 @@ export function setLogCallback(
   } else if (callback instanceof Deno.UnsafeCallback) {
     lib.symbols.wgpuSetLogCallback(callback.pointer, null);
   } else if (callback instanceof Function) {
-    const cb = new Deno.UnsafeCallback(C.LogCallbackDefinition, callback);
+    const cb = new Deno.UnsafeCallback(
+      C.LogCallbackDefinition,
+      (...args: UC.CbParam<C.LogCallbackDefinition>) => {
+        callback(...[args[0] as E.LogLevel, args[1], args[2]]);
+      },
+    );
     lib.symbols.wgpuSetLogCallback(cb.pointer, null);
     return cb;
   } else {
@@ -82,8 +89,8 @@ export function getVersion(): number {
   return result;
 }
 
-export class Adapter extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class Adapter extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -120,7 +127,14 @@ export class Adapter extends UC.Base {
   >;
   requestDevice(
     descriptor: Deno.PointerValue,
-    callback: UC.CbFn<C.RequestDeviceCallbackDefinition>,
+    callback: (
+      ...args: [
+        E.RequestDeviceStatus,
+        Device,
+        Deno.PointerValue,
+        Deno.PointerValue,
+      ]
+    ) => void,
   ): Deno.UnsafeCallback<C.RequestDeviceCallbackDefinition>;
   requestDevice(
     descriptor: Deno.PointerValue,
@@ -133,7 +147,14 @@ export class Adapter extends UC.Base {
   requestDevice(
     descriptor: Deno.PointerValue,
     callback?:
-      | UC.CbFn<C.RequestDeviceCallbackDefinition>
+      | ((
+        ...args: [
+          E.RequestDeviceStatus,
+          Device,
+          Deno.PointerValue,
+          Deno.PointerValue,
+        ]
+      ) => void)
       | Deno.UnsafeCallback<C.RequestDeviceCallbackDefinition>
       | Deno.PointerValue,
   ):
@@ -179,7 +200,14 @@ export class Adapter extends UC.Base {
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
         C.RequestDeviceCallbackDefinition,
-        callback,
+        (...args: UC.CbParam<C.RequestDeviceCallbackDefinition>) => {
+          callback(...[
+            args[0] as E.RequestDeviceStatus,
+            new Device(args[1], this),
+            args[2],
+            args[3],
+          ]);
+        },
       );
       lib.symbols.wgpuAdapterRequestDevice(
         this.pointer,
@@ -209,8 +237,8 @@ export class Adapter extends UC.Base {
   }
 }
 
-export class BindGroup extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class BindGroup extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -230,8 +258,8 @@ export class BindGroup extends UC.Base {
   }
 }
 
-export class BindGroupLayout extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class BindGroupLayout extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -251,8 +279,8 @@ export class BindGroupLayout extends UC.Base {
   }
 }
 
-export class Buffer extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class Buffer extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -309,7 +337,7 @@ export class Buffer extends UC.Base {
     mode: number,
     offset: number | bigint,
     size: number | bigint,
-    callback: UC.CbFn<C.BufferMapCallbackDefinition>,
+    callback: (...args: [E.BufferMapAsyncStatus, Deno.PointerValue]) => void,
   ): Deno.UnsafeCallback<C.BufferMapCallbackDefinition>;
   mapAsync(
     mode: number,
@@ -328,7 +356,7 @@ export class Buffer extends UC.Base {
     offset: number | bigint,
     size: number | bigint,
     callback?:
-      | UC.CbFn<C.BufferMapCallbackDefinition>
+      | ((...args: [E.BufferMapAsyncStatus, Deno.PointerValue]) => void)
       | Deno.UnsafeCallback<C.BufferMapCallbackDefinition>
       | Deno.PointerValue,
   ):
@@ -377,7 +405,9 @@ export class Buffer extends UC.Base {
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
         C.BufferMapCallbackDefinition,
-        callback,
+        (...args: UC.CbParam<C.BufferMapCallbackDefinition>) => {
+          callback(...[args[0] as E.BufferMapAsyncStatus, args[1]]);
+        },
       );
       lib.symbols.wgpuBufferMapAsync(
         this.pointer,
@@ -421,8 +451,8 @@ export class Buffer extends UC.Base {
   }
 }
 
-export class CommandBuffer extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class CommandBuffer extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -442,8 +472,8 @@ export class CommandBuffer extends UC.Base {
   }
 }
 
-export class CommandEncoder extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class CommandEncoder extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -609,8 +639,8 @@ export class CommandEncoder extends UC.Base {
   }
 }
 
-export class ComputePassEncoder extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class ComputePassEncoder extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -728,8 +758,8 @@ export class ComputePassEncoder extends UC.Base {
   }
 }
 
-export class ComputePipeline extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class ComputePipeline extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -757,8 +787,8 @@ export class ComputePipeline extends UC.Base {
   }
 }
 
-export class Device extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class Device extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -811,7 +841,14 @@ export class Device extends UC.Base {
   >;
   createComputePipelineAsync(
     descriptor: Deno.PointerValue,
-    callback: UC.CbFn<C.CreateComputePipelineAsyncCallbackDefinition>,
+    callback: (
+      ...args: [
+        E.CreatePipelineAsyncStatus,
+        ComputePipeline,
+        Deno.PointerValue,
+        Deno.PointerValue,
+      ]
+    ) => void,
   ): Deno.UnsafeCallback<C.CreateComputePipelineAsyncCallbackDefinition>;
   createComputePipelineAsync(
     descriptor: Deno.PointerValue,
@@ -826,7 +863,14 @@ export class Device extends UC.Base {
   createComputePipelineAsync(
     descriptor: Deno.PointerValue,
     callback?:
-      | UC.CbFn<C.CreateComputePipelineAsyncCallbackDefinition>
+      | ((
+        ...args: [
+          E.CreatePipelineAsyncStatus,
+          ComputePipeline,
+          Deno.PointerValue,
+          Deno.PointerValue,
+        ]
+      ) => void)
       | Deno.UnsafeCallback<C.CreateComputePipelineAsyncCallbackDefinition>
       | Deno.PointerValue,
   ):
@@ -890,7 +934,16 @@ export class Device extends UC.Base {
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
         C.CreateComputePipelineAsyncCallbackDefinition,
-        callback,
+        (
+          ...args: UC.CbParam<C.CreateComputePipelineAsyncCallbackDefinition>
+        ) => {
+          callback(...[
+            args[0] as E.CreatePipelineAsyncStatus,
+            new ComputePipeline(args[1], this),
+            args[2],
+            args[3],
+          ]);
+        },
       );
       lib.symbols.wgpuDeviceCreateComputePipelineAsync(
         this.pointer,
@@ -955,7 +1008,14 @@ export class Device extends UC.Base {
   >;
   createRenderPipelineAsync(
     descriptor: Deno.PointerValue,
-    callback: UC.CbFn<C.CreateRenderPipelineAsyncCallbackDefinition>,
+    callback: (
+      ...args: [
+        E.CreatePipelineAsyncStatus,
+        RenderPipeline,
+        Deno.PointerValue,
+        Deno.PointerValue,
+      ]
+    ) => void,
   ): Deno.UnsafeCallback<C.CreateRenderPipelineAsyncCallbackDefinition>;
   createRenderPipelineAsync(
     descriptor: Deno.PointerValue,
@@ -970,7 +1030,14 @@ export class Device extends UC.Base {
   createRenderPipelineAsync(
     descriptor: Deno.PointerValue,
     callback?:
-      | UC.CbFn<C.CreateRenderPipelineAsyncCallbackDefinition>
+      | ((
+        ...args: [
+          E.CreatePipelineAsyncStatus,
+          RenderPipeline,
+          Deno.PointerValue,
+          Deno.PointerValue,
+        ]
+      ) => void)
       | Deno.UnsafeCallback<C.CreateRenderPipelineAsyncCallbackDefinition>
       | Deno.PointerValue,
   ):
@@ -1034,7 +1101,16 @@ export class Device extends UC.Base {
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
         C.CreateRenderPipelineAsyncCallbackDefinition,
-        callback,
+        (
+          ...args: UC.CbParam<C.CreateRenderPipelineAsyncCallbackDefinition>
+        ) => {
+          callback(...[
+            args[0] as E.CreatePipelineAsyncStatus,
+            new RenderPipeline(args[1], this),
+            args[2],
+            args[3],
+          ]);
+        },
       );
       lib.symbols.wgpuDeviceCreateRenderPipelineAsync(
         this.pointer,
@@ -1116,13 +1192,15 @@ export class Device extends UC.Base {
 
   popErrorScope(): Promise<[E.ErrorType, Deno.PointerValue, Deno.PointerValue]>;
   popErrorScope(
-    callback: UC.CbFn<C.ErrorCallbackDefinition>,
+    callback: (
+      ...args: [E.ErrorType, Deno.PointerValue, Deno.PointerValue]
+    ) => void,
   ): Deno.UnsafeCallback<C.ErrorCallbackDefinition>;
   popErrorScope(callback: Deno.UnsafeCallback<C.ErrorCallbackDefinition>): void;
   popErrorScope(callback: Deno.PointerValue): void;
   popErrorScope(
     callback?:
-      | UC.CbFn<C.ErrorCallbackDefinition>
+      | ((...args: [E.ErrorType, Deno.PointerValue, Deno.PointerValue]) => void)
       | Deno.UnsafeCallback<C.ErrorCallbackDefinition>
       | Deno.PointerValue,
   ):
@@ -1148,7 +1226,12 @@ export class Device extends UC.Base {
     } else if (callback instanceof Deno.UnsafeCallback) {
       lib.symbols.wgpuDevicePopErrorScope(this.pointer, callback.pointer, null);
     } else if (callback instanceof Function) {
-      const cb = new Deno.UnsafeCallback(C.ErrorCallbackDefinition, callback);
+      const cb = new Deno.UnsafeCallback(
+        C.ErrorCallbackDefinition,
+        (...args: UC.CbParam<C.ErrorCallbackDefinition>) => {
+          callback(...[args[0] as E.ErrorType, args[1], args[2]]);
+        },
+      );
       lib.symbols.wgpuDevicePopErrorScope(this.pointer, cb.pointer, null);
       return cb;
     } else {
@@ -1170,7 +1253,9 @@ export class Device extends UC.Base {
     [E.ErrorType, Deno.PointerValue, Deno.PointerValue]
   >;
   setUncapturedErrorCallback(
-    callback: UC.CbFn<C.ErrorCallbackDefinition>,
+    callback: (
+      ...args: [E.ErrorType, Deno.PointerValue, Deno.PointerValue]
+    ) => void,
   ): Deno.UnsafeCallback<C.ErrorCallbackDefinition>;
   setUncapturedErrorCallback(
     callback: Deno.UnsafeCallback<C.ErrorCallbackDefinition>,
@@ -1178,7 +1263,7 @@ export class Device extends UC.Base {
   setUncapturedErrorCallback(callback: Deno.PointerValue): void;
   setUncapturedErrorCallback(
     callback?:
-      | UC.CbFn<C.ErrorCallbackDefinition>
+      | ((...args: [E.ErrorType, Deno.PointerValue, Deno.PointerValue]) => void)
       | Deno.UnsafeCallback<C.ErrorCallbackDefinition>
       | Deno.PointerValue,
   ):
@@ -1212,7 +1297,12 @@ export class Device extends UC.Base {
         null,
       );
     } else if (callback instanceof Function) {
-      const cb = new Deno.UnsafeCallback(C.ErrorCallbackDefinition, callback);
+      const cb = new Deno.UnsafeCallback(
+        C.ErrorCallbackDefinition,
+        (...args: UC.CbParam<C.ErrorCallbackDefinition>) => {
+          callback(...[args[0] as E.ErrorType, args[1], args[2]]);
+        },
+      );
       lib.symbols.wgpuDeviceSetUncapturedErrorCallback(
         this.pointer,
         cb.pointer,
@@ -1248,8 +1338,8 @@ export class Device extends UC.Base {
   }
 }
 
-export class Instance extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class Instance extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -1273,7 +1363,14 @@ export class Instance extends UC.Base {
   >;
   requestAdapter(
     options: Deno.PointerValue,
-    callback: UC.CbFn<C.RequestAdapterCallbackDefinition>,
+    callback: (
+      ...args: [
+        E.RequestAdapterStatus,
+        Adapter,
+        Deno.PointerValue,
+        Deno.PointerValue,
+      ]
+    ) => void,
   ): Deno.UnsafeCallback<C.RequestAdapterCallbackDefinition>;
   requestAdapter(
     options: Deno.PointerValue,
@@ -1283,7 +1380,14 @@ export class Instance extends UC.Base {
   requestAdapter(
     options: Deno.PointerValue,
     callback?:
-      | UC.CbFn<C.RequestAdapterCallbackDefinition>
+      | ((
+        ...args: [
+          E.RequestAdapterStatus,
+          Adapter,
+          Deno.PointerValue,
+          Deno.PointerValue,
+        ]
+      ) => void)
       | Deno.UnsafeCallback<C.RequestAdapterCallbackDefinition>
       | Deno.PointerValue,
   ):
@@ -1329,7 +1433,14 @@ export class Instance extends UC.Base {
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
         C.RequestAdapterCallbackDefinition,
-        callback,
+        (...args: UC.CbParam<C.RequestAdapterCallbackDefinition>) => {
+          callback(...[
+            args[0] as E.RequestAdapterStatus,
+            new Adapter(args[1], this),
+            args[2],
+            args[3],
+          ]);
+        },
       );
       lib.symbols.wgpuInstanceRequestAdapter(
         this.pointer,
@@ -1371,8 +1482,8 @@ export class Instance extends UC.Base {
   }
 }
 
-export class PipelineLayout extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class PipelineLayout extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -1392,8 +1503,8 @@ export class PipelineLayout extends UC.Base {
   }
 }
 
-export class QuerySet extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class QuerySet extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -1428,13 +1539,13 @@ export class QuerySet extends UC.Base {
   }
 }
 
-export class Queue extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class Queue extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
   onSubmittedWorkDone(): Promise<[E.QueueWorkDoneStatus, Deno.PointerValue]>;
   onSubmittedWorkDone(
-    callback: UC.CbFn<C.QueueWorkDoneCallbackDefinition>,
+    callback: (...args: [E.QueueWorkDoneStatus, Deno.PointerValue]) => void,
   ): Deno.UnsafeCallback<C.QueueWorkDoneCallbackDefinition>;
   onSubmittedWorkDone(
     callback: Deno.UnsafeCallback<C.QueueWorkDoneCallbackDefinition>,
@@ -1442,7 +1553,7 @@ export class Queue extends UC.Base {
   onSubmittedWorkDone(callback: Deno.PointerValue): void;
   onSubmittedWorkDone(
     callback?:
-      | UC.CbFn<C.QueueWorkDoneCallbackDefinition>
+      | ((...args: [E.QueueWorkDoneStatus, Deno.PointerValue]) => void)
       | Deno.UnsafeCallback<C.QueueWorkDoneCallbackDefinition>
       | Deno.PointerValue,
   ):
@@ -1477,7 +1588,9 @@ export class Queue extends UC.Base {
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
         C.QueueWorkDoneCallbackDefinition,
-        callback,
+        (...args: UC.CbParam<C.QueueWorkDoneCallbackDefinition>) => {
+          callback(...[args[0] as E.QueueWorkDoneStatus, args[1]]);
+        },
       );
       lib.symbols.wgpuQueueOnSubmittedWorkDone(this.pointer, cb.pointer, null);
       return cb;
@@ -1557,8 +1670,8 @@ export class Queue extends UC.Base {
   }
 }
 
-export class RenderBundle extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class RenderBundle extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -1578,8 +1691,8 @@ export class RenderBundle extends UC.Base {
   }
 }
 
-export class RenderBundleEncoder extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class RenderBundleEncoder extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -1744,8 +1857,8 @@ export class RenderBundleEncoder extends UC.Base {
   }
 }
 
-export class RenderPassEncoder extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class RenderPassEncoder extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -2077,8 +2190,8 @@ export class RenderPassEncoder extends UC.Base {
   }
 }
 
-export class RenderPipeline extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class RenderPipeline extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -2106,8 +2219,8 @@ export class RenderPipeline extends UC.Base {
   }
 }
 
-export class Sampler extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class Sampler extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -2127,15 +2240,21 @@ export class Sampler extends UC.Base {
   }
 }
 
-export class ShaderModule extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class ShaderModule extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
   getCompilationInfo(): Promise<
     [E.CompilationInfoRequestStatus, Deno.PointerValue, Deno.PointerValue]
   >;
   getCompilationInfo(
-    callback: UC.CbFn<C.CompilationInfoCallbackDefinition>,
+    callback: (
+      ...args: [
+        E.CompilationInfoRequestStatus,
+        Deno.PointerValue,
+        Deno.PointerValue,
+      ]
+    ) => void,
   ): Deno.UnsafeCallback<C.CompilationInfoCallbackDefinition>;
   getCompilationInfo(
     callback: Deno.UnsafeCallback<C.CompilationInfoCallbackDefinition>,
@@ -2143,7 +2262,13 @@ export class ShaderModule extends UC.Base {
   getCompilationInfo(callback: Deno.PointerValue): void;
   getCompilationInfo(
     callback?:
-      | UC.CbFn<C.CompilationInfoCallbackDefinition>
+      | ((
+        ...args: [
+          E.CompilationInfoRequestStatus,
+          Deno.PointerValue,
+          Deno.PointerValue,
+        ]
+      ) => void)
       | Deno.UnsafeCallback<C.CompilationInfoCallbackDefinition>
       | Deno.PointerValue,
   ):
@@ -2181,7 +2306,13 @@ export class ShaderModule extends UC.Base {
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
         C.CompilationInfoCallbackDefinition,
-        callback,
+        (...args: UC.CbParam<C.CompilationInfoCallbackDefinition>) => {
+          callback(...[
+            args[0] as E.CompilationInfoRequestStatus,
+            args[1],
+            args[2],
+          ]);
+        },
       );
       lib.symbols.wgpuShaderModuleGetCompilationInfo(
         this.pointer,
@@ -2214,8 +2345,8 @@ export class ShaderModule extends UC.Base {
   }
 }
 
-export class Surface extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class Surface extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -2247,8 +2378,8 @@ export class Surface extends UC.Base {
   }
 }
 
-export class SwapChain extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class SwapChain extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -2273,8 +2404,8 @@ export class SwapChain extends UC.Base {
   }
 }
 
-export class Texture extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class Texture extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 
@@ -2344,8 +2475,8 @@ export class Texture extends UC.Base {
   }
 }
 
-export class TextureView extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+export class TextureView extends UC.ClassBase {
+  constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
   }
 

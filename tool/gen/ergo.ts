@@ -130,8 +130,8 @@ function genClass(ctx: ECtx, className: string) {
     km(specs, (methodName) => genMethod(ctx, className, methodName)),
   );
   return dedent`
-    export class ${className} extends UC.Base { 
-      constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+    export class ${className} extends UC.ClassBase { 
+      constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
         super(pointer, parent);
       }
       ${methods}
@@ -222,10 +222,10 @@ function genFunctionWithCallback(
       `;
   return dedent`\
     ${prefix} ${name}(${paramsBeforeCb}): Promise<${promisetypes}>;
-    ${prefix} ${name}(${paramsBeforeCb}${pcomma} callback: UC.CbFn<${cbDef}>): Deno.UnsafeCallback<${cbDef}>
+    ${prefix} ${name}(${paramsBeforeCb}${pcomma} callback: (...args: ${promisetypes}) => void): Deno.UnsafeCallback<${cbDef}>
     ${prefix} ${name}(${paramsBeforeCb}${pcomma} callback: Deno.UnsafeCallback<${cbDef}>): void
     ${prefix} ${name}(${paramsBeforeCb}${pcomma} callback: Deno.PointerValue): void
-    ${prefix} ${name}(${paramsBeforeCb}${pcomma} callback?: UC.CbFn<${cbDef}> | Deno.UnsafeCallback<${cbDef}> | Deno.PointerValue): void | Promise<${promisetypes}> | Deno.UnsafeCallback<${cbDef}> {
+    ${prefix} ${name}(${paramsBeforeCb}${pcomma} callback?: ((...args: ${promisetypes}) => void) | Deno.UnsafeCallback<${cbDef}> | Deno.PointerValue): void | Promise<${promisetypes}> | Deno.UnsafeCallback<${cbDef}> {
       if (callback == null) {
         return new Promise((res) => {
           ${promiseImpl}
@@ -233,7 +233,9 @@ function genFunctionWithCallback(
       } else if (callback instanceof Deno.UnsafeCallback) {
         lib.symbols.${functionId}(${argBefore}${acomma} callback.pointer, null);
       } else if (callback instanceof Function) {
-        const cb = new Deno.UnsafeCallback(${cbDef}, callback);
+        const cb = new Deno.UnsafeCallback(${cbDef}, (...args: UC.CbParam<${cbDef}>) => {
+          callback(...${datasetters})
+        });
         lib.symbols.${functionId}(${argBefore}${acomma} cb.pointer, null);
         return cb;
       } else {

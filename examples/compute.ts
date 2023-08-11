@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno run -A --unstable
+
 /**
  * Adapted from https://github.com/gfx-rs/wgpu-native/blob/trunk/examples/compute/main.c
  */
