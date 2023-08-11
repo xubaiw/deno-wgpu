@@ -5,6 +5,10 @@ import * as E from "./enum.ts";
 import * as C from "./callback.ts";
 import * as UC from "../util/conv.ts";
 
+const registry = new FinalizationRegistry((
+  [ptr, release]: [Deno.PointerValue, (p: Deno.PointerValue) => void],
+) => release(ptr));
+
 export function createInstance(descriptor: Deno.PointerValue): Instance {
   const result = lib.symbols.wgpuCreateInstance(descriptor);
   return new Instance(result);
@@ -92,6 +96,7 @@ export function getVersion(): number {
 export class Adapter extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuAdapterRelease]);
   }
 
   enumerateFeatures(features: Deno.PointerValue): number | bigint {
@@ -225,35 +230,16 @@ export class Adapter extends UC.ClassBase {
       );
     }
   }
-
-  reference(): void {
-    const result = lib.symbols.wgpuAdapterReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuAdapterRelease(this.pointer);
-    return result;
-  }
 }
 
 export class BindGroup extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuBindGroupRelease]);
   }
 
   setLabel(label: Deno.PointerValue): void {
     const result = lib.symbols.wgpuBindGroupSetLabel(this.pointer, label);
-    return result;
-  }
-
-  reference(): void {
-    const result = lib.symbols.wgpuBindGroupReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuBindGroupRelease(this.pointer);
     return result;
   }
 }
@@ -261,20 +247,11 @@ export class BindGroup extends UC.ClassBase {
 export class BindGroupLayout extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuBindGroupLayoutRelease]);
   }
 
   setLabel(label: Deno.PointerValue): void {
     const result = lib.symbols.wgpuBindGroupLayoutSetLabel(this.pointer, label);
-    return result;
-  }
-
-  reference(): void {
-    const result = lib.symbols.wgpuBindGroupLayoutReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuBindGroupLayoutRelease(this.pointer);
     return result;
   }
 }
@@ -282,6 +259,7 @@ export class BindGroupLayout extends UC.ClassBase {
 export class Buffer extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuBufferRelease]);
   }
 
   destroy(): void {
@@ -439,35 +417,16 @@ export class Buffer extends UC.ClassBase {
     const result = lib.symbols.wgpuBufferUnmap(this.pointer);
     return result;
   }
-
-  reference(): void {
-    const result = lib.symbols.wgpuBufferReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuBufferRelease(this.pointer);
-    return result;
-  }
 }
 
 export class CommandBuffer extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuCommandBufferRelease]);
   }
 
   setLabel(label: Deno.PointerValue): void {
     const result = lib.symbols.wgpuCommandBufferSetLabel(this.pointer, label);
-    return result;
-  }
-
-  reference(): void {
-    const result = lib.symbols.wgpuCommandBufferReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuCommandBufferRelease(this.pointer);
     return result;
   }
 }
@@ -475,6 +434,7 @@ export class CommandBuffer extends UC.ClassBase {
 export class CommandEncoder extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuCommandEncoderRelease]);
   }
 
   beginComputePass(descriptor: Deno.PointerValue): ComputePassEncoder {
@@ -627,21 +587,15 @@ export class CommandEncoder extends UC.ClassBase {
     );
     return result;
   }
-
-  reference(): void {
-    const result = lib.symbols.wgpuCommandEncoderReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuCommandEncoderRelease(this.pointer);
-    return result;
-  }
 }
 
 export class ComputePassEncoder extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [
+      pointer,
+      lib.symbols.wgpuComputePassEncoderRelease,
+    ]);
   }
 
   beginPipelineStatisticsQuery(querySet: QuerySet, queryIndex: number): void {
@@ -746,21 +700,12 @@ export class ComputePassEncoder extends UC.ClassBase {
     );
     return result;
   }
-
-  reference(): void {
-    const result = lib.symbols.wgpuComputePassEncoderReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuComputePassEncoderRelease(this.pointer);
-    return result;
-  }
 }
 
 export class ComputePipeline extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuComputePipelineRelease]);
   }
 
   getBindGroupLayout(groupIndex: number): BindGroupLayout {
@@ -775,21 +720,12 @@ export class ComputePipeline extends UC.ClassBase {
     const result = lib.symbols.wgpuComputePipelineSetLabel(this.pointer, label);
     return result;
   }
-
-  reference(): void {
-    const result = lib.symbols.wgpuComputePipelineReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuComputePipelineRelease(this.pointer);
-    return result;
-  }
 }
 
 export class Device extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuDeviceRelease]);
   }
 
   createBindGroup(descriptor: Deno.PointerValue): BindGroup {
@@ -1318,16 +1254,6 @@ export class Device extends UC.ClassBase {
     }
   }
 
-  reference(): void {
-    const result = lib.symbols.wgpuDeviceReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuDeviceRelease(this.pointer);
-    return result;
-  }
-
   poll(wait: boolean, wrappedSubmissionIndex: Deno.PointerValue): boolean {
     const result = lib.symbols.wgpuDevicePoll(
       this.pointer,
@@ -1341,6 +1267,7 @@ export class Device extends UC.ClassBase {
 export class Instance extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuInstanceRelease]);
   }
 
   createSurface(descriptor: Deno.PointerValue): Surface {
@@ -1459,16 +1386,6 @@ export class Instance extends UC.ClassBase {
     }
   }
 
-  reference(): void {
-    const result = lib.symbols.wgpuInstanceReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuInstanceRelease(this.pointer);
-    return result;
-  }
-
   enumerateAdapters(
     options: Deno.PointerValue,
     adapters: Deno.PointerValue,
@@ -1485,20 +1402,11 @@ export class Instance extends UC.ClassBase {
 export class PipelineLayout extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuPipelineLayoutRelease]);
   }
 
   setLabel(label: Deno.PointerValue): void {
     const result = lib.symbols.wgpuPipelineLayoutSetLabel(this.pointer, label);
-    return result;
-  }
-
-  reference(): void {
-    const result = lib.symbols.wgpuPipelineLayoutReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuPipelineLayoutRelease(this.pointer);
     return result;
   }
 }
@@ -1506,6 +1414,7 @@ export class PipelineLayout extends UC.ClassBase {
 export class QuerySet extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuQuerySetRelease]);
   }
 
   destroy(): void {
@@ -1527,21 +1436,12 @@ export class QuerySet extends UC.ClassBase {
     const result = lib.symbols.wgpuQuerySetSetLabel(this.pointer, label);
     return result;
   }
-
-  reference(): void {
-    const result = lib.symbols.wgpuQuerySetReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuQuerySetRelease(this.pointer);
-    return result;
-  }
 }
 
 export class Queue extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuQueueRelease]);
   }
   onSubmittedWorkDone(): Promise<[E.QueueWorkDoneStatus, Deno.PointerValue]>;
   onSubmittedWorkDone(
@@ -1647,16 +1547,6 @@ export class Queue extends UC.ClassBase {
     return result;
   }
 
-  reference(): void {
-    const result = lib.symbols.wgpuQueueReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuQueueRelease(this.pointer);
-    return result;
-  }
-
   submitForIndex(
     commandCount: number | bigint,
     commands: Deno.PointerValue,
@@ -1673,20 +1563,11 @@ export class Queue extends UC.ClassBase {
 export class RenderBundle extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuRenderBundleRelease]);
   }
 
   setLabel(label: Deno.PointerValue): void {
     const result = lib.symbols.wgpuRenderBundleSetLabel(this.pointer, label);
-    return result;
-  }
-
-  reference(): void {
-    const result = lib.symbols.wgpuRenderBundleReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuRenderBundleRelease(this.pointer);
     return result;
   }
 }
@@ -1694,6 +1575,10 @@ export class RenderBundle extends UC.ClassBase {
 export class RenderBundleEncoder extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [
+      pointer,
+      lib.symbols.wgpuRenderBundleEncoderRelease,
+    ]);
   }
 
   draw(
@@ -1845,21 +1730,15 @@ export class RenderBundleEncoder extends UC.ClassBase {
     );
     return result;
   }
-
-  reference(): void {
-    const result = lib.symbols.wgpuRenderBundleEncoderReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuRenderBundleEncoderRelease(this.pointer);
-    return result;
-  }
 }
 
 export class RenderPassEncoder extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [
+      pointer,
+      lib.symbols.wgpuRenderPassEncoderRelease,
+    ]);
   }
 
   beginOcclusionQuery(queryIndex: number): void {
@@ -2098,16 +1977,6 @@ export class RenderPassEncoder extends UC.ClassBase {
     return result;
   }
 
-  reference(): void {
-    const result = lib.symbols.wgpuRenderPassEncoderReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuRenderPassEncoderRelease(this.pointer);
-    return result;
-  }
-
   setPushConstants(
     stages: number,
     offset: number,
@@ -2193,6 +2062,7 @@ export class RenderPassEncoder extends UC.ClassBase {
 export class RenderPipeline extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuRenderPipelineRelease]);
   }
 
   getBindGroupLayout(groupIndex: number): BindGroupLayout {
@@ -2207,35 +2077,16 @@ export class RenderPipeline extends UC.ClassBase {
     const result = lib.symbols.wgpuRenderPipelineSetLabel(this.pointer, label);
     return result;
   }
-
-  reference(): void {
-    const result = lib.symbols.wgpuRenderPipelineReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuRenderPipelineRelease(this.pointer);
-    return result;
-  }
 }
 
 export class Sampler extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuSamplerRelease]);
   }
 
   setLabel(label: Deno.PointerValue): void {
     const result = lib.symbols.wgpuSamplerSetLabel(this.pointer, label);
-    return result;
-  }
-
-  reference(): void {
-    const result = lib.symbols.wgpuSamplerReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuSamplerRelease(this.pointer);
     return result;
   }
 }
@@ -2243,6 +2094,7 @@ export class Sampler extends UC.ClassBase {
 export class ShaderModule extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuShaderModuleRelease]);
   }
   getCompilationInfo(): Promise<
     [E.CompilationInfoRequestStatus, Deno.PointerValue, Deno.PointerValue]
@@ -2333,21 +2185,12 @@ export class ShaderModule extends UC.ClassBase {
     const result = lib.symbols.wgpuShaderModuleSetLabel(this.pointer, label);
     return result;
   }
-
-  reference(): void {
-    const result = lib.symbols.wgpuShaderModuleReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuShaderModuleRelease(this.pointer);
-    return result;
-  }
 }
 
 export class Surface extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuSurfaceRelease]);
   }
 
   getPreferredFormat(adapter: Adapter): E.TextureFormat {
@@ -2356,16 +2199,6 @@ export class Surface extends UC.ClassBase {
       adapter.pointer,
     );
     return result as E.TextureFormat;
-  }
-
-  reference(): void {
-    const result = lib.symbols.wgpuSurfaceReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuSurfaceRelease(this.pointer);
-    return result;
   }
 
   getCapabilities(adapter: Adapter, capabilities: Deno.PointerValue): void {
@@ -2381,6 +2214,7 @@ export class Surface extends UC.ClassBase {
 export class SwapChain extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuSwapChainRelease]);
   }
 
   getCurrentTextureView(): TextureView {
@@ -2392,21 +2226,12 @@ export class SwapChain extends UC.ClassBase {
     const result = lib.symbols.wgpuSwapChainPresent(this.pointer);
     return result;
   }
-
-  reference(): void {
-    const result = lib.symbols.wgpuSwapChainReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuSwapChainRelease(this.pointer);
-    return result;
-  }
 }
 
 export class Texture extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuTextureRelease]);
   }
 
   createView(descriptor: Deno.PointerValue): TextureView {
@@ -2463,35 +2288,16 @@ export class Texture extends UC.ClassBase {
     const result = lib.symbols.wgpuTextureSetLabel(this.pointer, label);
     return result;
   }
-
-  reference(): void {
-    const result = lib.symbols.wgpuTextureReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuTextureRelease(this.pointer);
-    return result;
-  }
 }
 
 export class TextureView extends UC.ClassBase {
   constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
     super(pointer, parent);
+    registry.register(this, [pointer, lib.symbols.wgpuTextureViewRelease]);
   }
 
   setLabel(label: Deno.PointerValue): void {
     const result = lib.symbols.wgpuTextureViewSetLabel(this.pointer, label);
-    return result;
-  }
-
-  reference(): void {
-    const result = lib.symbols.wgpuTextureViewReference(this.pointer);
-    return result;
-  }
-
-  release(): void {
-    const result = lib.symbols.wgpuTextureViewRelease(this.pointer);
     return result;
   }
 }

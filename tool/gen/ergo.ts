@@ -4,7 +4,7 @@ import {
   CXCursor,
   CXType,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
-import { camelCase, Ctx, join, nofix, sep, km } from "./util.ts";
+import { camelCase, Ctx, join, km, nofix, sep } from "./util.ts";
 import { dedent } from "npm:@qnighy/dedent";
 
 const TYPE_MAP = {
@@ -121,6 +121,7 @@ function genHeader() {
     import * as C from "./callback.ts";
     import * as UC from "../util/conv.ts";
 
+    const registry = new FinalizationRegistry(([ptr, release]: [Deno.PointerValue, (p: Deno.PointerValue) => void]) => release(ptr));
     `;
 }
 
@@ -133,6 +134,7 @@ function genClass(ctx: ECtx, className: string) {
     export class ${className} extends UC.ClassBase { 
       constructor(pointer: Deno.PointerValue, parent?: UC.ClassBase) {
         super(pointer, parent);
+        registry.register(this, [pointer, lib.symbols.wgpu${className}Release]);
       }
       ${methods}
     }
@@ -142,6 +144,8 @@ function genClass(ctx: ECtx, className: string) {
 function genMethod(ctx: ECtx, className: string, methodId: string): string {
   const spec = ctx.classes[className][methodId];
   const name = camelCase(nofix(methodId).replace(className, ""));
+  // hide release and reference
+  if (name == "release" || name == "reference") return ``;
   const hasCallback = spec.parameters.some((x) => x.name == "callback");
   if (!hasCallback) {
     // ordinary function
@@ -373,4 +377,3 @@ const extractParamSpec = (
   param.name = cursor.getSpelling();
   return param;
 };
-
