@@ -13,7 +13,9 @@ export type Cb = Deno.UnsafeCallback;
 export type ToCb<D extends CbDef = CbDef> = CbFn<D> | Cb;
 export type ToCbPtr<D extends CbDef = CbDef> = ToCb<D> | Ptr;
 
-export type BaseConstructor<T> = { new (pointer: Deno.PointerValue, parent?: Base): T };
+export type BaseConstructor<T> = {
+  new (pointer: Deno.PointerValue, parent?: Base): T;
+};
 
 export class Base {
   pointer: Deno.PointerValue;

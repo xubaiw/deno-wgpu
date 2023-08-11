@@ -1,44 +1,12 @@
 # deno-wgpu
 
-WebGPU ponyfill for Deno through FFI and wgpu-native.
+Wgpu-native binding for Deno.
 
-**Note: The polyfill part is not done, but can be viewed as Deno binding to wgpu-native.**
+**Note: The author is not familiar with the WebGPU spec, so a polyfill is not planned recently. PRs are welcome.**
 
 ## Example
 
-You can also see `./examples/compute.ts` for basic compute shader.
-
-```ts
-import {
-  alloc,
-  lib,
-  ptr,
-  WGPUInstanceDescriptor,
-  WGPURequestAdapterCallback,
-  WGPUSupportedLimits,
-  withcb,
-} from "https://denopkg.com/xubaiw/deno-wgpu/mod.ts";
-
-// Create Instance
-const desc = alloc(WGPUInstanceDescriptor);
-desc.nextInChain = null;
-const instance = lib.symbols.wgpuCreateInstance(ptr(desc));
-
-// Request adapter
-const [_, adapter] = await withcb(
-  WGPURequestAdapterCallback,
-  lib.symbols.wgpuInstanceRequestAdapter,
-  2,
-)(instance, null, null);
-
-// Get Limits
-const slimits = alloc(WGPUSupportedLimits);
-lib.symbols.wgpuAdapterGetLimits(adapter, ptr(slimits));
-console.log(slimits);
-
-// Release instance
-lib.symbols.wgpuInstanceRelease(instance);
-```
+See [`./examples/compute.ts`](./examples/compute.ts) for the collatz example.
 
 ## Credits
 

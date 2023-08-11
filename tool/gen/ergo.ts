@@ -74,11 +74,12 @@ export async function genErgos(ctx: Ctx) {
     // handle function decl
     if (cursor.kind == CXCursorKind.CXCursor_FunctionDecl) {
       const name = cursor.getSpelling();
-      let group = undefined;
+      let group: string | undefined = undefined;
       for (const g of Object.keys(classes)) {
         if (nofix(name).startsWith(g)) {
-          group = g;
-          break;
+          if (group == null || g.length > group.length) {
+            group = g;
+          }
         }
       }
       const result = extractResSpec(cursor.getResultType()!, classes);

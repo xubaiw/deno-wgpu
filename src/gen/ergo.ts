@@ -228,26 +228,26 @@ export class BindGroup extends UC.Base {
     const result = lib.symbols.wgpuBindGroupRelease(this.pointer);
     return result;
   }
-
-  layoutSetLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuBindGroupLayoutSetLabel(this.pointer, label);
-    return result;
-  }
-
-  layoutReference(): void {
-    const result = lib.symbols.wgpuBindGroupLayoutReference(this.pointer);
-    return result;
-  }
-
-  layoutRelease(): void {
-    const result = lib.symbols.wgpuBindGroupLayoutRelease(this.pointer);
-    return result;
-  }
 }
 
 export class BindGroupLayout extends UC.Base {
   constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
     super(pointer, parent);
+  }
+
+  setLabel(label: Deno.PointerValue): void {
+    const result = lib.symbols.wgpuBindGroupLayoutSetLabel(this.pointer, label);
+    return result;
+  }
+
+  reference(): void {
+    const result = lib.symbols.wgpuBindGroupLayoutReference(this.pointer);
+    return result;
+  }
+
+  release(): void {
+    const result = lib.symbols.wgpuBindGroupLayoutRelease(this.pointer);
+    return result;
   }
 }
 
@@ -1576,8 +1576,14 @@ export class RenderBundle extends UC.Base {
     const result = lib.symbols.wgpuRenderBundleRelease(this.pointer);
     return result;
   }
+}
 
-  encoderDraw(
+export class RenderBundleEncoder extends UC.Base {
+  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
+    super(pointer, parent);
+  }
+
+  draw(
     vertexCount: number,
     instanceCount: number,
     firstVertex: number,
@@ -1593,7 +1599,7 @@ export class RenderBundle extends UC.Base {
     return result;
   }
 
-  encoderDrawIndexed(
+  drawIndexed(
     indexCount: number,
     instanceCount: number,
     firstIndex: number,
@@ -1611,7 +1617,7 @@ export class RenderBundle extends UC.Base {
     return result;
   }
 
-  encoderDrawIndexedIndirect(
+  drawIndexedIndirect(
     indirectBuffer: Buffer,
     indirectOffset: number | bigint,
   ): void {
@@ -1623,10 +1629,7 @@ export class RenderBundle extends UC.Base {
     return result;
   }
 
-  encoderDrawIndirect(
-    indirectBuffer: Buffer,
-    indirectOffset: number | bigint,
-  ): void {
+  drawIndirect(indirectBuffer: Buffer, indirectOffset: number | bigint): void {
     const result = lib.symbols.wgpuRenderBundleEncoderDrawIndirect(
       this.pointer,
       indirectBuffer.pointer,
@@ -1635,7 +1638,7 @@ export class RenderBundle extends UC.Base {
     return result;
   }
 
-  encoderFinish(descriptor: Deno.PointerValue): RenderBundle {
+  finish(descriptor: Deno.PointerValue): RenderBundle {
     const result = lib.symbols.wgpuRenderBundleEncoderFinish(
       this.pointer,
       descriptor,
@@ -1643,7 +1646,7 @@ export class RenderBundle extends UC.Base {
     return new RenderBundle(result, this);
   }
 
-  encoderInsertDebugMarker(markerLabel: Deno.PointerValue): void {
+  insertDebugMarker(markerLabel: Deno.PointerValue): void {
     const result = lib.symbols.wgpuRenderBundleEncoderInsertDebugMarker(
       this.pointer,
       markerLabel,
@@ -1651,14 +1654,14 @@ export class RenderBundle extends UC.Base {
     return result;
   }
 
-  encoderPopDebugGroup(): void {
+  popDebugGroup(): void {
     const result = lib.symbols.wgpuRenderBundleEncoderPopDebugGroup(
       this.pointer,
     );
     return result;
   }
 
-  encoderPushDebugGroup(groupLabel: Deno.PointerValue): void {
+  pushDebugGroup(groupLabel: Deno.PointerValue): void {
     const result = lib.symbols.wgpuRenderBundleEncoderPushDebugGroup(
       this.pointer,
       groupLabel,
@@ -1666,7 +1669,7 @@ export class RenderBundle extends UC.Base {
     return result;
   }
 
-  encoderSetBindGroup(
+  setBindGroup(
     groupIndex: number,
     group: BindGroup,
     dynamicOffsetCount: number | bigint,
@@ -1682,7 +1685,7 @@ export class RenderBundle extends UC.Base {
     return result;
   }
 
-  encoderSetIndexBuffer(
+  setIndexBuffer(
     buffer: Buffer,
     format: E.IndexFormat,
     offset: number | bigint,
@@ -1698,7 +1701,7 @@ export class RenderBundle extends UC.Base {
     return result;
   }
 
-  encoderSetLabel(label: Deno.PointerValue): void {
+  setLabel(label: Deno.PointerValue): void {
     const result = lib.symbols.wgpuRenderBundleEncoderSetLabel(
       this.pointer,
       label,
@@ -1706,7 +1709,7 @@ export class RenderBundle extends UC.Base {
     return result;
   }
 
-  encoderSetPipeline(pipeline: RenderPipeline): void {
+  setPipeline(pipeline: RenderPipeline): void {
     const result = lib.symbols.wgpuRenderBundleEncoderSetPipeline(
       this.pointer,
       pipeline.pointer,
@@ -1714,7 +1717,7 @@ export class RenderBundle extends UC.Base {
     return result;
   }
 
-  encoderSetVertexBuffer(
+  setVertexBuffer(
     slot: number,
     buffer: Buffer,
     offset: number | bigint,
@@ -1730,20 +1733,14 @@ export class RenderBundle extends UC.Base {
     return result;
   }
 
-  encoderReference(): void {
+  reference(): void {
     const result = lib.symbols.wgpuRenderBundleEncoderReference(this.pointer);
     return result;
   }
 
-  encoderRelease(): void {
+  release(): void {
     const result = lib.symbols.wgpuRenderBundleEncoderRelease(this.pointer);
     return result;
-  }
-}
-
-export class RenderBundleEncoder extends UC.Base {
-  constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
-    super(pointer, parent);
   }
 }
 
@@ -2345,25 +2342,25 @@ export class Texture extends UC.Base {
     const result = lib.symbols.wgpuTextureRelease(this.pointer);
     return result;
   }
-
-  viewSetLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuTextureViewSetLabel(this.pointer, label);
-    return result;
-  }
-
-  viewReference(): void {
-    const result = lib.symbols.wgpuTextureViewReference(this.pointer);
-    return result;
-  }
-
-  viewRelease(): void {
-    const result = lib.symbols.wgpuTextureViewRelease(this.pointer);
-    return result;
-  }
 }
 
 export class TextureView extends UC.Base {
   constructor(pointer: Deno.PointerValue, parent?: UC.Base) {
     super(pointer, parent);
+  }
+
+  setLabel(label: Deno.PointerValue): void {
+    const result = lib.symbols.wgpuTextureViewSetLabel(this.pointer, label);
+    return result;
+  }
+
+  reference(): void {
+    const result = lib.symbols.wgpuTextureViewReference(this.pointer);
+    return result;
+  }
+
+  release(): void {
+    const result = lib.symbols.wgpuTextureViewRelease(this.pointer);
+    return result;
   }
 }
