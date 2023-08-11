@@ -5,7 +5,15 @@
 import * as w from "../mod.ts";
 
 /** The numbers to be computed collatz. */
-const input = Uint32Array.from([1, 2, 3, 1000]);
+let inputs;
+if (Deno.args.length == 0) {
+  console.log("Usage: pass in args to use custom numbers.");
+  inputs = [1, 2, 3, 100];
+} else {
+  inputs = Deno.args.map(x => parseInt(x.trim()));
+}
+console.log({ inputs });
+const numbers = Uint32Array.from(inputs);
 
 // Create Instance
 const instanceDescriptor = new w.InstanceDescriptor();
@@ -38,7 +46,7 @@ const stagingBufferDescriptor = new w.BufferDescriptor();
 stagingBufferDescriptor.label = cstr("staging_buffer");
 stagingBufferDescriptor.usage = w.BufferUsage.BufferUsage_MapRead |
   w.BufferUsage.BufferUsage_CopyDst;
-stagingBufferDescriptor.size = input.byteLength;
+stagingBufferDescriptor.size = numbers.byteLength;
 stagingBufferDescriptor.mappedAtCreation = false;
 const stagingBuffer = device.createBuffer(stagingBufferDescriptor.pointer);
 
@@ -47,7 +55,7 @@ const storageBufferDescriptor = new w.BufferDescriptor();
 storageBufferDescriptor.label = cstr("storage_buffer");
 storageBufferDescriptor.usage = w.BufferUsage.BufferUsage_Storage |
   w.BufferUsage.BufferUsage_CopyDst | w.BufferUsage.BufferUsage_CopySrc;
-storageBufferDescriptor.size = input.byteLength;
+storageBufferDescriptor.size = numbers.byteLength;
 storageBufferDescriptor.mappedAtCreation = false;
 const storageBuffer = device.createBuffer(storageBufferDescriptor.pointer);
 
@@ -70,7 +78,7 @@ const entry = new w.BindGroupEntry();
 entry.binding = 0;
 entry.buffer = storageBuffer.pointer;
 entry.offset = 0;
-entry.size = input.byteLength;
+entry.size = numbers.byteLength;
 bindGroupDescriptor.entries = entry.pointer;
 const bindGroup = device.createBindGroup(bindGroupDescriptor.pointer);
 
@@ -90,7 +98,7 @@ const computePassEncoder = commandEncoder.beginComputePass(
 computePassEncoder.setPipeline(computePipeline);
 computePassEncoder.setBindGroup(0, bindGroup, 0, null);
 computePassEncoder.dispatchWorkgroups(
-  input.length,
+  numbers.length,
   1,
   1,
 );
@@ -101,7 +109,7 @@ commandEncoder.copyBufferToBuffer(
   0,
   stagingBuffer,
   0,
-  input.byteLength,
+  numbers.byteLength,
 );
 
 // Command Buffer
@@ -113,19 +121,19 @@ const commandBuffer = commandEncoder.finish(commandBufferDescriptor.pointer);
 queue.writeBuffer(
   storageBuffer,
   0,
-  Deno.UnsafePointer.of(input),
-  input.byteLength,
+  Deno.UnsafePointer.of(numbers),
+  numbers.byteLength,
 );
 
 // Summit and command and map result back to cpu
 queue.submit(1, pp(commandBuffer.pointer));
-await stagingBuffer.mapAsync(w.MapMode.MapMode_Read, 0, input.byteLength);
+await stagingBuffer.mapAsync(w.MapMode.MapMode_Read, 0, numbers.byteLength);
 
 // Print outputs
-const output = stagingBuffer.getMappedRange(0, input.byteLength);
-if (output) {
-  const view = new Deno.UnsafePointerView(output);
-  console.log({ output: [0, 1, 2, 3].map((n) => view.getUint32(n * 4)) });
+const outputs = stagingBuffer.getMappedRange(0, numbers.byteLength);
+if (outputs) {
+  const view = new Deno.UnsafePointerView(outputs);
+  console.log({ outputs: [0, 1, 2, 3].map((n) => view.getUint32(n * 4)) });
 }
 
 // Below are utility functions
