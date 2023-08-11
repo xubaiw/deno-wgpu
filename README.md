@@ -2,7 +2,7 @@
 
 Wgpu-native binding for Deno.
 
-**Note: The author is not familiar with the WebGPU spec, so a polyfill is not planned recently. PRs are welcome.**
+**Note: The polyfill part is not implemented. See issue #3.**
 
 ## Usage
 
