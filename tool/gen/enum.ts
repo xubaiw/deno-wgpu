@@ -6,18 +6,23 @@ import { Ctx, join, nofix } from "./util.ts";
 
 export const genEnums = async (ctx: Ctx) => {
   const { tu, dir } = ctx;
+  // record
   const enums: Record<string, Record<string, unknown>> = {};
   // visit
   tu.getCursor().visitChildren((cursor) => {
     // only handle enums
     if (cursor.kind == CXCursorKind.CXCursor_EnumDecl) {
-      const name = nofix(cursor.getSpelling());
-      if (enums[name] == null) enums[name] = {};
+      // do not use enum name to merge implementation-native enums
       // visit sub constants
       cursor.visitChildren((cursor) => {
         // handle constants
         if (cursor.kind == CXCursorKind.CXCursor_EnumConstantDecl) {
-          const key = nofix(cursor.getSpelling());
+          let [name, key] = nofix(cursor.getSpelling()).split("_");
+          // special mapping of NativeFeature => FeatureName
+          if (name == "NativeFeature") name = "FeatureName";
+          // `Force32` is used to force enum to be uint32_t, so just skip it
+          if (key == "Force32") return CXChildVisitResult.CXChildVisit_Continue;
+          if (enums[name] == null) enums[name] = {};
           const value = cursor.getEnumConstantDeclarationUnsignedValue();
           enums[name][key] = value;
         }
@@ -31,7 +36,8 @@ export const genEnums = async (ctx: Ctx) => {
   for (const [name, kv] of Object.entries(enums)) {
     text += `export enum ${name} {`;
     for (const [k, v] of Object.entries(kv)) {
-      text += `${k} = ${v},`;
+      const key = k.match(/^\d/) ? `_${k}` : k
+      text += `${key} = ${v},`;
     }
     text += `}`;
   }
