@@ -11,8 +11,8 @@ Wgpu-native binding for Deno.
 ```ts
 import * as W from "https://denopkg.com/xubaiw/deno-wgpu/mod.ts";
 
-const desc = new w.InstanceDescriptor();
-const instance = w.createInstance(desc.pointer);
+const desc = new W.InstanceDescriptor();
+const instance = W.createInstance(desc.pointer);
 
 const [, adapter] = await instance.requestAdapter(null);
 
