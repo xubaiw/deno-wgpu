@@ -22,3 +22,10 @@ export const sep =
 function nn<T>(x: T): x is NonNullable<T> {
   return x !== null;
 }
+
+export function km<T>(
+  xs: Record<string, unknown>,
+  fn: (x: string, i: number) => T,
+): T[] {
+  return Object.keys(xs).map(fn);
+}

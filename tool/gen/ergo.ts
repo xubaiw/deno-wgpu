@@ -4,7 +4,7 @@ import {
   CXCursor,
   CXType,
 } from "https://deno.land/x/libclang@1.0.0-beta.8/mod.ts";
-import { camelCase, Ctx, join, nofix, sep } from "./util.ts";
+import { camelCase, Ctx, join, nofix, sep, km } from "./util.ts";
 import { dedent } from "npm:@qnighy/dedent";
 
 const TYPE_MAP = {
@@ -374,9 +374,3 @@ const extractParamSpec = (
   return param;
 };
 
-function km<T>(
-  xs: Record<string, unknown>,
-  fn: (x: string, i: number) => T,
-): T[] {
-  return Object.keys(xs).map(fn);
-}

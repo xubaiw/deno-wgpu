@@ -31,17 +31,14 @@ export class ClassBase {
   }
 }
 
-export class StructBase {
-  view: DataView;
+export abstract class StructBase {
+  abstract dataview: DataView;
   get pointer(): Deno.PointerValue {
-    const buffer = this.view.buffer;
-    const offset = this.view.byteOffset;
+    const buffer = this.dataview.buffer;
+    const offset = this.dataview.byteOffset;
     const pBuf = Deno.UnsafePointer.of(buffer);
     if (!pBuf) return pBuf;
     const pView = Deno.UnsafePointer.offset(pBuf, offset);
     return pView;
-  }
-  constructor(view: DataView) {
-    this.view = view;
   }
 }
