@@ -1,4 +1,4 @@
-import { endianness } from "node:os";
+import { endianness } from "https://deno.land/std@0.177.0/node/os.ts";
 import * as UC from "../util/conv.ts";
 import * as E from "./enum.ts";
 
