@@ -4,6 +4,21 @@ Wgpu-native binding for Deno.
 
 **Note: The author is not familiar with the WebGPU spec, so a polyfill is not planned recently. PRs are welcome.**
 
+## Usage
+
+`deno-wgpu` is not published to `deno.land`. You can import it from `denopkg.com`:
+
+```ts
+import * as W from "https://denopkg.com/xubaiw/deno-wgpu/mod.ts";
+
+const desc = new w.InstanceDescriptor();
+const instance = w.createInstance(desc.pointer);
+
+const [, adapter] = await instance.requestAdapter(null);
+
+// Further usage...
+```
+
 ## Example
 
 See [`./examples/compute.ts`](./examples/compute.ts) for the collatz example.
