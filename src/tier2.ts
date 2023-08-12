@@ -596,7 +596,7 @@ export class AdapterProperties extends U.StructBase {
     return this.dataview.getUint32(56, U.LE) as AdapterType;
   }
 
-  set adapterType(value: AdapterType | number) {
+  set adapterType(value: AdapterType) {
     this.dataview.setUint32(56, value, U.LE);
   }
 
@@ -604,7 +604,7 @@ export class AdapterProperties extends U.StructBase {
     return this.dataview.getUint32(60, U.LE) as BackendType;
   }
 
-  set backendType(value: BackendType | number) {
+  set backendType(value: BackendType) {
     this.dataview.setUint32(60, value, U.LE);
   }
 
@@ -728,7 +728,7 @@ export class BlendComponent extends U.StructBase {
     return this.dataview.getUint32(0, U.LE) as BlendOperation;
   }
 
-  set operation(value: BlendOperation | number) {
+  set operation(value: BlendOperation) {
     this.dataview.setUint32(0, value, U.LE);
   }
 
@@ -736,7 +736,7 @@ export class BlendComponent extends U.StructBase {
     return this.dataview.getUint32(4, U.LE) as BlendFactor;
   }
 
-  set srcFactor(value: BlendFactor | number) {
+  set srcFactor(value: BlendFactor) {
     this.dataview.setUint32(4, value, U.LE);
   }
 
@@ -744,7 +744,7 @@ export class BlendComponent extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as BlendFactor;
   }
 
-  set dstFactor(value: BlendFactor | number) {
+  set dstFactor(value: BlendFactor) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -786,7 +786,7 @@ export class BufferBindingLayout extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as BufferBindingType;
   }
 
-  set type(value: BufferBindingType | number) {
+  set type(value: BufferBindingType) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -1072,7 +1072,7 @@ export class CompilationMessage extends U.StructBase {
     return this.dataview.getUint32(16, U.LE) as CompilationMessageType;
   }
 
-  set type(value: CompilationMessageType | number) {
+  set type(value: CompilationMessageType) {
     this.dataview.setUint32(16, value, U.LE);
   }
 
@@ -1178,7 +1178,7 @@ export class ComputePassTimestampWrite extends U.StructBase {
     return this.dataview.getUint32(12, U.LE) as ComputePassTimestampLocation;
   }
 
-  set location(value: ComputePassTimestampLocation | number) {
+  set location(value: ComputePassTimestampLocation) {
     this.dataview.setUint32(12, value, U.LE);
   }
 
@@ -1840,7 +1840,7 @@ export class PrimitiveState extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as PrimitiveTopology;
   }
 
-  set topology(value: PrimitiveTopology | number) {
+  set topology(value: PrimitiveTopology) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -1848,7 +1848,7 @@ export class PrimitiveState extends U.StructBase {
     return this.dataview.getUint32(12, U.LE) as IndexFormat;
   }
 
-  set stripIndexFormat(value: IndexFormat | number) {
+  set stripIndexFormat(value: IndexFormat) {
     this.dataview.setUint32(12, value, U.LE);
   }
 
@@ -1856,7 +1856,7 @@ export class PrimitiveState extends U.StructBase {
     return this.dataview.getUint32(16, U.LE) as FrontFace;
   }
 
-  set frontFace(value: FrontFace | number) {
+  set frontFace(value: FrontFace) {
     this.dataview.setUint32(16, value, U.LE);
   }
 
@@ -1864,7 +1864,7 @@ export class PrimitiveState extends U.StructBase {
     return this.dataview.getUint32(20, U.LE) as CullMode;
   }
 
-  set cullMode(value: CullMode | number) {
+  set cullMode(value: CullMode) {
     this.dataview.setUint32(20, value, U.LE);
   }
 
@@ -1918,7 +1918,7 @@ export class QuerySetDescriptor extends U.StructBase {
     return this.dataview.getUint32(16, U.LE) as QueryType;
   }
 
-  set type(value: QueryType | number) {
+  set type(value: QueryType) {
     this.dataview.setUint32(16, value, U.LE);
   }
 
@@ -2112,7 +2112,7 @@ export class RenderBundleEncoderDescriptor extends U.StructBase {
     return this.dataview.getUint32(32, U.LE) as TextureFormat;
   }
 
-  set depthStencilFormat(value: TextureFormat | number) {
+  set depthStencilFormat(value: TextureFormat) {
     this.dataview.setUint32(32, value, U.LE);
   }
 
@@ -2178,7 +2178,7 @@ export class RenderPassDepthStencilAttachment extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as LoadOp;
   }
 
-  set depthLoadOp(value: LoadOp | number) {
+  set depthLoadOp(value: LoadOp) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -2186,7 +2186,7 @@ export class RenderPassDepthStencilAttachment extends U.StructBase {
     return this.dataview.getUint32(12, U.LE) as StoreOp;
   }
 
-  set depthStoreOp(value: StoreOp | number) {
+  set depthStoreOp(value: StoreOp) {
     this.dataview.setUint32(12, value, U.LE);
   }
 
@@ -2210,7 +2210,7 @@ export class RenderPassDepthStencilAttachment extends U.StructBase {
     return this.dataview.getUint32(24, U.LE) as LoadOp;
   }
 
-  set stencilLoadOp(value: LoadOp | number) {
+  set stencilLoadOp(value: LoadOp) {
     this.dataview.setUint32(24, value, U.LE);
   }
 
@@ -2218,7 +2218,7 @@ export class RenderPassDepthStencilAttachment extends U.StructBase {
     return this.dataview.getUint32(28, U.LE) as StoreOp;
   }
 
-  set stencilStoreOp(value: StoreOp | number) {
+  set stencilStoreOp(value: StoreOp) {
     this.dataview.setUint32(28, value, U.LE);
   }
 
@@ -2330,7 +2330,7 @@ export class RenderPassTimestampWrite extends U.StructBase {
     return this.dataview.getUint32(12, U.LE) as RenderPassTimestampLocation;
   }
 
-  set location(value: RenderPassTimestampLocation | number) {
+  set location(value: RenderPassTimestampLocation) {
     this.dataview.setUint32(12, value, U.LE);
   }
 
@@ -2384,7 +2384,7 @@ export class RequestAdapterOptions extends U.StructBase {
     return this.dataview.getUint32(16, U.LE) as PowerPreference;
   }
 
-  set powerPreference(value: PowerPreference | number) {
+  set powerPreference(value: PowerPreference) {
     this.dataview.setUint32(16, value, U.LE);
   }
 
@@ -2392,7 +2392,7 @@ export class RequestAdapterOptions extends U.StructBase {
     return this.dataview.getUint32(20, U.LE) as BackendType;
   }
 
-  set backendType(value: BackendType | number) {
+  set backendType(value: BackendType) {
     this.dataview.setUint32(20, value, U.LE);
   }
 
@@ -2442,7 +2442,7 @@ export class SamplerBindingLayout extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as SamplerBindingType;
   }
 
-  set type(value: SamplerBindingType | number) {
+  set type(value: SamplerBindingType) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -2496,7 +2496,7 @@ export class SamplerDescriptor extends U.StructBase {
     return this.dataview.getUint32(16, U.LE) as AddressMode;
   }
 
-  set addressModeU(value: AddressMode | number) {
+  set addressModeU(value: AddressMode) {
     this.dataview.setUint32(16, value, U.LE);
   }
 
@@ -2504,7 +2504,7 @@ export class SamplerDescriptor extends U.StructBase {
     return this.dataview.getUint32(20, U.LE) as AddressMode;
   }
 
-  set addressModeV(value: AddressMode | number) {
+  set addressModeV(value: AddressMode) {
     this.dataview.setUint32(20, value, U.LE);
   }
 
@@ -2512,7 +2512,7 @@ export class SamplerDescriptor extends U.StructBase {
     return this.dataview.getUint32(24, U.LE) as AddressMode;
   }
 
-  set addressModeW(value: AddressMode | number) {
+  set addressModeW(value: AddressMode) {
     this.dataview.setUint32(24, value, U.LE);
   }
 
@@ -2520,7 +2520,7 @@ export class SamplerDescriptor extends U.StructBase {
     return this.dataview.getUint32(28, U.LE) as FilterMode;
   }
 
-  set magFilter(value: FilterMode | number) {
+  set magFilter(value: FilterMode) {
     this.dataview.setUint32(28, value, U.LE);
   }
 
@@ -2528,7 +2528,7 @@ export class SamplerDescriptor extends U.StructBase {
     return this.dataview.getUint32(32, U.LE) as FilterMode;
   }
 
-  set minFilter(value: FilterMode | number) {
+  set minFilter(value: FilterMode) {
     this.dataview.setUint32(32, value, U.LE);
   }
 
@@ -2536,7 +2536,7 @@ export class SamplerDescriptor extends U.StructBase {
     return this.dataview.getUint32(36, U.LE) as MipmapFilterMode;
   }
 
-  set mipmapFilter(value: MipmapFilterMode | number) {
+  set mipmapFilter(value: MipmapFilterMode) {
     this.dataview.setUint32(36, value, U.LE);
   }
 
@@ -2560,7 +2560,7 @@ export class SamplerDescriptor extends U.StructBase {
     return this.dataview.getUint32(48, U.LE) as CompareFunction;
   }
 
-  set compare(value: CompareFunction | number) {
+  set compare(value: CompareFunction) {
     this.dataview.setUint32(48, value, U.LE);
   }
 
@@ -2764,7 +2764,7 @@ export class StencilFaceState extends U.StructBase {
     return this.dataview.getUint32(0, U.LE) as CompareFunction;
   }
 
-  set compare(value: CompareFunction | number) {
+  set compare(value: CompareFunction) {
     this.dataview.setUint32(0, value, U.LE);
   }
 
@@ -2772,7 +2772,7 @@ export class StencilFaceState extends U.StructBase {
     return this.dataview.getUint32(4, U.LE) as StencilOperation;
   }
 
-  set failOp(value: StencilOperation | number) {
+  set failOp(value: StencilOperation) {
     this.dataview.setUint32(4, value, U.LE);
   }
 
@@ -2780,7 +2780,7 @@ export class StencilFaceState extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as StencilOperation;
   }
 
-  set depthFailOp(value: StencilOperation | number) {
+  set depthFailOp(value: StencilOperation) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -2788,7 +2788,7 @@ export class StencilFaceState extends U.StructBase {
     return this.dataview.getUint32(12, U.LE) as StencilOperation;
   }
 
-  set passOp(value: StencilOperation | number) {
+  set passOp(value: StencilOperation) {
     this.dataview.setUint32(12, value, U.LE);
   }
 
@@ -2830,7 +2830,7 @@ export class StorageTextureBindingLayout extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as StorageTextureAccess;
   }
 
-  set access(value: StorageTextureAccess | number) {
+  set access(value: StorageTextureAccess) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -2838,7 +2838,7 @@ export class StorageTextureBindingLayout extends U.StructBase {
     return this.dataview.getUint32(12, U.LE) as TextureFormat;
   }
 
-  set format(value: TextureFormat | number) {
+  set format(value: TextureFormat) {
     this.dataview.setUint32(12, value, U.LE);
   }
 
@@ -2846,7 +2846,7 @@ export class StorageTextureBindingLayout extends U.StructBase {
     return this.dataview.getUint32(16, U.LE) as TextureViewDimension;
   }
 
-  set viewDimension(value: TextureViewDimension | number) {
+  set viewDimension(value: TextureViewDimension) {
     this.dataview.setUint32(16, value, U.LE);
   }
 
@@ -3344,7 +3344,7 @@ export class SwapChainDescriptor extends U.StructBase {
     return this.dataview.getUint32(20, U.LE) as TextureFormat;
   }
 
-  set format(value: TextureFormat | number) {
+  set format(value: TextureFormat) {
     this.dataview.setUint32(20, value, U.LE);
   }
 
@@ -3368,7 +3368,7 @@ export class SwapChainDescriptor extends U.StructBase {
     return this.dataview.getUint32(32, U.LE) as PresentMode;
   }
 
-  set presentMode(value: PresentMode | number) {
+  set presentMode(value: PresentMode) {
     this.dataview.setUint32(32, value, U.LE);
   }
 
@@ -3410,7 +3410,7 @@ export class TextureBindingLayout extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as TextureSampleType;
   }
 
-  set sampleType(value: TextureSampleType | number) {
+  set sampleType(value: TextureSampleType) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -3418,7 +3418,7 @@ export class TextureBindingLayout extends U.StructBase {
     return this.dataview.getUint32(12, U.LE) as TextureViewDimension;
   }
 
-  set viewDimension(value: TextureViewDimension | number) {
+  set viewDimension(value: TextureViewDimension) {
     this.dataview.setUint32(12, value, U.LE);
   }
 
@@ -3538,7 +3538,7 @@ export class TextureViewDescriptor extends U.StructBase {
     return this.dataview.getUint32(16, U.LE) as TextureFormat;
   }
 
-  set format(value: TextureFormat | number) {
+  set format(value: TextureFormat) {
     this.dataview.setUint32(16, value, U.LE);
   }
 
@@ -3546,7 +3546,7 @@ export class TextureViewDescriptor extends U.StructBase {
     return this.dataview.getUint32(20, U.LE) as TextureViewDimension;
   }
 
-  set dimension(value: TextureViewDimension | number) {
+  set dimension(value: TextureViewDimension) {
     this.dataview.setUint32(20, value, U.LE);
   }
 
@@ -3586,7 +3586,7 @@ export class TextureViewDescriptor extends U.StructBase {
     return this.dataview.getUint32(40, U.LE) as TextureAspect;
   }
 
-  set aspect(value: TextureAspect | number) {
+  set aspect(value: TextureAspect) {
     this.dataview.setUint32(40, value, U.LE);
   }
 
@@ -3616,7 +3616,7 @@ export class VertexAttribute extends U.StructBase {
     return this.dataview.getUint32(0, U.LE) as VertexFormat;
   }
 
-  set format(value: VertexFormat | number) {
+  set format(value: VertexFormat) {
     this.dataview.setUint32(0, value, U.LE);
   }
 
@@ -4040,7 +4040,7 @@ export class DepthStencilState extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as TextureFormat;
   }
 
-  set format(value: TextureFormat | number) {
+  set format(value: TextureFormat) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -4056,7 +4056,7 @@ export class DepthStencilState extends U.StructBase {
     return this.dataview.getUint32(16, U.LE) as CompareFunction;
   }
 
-  set depthCompare(value: CompareFunction | number) {
+  set depthCompare(value: CompareFunction) {
     this.dataview.setUint32(16, value, U.LE);
   }
 
@@ -4268,7 +4268,7 @@ export class ImageCopyTexture extends U.StructBase {
     return this.dataview.getUint32(32, U.LE) as TextureAspect;
   }
 
-  set aspect(value: TextureAspect | number) {
+  set aspect(value: TextureAspect) {
     this.dataview.setUint32(32, value, U.LE);
   }
 
@@ -4400,7 +4400,7 @@ export class RenderPassColorAttachment extends U.StructBase {
     return this.dataview.getUint32(16, U.LE) as LoadOp;
   }
 
-  set loadOp(value: LoadOp | number) {
+  set loadOp(value: LoadOp) {
     this.dataview.setUint32(16, value, U.LE);
   }
 
@@ -4408,7 +4408,7 @@ export class RenderPassColorAttachment extends U.StructBase {
     return this.dataview.getUint32(20, U.LE) as StoreOp;
   }
 
-  set storeOp(value: StoreOp | number) {
+  set storeOp(value: StoreOp) {
     this.dataview.setUint32(20, value, U.LE);
   }
 
@@ -4652,7 +4652,7 @@ export class TextureDescriptor extends U.StructBase {
     return this.dataview.getUint32(20, U.LE) as TextureDimension;
   }
 
-  set dimension(value: TextureDimension | number) {
+  set dimension(value: TextureDimension) {
     this.dataview.setUint32(20, value, U.LE);
   }
 
@@ -4676,7 +4676,7 @@ export class TextureDescriptor extends U.StructBase {
     return this.dataview.getUint32(36, U.LE) as TextureFormat;
   }
 
-  set format(value: TextureFormat | number) {
+  set format(value: TextureFormat) {
     this.dataview.setUint32(36, value, U.LE);
   }
 
@@ -4750,7 +4750,7 @@ export class VertexBufferLayout extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as VertexStepMode;
   }
 
-  set stepMode(value: VertexStepMode | number) {
+  set stepMode(value: VertexStepMode) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -4878,7 +4878,7 @@ export class ColorTargetState extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as TextureFormat;
   }
 
-  set format(value: TextureFormat | number) {
+  set format(value: TextureFormat) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -5568,7 +5568,7 @@ export class ChainedStruct extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as SType;
   }
 
-  set sType(value: SType | number) {
+  set sType(value: SType) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -5610,7 +5610,7 @@ export class ChainedStructOut extends U.StructBase {
     return this.dataview.getUint32(8, U.LE) as SType;
   }
 
-  set sType(value: SType | number) {
+  set sType(value: SType) {
     this.dataview.setUint32(8, value, U.LE);
   }
 
@@ -5664,7 +5664,7 @@ export class InstanceExtras extends U.StructBase {
     return this.dataview.getUint32(20, U.LE) as Dx12Compiler;
   }
 
-  set dx12ShaderCompiler(value: Dx12Compiler | number) {
+  set dx12ShaderCompiler(value: Dx12Compiler) {
     this.dataview.setUint32(20, value, U.LE);
   }
 
@@ -6068,7 +6068,7 @@ export class ShaderModuleGLSLDescriptor extends U.StructBase {
     return this.dataview.getUint32(16, U.LE) as ShaderStage;
   }
 
-  set stage(value: ShaderStage | number) {
+  set stage(value: ShaderStage) {
     this.dataview.setUint32(16, value, U.LE);
   }
 
@@ -6462,7 +6462,7 @@ export class GlobalReport extends U.StructBase {
     return this.dataview.getUint32(32, U.LE) as BackendType;
   }
 
-  set backendType(value: BackendType | number) {
+  set backendType(value: BackendType) {
     this.dataview.setUint32(32, value, U.LE);
   }
 
@@ -6670,7 +6670,7 @@ export class SwapChainDescriptorExtras extends U.StructBase {
     return this.dataview.getUint32(16, U.LE) as CompositeAlphaMode;
   }
 
-  set alphaMode(value: CompositeAlphaMode | number) {
+  set alphaMode(value: CompositeAlphaMode) {
     this.dataview.setUint32(16, value, U.LE);
   }
 
@@ -6741,78 +6741,60 @@ export class InstanceEnumerateAdapterOptions extends U.StructBase {
   }
 }
 
-export const BufferMapCallbackDefinition = {
-  "result": "void",
-  "parameters": ["u32", "pointer"],
+export const BufferMapCallback = {
+  result: "void",
+  parameters: ["u32", "pointer"],
 } as const;
-export type BufferMapCallbackDefinition = typeof BufferMapCallbackDefinition;
 
-export const CompilationInfoCallbackDefinition = {
-  "result": "void",
-  "parameters": ["u32", "pointer", "pointer"],
+export const CompilationInfoCallback = {
+  result: "void",
+  parameters: ["u32", "pointer", "pointer"],
 } as const;
-export type CompilationInfoCallbackDefinition =
-  typeof CompilationInfoCallbackDefinition;
 
-export const CreateComputePipelineAsyncCallbackDefinition = {
-  "result": "void",
-  "parameters": ["u32", "pointer", "pointer", "pointer"],
+export const CreateComputePipelineAsyncCallback = {
+  result: "void",
+  parameters: ["u32", "pointer", "pointer", "pointer"],
 } as const;
-export type CreateComputePipelineAsyncCallbackDefinition =
-  typeof CreateComputePipelineAsyncCallbackDefinition;
 
-export const CreateRenderPipelineAsyncCallbackDefinition = {
-  "result": "void",
-  "parameters": ["u32", "pointer", "pointer", "pointer"],
+export const CreateRenderPipelineAsyncCallback = {
+  result: "void",
+  parameters: ["u32", "pointer", "pointer", "pointer"],
 } as const;
-export type CreateRenderPipelineAsyncCallbackDefinition =
-  typeof CreateRenderPipelineAsyncCallbackDefinition;
 
-export const DeviceLostCallbackDefinition = {
-  "result": "void",
-  "parameters": ["u32", "pointer", "pointer"],
+export const DeviceLostCallback = {
+  result: "void",
+  parameters: ["u32", "pointer", "pointer"],
 } as const;
-export type DeviceLostCallbackDefinition = typeof DeviceLostCallbackDefinition;
 
-export const ErrorCallbackDefinition = {
-  "result": "void",
-  "parameters": ["u32", "pointer", "pointer"],
+export const ErrorCallback = {
+  result: "void",
+  parameters: ["u32", "pointer", "pointer"],
 } as const;
-export type ErrorCallbackDefinition = typeof ErrorCallbackDefinition;
 
-export const QueueWorkDoneCallbackDefinition = {
-  "result": "void",
-  "parameters": ["u32", "pointer"],
+export const QueueWorkDoneCallback = {
+  result: "void",
+  parameters: ["u32", "pointer"],
 } as const;
-export type QueueWorkDoneCallbackDefinition =
-  typeof QueueWorkDoneCallbackDefinition;
 
-export const RequestAdapterCallbackDefinition = {
-  "result": "void",
-  "parameters": ["u32", "pointer", "pointer", "pointer"],
+export const RequestAdapterCallback = {
+  result: "void",
+  parameters: ["u32", "pointer", "pointer", "pointer"],
 } as const;
-export type RequestAdapterCallbackDefinition =
-  typeof RequestAdapterCallbackDefinition;
 
-export const RequestDeviceCallbackDefinition = {
-  "result": "void",
-  "parameters": ["u32", "pointer", "pointer", "pointer"],
+export const RequestDeviceCallback = {
+  result: "void",
+  parameters: ["u32", "pointer", "pointer", "pointer"],
 } as const;
-export type RequestDeviceCallbackDefinition =
-  typeof RequestDeviceCallbackDefinition;
 
-export const ProcDeviceSetUncapturedErrorCallbackDefinition = {
-  "result": "void",
-  "parameters": ["pointer", "pointer", "pointer"],
+export const ProcDeviceSetUncapturedErrorCallback = {
+  result: "void",
+  parameters: ["pointer", "pointer", "pointer"],
 } as const;
-export type ProcDeviceSetUncapturedErrorCallbackDefinition =
-  typeof ProcDeviceSetUncapturedErrorCallbackDefinition;
 
-export const LogCallbackDefinition = {
-  "result": "void",
-  "parameters": ["u32", "pointer", "pointer"],
+export const LogCallback = {
+  result: "void",
+  parameters: ["u32", "pointer", "pointer"],
 } as const;
-export type LogCallbackDefinition = typeof LogCallbackDefinition;
 
 export function createInstance(descriptor: Deno.PointerValue): Instance {
   const result = lib.symbols.wgpuCreateInstance(descriptor);
@@ -6840,25 +6822,25 @@ export function setLogCallback(): Promise<
 >;
 export function setLogCallback(
   callback: (...args: [LogLevel, Deno.PointerValue, Deno.PointerValue]) => void,
-): Deno.UnsafeCallback<LogCallbackDefinition>;
+): Deno.UnsafeCallback<typeof LogCallback>;
 export function setLogCallback(
-  callback: Deno.UnsafeCallback<LogCallbackDefinition>,
+  callback: Deno.UnsafeCallback<typeof LogCallback>,
 ): void;
 export function setLogCallback(callback: Deno.PointerValue): void;
 export function setLogCallback(
   callback?:
     | ((...args: [LogLevel, Deno.PointerValue, Deno.PointerValue]) => void)
-    | Deno.UnsafeCallback<LogCallbackDefinition>
+    | Deno.UnsafeCallback<typeof LogCallback>
     | Deno.PointerValue,
 ):
   | void
   | Promise<[LogLevel, Deno.PointerValue, Deno.PointerValue]>
-  | Deno.UnsafeCallback<LogCallbackDefinition> {
+  | Deno.UnsafeCallback<typeof LogCallback> {
   if (callback == null) {
     return new Promise((res) => {
       const cb = new Deno.UnsafeCallback(
-        LogCallbackDefinition,
-        (...args: U.CbParam<LogCallbackDefinition>) => {
+        LogCallback,
+        (...args: U.CbParam<typeof LogCallback>) => {
           res(
             [args[0] as LogLevel, args[1], args[2]] as [
               LogLevel,
@@ -6874,8 +6856,8 @@ export function setLogCallback(
     lib.symbols.wgpuSetLogCallback(callback.pointer, null);
   } else if (callback instanceof Function) {
     const cb = new Deno.UnsafeCallback(
-      LogCallbackDefinition,
-      (...args: U.CbParam<LogCallbackDefinition>) => {
+      LogCallback,
+      (...args: U.CbParam<typeof LogCallback>) => {
         callback(...[args[0] as LogLevel, args[1], args[2]]);
       },
     );
@@ -6943,10 +6925,10 @@ export class Adapter extends U.ClassBase {
         Deno.PointerValue,
       ]
     ) => void,
-  ): Deno.UnsafeCallback<RequestDeviceCallbackDefinition>;
+  ): Deno.UnsafeCallback<typeof RequestDeviceCallback>;
   requestDevice(
     descriptor: Deno.PointerValue,
-    callback: Deno.UnsafeCallback<RequestDeviceCallbackDefinition>,
+    callback: Deno.UnsafeCallback<typeof RequestDeviceCallback>,
   ): void;
   requestDevice(
     descriptor: Deno.PointerValue,
@@ -6963,19 +6945,19 @@ export class Adapter extends U.ClassBase {
           Deno.PointerValue,
         ]
       ) => void)
-      | Deno.UnsafeCallback<RequestDeviceCallbackDefinition>
+      | Deno.UnsafeCallback<typeof RequestDeviceCallback>
       | Deno.PointerValue,
   ):
     | void
     | Promise<
       [RequestDeviceStatus, Device, Deno.PointerValue, Deno.PointerValue]
     >
-    | Deno.UnsafeCallback<RequestDeviceCallbackDefinition> {
+    | Deno.UnsafeCallback<typeof RequestDeviceCallback> {
     if (callback == null) {
       return new Promise((res) => {
         const cb = new Deno.UnsafeCallback(
-          RequestDeviceCallbackDefinition,
-          (...args: U.CbParam<RequestDeviceCallbackDefinition>) => {
+          RequestDeviceCallback,
+          (...args: U.CbParam<typeof RequestDeviceCallback>) => {
             res(
               [
                 args[0] as RequestDeviceStatus,
@@ -7007,8 +6989,8 @@ export class Adapter extends U.ClassBase {
       );
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
-        RequestDeviceCallbackDefinition,
-        (...args: U.CbParam<RequestDeviceCallbackDefinition>) => {
+        RequestDeviceCallback,
+        (...args: U.CbParam<typeof RequestDeviceCallback>) => {
           callback(...[
             args[0] as RequestDeviceStatus,
             new Device(args[1], this),
@@ -7122,12 +7104,12 @@ export class Buffer extends U.ClassBase {
     offset: number | bigint,
     size: number | bigint,
     callback: (...args: [BufferMapAsyncStatus, Deno.PointerValue]) => void,
-  ): Deno.UnsafeCallback<BufferMapCallbackDefinition>;
+  ): Deno.UnsafeCallback<typeof BufferMapCallback>;
   mapAsync(
     mode: number,
     offset: number | bigint,
     size: number | bigint,
-    callback: Deno.UnsafeCallback<BufferMapCallbackDefinition>,
+    callback: Deno.UnsafeCallback<typeof BufferMapCallback>,
   ): void;
   mapAsync(
     mode: number,
@@ -7141,12 +7123,12 @@ export class Buffer extends U.ClassBase {
     size: number | bigint,
     callback?:
       | ((...args: [BufferMapAsyncStatus, Deno.PointerValue]) => void)
-      | Deno.UnsafeCallback<BufferMapCallbackDefinition>
+      | Deno.UnsafeCallback<typeof BufferMapCallback>
       | Deno.PointerValue,
   ):
     | void
     | Promise<[BufferMapAsyncStatus, Deno.PointerValue]>
-    | Deno.UnsafeCallback<BufferMapCallbackDefinition> {
+    | Deno.UnsafeCallback<typeof BufferMapCallback> {
     if (callback == null) {
       return new Promise((res) => {
         let data: [BufferMapAsyncStatus, Deno.PointerValue];
@@ -7157,8 +7139,8 @@ export class Buffer extends U.ClassBase {
           );
         }
         const cb = new Deno.UnsafeCallback(
-          BufferMapCallbackDefinition,
-          (...args: U.CbParam<BufferMapCallbackDefinition>) => {
+          BufferMapCallback,
+          (...args: U.CbParam<typeof BufferMapCallback>) => {
             data = [args[0] as BufferMapAsyncStatus, args[1]];
           },
         );
@@ -7188,8 +7170,8 @@ export class Buffer extends U.ClassBase {
       );
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
-        BufferMapCallbackDefinition,
-        (...args: U.CbParam<BufferMapCallbackDefinition>) => {
+        BufferMapCallback,
+        (...args: U.CbParam<typeof BufferMapCallback>) => {
           callback(...[args[0] as BufferMapAsyncStatus, args[1]]);
         },
       );
@@ -7594,10 +7576,10 @@ export class Device extends U.ClassBase {
         Deno.PointerValue,
       ]
     ) => void,
-  ): Deno.UnsafeCallback<CreateComputePipelineAsyncCallbackDefinition>;
+  ): Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback>;
   createComputePipelineAsync(
     descriptor: Deno.PointerValue,
-    callback: Deno.UnsafeCallback<CreateComputePipelineAsyncCallbackDefinition>,
+    callback: Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback>,
   ): void;
   createComputePipelineAsync(
     descriptor: Deno.PointerValue,
@@ -7614,7 +7596,7 @@ export class Device extends U.ClassBase {
           Deno.PointerValue,
         ]
       ) => void)
-      | Deno.UnsafeCallback<CreateComputePipelineAsyncCallbackDefinition>
+      | Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback>
       | Deno.PointerValue,
   ):
     | void
@@ -7626,7 +7608,7 @@ export class Device extends U.ClassBase {
         Deno.PointerValue,
       ]
     >
-    | Deno.UnsafeCallback<CreateComputePipelineAsyncCallbackDefinition> {
+    | Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback> {
     if (callback == null) {
       return new Promise((res) => {
         let data: [
@@ -7642,10 +7624,8 @@ export class Device extends U.ClassBase {
           );
         }
         const cb = new Deno.UnsafeCallback(
-          CreateComputePipelineAsyncCallbackDefinition,
-          (
-            ...args: U.CbParam<CreateComputePipelineAsyncCallbackDefinition>
-          ) => {
+          CreateComputePipelineAsyncCallback,
+          (...args: U.CbParam<typeof CreateComputePipelineAsyncCallback>) => {
             data = [
               args[0] as CreatePipelineAsyncStatus,
               new ComputePipeline(args[1], this),
@@ -7676,8 +7656,8 @@ export class Device extends U.ClassBase {
       );
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
-        CreateComputePipelineAsyncCallbackDefinition,
-        (...args: U.CbParam<CreateComputePipelineAsyncCallbackDefinition>) => {
+        CreateComputePipelineAsyncCallback,
+        (...args: U.CbParam<typeof CreateComputePipelineAsyncCallback>) => {
           callback(...[
             args[0] as CreatePipelineAsyncStatus,
             new ComputePipeline(args[1], this),
@@ -7757,10 +7737,10 @@ export class Device extends U.ClassBase {
         Deno.PointerValue,
       ]
     ) => void,
-  ): Deno.UnsafeCallback<CreateRenderPipelineAsyncCallbackDefinition>;
+  ): Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback>;
   createRenderPipelineAsync(
     descriptor: Deno.PointerValue,
-    callback: Deno.UnsafeCallback<CreateRenderPipelineAsyncCallbackDefinition>,
+    callback: Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback>,
   ): void;
   createRenderPipelineAsync(
     descriptor: Deno.PointerValue,
@@ -7777,7 +7757,7 @@ export class Device extends U.ClassBase {
           Deno.PointerValue,
         ]
       ) => void)
-      | Deno.UnsafeCallback<CreateRenderPipelineAsyncCallbackDefinition>
+      | Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback>
       | Deno.PointerValue,
   ):
     | void
@@ -7789,7 +7769,7 @@ export class Device extends U.ClassBase {
         Deno.PointerValue,
       ]
     >
-    | Deno.UnsafeCallback<CreateRenderPipelineAsyncCallbackDefinition> {
+    | Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback> {
     if (callback == null) {
       return new Promise((res) => {
         let data: [
@@ -7805,8 +7785,8 @@ export class Device extends U.ClassBase {
           );
         }
         const cb = new Deno.UnsafeCallback(
-          CreateRenderPipelineAsyncCallbackDefinition,
-          (...args: U.CbParam<CreateRenderPipelineAsyncCallbackDefinition>) => {
+          CreateRenderPipelineAsyncCallback,
+          (...args: U.CbParam<typeof CreateRenderPipelineAsyncCallback>) => {
             data = [
               args[0] as CreatePipelineAsyncStatus,
               new RenderPipeline(args[1], this),
@@ -7837,8 +7817,8 @@ export class Device extends U.ClassBase {
       );
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
-        CreateRenderPipelineAsyncCallbackDefinition,
-        (...args: U.CbParam<CreateRenderPipelineAsyncCallbackDefinition>) => {
+        CreateRenderPipelineAsyncCallback,
+        (...args: U.CbParam<typeof CreateRenderPipelineAsyncCallback>) => {
           callback(...[
             args[0] as CreatePipelineAsyncStatus,
             new RenderPipeline(args[1], this),
@@ -7930,23 +7910,23 @@ export class Device extends U.ClassBase {
     callback: (
       ...args: [ErrorType, Deno.PointerValue, Deno.PointerValue]
     ) => void,
-  ): Deno.UnsafeCallback<ErrorCallbackDefinition>;
-  popErrorScope(callback: Deno.UnsafeCallback<ErrorCallbackDefinition>): void;
+  ): Deno.UnsafeCallback<typeof ErrorCallback>;
+  popErrorScope(callback: Deno.UnsafeCallback<typeof ErrorCallback>): void;
   popErrorScope(callback: Deno.PointerValue): void;
   popErrorScope(
     callback?:
       | ((...args: [ErrorType, Deno.PointerValue, Deno.PointerValue]) => void)
-      | Deno.UnsafeCallback<ErrorCallbackDefinition>
+      | Deno.UnsafeCallback<typeof ErrorCallback>
       | Deno.PointerValue,
   ):
     | void
     | Promise<[ErrorType, Deno.PointerValue, Deno.PointerValue]>
-    | Deno.UnsafeCallback<ErrorCallbackDefinition> {
+    | Deno.UnsafeCallback<typeof ErrorCallback> {
     if (callback == null) {
       return new Promise((res) => {
         const cb = new Deno.UnsafeCallback(
-          ErrorCallbackDefinition,
-          (...args: U.CbParam<ErrorCallbackDefinition>) => {
+          ErrorCallback,
+          (...args: U.CbParam<typeof ErrorCallback>) => {
             res(
               [args[0] as ErrorType, args[1], args[2]] as [
                 ErrorType,
@@ -7962,8 +7942,8 @@ export class Device extends U.ClassBase {
       lib.symbols.wgpuDevicePopErrorScope(this.pointer, callback.pointer, null);
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
-        ErrorCallbackDefinition,
-        (...args: U.CbParam<ErrorCallbackDefinition>) => {
+        ErrorCallback,
+        (...args: U.CbParam<typeof ErrorCallback>) => {
           callback(...[args[0] as ErrorType, args[1], args[2]]);
         },
       );
@@ -7991,25 +7971,25 @@ export class Device extends U.ClassBase {
     callback: (
       ...args: [ErrorType, Deno.PointerValue, Deno.PointerValue]
     ) => void,
-  ): Deno.UnsafeCallback<ErrorCallbackDefinition>;
+  ): Deno.UnsafeCallback<typeof ErrorCallback>;
   setUncapturedErrorCallback(
-    callback: Deno.UnsafeCallback<ErrorCallbackDefinition>,
+    callback: Deno.UnsafeCallback<typeof ErrorCallback>,
   ): void;
   setUncapturedErrorCallback(callback: Deno.PointerValue): void;
   setUncapturedErrorCallback(
     callback?:
       | ((...args: [ErrorType, Deno.PointerValue, Deno.PointerValue]) => void)
-      | Deno.UnsafeCallback<ErrorCallbackDefinition>
+      | Deno.UnsafeCallback<typeof ErrorCallback>
       | Deno.PointerValue,
   ):
     | void
     | Promise<[ErrorType, Deno.PointerValue, Deno.PointerValue]>
-    | Deno.UnsafeCallback<ErrorCallbackDefinition> {
+    | Deno.UnsafeCallback<typeof ErrorCallback> {
     if (callback == null) {
       return new Promise((res) => {
         const cb = new Deno.UnsafeCallback(
-          ErrorCallbackDefinition,
-          (...args: U.CbParam<ErrorCallbackDefinition>) => {
+          ErrorCallback,
+          (...args: U.CbParam<typeof ErrorCallback>) => {
             res(
               [args[0] as ErrorType, args[1], args[2]] as [
                 ErrorType,
@@ -8033,8 +8013,8 @@ export class Device extends U.ClassBase {
       );
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
-        ErrorCallbackDefinition,
-        (...args: U.CbParam<ErrorCallbackDefinition>) => {
+        ErrorCallback,
+        (...args: U.CbParam<typeof ErrorCallback>) => {
           callback(...[args[0] as ErrorType, args[1], args[2]]);
         },
       );
@@ -8097,10 +8077,10 @@ export class Instance extends U.ClassBase {
         Deno.PointerValue,
       ]
     ) => void,
-  ): Deno.UnsafeCallback<RequestAdapterCallbackDefinition>;
+  ): Deno.UnsafeCallback<typeof RequestAdapterCallback>;
   requestAdapter(
     options: Deno.PointerValue,
-    callback: Deno.UnsafeCallback<RequestAdapterCallbackDefinition>,
+    callback: Deno.UnsafeCallback<typeof RequestAdapterCallback>,
   ): void;
   requestAdapter(options: Deno.PointerValue, callback: Deno.PointerValue): void;
   requestAdapter(
@@ -8114,19 +8094,19 @@ export class Instance extends U.ClassBase {
           Deno.PointerValue,
         ]
       ) => void)
-      | Deno.UnsafeCallback<RequestAdapterCallbackDefinition>
+      | Deno.UnsafeCallback<typeof RequestAdapterCallback>
       | Deno.PointerValue,
   ):
     | void
     | Promise<
       [RequestAdapterStatus, Adapter, Deno.PointerValue, Deno.PointerValue]
     >
-    | Deno.UnsafeCallback<RequestAdapterCallbackDefinition> {
+    | Deno.UnsafeCallback<typeof RequestAdapterCallback> {
     if (callback == null) {
       return new Promise((res) => {
         const cb = new Deno.UnsafeCallback(
-          RequestAdapterCallbackDefinition,
-          (...args: U.CbParam<RequestAdapterCallbackDefinition>) => {
+          RequestAdapterCallback,
+          (...args: U.CbParam<typeof RequestAdapterCallback>) => {
             res(
               [
                 args[0] as RequestAdapterStatus,
@@ -8158,8 +8138,8 @@ export class Instance extends U.ClassBase {
       );
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
-        RequestAdapterCallbackDefinition,
-        (...args: U.CbParam<RequestAdapterCallbackDefinition>) => {
+        RequestAdapterCallback,
+        (...args: U.CbParam<typeof RequestAdapterCallback>) => {
           callback(...[
             args[0] as RequestAdapterStatus,
             new Adapter(args[1], this),
@@ -8245,25 +8225,25 @@ export class Queue extends U.ClassBase {
   onSubmittedWorkDone(): Promise<[QueueWorkDoneStatus, Deno.PointerValue]>;
   onSubmittedWorkDone(
     callback: (...args: [QueueWorkDoneStatus, Deno.PointerValue]) => void,
-  ): Deno.UnsafeCallback<QueueWorkDoneCallbackDefinition>;
+  ): Deno.UnsafeCallback<typeof QueueWorkDoneCallback>;
   onSubmittedWorkDone(
-    callback: Deno.UnsafeCallback<QueueWorkDoneCallbackDefinition>,
+    callback: Deno.UnsafeCallback<typeof QueueWorkDoneCallback>,
   ): void;
   onSubmittedWorkDone(callback: Deno.PointerValue): void;
   onSubmittedWorkDone(
     callback?:
       | ((...args: [QueueWorkDoneStatus, Deno.PointerValue]) => void)
-      | Deno.UnsafeCallback<QueueWorkDoneCallbackDefinition>
+      | Deno.UnsafeCallback<typeof QueueWorkDoneCallback>
       | Deno.PointerValue,
   ):
     | void
     | Promise<[QueueWorkDoneStatus, Deno.PointerValue]>
-    | Deno.UnsafeCallback<QueueWorkDoneCallbackDefinition> {
+    | Deno.UnsafeCallback<typeof QueueWorkDoneCallback> {
     if (callback == null) {
       return new Promise((res) => {
         const cb = new Deno.UnsafeCallback(
-          QueueWorkDoneCallbackDefinition,
-          (...args: U.CbParam<QueueWorkDoneCallbackDefinition>) => {
+          QueueWorkDoneCallback,
+          (...args: U.CbParam<typeof QueueWorkDoneCallback>) => {
             res(
               [args[0] as QueueWorkDoneStatus, args[1]] as [
                 QueueWorkDoneStatus,
@@ -8286,8 +8266,8 @@ export class Queue extends U.ClassBase {
       );
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
-        QueueWorkDoneCallbackDefinition,
-        (...args: U.CbParam<QueueWorkDoneCallbackDefinition>) => {
+        QueueWorkDoneCallback,
+        (...args: U.CbParam<typeof QueueWorkDoneCallback>) => {
           callback(...[args[0] as QueueWorkDoneStatus, args[1]]);
         },
       );
@@ -8906,9 +8886,9 @@ export class ShaderModule extends U.ClassBase {
         Deno.PointerValue,
       ]
     ) => void,
-  ): Deno.UnsafeCallback<CompilationInfoCallbackDefinition>;
+  ): Deno.UnsafeCallback<typeof CompilationInfoCallback>;
   getCompilationInfo(
-    callback: Deno.UnsafeCallback<CompilationInfoCallbackDefinition>,
+    callback: Deno.UnsafeCallback<typeof CompilationInfoCallback>,
   ): void;
   getCompilationInfo(callback: Deno.PointerValue): void;
   getCompilationInfo(
@@ -8920,19 +8900,19 @@ export class ShaderModule extends U.ClassBase {
           Deno.PointerValue,
         ]
       ) => void)
-      | Deno.UnsafeCallback<CompilationInfoCallbackDefinition>
+      | Deno.UnsafeCallback<typeof CompilationInfoCallback>
       | Deno.PointerValue,
   ):
     | void
     | Promise<
       [CompilationInfoRequestStatus, Deno.PointerValue, Deno.PointerValue]
     >
-    | Deno.UnsafeCallback<CompilationInfoCallbackDefinition> {
+    | Deno.UnsafeCallback<typeof CompilationInfoCallback> {
     if (callback == null) {
       return new Promise((res) => {
         const cb = new Deno.UnsafeCallback(
-          CompilationInfoCallbackDefinition,
-          (...args: U.CbParam<CompilationInfoCallbackDefinition>) => {
+          CompilationInfoCallback,
+          (...args: U.CbParam<typeof CompilationInfoCallback>) => {
             res(
               [args[0] as CompilationInfoRequestStatus, args[1], args[2]] as [
                 CompilationInfoRequestStatus,
@@ -8956,8 +8936,8 @@ export class ShaderModule extends U.ClassBase {
       );
     } else if (callback instanceof Function) {
       const cb = new Deno.UnsafeCallback(
-        CompilationInfoCallbackDefinition,
-        (...args: U.CbParam<CompilationInfoCallbackDefinition>) => {
+        CompilationInfoCallback,
+        (...args: U.CbParam<typeof CompilationInfoCallback>) => {
           callback(...[
             args[0] as CompilationInfoRequestStatus,
             args[1],
