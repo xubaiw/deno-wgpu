@@ -30,7 +30,7 @@ type Ctx = {
   dir: string;
   symbols: Record<string, SymbolSpec>;
   callbacks: Record<string, CallbackSpec>;
-  enums: Record<string, Record<string, unknown>>;
+  enums: Record<string, Record<string, number | bigint>>;
   structs: Record<string, StructSpec>;
   functions: Record<string, FunctionSpec>;
   classes: Record<string, Record<string, FunctionSpec>>;
@@ -322,14 +322,18 @@ function generateStruct(ctx: Ctx, name: string) {
   );
   const to = generateStructTo(ctx, name);
   const from = generateStructFrom(ctx, name);
+  const setstype = Object.keys(ctx.enums["SType"]).includes(nofix(name))
+    ? `this.chain.sType = SType.${nofix(name)};`
+    : "";
   return dedent`
     ${to}
     export class ${nofix(name)} extends U.StructBase {
       dataview: DataView;
       constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
         super();
-        if (dataviewOrPtr == null) {
+        if (dataviewOrPtr === undefined) {
           this.dataview = new DataView(new ArrayBuffer(${size}));
+          ${setstype}
         } else {
           if (dataviewOrPtr instanceof DataView) {
             this.dataview = dataviewOrPtr;
@@ -349,11 +353,17 @@ function generateStructTo(ctx: Ctx, name: string) {
   const body = sep(";")(
     km(
       fields,
-      (fname) => `${fname}?: ${generateStructSetterType(ctx, name, fname)}`,
+      (fname) =>
+        `${fname}${fname == "sType" ? "" : "?"}: ${
+          generateStructSetterType(ctx, name, fname)
+        }`,
     ),
   );
+  const canbeundfined = Object.keys(fields).includes("sType")
+    ? ""
+    : "undefined |";
   return dedent`
-    export type To${nofix(name)} = undefined | {
+    export type To${nofix(name)} = ${canbeundfined} {
       ${body}
     };
   `;
@@ -381,7 +391,7 @@ function generateStructGetter(ctx: Ctx, sname: string, fname: string) {
 
 function generateStructSetter(ctx: Ctx, sname: string, fname: string) {
   const type = generateStructSetterType(ctx, sname, fname);
-  const result = generateStructSetterResult(ctx, sname, fname);
+  const result = generateStructSetterBody(ctx, sname, fname);
   return `
     set ${fname}(value: ${type}) {
       ${result};
@@ -407,8 +417,7 @@ function generateStructFrom(ctx: Ctx, name: string): string {
       return struct;
     }
     set(plain: To${nofix(name)}) {
-      const struct = this;
-      if (plain === undefined) return struct;
+      if (plain === undefined) return;
       ${setters("this")}
     }
   `;
@@ -495,7 +504,16 @@ function generateStructSetterType(ctx: Ctx, name: string, fname: string) {
     if (type in ctx.classes) return `Deno.PointerValue | ${nofix(type)}`;
     // struct
     const match = matchStruct(ctx, type);
-    if (match) return `Deno.PointerValue | ${nofix(match)} | To${nofix(match)}`;
+    if (match) {
+      // chained struct
+      if (fname == "nextInChain") {
+        return `Deno.PointerValue | { chain: ${nofix(match)} | To${
+          nofix(match)
+        }, [key: string]: any }`;
+      }
+      // default struct
+      return `Deno.PointerValue | ${nofix(match)} | To${nofix(match)}`;
+    }
     // default
     return `Deno.PointerValue`;
   }
@@ -513,7 +531,7 @@ function generateStructSetterType(ctx: Ctx, name: string, fname: string) {
   );
 }
 
-function generateStructSetterResult(ctx: Ctx, name: string, fname: string) {
+function generateStructSetterBody(ctx: Ctx, name: string, fname: string) {
   const { offset, kind, size, type } = ctx.structs[name].fields[fname];
   if (kind == "Record") {
     return `
@@ -527,21 +545,48 @@ function generateStructSetterResult(ctx: Ctx, name: string, fname: string) {
     `;
   }
   if (kind == "Pointer") {
-    const setter = (inner: string) =>
-      `this.dataview.setBigUint64(${offset}, BigInt(Deno.UnsafePointer.value(${inner})), U.LE);`;
+    const withsetinner = (setinner: string) =>
+      `${setinner};
+       this.dataview.setBigUint64(
+         ${offset},
+         BigInt(Deno.UnsafePointer.value(inner)),
+         U.LE
+       );`;
     // class
     if (type in ctx.classes) {
-      return setter(`value instanceof ${nofix(type)} ? value.pointer : value`);
+      return withsetinner(
+        `const inner = value instanceof U.ClassBase ? value.pointer : value;`,
+      );
     }
     // struct
     const match = matchStruct(ctx, type);
     if (match) {
-      return setter(
-        `value instanceof ${nofix(match)} ? value.pointer : U.duckIsPointer(value) ? value : ${nofix(match)}.from(value).pointer`,
+      // chained struct
+      if (fname == "nextInChain") {
+        const switcher = sep(";")(km(ctx.enums["SType"], (key) => {
+          if (("WGPU" + key) in ctx.structs) {
+            return `if (value.chain.sType == SType.${key}) inner = ${key}.from(value).pointer`;
+          } else {
+            return `if (value.chain.sType == SType.${key}) throw new Error(\`Invalid sType \${value.chain.sType}\`)`;
+          }
+        }));
+        return withsetinner(`
+          let inner!: Deno.PointerValue;
+          if (U.duckIsPointer(value)) inner = value;
+          else {
+            ${switcher}
+          }
+        `);
+      }
+      // default struct
+      return withsetinner(
+        `const inner = value instanceof U.StructBase ? value.pointer : U.duckIsPointer(value) ? value : ${
+          nofix(match)
+        }.from(value).pointer`,
       );
     }
     // default
-    return setter("value");
+    return withsetinner("const inner = value;");
   }
   if (kind == "Enum") {
     return `this.dataview.setUint32(${offset}, value, U.LE)`;
@@ -766,7 +811,7 @@ function generateClassMethodWithCallback(
       `
     : `
         const cb = new Deno.UnsafeCallback(${cbDef}, (...args: U.CbParam<typeof ${cbDef}>) => {
-          res(${datasetters} as ${promisetypes});
+          res(${datasetters});
         })
         lib.symbols.${functionId}(${argBefore}${acomma} cb.pointer, null);
       `;
@@ -821,7 +866,7 @@ function generateFunction(ctx: Ctx, functionId: string): string {
 }
 
 function matchStruct(ctx: Ctx, type: string): string | null {
-  const match = type.match(/^const (\w+) \*$/);
+  const match = type.match(/(\w+) \*$/);
   if (!match) return null;
   if (match[1] in ctx.structs) return match[1];
   return null;
@@ -852,17 +897,23 @@ function generateFunctionBody(ctx: Ctx, clsOrFn: string, optMId?: string) {
   `;
 }
 
-function translateTypeSpec(ctx: Ctx, spec: TypeSpec, allowptr = false): string {
+function translateTypeSpec(
+  ctx: Ctx,
+  spec: TypeSpec,
+  singletype = false,
+): string {
   const { kind, type } = spec;
-  const orptr = allowptr ? "| Deno.PointerValue" : "";
+  const orptr = singletype ? "| Deno.PointerValue" : "";
   if (kind == "Enum") return nofix(type);
   if (kind == "Pointer") {
     if (type in ctx.callbacks) return nofix(type);
     if (type in ctx.classes) return nofix(type);
     // struct
-    const match = type.match(/^const (\w+) \*$/);
-    if (match && match[1] in ctx.structs) {
-      return `${nofix(match[1])} | To${nofix(match[1])}` + orptr;
+    const match = matchStruct(ctx, type);
+    if (match) {
+      return `${nofix(match)} | null` +
+        (singletype ? `| To${nofix(match)}` : "") +
+        orptr;
     }
   }
   return translateKindToDeno(kind);
@@ -883,9 +934,9 @@ function generateResultTransform(
       return `new ${nofix(type)}(${inner} ${method ? ", this" : ""})`;
     }
     // struct
-    const match = type.match(/^const (\w+) \*$/);
-    if (match && match[1] in ctx.structs) {
-      return `new ${nofix(match[1])}(${inner})`;
+    const match = matchStruct(ctx, type);
+    if (match) {
+      return `${inner} === null ? null : new ${nofix(match)}(${inner})`;
     }
   }
   return inner;
@@ -900,12 +951,12 @@ function translateArgument(ctx: Ctx, spec: NamedTypeSpec): string {
       return `${spec.name}.pointer`;
     }
     // struct
-    const match = spec.type.match(/^const (\w+) \*$/);
-    if (match && match[1] in ctx.structs) {
+    const match = matchStruct(ctx, spec.type);
+    if (match) {
       return `${spec.name} instanceof ${
-        nofix(match[1])
+        nofix(match)
       } ? ${spec.name}.pointer : U.duckIsPointer(${spec.name}) ? ${spec.name} : ${
-        nofix(match[1])
+        nofix(match)
       }.from(${spec.name}).pointer`;
     }
   }

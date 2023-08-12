@@ -500,7 +500,10 @@ export enum CompositeAlphaMode {
 }
 
 export type ToAdapterProperties = undefined | {
-  nextInChain?: Deno.PointerValue;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStructOut | ToChainedStructOut;
+    [key: string]: any;
+  };
   vendorID?: number;
   vendorName?: Deno.PointerValue;
   architecture?: Deno.PointerValue;
@@ -515,7 +518,7 @@ export class AdapterProperties extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(64));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -528,15 +531,86 @@ export class AdapterProperties extends U.StructBase {
     }
   }
 
-  get nextInChain(): Deno.PointerValue {
+  get nextInChain(): ChainedStructOut | null {
     const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    return ptr;
+    if (ptr == null) return null;
+    else return new ChainedStructOut(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStructOut | ToChainedStructOut;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -555,9 +629,10 @@ export class AdapterProperties extends U.StructBase {
   }
 
   set vendorName(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -568,9 +643,10 @@ export class AdapterProperties extends U.StructBase {
   }
 
   set architecture(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -589,9 +665,10 @@ export class AdapterProperties extends U.StructBase {
   }
 
   set name(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       40,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -602,9 +679,10 @@ export class AdapterProperties extends U.StructBase {
   }
 
   set driverDescription(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       48,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -644,8 +722,7 @@ export class AdapterProperties extends U.StructBase {
     return struct;
   }
   set(plain: ToAdapterProperties) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.vendorID !== undefined) this.vendorID = plain.vendorID;
     if (plain.vendorName !== undefined) this.vendorName = plain.vendorName;
@@ -663,7 +740,10 @@ export class AdapterProperties extends U.StructBase {
 }
 
 export type ToBindGroupEntry = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   binding?: number;
   buffer?: Deno.PointerValue | Buffer;
   offset?: bigint | number;
@@ -676,7 +756,7 @@ export class BindGroupEntry extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(56));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -695,16 +775,80 @@ export class BindGroupEntry extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -723,13 +867,10 @@ export class BindGroupEntry extends U.StructBase {
   }
 
   set buffer(value: Deno.PointerValue | Buffer) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       16,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof Buffer ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -756,13 +897,10 @@ export class BindGroupEntry extends U.StructBase {
   }
 
   set sampler(value: Deno.PointerValue | Sampler) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       40,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof Sampler ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -773,13 +911,10 @@ export class BindGroupEntry extends U.StructBase {
   }
 
   set textureView(value: Deno.PointerValue | TextureView) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       48,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof TextureView ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -797,8 +932,7 @@ export class BindGroupEntry extends U.StructBase {
     return struct;
   }
   set(plain: ToBindGroupEntry) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.binding !== undefined) this.binding = plain.binding;
     if (plain.buffer !== undefined) this.buffer = plain.buffer;
@@ -819,7 +953,7 @@ export class BlendComponent extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(12));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -865,8 +999,7 @@ export class BlendComponent extends U.StructBase {
     return struct;
   }
   set(plain: ToBlendComponent) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.operation !== undefined) this.operation = plain.operation;
     if (plain.srcFactor !== undefined) this.srcFactor = plain.srcFactor;
     if (plain.dstFactor !== undefined) this.dstFactor = plain.dstFactor;
@@ -874,7 +1007,10 @@ export class BlendComponent extends U.StructBase {
 }
 
 export type ToBufferBindingLayout = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   type?: BufferBindingType;
   hasDynamicOffset?: boolean | number | bigint;
   minBindingSize?: bigint | number;
@@ -884,7 +1020,7 @@ export class BufferBindingLayout extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -903,16 +1039,80 @@ export class BufferBindingLayout extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -955,8 +1155,7 @@ export class BufferBindingLayout extends U.StructBase {
     return struct;
   }
   set(plain: ToBufferBindingLayout) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.type !== undefined) this.type = plain.type;
     if (plain.hasDynamicOffset !== undefined) {
@@ -969,7 +1168,10 @@ export class BufferBindingLayout extends U.StructBase {
 }
 
 export type ToBufferDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   usage?: number;
   size?: bigint | number;
@@ -980,7 +1182,7 @@ export class BufferDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(40));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -999,16 +1201,80 @@ export class BufferDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -1019,9 +1285,10 @@ export class BufferDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -1063,8 +1330,7 @@ export class BufferDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToBufferDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.usage !== undefined) this.usage = plain.usage;
@@ -1086,7 +1352,7 @@ export class Color extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -1141,8 +1407,7 @@ export class Color extends U.StructBase {
     return struct;
   }
   set(plain: ToColor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.r !== undefined) this.r = plain.r;
     if (plain.g !== undefined) this.g = plain.g;
     if (plain.b !== undefined) this.b = plain.b;
@@ -1151,7 +1416,10 @@ export class Color extends U.StructBase {
 }
 
 export type ToCommandBufferDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
 };
 
@@ -1159,7 +1427,7 @@ export class CommandBufferDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -1178,16 +1446,80 @@ export class CommandBufferDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -1198,9 +1530,10 @@ export class CommandBufferDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -1213,15 +1546,17 @@ export class CommandBufferDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToCommandBufferDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
   }
 }
 
 export type ToCommandEncoderDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
 };
 
@@ -1229,7 +1564,7 @@ export class CommandEncoderDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -1248,16 +1583,80 @@ export class CommandEncoderDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -1268,9 +1667,10 @@ export class CommandEncoderDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -1283,15 +1683,17 @@ export class CommandEncoderDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToCommandEncoderDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
   }
 }
 
 export type ToCompilationMessage = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   message?: Deno.PointerValue;
   type?: CompilationMessageType;
   lineNum?: bigint | number;
@@ -1307,7 +1709,7 @@ export class CompilationMessage extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(80));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -1326,16 +1728,80 @@ export class CompilationMessage extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -1346,9 +1812,10 @@ export class CompilationMessage extends U.StructBase {
   }
 
   set message(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -1435,8 +1902,7 @@ export class CompilationMessage extends U.StructBase {
     return struct;
   }
   set(plain: ToCompilationMessage) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.message !== undefined) this.message = plain.message;
     if (plain.type !== undefined) this.type = plain.type;
@@ -1462,7 +1928,7 @@ export class ComputePassTimestampWrite extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -1481,13 +1947,10 @@ export class ComputePassTimestampWrite extends U.StructBase {
   }
 
   set querySet(value: Deno.PointerValue | QuerySet) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       0,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof QuerySet ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -1517,8 +1980,7 @@ export class ComputePassTimestampWrite extends U.StructBase {
     return struct;
   }
   set(plain: ToComputePassTimestampWrite) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.querySet !== undefined) this.querySet = plain.querySet;
     if (plain.queryIndex !== undefined) this.queryIndex = plain.queryIndex;
     if (plain.location !== undefined) this.location = plain.location;
@@ -1526,7 +1988,10 @@ export class ComputePassTimestampWrite extends U.StructBase {
 }
 
 export type ToConstantEntry = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   key?: Deno.PointerValue;
   value?: number;
 };
@@ -1535,7 +2000,7 @@ export class ConstantEntry extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -1554,16 +2019,80 @@ export class ConstantEntry extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -1574,9 +2103,10 @@ export class ConstantEntry extends U.StructBase {
   }
 
   set key(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -1598,8 +2128,7 @@ export class ConstantEntry extends U.StructBase {
     return struct;
   }
   set(plain: ToConstantEntry) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.key !== undefined) this.key = plain.key;
     if (plain.value !== undefined) this.value = plain.value;
@@ -1616,7 +2145,7 @@ export class Extent3D extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(12));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -1664,8 +2193,7 @@ export class Extent3D extends U.StructBase {
     return struct;
   }
   set(plain: ToExtent3D) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.width !== undefined) this.width = plain.width;
     if (plain.height !== undefined) this.height = plain.height;
     if (plain.depthOrArrayLayers !== undefined) {
@@ -1675,14 +2203,17 @@ export class Extent3D extends U.StructBase {
 }
 
 export type ToInstanceDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
 };
 
 export class InstanceDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(8));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -1701,16 +2232,80 @@ export class InstanceDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -1722,8 +2317,7 @@ export class InstanceDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToInstanceDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
   }
 }
@@ -1766,7 +2360,7 @@ export class Limits extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(144));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -2139,8 +2733,7 @@ export class Limits extends U.StructBase {
     return struct;
   }
   set(plain: ToLimits) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.maxTextureDimension1D !== undefined) {
       this.maxTextureDimension1D = plain.maxTextureDimension1D;
     }
@@ -2250,7 +2843,10 @@ export class Limits extends U.StructBase {
 }
 
 export type ToMultisampleState = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   count?: number;
   mask?: number;
   alphaToCoverageEnabled?: boolean | number | bigint;
@@ -2260,7 +2856,7 @@ export class MultisampleState extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -2279,16 +2875,80 @@ export class MultisampleState extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2329,8 +2989,7 @@ export class MultisampleState extends U.StructBase {
     return struct;
   }
   set(plain: ToMultisampleState) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.count !== undefined) this.count = plain.count;
     if (plain.mask !== undefined) this.mask = plain.mask;
@@ -2350,7 +3009,7 @@ export class Origin3D extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(12));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -2396,8 +3055,7 @@ export class Origin3D extends U.StructBase {
     return struct;
   }
   set(plain: ToOrigin3D) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.x !== undefined) this.x = plain.x;
     if (plain.y !== undefined) this.y = plain.y;
     if (plain.z !== undefined) this.z = plain.z;
@@ -2405,7 +3063,10 @@ export class Origin3D extends U.StructBase {
 }
 
 export type ToPipelineLayoutDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   bindGroupLayoutCount?: bigint | number;
   bindGroupLayouts?: Deno.PointerValue;
@@ -2415,7 +3076,7 @@ export class PipelineLayoutDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -2434,16 +3095,80 @@ export class PipelineLayoutDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2454,9 +3179,10 @@ export class PipelineLayoutDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2475,9 +3201,10 @@ export class PipelineLayoutDescriptor extends U.StructBase {
   }
 
   set bindGroupLayouts(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2496,8 +3223,7 @@ export class PipelineLayoutDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToPipelineLayoutDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.bindGroupLayoutCount !== undefined) {
@@ -2518,8 +3244,9 @@ export class PrimitiveDepthClipControl extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
+      this.chain.sType = SType.PrimitiveDepthClipControl;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -2567,8 +3294,7 @@ export class PrimitiveDepthClipControl extends U.StructBase {
     return struct;
   }
   set(plain: ToPrimitiveDepthClipControl) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.unclippedDepth !== undefined) {
       this.unclippedDepth = plain.unclippedDepth;
@@ -2577,7 +3303,10 @@ export class PrimitiveDepthClipControl extends U.StructBase {
 }
 
 export type ToPrimitiveState = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   topology?: PrimitiveTopology;
   stripIndexFormat?: IndexFormat;
   frontFace?: FrontFace;
@@ -2588,7 +3317,7 @@ export class PrimitiveState extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -2607,16 +3336,80 @@ export class PrimitiveState extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2666,8 +3459,7 @@ export class PrimitiveState extends U.StructBase {
     return struct;
   }
   set(plain: ToPrimitiveState) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.topology !== undefined) this.topology = plain.topology;
     if (plain.stripIndexFormat !== undefined) {
@@ -2679,7 +3471,10 @@ export class PrimitiveState extends U.StructBase {
 }
 
 export type ToQuerySetDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   type?: QueryType;
   count?: number;
@@ -2691,7 +3486,7 @@ export class QuerySetDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(40));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -2710,16 +3505,80 @@ export class QuerySetDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2730,9 +3589,10 @@ export class QuerySetDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2759,9 +3619,10 @@ export class QuerySetDescriptor extends U.StructBase {
   }
 
   set pipelineStatistics(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2790,8 +3651,7 @@ export class QuerySetDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToQuerySetDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.type !== undefined) this.type = plain.type;
@@ -2806,7 +3666,10 @@ export class QuerySetDescriptor extends U.StructBase {
 }
 
 export type ToQueueDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
 };
 
@@ -2814,7 +3677,7 @@ export class QueueDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -2833,16 +3696,80 @@ export class QueueDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2853,9 +3780,10 @@ export class QueueDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2868,15 +3796,17 @@ export class QueueDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToQueueDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
   }
 }
 
 export type ToRenderBundleDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
 };
 
@@ -2884,7 +3814,7 @@ export class RenderBundleDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -2903,16 +3833,80 @@ export class RenderBundleDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2923,9 +3917,10 @@ export class RenderBundleDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2938,15 +3933,17 @@ export class RenderBundleDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToRenderBundleDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
   }
 }
 
 export type ToRenderBundleEncoderDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   colorFormatsCount?: bigint | number;
   colorFormats?: Deno.PointerValue;
@@ -2960,7 +3957,7 @@ export class RenderBundleEncoderDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(48));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -2979,16 +3976,80 @@ export class RenderBundleEncoderDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -2999,9 +4060,10 @@ export class RenderBundleEncoderDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3020,9 +4082,10 @@ export class RenderBundleEncoderDescriptor extends U.StructBase {
   }
 
   set colorFormats(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3083,8 +4146,7 @@ export class RenderBundleEncoderDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToRenderBundleEncoderDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.colorFormatsCount !== undefined) {
@@ -3122,7 +4184,7 @@ export class RenderPassDepthStencilAttachment extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(40));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -3141,13 +4203,10 @@ export class RenderPassDepthStencilAttachment extends U.StructBase {
   }
 
   set view(value: Deno.PointerValue | TextureView) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       0,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof TextureView ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3245,8 +4304,7 @@ export class RenderPassDepthStencilAttachment extends U.StructBase {
     return struct;
   }
   set(plain: ToRenderPassDepthStencilAttachment) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.view !== undefined) this.view = plain.view;
     if (plain.depthLoadOp !== undefined) this.depthLoadOp = plain.depthLoadOp;
     if (plain.depthStoreOp !== undefined) {
@@ -3282,8 +4340,9 @@ export class RenderPassDescriptorMaxDrawCount extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
+      this.chain.sType = SType.RenderPassDescriptorMaxDrawCount;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -3331,8 +4390,7 @@ export class RenderPassDescriptorMaxDrawCount extends U.StructBase {
     return struct;
   }
   set(plain: ToRenderPassDescriptorMaxDrawCount) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.maxDrawCount !== undefined) {
       this.maxDrawCount = plain.maxDrawCount;
@@ -3350,7 +4408,7 @@ export class RenderPassTimestampWrite extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -3369,13 +4427,10 @@ export class RenderPassTimestampWrite extends U.StructBase {
   }
 
   set querySet(value: Deno.PointerValue | QuerySet) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       0,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof QuerySet ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3405,8 +4460,7 @@ export class RenderPassTimestampWrite extends U.StructBase {
     return struct;
   }
   set(plain: ToRenderPassTimestampWrite) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.querySet !== undefined) this.querySet = plain.querySet;
     if (plain.queryIndex !== undefined) this.queryIndex = plain.queryIndex;
     if (plain.location !== undefined) this.location = plain.location;
@@ -3414,7 +4468,10 @@ export class RenderPassTimestampWrite extends U.StructBase {
 }
 
 export type ToRequestAdapterOptions = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   compatibleSurface?: Deno.PointerValue | Surface;
   powerPreference?: PowerPreference;
   backendType?: BackendType;
@@ -3425,7 +4482,7 @@ export class RequestAdapterOptions extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -3444,16 +4501,80 @@ export class RequestAdapterOptions extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3464,13 +4585,10 @@ export class RequestAdapterOptions extends U.StructBase {
   }
 
   set compatibleSurface(value: Deno.PointerValue | Surface) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       8,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof Surface ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3516,8 +4634,7 @@ export class RequestAdapterOptions extends U.StructBase {
     return struct;
   }
   set(plain: ToRequestAdapterOptions) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.compatibleSurface !== undefined) {
       this.compatibleSurface = plain.compatibleSurface;
@@ -3533,7 +4650,10 @@ export class RequestAdapterOptions extends U.StructBase {
 }
 
 export type ToSamplerBindingLayout = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   type?: SamplerBindingType;
 };
 
@@ -3541,7 +4661,7 @@ export class SamplerBindingLayout extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -3560,16 +4680,80 @@ export class SamplerBindingLayout extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3590,15 +4774,17 @@ export class SamplerBindingLayout extends U.StructBase {
     return struct;
   }
   set(plain: ToSamplerBindingLayout) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.type !== undefined) this.type = plain.type;
   }
 }
 
 export type ToSamplerDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   addressModeU?: AddressMode;
   addressModeV?: AddressMode;
@@ -3616,7 +4802,7 @@ export class SamplerDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(56));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -3635,16 +4821,80 @@ export class SamplerDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3655,9 +4905,10 @@ export class SamplerDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3770,8 +5021,7 @@ export class SamplerDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToSamplerDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.addressModeU !== undefined) {
@@ -3798,7 +5048,10 @@ export class SamplerDescriptor extends U.StructBase {
 }
 
 export type ToShaderModuleCompilationHint = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   entryPoint?: Deno.PointerValue;
   layout?: Deno.PointerValue | PipelineLayout;
 };
@@ -3807,7 +5060,7 @@ export class ShaderModuleCompilationHint extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -3826,16 +5079,80 @@ export class ShaderModuleCompilationHint extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3846,9 +5163,10 @@ export class ShaderModuleCompilationHint extends U.StructBase {
   }
 
   set entryPoint(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3859,13 +5177,10 @@ export class ShaderModuleCompilationHint extends U.StructBase {
   }
 
   set layout(value: Deno.PointerValue | PipelineLayout) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       16,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof PipelineLayout ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3879,8 +5194,7 @@ export class ShaderModuleCompilationHint extends U.StructBase {
     return struct;
   }
   set(plain: ToShaderModuleCompilationHint) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.entryPoint !== undefined) this.entryPoint = plain.entryPoint;
     if (plain.layout !== undefined) this.layout = plain.layout;
@@ -3897,8 +5211,9 @@ export class ShaderModuleSPIRVDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
+      this.chain.sType = SType.ShaderModuleSPIRVDescriptor;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -3942,9 +5257,10 @@ export class ShaderModuleSPIRVDescriptor extends U.StructBase {
   }
 
   set code(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -3958,8 +5274,7 @@ export class ShaderModuleSPIRVDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToShaderModuleSPIRVDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.codeSize !== undefined) this.codeSize = plain.codeSize;
     if (plain.code !== undefined) this.code = plain.code;
@@ -3975,8 +5290,9 @@ export class ShaderModuleWGSLDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
+      this.chain.sType = SType.ShaderModuleWGSLDescriptor;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -4012,9 +5328,10 @@ export class ShaderModuleWGSLDescriptor extends U.StructBase {
   }
 
   set code(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4027,8 +5344,7 @@ export class ShaderModuleWGSLDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToShaderModuleWGSLDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.code !== undefined) this.code = plain.code;
   }
@@ -4045,7 +5361,7 @@ export class StencilFaceState extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -4100,8 +5416,7 @@ export class StencilFaceState extends U.StructBase {
     return struct;
   }
   set(plain: ToStencilFaceState) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.compare !== undefined) this.compare = plain.compare;
     if (plain.failOp !== undefined) this.failOp = plain.failOp;
     if (plain.depthFailOp !== undefined) this.depthFailOp = plain.depthFailOp;
@@ -4110,7 +5425,10 @@ export class StencilFaceState extends U.StructBase {
 }
 
 export type ToStorageTextureBindingLayout = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   access?: StorageTextureAccess;
   format?: TextureFormat;
   viewDimension?: TextureViewDimension;
@@ -4120,7 +5438,7 @@ export class StorageTextureBindingLayout extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -4139,16 +5457,80 @@ export class StorageTextureBindingLayout extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4189,8 +5571,7 @@ export class StorageTextureBindingLayout extends U.StructBase {
     return struct;
   }
   set(plain: ToStorageTextureBindingLayout) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.access !== undefined) this.access = plain.access;
     if (plain.format !== undefined) this.format = plain.format;
@@ -4201,7 +5582,10 @@ export class StorageTextureBindingLayout extends U.StructBase {
 }
 
 export type ToSurfaceDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
 };
 
@@ -4209,7 +5593,7 @@ export class SurfaceDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -4228,16 +5612,80 @@ export class SurfaceDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4248,9 +5696,10 @@ export class SurfaceDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4263,8 +5712,7 @@ export class SurfaceDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToSurfaceDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
   }
@@ -4279,8 +5727,9 @@ export class SurfaceDescriptorFromAndroidNativeWindow extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
+      this.chain.sType = SType.SurfaceDescriptorFromAndroidNativeWindow;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -4316,9 +5765,10 @@ export class SurfaceDescriptorFromAndroidNativeWindow extends U.StructBase {
   }
 
   set window(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4331,8 +5781,7 @@ export class SurfaceDescriptorFromAndroidNativeWindow extends U.StructBase {
     return struct;
   }
   set(plain: ToSurfaceDescriptorFromAndroidNativeWindow) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.window !== undefined) this.window = plain.window;
   }
@@ -4347,8 +5796,9 @@ export class SurfaceDescriptorFromCanvasHTMLSelector extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
+      this.chain.sType = SType.SurfaceDescriptorFromCanvasHTMLSelector;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -4384,9 +5834,10 @@ export class SurfaceDescriptorFromCanvasHTMLSelector extends U.StructBase {
   }
 
   set selector(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4399,8 +5850,7 @@ export class SurfaceDescriptorFromCanvasHTMLSelector extends U.StructBase {
     return struct;
   }
   set(plain: ToSurfaceDescriptorFromCanvasHTMLSelector) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.selector !== undefined) this.selector = plain.selector;
   }
@@ -4415,8 +5865,9 @@ export class SurfaceDescriptorFromMetalLayer extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
+      this.chain.sType = SType.SurfaceDescriptorFromMetalLayer;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -4452,9 +5903,10 @@ export class SurfaceDescriptorFromMetalLayer extends U.StructBase {
   }
 
   set layer(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4467,8 +5919,7 @@ export class SurfaceDescriptorFromMetalLayer extends U.StructBase {
     return struct;
   }
   set(plain: ToSurfaceDescriptorFromMetalLayer) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.layer !== undefined) this.layer = plain.layer;
   }
@@ -4484,8 +5935,9 @@ export class SurfaceDescriptorFromWaylandSurface extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
+      this.chain.sType = SType.SurfaceDescriptorFromWaylandSurface;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -4521,9 +5973,10 @@ export class SurfaceDescriptorFromWaylandSurface extends U.StructBase {
   }
 
   set display(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4534,9 +5987,10 @@ export class SurfaceDescriptorFromWaylandSurface extends U.StructBase {
   }
 
   set surface(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4550,8 +6004,7 @@ export class SurfaceDescriptorFromWaylandSurface extends U.StructBase {
     return struct;
   }
   set(plain: ToSurfaceDescriptorFromWaylandSurface) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.display !== undefined) this.display = plain.display;
     if (plain.surface !== undefined) this.surface = plain.surface;
@@ -4568,8 +6021,9 @@ export class SurfaceDescriptorFromWindowsHWND extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
+      this.chain.sType = SType.SurfaceDescriptorFromWindowsHWND;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -4605,9 +6059,10 @@ export class SurfaceDescriptorFromWindowsHWND extends U.StructBase {
   }
 
   set hinstance(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4618,9 +6073,10 @@ export class SurfaceDescriptorFromWindowsHWND extends U.StructBase {
   }
 
   set hwnd(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4634,8 +6090,7 @@ export class SurfaceDescriptorFromWindowsHWND extends U.StructBase {
     return struct;
   }
   set(plain: ToSurfaceDescriptorFromWindowsHWND) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.hinstance !== undefined) this.hinstance = plain.hinstance;
     if (plain.hwnd !== undefined) this.hwnd = plain.hwnd;
@@ -4652,8 +6107,9 @@ export class SurfaceDescriptorFromXcbWindow extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
+      this.chain.sType = SType.SurfaceDescriptorFromXcbWindow;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -4689,9 +6145,10 @@ export class SurfaceDescriptorFromXcbWindow extends U.StructBase {
   }
 
   set connection(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4713,8 +6170,7 @@ export class SurfaceDescriptorFromXcbWindow extends U.StructBase {
     return struct;
   }
   set(plain: ToSurfaceDescriptorFromXcbWindow) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.connection !== undefined) this.connection = plain.connection;
     if (plain.window !== undefined) this.window = plain.window;
@@ -4731,8 +6187,9 @@ export class SurfaceDescriptorFromXlibWindow extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
+      this.chain.sType = SType.SurfaceDescriptorFromXlibWindow;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -4768,9 +6225,10 @@ export class SurfaceDescriptorFromXlibWindow extends U.StructBase {
   }
 
   set display(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4792,8 +6250,7 @@ export class SurfaceDescriptorFromXlibWindow extends U.StructBase {
     return struct;
   }
   set(plain: ToSurfaceDescriptorFromXlibWindow) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.display !== undefined) this.display = plain.display;
     if (plain.window !== undefined) this.window = plain.window;
@@ -4801,7 +6258,10 @@ export class SurfaceDescriptorFromXlibWindow extends U.StructBase {
 }
 
 export type ToSwapChainDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   usage?: number;
   format?: TextureFormat;
@@ -4814,7 +6274,7 @@ export class SwapChainDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(40));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -4833,16 +6293,80 @@ export class SwapChainDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4853,9 +6377,10 @@ export class SwapChainDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -4913,8 +6438,7 @@ export class SwapChainDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToSwapChainDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.usage !== undefined) this.usage = plain.usage;
@@ -4926,7 +6450,10 @@ export class SwapChainDescriptor extends U.StructBase {
 }
 
 export type ToTextureBindingLayout = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   sampleType?: TextureSampleType;
   viewDimension?: TextureViewDimension;
   multisampled?: boolean | number | bigint;
@@ -4936,7 +6463,7 @@ export class TextureBindingLayout extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -4955,16 +6482,80 @@ export class TextureBindingLayout extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5007,8 +6598,7 @@ export class TextureBindingLayout extends U.StructBase {
     return struct;
   }
   set(plain: ToTextureBindingLayout) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.sampleType !== undefined) this.sampleType = plain.sampleType;
     if (plain.viewDimension !== undefined) {
@@ -5021,7 +6611,10 @@ export class TextureBindingLayout extends U.StructBase {
 }
 
 export type ToTextureDataLayout = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   offset?: bigint | number;
   bytesPerRow?: number;
   rowsPerImage?: number;
@@ -5031,7 +6624,7 @@ export class TextureDataLayout extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -5050,16 +6643,80 @@ export class TextureDataLayout extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5100,8 +6757,7 @@ export class TextureDataLayout extends U.StructBase {
     return struct;
   }
   set(plain: ToTextureDataLayout) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.offset !== undefined) this.offset = plain.offset;
     if (plain.bytesPerRow !== undefined) this.bytesPerRow = plain.bytesPerRow;
@@ -5112,7 +6768,10 @@ export class TextureDataLayout extends U.StructBase {
 }
 
 export type ToTextureViewDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   format?: TextureFormat;
   dimension?: TextureViewDimension;
@@ -5127,7 +6786,7 @@ export class TextureViewDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(48));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -5146,16 +6805,80 @@ export class TextureViewDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5166,9 +6889,10 @@ export class TextureViewDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5252,8 +6976,7 @@ export class TextureViewDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToTextureViewDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.format !== undefined) this.format = plain.format;
@@ -5284,7 +7007,7 @@ export class VertexAttribute extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -5332,8 +7055,7 @@ export class VertexAttribute extends U.StructBase {
     return struct;
   }
   set(plain: ToVertexAttribute) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.format !== undefined) this.format = plain.format;
     if (plain.offset !== undefined) this.offset = plain.offset;
     if (plain.shaderLocation !== undefined) {
@@ -5343,7 +7065,10 @@ export class VertexAttribute extends U.StructBase {
 }
 
 export type ToBindGroupDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   layout?: Deno.PointerValue | BindGroupLayout;
   entryCount?: bigint | number;
@@ -5354,7 +7079,7 @@ export class BindGroupDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(40));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -5373,16 +7098,80 @@ export class BindGroupDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5393,9 +7182,10 @@ export class BindGroupDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5406,13 +7196,10 @@ export class BindGroupDescriptor extends U.StructBase {
   }
 
   set layout(value: Deno.PointerValue | BindGroupLayout) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       16,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof BindGroupLayout ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5432,15 +7219,14 @@ export class BindGroupDescriptor extends U.StructBase {
   }
 
   set entries(value: Deno.PointerValue | BindGroupEntry | ToBindGroupEntry) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : BindGroupEntry.from(value).pointer;
     this.dataview.setBigUint64(
       32,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof BindGroupEntry
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : BindGroupEntry.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5456,8 +7242,7 @@ export class BindGroupDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToBindGroupDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.layout !== undefined) this.layout = plain.layout;
@@ -5467,7 +7252,10 @@ export class BindGroupDescriptor extends U.StructBase {
 }
 
 export type ToBindGroupLayoutEntry = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   binding?: number;
   visibility?: number;
   buffer?: BufferBindingLayout | ToBufferBindingLayout;
@@ -5480,7 +7268,7 @@ export class BindGroupLayoutEntry extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(104));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -5499,16 +7287,80 @@ export class BindGroupLayoutEntry extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5618,8 +7470,7 @@ export class BindGroupLayoutEntry extends U.StructBase {
     return struct;
   }
   set(plain: ToBindGroupLayoutEntry) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.binding !== undefined) this.binding = plain.binding;
     if (plain.visibility !== undefined) this.visibility = plain.visibility;
@@ -5641,7 +7492,7 @@ export class BlendState extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -5698,15 +7549,17 @@ export class BlendState extends U.StructBase {
     return struct;
   }
   set(plain: ToBlendState) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.color !== undefined) this.color = plain.color;
     if (plain.alpha !== undefined) this.alpha = plain.alpha;
   }
 }
 
 export type ToCompilationInfo = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   messageCount?: bigint | number;
   messages?: Deno.PointerValue | CompilationMessage | ToCompilationMessage;
 };
@@ -5715,7 +7568,7 @@ export class CompilationInfo extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -5734,16 +7587,80 @@ export class CompilationInfo extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5765,15 +7682,14 @@ export class CompilationInfo extends U.StructBase {
   set messages(
     value: Deno.PointerValue | CompilationMessage | ToCompilationMessage,
   ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : CompilationMessage.from(value).pointer;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof CompilationMessage
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : CompilationMessage.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5789,8 +7705,7 @@ export class CompilationInfo extends U.StructBase {
     return struct;
   }
   set(plain: ToCompilationInfo) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.messageCount !== undefined) {
       this.messageCount = plain.messageCount;
@@ -5800,7 +7715,10 @@ export class CompilationInfo extends U.StructBase {
 }
 
 export type ToComputePassDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   timestampWriteCount?: bigint | number;
   timestampWrites?:
@@ -5813,7 +7731,7 @@ export class ComputePassDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -5832,16 +7750,80 @@ export class ComputePassDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5852,9 +7834,10 @@ export class ComputePassDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5879,15 +7862,14 @@ export class ComputePassDescriptor extends U.StructBase {
       | ComputePassTimestampWrite
       | ToComputePassTimestampWrite,
   ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : ComputePassTimestampWrite.from(value).pointer;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ComputePassTimestampWrite
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ComputePassTimestampWrite.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -5906,8 +7888,7 @@ export class ComputePassDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToComputePassDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.timestampWriteCount !== undefined) {
@@ -5920,7 +7901,10 @@ export class ComputePassDescriptor extends U.StructBase {
 }
 
 export type ToDepthStencilState = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   format?: TextureFormat;
   depthWriteEnabled?: boolean | number | bigint;
   depthCompare?: CompareFunction;
@@ -5937,7 +7921,7 @@ export class DepthStencilState extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(72));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -5956,16 +7940,80 @@ export class DepthStencilState extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6101,8 +8149,7 @@ export class DepthStencilState extends U.StructBase {
     return struct;
   }
   set(plain: ToDepthStencilState) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.format !== undefined) this.format = plain.format;
     if (plain.depthWriteEnabled !== undefined) {
@@ -6132,7 +8179,10 @@ export class DepthStencilState extends U.StructBase {
 }
 
 export type ToImageCopyBuffer = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   layout?: TextureDataLayout | ToTextureDataLayout;
   buffer?: Deno.PointerValue | Buffer;
 };
@@ -6141,7 +8191,7 @@ export class ImageCopyBuffer extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(40));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -6160,16 +8210,80 @@ export class ImageCopyBuffer extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6198,13 +8312,10 @@ export class ImageCopyBuffer extends U.StructBase {
   }
 
   set buffer(value: Deno.PointerValue | Buffer) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       32,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof Buffer ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6218,8 +8329,7 @@ export class ImageCopyBuffer extends U.StructBase {
     return struct;
   }
   set(plain: ToImageCopyBuffer) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.layout !== undefined) this.layout = plain.layout;
     if (plain.buffer !== undefined) this.buffer = plain.buffer;
@@ -6227,7 +8337,10 @@ export class ImageCopyBuffer extends U.StructBase {
 }
 
 export type ToImageCopyTexture = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   texture?: Deno.PointerValue | Texture;
   mipLevel?: number;
   origin?: Origin3D | ToOrigin3D;
@@ -6238,7 +8351,7 @@ export class ImageCopyTexture extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(40));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -6257,16 +8370,80 @@ export class ImageCopyTexture extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6277,13 +8454,10 @@ export class ImageCopyTexture extends U.StructBase {
   }
 
   set texture(value: Deno.PointerValue | Texture) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       8,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof Texture ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6333,8 +8507,7 @@ export class ImageCopyTexture extends U.StructBase {
     return struct;
   }
   set(plain: ToImageCopyTexture) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.texture !== undefined) this.texture = plain.texture;
     if (plain.mipLevel !== undefined) this.mipLevel = plain.mipLevel;
@@ -6344,7 +8517,10 @@ export class ImageCopyTexture extends U.StructBase {
 }
 
 export type ToProgrammableStageDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   module?: Deno.PointerValue | ShaderModule;
   entryPoint?: Deno.PointerValue;
   constantCount?: bigint | number;
@@ -6355,7 +8531,7 @@ export class ProgrammableStageDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(40));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -6374,16 +8550,80 @@ export class ProgrammableStageDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6394,13 +8634,10 @@ export class ProgrammableStageDescriptor extends U.StructBase {
   }
 
   set module(value: Deno.PointerValue | ShaderModule) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       8,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof ShaderModule ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6411,9 +8648,10 @@ export class ProgrammableStageDescriptor extends U.StructBase {
   }
 
   set entryPoint(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6433,15 +8671,14 @@ export class ProgrammableStageDescriptor extends U.StructBase {
   }
 
   set constants(value: Deno.PointerValue | ConstantEntry | ToConstantEntry) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : ConstantEntry.from(value).pointer;
     this.dataview.setBigUint64(
       32,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ConstantEntry
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ConstantEntry.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6459,8 +8696,7 @@ export class ProgrammableStageDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToProgrammableStageDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.module !== undefined) this.module = plain.module;
     if (plain.entryPoint !== undefined) this.entryPoint = plain.entryPoint;
@@ -6483,7 +8719,7 @@ export class RenderPassColorAttachment extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(56));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -6502,13 +8738,10 @@ export class RenderPassColorAttachment extends U.StructBase {
   }
 
   set view(value: Deno.PointerValue | TextureView) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       0,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof TextureView ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6519,13 +8752,10 @@ export class RenderPassColorAttachment extends U.StructBase {
   }
 
   set resolveTarget(value: Deno.PointerValue | TextureView) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       8,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof TextureView ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6577,8 +8807,7 @@ export class RenderPassColorAttachment extends U.StructBase {
     return struct;
   }
   set(plain: ToRenderPassColorAttachment) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.view !== undefined) this.view = plain.view;
     if (plain.resolveTarget !== undefined) {
       this.resolveTarget = plain.resolveTarget;
@@ -6590,7 +8819,10 @@ export class RenderPassColorAttachment extends U.StructBase {
 }
 
 export type ToRequiredLimits = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   limits?: Limits | ToLimits;
 };
 
@@ -6598,7 +8830,7 @@ export class RequiredLimits extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(152));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -6617,16 +8849,80 @@ export class RequiredLimits extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6657,15 +8953,17 @@ export class RequiredLimits extends U.StructBase {
     return struct;
   }
   set(plain: ToRequiredLimits) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.limits !== undefined) this.limits = plain.limits;
   }
 }
 
 export type ToShaderModuleDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   hintCount?: bigint | number;
   hints?:
@@ -6678,7 +8976,7 @@ export class ShaderModuleDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -6697,16 +8995,80 @@ export class ShaderModuleDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6717,9 +9079,10 @@ export class ShaderModuleDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6744,17 +9107,14 @@ export class ShaderModuleDescriptor extends U.StructBase {
       | ShaderModuleCompilationHint
       | ToShaderModuleCompilationHint,
   ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : ShaderModuleCompilationHint.from(value).pointer;
     this.dataview.setBigUint64(
       24,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof ShaderModuleCompilationHint
-            ? value.pointer
-            : U.duckIsPointer(value)
-            ? value
-            : ShaderModuleCompilationHint.from(value).pointer,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6769,8 +9129,7 @@ export class ShaderModuleDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToShaderModuleDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.hintCount !== undefined) this.hintCount = plain.hintCount;
@@ -6779,7 +9138,10 @@ export class ShaderModuleDescriptor extends U.StructBase {
 }
 
 export type ToSupportedLimits = undefined | {
-  nextInChain?: Deno.PointerValue;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStructOut | ToChainedStructOut;
+    [key: string]: any;
+  };
   limits?: Limits | ToLimits;
 };
 
@@ -6787,7 +9149,7 @@ export class SupportedLimits extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(152));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -6800,15 +9162,86 @@ export class SupportedLimits extends U.StructBase {
     }
   }
 
-  get nextInChain(): Deno.PointerValue {
+  get nextInChain(): ChainedStructOut | null {
     const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    return ptr;
+    if (ptr == null) return null;
+    else return new ChainedStructOut(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStructOut | ToChainedStructOut;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6839,15 +9272,17 @@ export class SupportedLimits extends U.StructBase {
     return struct;
   }
   set(plain: ToSupportedLimits) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.limits !== undefined) this.limits = plain.limits;
   }
 }
 
 export type ToTextureDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   usage?: number;
   dimension?: TextureDimension;
@@ -6863,7 +9298,7 @@ export class TextureDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(64));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -6882,16 +9317,80 @@ export class TextureDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6902,9 +9401,10 @@ export class TextureDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -6981,9 +9481,10 @@ export class TextureDescriptor extends U.StructBase {
   }
 
   set viewFormats(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       56,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7008,8 +9509,7 @@ export class TextureDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToTextureDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.usage !== undefined) this.usage = plain.usage;
@@ -7038,7 +9538,7 @@ export class VertexBufferLayout extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -7084,15 +9584,14 @@ export class VertexBufferLayout extends U.StructBase {
   set attributes(
     value: Deno.PointerValue | VertexAttribute | ToVertexAttribute,
   ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : VertexAttribute.from(value).pointer;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof VertexAttribute
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : VertexAttribute.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7109,8 +9608,7 @@ export class VertexBufferLayout extends U.StructBase {
     return struct;
   }
   set(plain: ToVertexBufferLayout) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.arrayStride !== undefined) this.arrayStride = plain.arrayStride;
     if (plain.stepMode !== undefined) this.stepMode = plain.stepMode;
     if (plain.attributeCount !== undefined) {
@@ -7121,7 +9619,10 @@ export class VertexBufferLayout extends U.StructBase {
 }
 
 export type ToBindGroupLayoutDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   entryCount?: bigint | number;
   entries?: Deno.PointerValue | BindGroupLayoutEntry | ToBindGroupLayoutEntry;
@@ -7131,7 +9632,7 @@ export class BindGroupLayoutDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -7150,16 +9651,80 @@ export class BindGroupLayoutDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7170,9 +9735,10 @@ export class BindGroupLayoutDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7194,15 +9760,14 @@ export class BindGroupLayoutDescriptor extends U.StructBase {
   set entries(
     value: Deno.PointerValue | BindGroupLayoutEntry | ToBindGroupLayoutEntry,
   ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : BindGroupLayoutEntry.from(value).pointer;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof BindGroupLayoutEntry
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : BindGroupLayoutEntry.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7217,8 +9782,7 @@ export class BindGroupLayoutDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToBindGroupLayoutDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.entryCount !== undefined) this.entryCount = plain.entryCount;
@@ -7227,7 +9791,10 @@ export class BindGroupLayoutDescriptor extends U.StructBase {
 }
 
 export type ToColorTargetState = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   format?: TextureFormat;
   blend?: Deno.PointerValue | BlendState | ToBlendState;
   writeMask?: number;
@@ -7237,7 +9804,7 @@ export class ColorTargetState extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -7256,16 +9823,80 @@ export class ColorTargetState extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7285,15 +9916,14 @@ export class ColorTargetState extends U.StructBase {
   }
 
   set blend(value: Deno.PointerValue | BlendState | ToBlendState) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : BlendState.from(value).pointer;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof BlendState
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : BlendState.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7316,8 +9946,7 @@ export class ColorTargetState extends U.StructBase {
     return struct;
   }
   set(plain: ToColorTargetState) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.format !== undefined) this.format = plain.format;
     if (plain.blend !== undefined) this.blend = plain.blend;
@@ -7326,7 +9955,10 @@ export class ColorTargetState extends U.StructBase {
 }
 
 export type ToComputePipelineDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   layout?: Deno.PointerValue | PipelineLayout;
   compute?: ProgrammableStageDescriptor | ToProgrammableStageDescriptor;
@@ -7336,7 +9968,7 @@ export class ComputePipelineDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(64));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -7355,16 +9987,80 @@ export class ComputePipelineDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7375,9 +10071,10 @@ export class ComputePipelineDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7388,13 +10085,10 @@ export class ComputePipelineDescriptor extends U.StructBase {
   }
 
   set layout(value: Deno.PointerValue | PipelineLayout) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       16,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof PipelineLayout ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7429,8 +10123,7 @@ export class ComputePipelineDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToComputePipelineDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.layout !== undefined) this.layout = plain.layout;
@@ -7439,7 +10132,10 @@ export class ComputePipelineDescriptor extends U.StructBase {
 }
 
 export type ToDeviceDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   requiredFeaturesCount?: bigint | number;
   requiredFeatures?: Deno.PointerValue;
@@ -7453,7 +10149,7 @@ export class DeviceDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(72));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -7472,16 +10168,80 @@ export class DeviceDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7492,9 +10252,10 @@ export class DeviceDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7513,9 +10274,10 @@ export class DeviceDescriptor extends U.StructBase {
   }
 
   set requiredFeatures(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7529,15 +10291,14 @@ export class DeviceDescriptor extends U.StructBase {
   set requiredLimits(
     value: Deno.PointerValue | RequiredLimits | ToRequiredLimits,
   ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : RequiredLimits.from(value).pointer;
     this.dataview.setBigUint64(
       32,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof RequiredLimits
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : RequiredLimits.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7566,9 +10327,10 @@ export class DeviceDescriptor extends U.StructBase {
   }
 
   set deviceLostCallback(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       56,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7579,9 +10341,10 @@ export class DeviceDescriptor extends U.StructBase {
   }
 
   set deviceLostUserdata(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       64,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7612,8 +10375,7 @@ export class DeviceDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToDeviceDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.requiredFeaturesCount !== undefined) {
@@ -7638,7 +10400,10 @@ export class DeviceDescriptor extends U.StructBase {
 }
 
 export type ToRenderPassDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   colorAttachmentCount?: bigint | number;
   colorAttachments?:
@@ -7661,7 +10426,7 @@ export class RenderPassDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(64));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -7680,16 +10445,80 @@ export class RenderPassDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7700,9 +10529,10 @@ export class RenderPassDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7727,15 +10557,14 @@ export class RenderPassDescriptor extends U.StructBase {
       | RenderPassColorAttachment
       | ToRenderPassColorAttachment,
   ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : RenderPassColorAttachment.from(value).pointer;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof RenderPassColorAttachment
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : RenderPassColorAttachment.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7752,17 +10581,14 @@ export class RenderPassDescriptor extends U.StructBase {
       | RenderPassDepthStencilAttachment
       | ToRenderPassDepthStencilAttachment,
   ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : RenderPassDepthStencilAttachment.from(value).pointer;
     this.dataview.setBigUint64(
       32,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof RenderPassDepthStencilAttachment
-            ? value.pointer
-            : U.duckIsPointer(value)
-            ? value
-            : RenderPassDepthStencilAttachment.from(value).pointer,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7773,13 +10599,10 @@ export class RenderPassDescriptor extends U.StructBase {
   }
 
   set occlusionQuerySet(value: Deno.PointerValue | QuerySet) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       40,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof QuerySet ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7804,15 +10627,14 @@ export class RenderPassDescriptor extends U.StructBase {
       | RenderPassTimestampWrite
       | ToRenderPassTimestampWrite,
   ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : RenderPassTimestampWrite.from(value).pointer;
     this.dataview.setBigUint64(
       56,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof RenderPassTimestampWrite
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : RenderPassTimestampWrite.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7843,8 +10665,7 @@ export class RenderPassDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToRenderPassDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.colorAttachmentCount !== undefined) {
@@ -7869,7 +10690,10 @@ export class RenderPassDescriptor extends U.StructBase {
 }
 
 export type ToVertexState = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   module?: Deno.PointerValue | ShaderModule;
   entryPoint?: Deno.PointerValue;
   constantCount?: bigint | number;
@@ -7882,7 +10706,7 @@ export class VertexState extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(56));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -7901,16 +10725,80 @@ export class VertexState extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7921,13 +10809,10 @@ export class VertexState extends U.StructBase {
   }
 
   set module(value: Deno.PointerValue | ShaderModule) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       8,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof ShaderModule ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7938,9 +10823,10 @@ export class VertexState extends U.StructBase {
   }
 
   set entryPoint(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7960,15 +10846,14 @@ export class VertexState extends U.StructBase {
   }
 
   set constants(value: Deno.PointerValue | ConstantEntry | ToConstantEntry) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : ConstantEntry.from(value).pointer;
     this.dataview.setBigUint64(
       32,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ConstantEntry
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ConstantEntry.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -7990,15 +10875,14 @@ export class VertexState extends U.StructBase {
   set buffers(
     value: Deno.PointerValue | VertexBufferLayout | ToVertexBufferLayout,
   ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : VertexBufferLayout.from(value).pointer;
     this.dataview.setBigUint64(
       48,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof VertexBufferLayout
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : VertexBufferLayout.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8018,8 +10902,7 @@ export class VertexState extends U.StructBase {
     return struct;
   }
   set(plain: ToVertexState) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.module !== undefined) this.module = plain.module;
     if (plain.entryPoint !== undefined) this.entryPoint = plain.entryPoint;
@@ -8033,7 +10916,10 @@ export class VertexState extends U.StructBase {
 }
 
 export type ToFragmentState = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   module?: Deno.PointerValue | ShaderModule;
   entryPoint?: Deno.PointerValue;
   constantCount?: bigint | number;
@@ -8046,7 +10932,7 @@ export class FragmentState extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(56));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -8065,16 +10951,80 @@ export class FragmentState extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8085,13 +11035,10 @@ export class FragmentState extends U.StructBase {
   }
 
   set module(value: Deno.PointerValue | ShaderModule) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       8,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof ShaderModule ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8102,9 +11049,10 @@ export class FragmentState extends U.StructBase {
   }
 
   set entryPoint(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8124,15 +11072,14 @@ export class FragmentState extends U.StructBase {
   }
 
   set constants(value: Deno.PointerValue | ConstantEntry | ToConstantEntry) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : ConstantEntry.from(value).pointer;
     this.dataview.setBigUint64(
       32,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ConstantEntry
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ConstantEntry.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8154,15 +11101,14 @@ export class FragmentState extends U.StructBase {
   set targets(
     value: Deno.PointerValue | ColorTargetState | ToColorTargetState,
   ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : ColorTargetState.from(value).pointer;
     this.dataview.setBigUint64(
       48,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ColorTargetState
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ColorTargetState.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8182,8 +11128,7 @@ export class FragmentState extends U.StructBase {
     return struct;
   }
   set(plain: ToFragmentState) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.module !== undefined) this.module = plain.module;
     if (plain.entryPoint !== undefined) this.entryPoint = plain.entryPoint;
@@ -8197,7 +11142,10 @@ export class FragmentState extends U.StructBase {
 }
 
 export type ToRenderPipelineDescriptor = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   label?: Deno.PointerValue;
   layout?: Deno.PointerValue | PipelineLayout;
   vertex?: VertexState | ToVertexState;
@@ -8211,7 +11159,7 @@ export class RenderPipelineDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(144));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -8230,16 +11178,80 @@ export class RenderPipelineDescriptor extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8250,9 +11262,10 @@ export class RenderPipelineDescriptor extends U.StructBase {
   }
 
   set label(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8263,13 +11276,10 @@ export class RenderPipelineDescriptor extends U.StructBase {
   }
 
   set layout(value: Deno.PointerValue | PipelineLayout) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       16,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof PipelineLayout ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8321,15 +11331,14 @@ export class RenderPipelineDescriptor extends U.StructBase {
   set depthStencil(
     value: Deno.PointerValue | DepthStencilState | ToDepthStencilState,
   ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : DepthStencilState.from(value).pointer;
     this.dataview.setBigUint64(
       104,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof DepthStencilState
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : DepthStencilState.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8361,15 +11370,14 @@ export class RenderPipelineDescriptor extends U.StructBase {
   }
 
   set fragment(value: Deno.PointerValue | FragmentState | ToFragmentState) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : FragmentState.from(value).pointer;
     this.dataview.setBigUint64(
       136,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof FragmentState
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : FragmentState.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8390,8 +11398,7 @@ export class RenderPipelineDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToRenderPipelineDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.label !== undefined) this.label = plain.label;
     if (plain.layout !== undefined) this.layout = plain.layout;
@@ -8405,16 +11412,16 @@ export class RenderPipelineDescriptor extends U.StructBase {
   }
 }
 
-export type ToChainedStruct = undefined | {
-  next?: Deno.PointerValue;
-  sType?: SType;
+export type ToChainedStruct = {
+  next?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  sType: SType;
 };
 
 export class ChainedStruct extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -8427,15 +11434,21 @@ export class ChainedStruct extends U.StructBase {
     }
   }
 
-  get next(): Deno.PointerValue {
+  get next(): ChainedStruct | null {
     const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    return ptr;
+    if (ptr == null) return null;
+    else return new ChainedStruct(ptr);
   }
 
-  set next(value: Deno.PointerValue) {
+  set next(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : ChainedStruct.from(value).pointer;
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8456,23 +11469,22 @@ export class ChainedStruct extends U.StructBase {
     return struct;
   }
   set(plain: ToChainedStruct) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.next !== undefined) this.next = plain.next;
     if (plain.sType !== undefined) this.sType = plain.sType;
   }
 }
 
-export type ToChainedStructOut = undefined | {
-  next?: Deno.PointerValue;
-  sType?: SType;
+export type ToChainedStructOut = {
+  next?: Deno.PointerValue | ChainedStructOut | ToChainedStructOut;
+  sType: SType;
 };
 
 export class ChainedStructOut extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -8485,15 +11497,21 @@ export class ChainedStructOut extends U.StructBase {
     }
   }
 
-  get next(): Deno.PointerValue {
+  get next(): ChainedStructOut | null {
     const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    return ptr;
+    if (ptr == null) return null;
+    else return new ChainedStructOut(ptr);
   }
 
-  set next(value: Deno.PointerValue) {
+  set next(value: Deno.PointerValue | ChainedStructOut | ToChainedStructOut) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : ChainedStructOut.from(value).pointer;
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8514,8 +11532,7 @@ export class ChainedStructOut extends U.StructBase {
     return struct;
   }
   set(plain: ToChainedStructOut) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.next !== undefined) this.next = plain.next;
     if (plain.sType !== undefined) this.sType = plain.sType;
   }
@@ -8533,8 +11550,9 @@ export class InstanceExtras extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(40));
+      this.chain.sType = SType.InstanceExtras;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -8586,9 +11604,10 @@ export class InstanceExtras extends U.StructBase {
   }
 
   set dxilPath(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8599,9 +11618,10 @@ export class InstanceExtras extends U.StructBase {
   }
 
   set dxcPath(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       32,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8619,8 +11639,7 @@ export class InstanceExtras extends U.StructBase {
     return struct;
   }
   set(plain: ToInstanceExtras) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.backends !== undefined) this.backends = plain.backends;
     if (plain.dx12ShaderCompiler !== undefined) {
@@ -8640,8 +11659,9 @@ export class DeviceExtras extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
+      this.chain.sType = SType.DeviceExtras;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -8677,9 +11697,10 @@ export class DeviceExtras extends U.StructBase {
   }
 
   set tracePath(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8692,8 +11713,7 @@ export class DeviceExtras extends U.StructBase {
     return struct;
   }
   set(plain: ToDeviceExtras) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.tracePath !== undefined) this.tracePath = plain.tracePath;
   }
@@ -8708,8 +11728,9 @@ export class RequiredLimitsExtras extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
+      this.chain.sType = SType.RequiredLimitsExtras;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -8757,8 +11778,7 @@ export class RequiredLimitsExtras extends U.StructBase {
     return struct;
   }
   set(plain: ToRequiredLimitsExtras) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.maxPushConstantSize !== undefined) {
       this.maxPushConstantSize = plain.maxPushConstantSize;
@@ -8775,8 +11795,9 @@ export class SupportedLimitsExtras extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(24));
+      this.chain.sType = SType.SupportedLimitsExtras;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -8824,8 +11845,7 @@ export class SupportedLimitsExtras extends U.StructBase {
     return struct;
   }
   set(plain: ToSupportedLimitsExtras) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.maxPushConstantSize !== undefined) {
       this.maxPushConstantSize = plain.maxPushConstantSize;
@@ -8843,7 +11863,7 @@ export class PushConstantRange extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(12));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -8889,8 +11909,7 @@ export class PushConstantRange extends U.StructBase {
     return struct;
   }
   set(plain: ToPushConstantRange) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.stages !== undefined) this.stages = plain.stages;
     if (plain.start !== undefined) this.start = plain.start;
     if (plain.end !== undefined) this.end = plain.end;
@@ -8900,15 +11919,19 @@ export class PushConstantRange extends U.StructBase {
 export type ToPipelineLayoutExtras = undefined | {
   chain?: ChainedStruct | ToChainedStruct;
   pushConstantRangeCount?: number;
-  pushConstantRanges?: Deno.PointerValue;
+  pushConstantRanges?:
+    | Deno.PointerValue
+    | PushConstantRange
+    | ToPushConstantRange;
 };
 
 export class PipelineLayoutExtras extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
+      this.chain.sType = SType.PipelineLayoutExtras;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -8946,15 +11969,23 @@ export class PipelineLayoutExtras extends U.StructBase {
     this.dataview.setUint32(16, value, U.LE);
   }
 
-  get pushConstantRanges(): Deno.PointerValue {
+  get pushConstantRanges(): PushConstantRange | null {
     const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    return ptr;
+    if (ptr == null) return null;
+    else return new PushConstantRange(ptr);
   }
 
-  set pushConstantRanges(value: Deno.PointerValue) {
+  set pushConstantRanges(
+    value: Deno.PointerValue | PushConstantRange | ToPushConstantRange,
+  ) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : PushConstantRange.from(value).pointer;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -8972,8 +12003,7 @@ export class PipelineLayoutExtras extends U.StructBase {
     return struct;
   }
   set(plain: ToPipelineLayoutExtras) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.pushConstantRangeCount !== undefined) {
       this.pushConstantRangeCount = plain.pushConstantRangeCount;
@@ -8993,7 +12023,7 @@ export class WrappedSubmissionIndex extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -9012,13 +12042,10 @@ export class WrappedSubmissionIndex extends U.StructBase {
   }
 
   set queue(value: Deno.PointerValue | Queue) {
+    const inner = value instanceof U.ClassBase ? value.pointer : value;
     this.dataview.setBigUint64(
       0,
-      BigInt(
-        Deno.UnsafePointer.value(
-          value instanceof Queue ? value.pointer : value,
-        ),
-      ),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -9041,8 +12068,7 @@ export class WrappedSubmissionIndex extends U.StructBase {
     return struct;
   }
   set(plain: ToWrappedSubmissionIndex) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.queue !== undefined) this.queue = plain.queue;
     if (plain.submissionIndex !== undefined) {
       this.submissionIndex = plain.submissionIndex;
@@ -9059,7 +12085,7 @@ export class ShaderDefine extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -9078,9 +12104,10 @@ export class ShaderDefine extends U.StructBase {
   }
 
   set name(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -9091,9 +12118,10 @@ export class ShaderDefine extends U.StructBase {
   }
 
   set value(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -9106,8 +12134,7 @@ export class ShaderDefine extends U.StructBase {
     return struct;
   }
   set(plain: ToShaderDefine) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.name !== undefined) this.name = plain.name;
     if (plain.value !== undefined) this.value = plain.value;
   }
@@ -9118,15 +12145,16 @@ export type ToShaderModuleGLSLDescriptor = undefined | {
   stage?: ShaderStage;
   code?: Deno.PointerValue;
   defineCount?: number;
-  defines?: Deno.PointerValue;
+  defines?: Deno.PointerValue | ShaderDefine | ToShaderDefine;
 };
 
 export class ShaderModuleGLSLDescriptor extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(48));
+      this.chain.sType = SType.ShaderModuleGLSLDescriptor;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -9170,9 +12198,10 @@ export class ShaderModuleGLSLDescriptor extends U.StructBase {
   }
 
   set code(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -9185,15 +12214,21 @@ export class ShaderModuleGLSLDescriptor extends U.StructBase {
     this.dataview.setUint32(32, value, U.LE);
   }
 
-  get defines(): Deno.PointerValue {
+  get defines(): ShaderDefine | null {
     const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
-    return ptr;
+    if (ptr == null) return null;
+    else return new ShaderDefine(ptr);
   }
 
-  set defines(value: Deno.PointerValue) {
+  set defines(value: Deno.PointerValue | ShaderDefine | ToShaderDefine) {
+    const inner = value instanceof U.StructBase
+      ? value.pointer
+      : U.duckIsPointer(value)
+      ? value
+      : ShaderDefine.from(value).pointer;
     this.dataview.setBigUint64(
       40,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -9209,8 +12244,7 @@ export class ShaderModuleGLSLDescriptor extends U.StructBase {
     return struct;
   }
   set(plain: ToShaderModuleGLSLDescriptor) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.stage !== undefined) this.stage = plain.stage;
     if (plain.code !== undefined) this.code = plain.code;
@@ -9230,7 +12264,7 @@ export class StorageReport extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(32));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -9285,8 +12319,7 @@ export class StorageReport extends U.StructBase {
     return struct;
   }
   set(plain: ToStorageReport) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.numOccupied !== undefined) this.numOccupied = plain.numOccupied;
     if (plain.numVacant !== undefined) this.numVacant = plain.numVacant;
     if (plain.numError !== undefined) this.numError = plain.numError;
@@ -9316,7 +12349,7 @@ export class HubReport extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(480));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -9636,8 +12669,7 @@ export class HubReport extends U.StructBase {
     return struct;
   }
   set(plain: ToHubReport) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.adapters !== undefined) this.adapters = plain.adapters;
     if (plain.devices !== undefined) this.devices = plain.devices;
     if (plain.pipelineLayouts !== undefined) {
@@ -9686,7 +12718,7 @@ export class GlobalReport extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(2440));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -9828,8 +12860,7 @@ export class GlobalReport extends U.StructBase {
     return struct;
   }
   set(plain: ToGlobalReport) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.surfaces !== undefined) this.surfaces = plain.surfaces;
     if (plain.backendType !== undefined) this.backendType = plain.backendType;
     if (plain.vulkan !== undefined) this.vulkan = plain.vulkan;
@@ -9853,7 +12884,7 @@ export class SurfaceCapabilities extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(48));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -9880,9 +12911,10 @@ export class SurfaceCapabilities extends U.StructBase {
   }
 
   set formats(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -9901,9 +12933,10 @@ export class SurfaceCapabilities extends U.StructBase {
   }
 
   set presentModes(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       24,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -9922,9 +12955,10 @@ export class SurfaceCapabilities extends U.StructBase {
   }
 
   set alphaModes(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       40,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -9947,8 +12981,7 @@ export class SurfaceCapabilities extends U.StructBase {
     return struct;
   }
   set(plain: ToSurfaceCapabilities) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.formatCount !== undefined) this.formatCount = plain.formatCount;
     if (plain.formats !== undefined) this.formats = plain.formats;
     if (plain.presentModeCount !== undefined) {
@@ -9975,8 +13008,9 @@ export class SwapChainDescriptorExtras extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(40));
+      this.chain.sType = SType.SwapChainDescriptorExtras;
     } else {
       if (dataviewOrPtr instanceof DataView) {
         this.dataview = dataviewOrPtr;
@@ -10028,9 +13062,10 @@ export class SwapChainDescriptorExtras extends U.StructBase {
   }
 
   set viewFormats(value: Deno.PointerValue) {
+    const inner = value;
     this.dataview.setBigUint64(
       32,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -10047,8 +13082,7 @@ export class SwapChainDescriptorExtras extends U.StructBase {
     return struct;
   }
   set(plain: ToSwapChainDescriptorExtras) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.chain !== undefined) this.chain = plain.chain;
     if (plain.alphaMode !== undefined) this.alphaMode = plain.alphaMode;
     if (plain.viewFormatCount !== undefined) {
@@ -10059,7 +13093,10 @@ export class SwapChainDescriptorExtras extends U.StructBase {
 }
 
 export type ToInstanceEnumerateAdapterOptions = undefined | {
-  nextInChain?: Deno.PointerValue | ChainedStruct | ToChainedStruct;
+  nextInChain?: Deno.PointerValue | {
+    chain: ChainedStruct | ToChainedStruct;
+    [key: string]: any;
+  };
   backends?: number;
 };
 
@@ -10067,7 +13104,7 @@ export class InstanceEnumerateAdapterOptions extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
     super();
-    if (dataviewOrPtr == null) {
+    if (dataviewOrPtr === undefined) {
       this.dataview = new DataView(new ArrayBuffer(16));
     } else {
       if (dataviewOrPtr instanceof DataView) {
@@ -10086,16 +13123,80 @@ export class InstanceEnumerateAdapterOptions extends U.StructBase {
     else return new ChainedStruct(ptr);
   }
 
-  set nextInChain(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
+  set nextInChain(
+    value: Deno.PointerValue | {
+      chain: ChainedStruct | ToChainedStruct;
+      [key: string]: any;
+    },
+  ) {
+    let inner!: Deno.PointerValue;
+    if (U.duckIsPointer(value)) inner = value;
+    else {
+      if (value.chain.sType == SType.Invalid) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromMetalLayer) {
+        inner = SurfaceDescriptorFromMetalLayer.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWindowsHWND) {
+        inner = SurfaceDescriptorFromWindowsHWND.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXlibWindow) {
+        inner = SurfaceDescriptorFromXlibWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromCanvasHTMLSelector) {
+        inner = SurfaceDescriptorFromCanvasHTMLSelector.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleSPIRVDescriptor) {
+        inner = ShaderModuleSPIRVDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleWGSLDescriptor) {
+        inner = ShaderModuleWGSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PrimitiveDepthClipControl) {
+        inner = PrimitiveDepthClipControl.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromWaylandSurface) {
+        inner = SurfaceDescriptorFromWaylandSurface.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromAndroidNativeWindow) {
+        inner = SurfaceDescriptorFromAndroidNativeWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SurfaceDescriptorFromXcbWindow) {
+        inner = SurfaceDescriptorFromXcbWindow.from(value).pointer;
+      }
+      if (value.chain.sType == SType.RenderPassDescriptorMaxDrawCount) {
+        inner = RenderPassDescriptorMaxDrawCount.from(value).pointer;
+      }
+      if (value.chain.sType == SType.DeviceExtras) {
+        inner = DeviceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.AdapterExtras) {
+        throw new Error(`Invalid sType ${value.chain.sType}`);
+      }
+      if (value.chain.sType == SType.RequiredLimitsExtras) {
+        inner = RequiredLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.PipelineLayoutExtras) {
+        inner = PipelineLayoutExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.ShaderModuleGLSLDescriptor) {
+        inner = ShaderModuleGLSLDescriptor.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SupportedLimitsExtras) {
+        inner = SupportedLimitsExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.InstanceExtras) {
+        inner = InstanceExtras.from(value).pointer;
+      }
+      if (value.chain.sType == SType.SwapChainDescriptorExtras) {
+        inner = SwapChainDescriptorExtras.from(value).pointer;
+      }
+    }
+
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(
-        value instanceof ChainedStruct
-          ? value.pointer
-          : U.duckIsPointer(value)
-          ? value
-          : ChainedStruct.from(value).pointer,
-      )),
+      BigInt(Deno.UnsafePointer.value(inner)),
       U.LE,
     );
   }
@@ -10116,8 +13217,7 @@ export class InstanceEnumerateAdapterOptions extends U.StructBase {
     return struct;
   }
   set(plain: ToInstanceEnumerateAdapterOptions) {
-    const struct = this;
-    if (plain === undefined) return struct;
+    if (plain === undefined) return;
     if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
     if (plain.backends !== undefined) this.backends = plain.backends;
   }
@@ -10179,7 +13279,11 @@ export const LogCallback = {
 } as const;
 
 export function createInstance(
-  descriptor?: InstanceDescriptor | ToInstanceDescriptor | Deno.PointerValue,
+  descriptor?:
+    | InstanceDescriptor
+    | null
+    | ToInstanceDescriptor
+    | Deno.PointerValue,
 ): Instance {
   const result = lib.symbols.wgpuCreateInstance(
     descriptor instanceof InstanceDescriptor
@@ -10201,9 +13305,16 @@ export function getProcAddress(
 
 export function generateReport(
   instance: Instance,
-  report: Deno.PointerValue,
+  report: GlobalReport | null | ToGlobalReport | Deno.PointerValue,
 ): void {
-  const result = lib.symbols.wgpuGenerateReport(instance.pointer, report);
+  const result = lib.symbols.wgpuGenerateReport(
+    instance.pointer,
+    report instanceof GlobalReport
+      ? report.pointer
+      : U.duckIsPointer(report)
+      ? report
+      : GlobalReport.from(report).pointer,
+  );
   return result;
 }
 
@@ -10229,7 +13340,7 @@ export function setLogCallback(
       const cb = new Deno.UnsafeCallback(
         LogCallback,
         (...args: U.CbParam<typeof LogCallback>) => {
-          res([args[0] as LogLevel, args[1]] as [LogLevel, Deno.PointerValue]);
+          res([args[0] as LogLevel, args[1]]);
         },
       );
       lib.symbols.wgpuSetLogCallback(cb.pointer, null);
@@ -10274,15 +13385,34 @@ export class Adapter extends U.ClassBase {
     return result;
   }
 
-  getLimits(limits: Deno.PointerValue): boolean {
-    const result = lib.symbols.wgpuAdapterGetLimits(this.pointer, limits);
+  getLimits(
+    limits?: SupportedLimits | null | ToSupportedLimits | Deno.PointerValue,
+  ): boolean {
+    const result = lib.symbols.wgpuAdapterGetLimits(
+      this.pointer,
+      limits instanceof SupportedLimits
+        ? limits.pointer
+        : U.duckIsPointer(limits)
+        ? limits
+        : SupportedLimits.from(limits).pointer,
+    );
     return result == 1;
   }
 
-  getProperties(properties: Deno.PointerValue): void {
+  getProperties(
+    properties?:
+      | AdapterProperties
+      | null
+      | ToAdapterProperties
+      | Deno.PointerValue,
+  ): void {
     const result = lib.symbols.wgpuAdapterGetProperties(
       this.pointer,
-      properties,
+      properties instanceof AdapterProperties
+        ? properties.pointer
+        : U.duckIsPointer(properties)
+        ? properties
+        : AdapterProperties.from(properties).pointer,
     );
     return result;
   }
@@ -10293,24 +13423,24 @@ export class Adapter extends U.ClassBase {
   }
 
   requestDevice(
-    descriptor?: DeviceDescriptor | ToDeviceDescriptor,
+    descriptor?: DeviceDescriptor | null,
   ): Promise<[RequestDeviceStatus, Device, Deno.PointerValue]>;
   requestDevice(
-    descriptor: DeviceDescriptor | ToDeviceDescriptor,
+    descriptor: DeviceDescriptor | null,
     callback: (
       ...args: [RequestDeviceStatus, Device, Deno.PointerValue]
     ) => void,
   ): Deno.UnsafeCallback<typeof RequestDeviceCallback>;
   requestDevice(
-    descriptor: DeviceDescriptor | ToDeviceDescriptor,
+    descriptor: DeviceDescriptor | null,
     callback: Deno.UnsafeCallback<typeof RequestDeviceCallback>,
   ): void;
   requestDevice(
-    descriptor: DeviceDescriptor | ToDeviceDescriptor,
+    descriptor: DeviceDescriptor | null,
     callback: Deno.PointerValue,
   ): void;
   requestDevice(
-    descriptor: DeviceDescriptor | ToDeviceDescriptor,
+    descriptor: DeviceDescriptor | null,
     callback?:
       | ((...args: [RequestDeviceStatus, Device, Deno.PointerValue]) => void)
       | Deno.UnsafeCallback<typeof RequestDeviceCallback>
@@ -10324,13 +13454,11 @@ export class Adapter extends U.ClassBase {
         const cb = new Deno.UnsafeCallback(
           RequestDeviceCallback,
           (...args: U.CbParam<typeof RequestDeviceCallback>) => {
-            res(
-              [
-                args[0] as RequestDeviceStatus,
-                new Device(args[1], this),
-                args[2],
-              ] as [RequestDeviceStatus, Device, Deno.PointerValue],
-            );
+            res([
+              args[0] as RequestDeviceStatus,
+              new Device(args[1], this),
+              args[2],
+            ]);
           },
         );
         lib.symbols.wgpuAdapterRequestDevice(
@@ -10603,6 +13731,7 @@ export class CommandEncoder extends U.ClassBase {
   beginComputePass(
     descriptor?:
       | ComputePassDescriptor
+      | null
       | ToComputePassDescriptor
       | Deno.PointerValue,
   ): ComputePassEncoder {
@@ -10620,6 +13749,7 @@ export class CommandEncoder extends U.ClassBase {
   beginRenderPass(
     descriptor?:
       | RenderPassDescriptor
+      | null
       | ToRenderPassDescriptor
       | Deno.PointerValue,
   ): RenderPassEncoder {
@@ -10667,9 +13797,13 @@ export class CommandEncoder extends U.ClassBase {
   }
 
   copyBufferToTexture(
-    source: ImageCopyBuffer | ToImageCopyBuffer | Deno.PointerValue,
-    destination: ImageCopyTexture | ToImageCopyTexture | Deno.PointerValue,
-    copySize: Extent3D | ToExtent3D | Deno.PointerValue,
+    source: ImageCopyBuffer | null | ToImageCopyBuffer | Deno.PointerValue,
+    destination:
+      | ImageCopyTexture
+      | null
+      | ToImageCopyTexture
+      | Deno.PointerValue,
+    copySize: Extent3D | null | ToExtent3D | Deno.PointerValue,
   ): void {
     const result = lib.symbols.wgpuCommandEncoderCopyBufferToTexture(
       this.pointer,
@@ -10693,9 +13827,9 @@ export class CommandEncoder extends U.ClassBase {
   }
 
   copyTextureToBuffer(
-    source: ImageCopyTexture | ToImageCopyTexture | Deno.PointerValue,
-    destination: ImageCopyBuffer | ToImageCopyBuffer | Deno.PointerValue,
-    copySize: Extent3D | ToExtent3D | Deno.PointerValue,
+    source: ImageCopyTexture | null | ToImageCopyTexture | Deno.PointerValue,
+    destination: ImageCopyBuffer | null | ToImageCopyBuffer | Deno.PointerValue,
+    copySize: Extent3D | null | ToExtent3D | Deno.PointerValue,
   ): void {
     const result = lib.symbols.wgpuCommandEncoderCopyTextureToBuffer(
       this.pointer,
@@ -10719,9 +13853,13 @@ export class CommandEncoder extends U.ClassBase {
   }
 
   copyTextureToTexture(
-    source: ImageCopyTexture | ToImageCopyTexture | Deno.PointerValue,
-    destination: ImageCopyTexture | ToImageCopyTexture | Deno.PointerValue,
-    copySize: Extent3D | ToExtent3D | Deno.PointerValue,
+    source: ImageCopyTexture | null | ToImageCopyTexture | Deno.PointerValue,
+    destination:
+      | ImageCopyTexture
+      | null
+      | ToImageCopyTexture
+      | Deno.PointerValue,
+    copySize: Extent3D | null | ToExtent3D | Deno.PointerValue,
   ): void {
     const result = lib.symbols.wgpuCommandEncoderCopyTextureToTexture(
       this.pointer,
@@ -10747,6 +13885,7 @@ export class CommandEncoder extends U.ClassBase {
   finish(
     descriptor?:
       | CommandBufferDescriptor
+      | null
       | ToCommandBufferDescriptor
       | Deno.PointerValue,
   ): CommandBuffer {
@@ -10960,6 +14099,7 @@ export class Device extends U.ClassBase {
   createBindGroup(
     descriptor?:
       | BindGroupDescriptor
+      | null
       | ToBindGroupDescriptor
       | Deno.PointerValue,
   ): BindGroup {
@@ -10977,6 +14117,7 @@ export class Device extends U.ClassBase {
   createBindGroupLayout(
     descriptor?:
       | BindGroupLayoutDescriptor
+      | null
       | ToBindGroupLayoutDescriptor
       | Deno.PointerValue,
   ): BindGroupLayout {
@@ -10992,7 +14133,11 @@ export class Device extends U.ClassBase {
   }
 
   createBuffer(
-    descriptor?: BufferDescriptor | ToBufferDescriptor | Deno.PointerValue,
+    descriptor?:
+      | BufferDescriptor
+      | null
+      | ToBufferDescriptor
+      | Deno.PointerValue,
   ): Buffer {
     const result = lib.symbols.wgpuDeviceCreateBuffer(
       this.pointer,
@@ -11008,6 +14153,7 @@ export class Device extends U.ClassBase {
   createCommandEncoder(
     descriptor?:
       | CommandEncoderDescriptor
+      | null
       | ToCommandEncoderDescriptor
       | Deno.PointerValue,
   ): CommandEncoder {
@@ -11025,6 +14171,7 @@ export class Device extends U.ClassBase {
   createComputePipeline(
     descriptor?:
       | ComputePipelineDescriptor
+      | null
       | ToComputePipelineDescriptor
       | Deno.PointerValue,
   ): ComputePipeline {
@@ -11040,24 +14187,24 @@ export class Device extends U.ClassBase {
   }
 
   createComputePipelineAsync(
-    descriptor?: ComputePipelineDescriptor | ToComputePipelineDescriptor,
+    descriptor?: ComputePipelineDescriptor | null,
   ): Promise<[CreatePipelineAsyncStatus, ComputePipeline, Deno.PointerValue]>;
   createComputePipelineAsync(
-    descriptor: ComputePipelineDescriptor | ToComputePipelineDescriptor,
+    descriptor: ComputePipelineDescriptor | null,
     callback: (
       ...args: [CreatePipelineAsyncStatus, ComputePipeline, Deno.PointerValue]
     ) => void,
   ): Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback>;
   createComputePipelineAsync(
-    descriptor: ComputePipelineDescriptor | ToComputePipelineDescriptor,
+    descriptor: ComputePipelineDescriptor | null,
     callback: Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback>,
   ): void;
   createComputePipelineAsync(
-    descriptor: ComputePipelineDescriptor | ToComputePipelineDescriptor,
+    descriptor: ComputePipelineDescriptor | null,
     callback: Deno.PointerValue,
   ): void;
   createComputePipelineAsync(
-    descriptor: ComputePipelineDescriptor | ToComputePipelineDescriptor,
+    descriptor: ComputePipelineDescriptor | null,
     callback?:
       | ((
         ...args: [CreatePipelineAsyncStatus, ComputePipeline, Deno.PointerValue]
@@ -11158,6 +14305,7 @@ export class Device extends U.ClassBase {
   createPipelineLayout(
     descriptor?:
       | PipelineLayoutDescriptor
+      | null
       | ToPipelineLayoutDescriptor
       | Deno.PointerValue,
   ): PipelineLayout {
@@ -11173,7 +14321,11 @@ export class Device extends U.ClassBase {
   }
 
   createQuerySet(
-    descriptor?: QuerySetDescriptor | ToQuerySetDescriptor | Deno.PointerValue,
+    descriptor?:
+      | QuerySetDescriptor
+      | null
+      | ToQuerySetDescriptor
+      | Deno.PointerValue,
   ): QuerySet {
     const result = lib.symbols.wgpuDeviceCreateQuerySet(
       this.pointer,
@@ -11189,6 +14341,7 @@ export class Device extends U.ClassBase {
   createRenderBundleEncoder(
     descriptor?:
       | RenderBundleEncoderDescriptor
+      | null
       | ToRenderBundleEncoderDescriptor
       | Deno.PointerValue,
   ): RenderBundleEncoder {
@@ -11206,6 +14359,7 @@ export class Device extends U.ClassBase {
   createRenderPipeline(
     descriptor?:
       | RenderPipelineDescriptor
+      | null
       | ToRenderPipelineDescriptor
       | Deno.PointerValue,
   ): RenderPipeline {
@@ -11221,24 +14375,24 @@ export class Device extends U.ClassBase {
   }
 
   createRenderPipelineAsync(
-    descriptor?: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
+    descriptor?: RenderPipelineDescriptor | null,
   ): Promise<[CreatePipelineAsyncStatus, RenderPipeline, Deno.PointerValue]>;
   createRenderPipelineAsync(
-    descriptor: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
+    descriptor: RenderPipelineDescriptor | null,
     callback: (
       ...args: [CreatePipelineAsyncStatus, RenderPipeline, Deno.PointerValue]
     ) => void,
   ): Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback>;
   createRenderPipelineAsync(
-    descriptor: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
+    descriptor: RenderPipelineDescriptor | null,
     callback: Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback>,
   ): void;
   createRenderPipelineAsync(
-    descriptor: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
+    descriptor: RenderPipelineDescriptor | null,
     callback: Deno.PointerValue,
   ): void;
   createRenderPipelineAsync(
-    descriptor: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
+    descriptor: RenderPipelineDescriptor | null,
     callback?:
       | ((
         ...args: [CreatePipelineAsyncStatus, RenderPipeline, Deno.PointerValue]
@@ -11337,7 +14491,11 @@ export class Device extends U.ClassBase {
   }
 
   createSampler(
-    descriptor?: SamplerDescriptor | ToSamplerDescriptor | Deno.PointerValue,
+    descriptor?:
+      | SamplerDescriptor
+      | null
+      | ToSamplerDescriptor
+      | Deno.PointerValue,
   ): Sampler {
     const result = lib.symbols.wgpuDeviceCreateSampler(
       this.pointer,
@@ -11353,6 +14511,7 @@ export class Device extends U.ClassBase {
   createShaderModule(
     descriptor?:
       | ShaderModuleDescriptor
+      | null
       | ToShaderModuleDescriptor
       | Deno.PointerValue,
   ): ShaderModule {
@@ -11369,7 +14528,11 @@ export class Device extends U.ClassBase {
 
   createSwapChain(
     surface: Surface,
-    descriptor: SwapChainDescriptor | ToSwapChainDescriptor | Deno.PointerValue,
+    descriptor:
+      | SwapChainDescriptor
+      | null
+      | ToSwapChainDescriptor
+      | Deno.PointerValue,
   ): SwapChain {
     const result = lib.symbols.wgpuDeviceCreateSwapChain(
       this.pointer,
@@ -11384,7 +14547,11 @@ export class Device extends U.ClassBase {
   }
 
   createTexture(
-    descriptor?: TextureDescriptor | ToTextureDescriptor | Deno.PointerValue,
+    descriptor?:
+      | TextureDescriptor
+      | null
+      | ToTextureDescriptor
+      | Deno.PointerValue,
   ): Texture {
     const result = lib.symbols.wgpuDeviceCreateTexture(
       this.pointer,
@@ -11410,8 +14577,17 @@ export class Device extends U.ClassBase {
     return result;
   }
 
-  getLimits(limits: Deno.PointerValue): boolean {
-    const result = lib.symbols.wgpuDeviceGetLimits(this.pointer, limits);
+  getLimits(
+    limits?: SupportedLimits | null | ToSupportedLimits | Deno.PointerValue,
+  ): boolean {
+    const result = lib.symbols.wgpuDeviceGetLimits(
+      this.pointer,
+      limits instanceof SupportedLimits
+        ? limits.pointer
+        : U.duckIsPointer(limits)
+        ? limits
+        : SupportedLimits.from(limits).pointer,
+    );
     return result == 1;
   }
 
@@ -11445,9 +14621,7 @@ export class Device extends U.ClassBase {
         const cb = new Deno.UnsafeCallback(
           ErrorCallback,
           (...args: U.CbParam<typeof ErrorCallback>) => {
-            res(
-              [args[0] as ErrorType, args[1]] as [ErrorType, Deno.PointerValue],
-            );
+            res([args[0] as ErrorType, args[1]]);
           },
         );
         lib.symbols.wgpuDevicePopErrorScope(this.pointer, cb.pointer, null);
@@ -11500,9 +14674,7 @@ export class Device extends U.ClassBase {
         const cb = new Deno.UnsafeCallback(
           ErrorCallback,
           (...args: U.CbParam<typeof ErrorCallback>) => {
-            res(
-              [args[0] as ErrorType, args[1]] as [ErrorType, Deno.PointerValue],
-            );
+            res([args[0] as ErrorType, args[1]]);
           },
         );
         lib.symbols.wgpuDeviceSetUncapturedErrorCallback(
@@ -11543,6 +14715,7 @@ export class Device extends U.ClassBase {
     wait: boolean,
     wrappedSubmissionIndex:
       | WrappedSubmissionIndex
+      | null
       | ToWrappedSubmissionIndex
       | Deno.PointerValue,
   ): boolean {
@@ -11566,7 +14739,11 @@ export class Instance extends U.ClassBase {
   }
 
   createSurface(
-    descriptor?: SurfaceDescriptor | ToSurfaceDescriptor | Deno.PointerValue,
+    descriptor?:
+      | SurfaceDescriptor
+      | null
+      | ToSurfaceDescriptor
+      | Deno.PointerValue,
   ): Surface {
     const result = lib.symbols.wgpuInstanceCreateSurface(
       this.pointer,
@@ -11585,24 +14762,24 @@ export class Instance extends U.ClassBase {
   }
 
   requestAdapter(
-    options?: RequestAdapterOptions | ToRequestAdapterOptions,
+    options?: RequestAdapterOptions | null,
   ): Promise<[RequestAdapterStatus, Adapter, Deno.PointerValue]>;
   requestAdapter(
-    options: RequestAdapterOptions | ToRequestAdapterOptions,
+    options: RequestAdapterOptions | null,
     callback: (
       ...args: [RequestAdapterStatus, Adapter, Deno.PointerValue]
     ) => void,
   ): Deno.UnsafeCallback<typeof RequestAdapterCallback>;
   requestAdapter(
-    options: RequestAdapterOptions | ToRequestAdapterOptions,
+    options: RequestAdapterOptions | null,
     callback: Deno.UnsafeCallback<typeof RequestAdapterCallback>,
   ): void;
   requestAdapter(
-    options: RequestAdapterOptions | ToRequestAdapterOptions,
+    options: RequestAdapterOptions | null,
     callback: Deno.PointerValue,
   ): void;
   requestAdapter(
-    options: RequestAdapterOptions | ToRequestAdapterOptions,
+    options: RequestAdapterOptions | null,
     callback?:
       | ((...args: [RequestAdapterStatus, Adapter, Deno.PointerValue]) => void)
       | Deno.UnsafeCallback<typeof RequestAdapterCallback>
@@ -11616,13 +14793,11 @@ export class Instance extends U.ClassBase {
         const cb = new Deno.UnsafeCallback(
           RequestAdapterCallback,
           (...args: U.CbParam<typeof RequestAdapterCallback>) => {
-            res(
-              [
-                args[0] as RequestAdapterStatus,
-                new Adapter(args[1], this),
-                args[2],
-              ] as [RequestAdapterStatus, Adapter, Deno.PointerValue],
-            );
+            res([
+              args[0] as RequestAdapterStatus,
+              new Adapter(args[1], this),
+              args[2],
+            ]);
           },
         );
         lib.symbols.wgpuInstanceRequestAdapter(
@@ -11686,6 +14861,7 @@ export class Instance extends U.ClassBase {
   enumerateAdapters(
     options:
       | InstanceEnumerateAdapterOptions
+      | null
       | ToInstanceEnumerateAdapterOptions
       | Deno.PointerValue,
     adapters: Deno.PointerValue,
@@ -11769,7 +14945,7 @@ export class Queue extends U.ClassBase {
         const cb = new Deno.UnsafeCallback(
           QueueWorkDoneCallback,
           (...args: U.CbParam<typeof QueueWorkDoneCallback>) => {
-            res([args[0] as QueueWorkDoneStatus] as [QueueWorkDoneStatus]);
+            res([args[0] as QueueWorkDoneStatus]);
           },
         );
         lib.symbols.wgpuQueueOnSubmittedWorkDone(
@@ -11829,11 +15005,19 @@ export class Queue extends U.ClassBase {
   }
 
   writeTexture(
-    destination: ImageCopyTexture | ToImageCopyTexture | Deno.PointerValue,
+    destination:
+      | ImageCopyTexture
+      | null
+      | ToImageCopyTexture
+      | Deno.PointerValue,
     data: Deno.PointerValue,
     dataSize: number | bigint,
-    dataLayout: TextureDataLayout | ToTextureDataLayout | Deno.PointerValue,
-    writeSize: Extent3D | ToExtent3D | Deno.PointerValue,
+    dataLayout:
+      | TextureDataLayout
+      | null
+      | ToTextureDataLayout
+      | Deno.PointerValue,
+    writeSize: Extent3D | null | ToExtent3D | Deno.PointerValue,
   ): void {
     const result = lib.symbols.wgpuQueueWriteTexture(
       this.pointer,
@@ -11950,6 +15134,7 @@ export class RenderBundleEncoder extends U.ClassBase {
   finish(
     descriptor?:
       | RenderBundleDescriptor
+      | null
       | ToRenderBundleDescriptor
       | Deno.PointerValue,
   ): RenderBundle {
@@ -12202,7 +15387,7 @@ export class RenderPassEncoder extends U.ClassBase {
     return result;
   }
 
-  setBlendConstant(color?: Color | ToColor | Deno.PointerValue): void {
+  setBlendConstant(color?: Color | null | ToColor | Deno.PointerValue): void {
     const result = lib.symbols.wgpuRenderPassEncoderSetBlendConstant(
       this.pointer,
       color instanceof Color
@@ -12421,11 +15606,11 @@ export class ShaderModule extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuShaderModuleRelease]);
   }
   getCompilationInfo(): Promise<
-    [CompilationInfoRequestStatus, Deno.PointerValue]
+    [CompilationInfoRequestStatus, CompilationInfo | null]
   >;
   getCompilationInfo(
     callback: (
-      ...args: [CompilationInfoRequestStatus, Deno.PointerValue]
+      ...args: [CompilationInfoRequestStatus, CompilationInfo | null]
     ) => void,
   ): Deno.UnsafeCallback<typeof CompilationInfoCallback>;
   getCompilationInfo(
@@ -12434,24 +15619,24 @@ export class ShaderModule extends U.ClassBase {
   getCompilationInfo(callback: Deno.PointerValue): void;
   getCompilationInfo(
     callback?:
-      | ((...args: [CompilationInfoRequestStatus, Deno.PointerValue]) => void)
+      | ((
+        ...args: [CompilationInfoRequestStatus, CompilationInfo | null]
+      ) => void)
       | Deno.UnsafeCallback<typeof CompilationInfoCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<[CompilationInfoRequestStatus, Deno.PointerValue]>
+    | Promise<[CompilationInfoRequestStatus, CompilationInfo | null]>
     | Deno.UnsafeCallback<typeof CompilationInfoCallback> {
     if (callback == null) {
       return new Promise((res) => {
         const cb = new Deno.UnsafeCallback(
           CompilationInfoCallback,
           (...args: U.CbParam<typeof CompilationInfoCallback>) => {
-            res(
-              [args[0] as CompilationInfoRequestStatus, args[1]] as [
-                CompilationInfoRequestStatus,
-                Deno.PointerValue,
-              ],
-            );
+            res([
+              args[0] as CompilationInfoRequestStatus,
+              args[1] === null ? null : new CompilationInfo(args[1]),
+            ]);
           },
         );
         lib.symbols.wgpuShaderModuleGetCompilationInfo(
@@ -12470,7 +15655,10 @@ export class ShaderModule extends U.ClassBase {
       const cb = new Deno.UnsafeCallback(
         CompilationInfoCallback,
         (...args: U.CbParam<typeof CompilationInfoCallback>) => {
-          callback(...[args[0] as CompilationInfoRequestStatus, args[1]]);
+          callback(...[
+            args[0] as CompilationInfoRequestStatus,
+            args[1] === null ? null : new CompilationInfo(args[1]),
+          ]);
         },
       );
       lib.symbols.wgpuShaderModuleGetCompilationInfo(
@@ -12508,11 +15696,22 @@ export class Surface extends U.ClassBase {
     return result as TextureFormat;
   }
 
-  getCapabilities(adapter: Adapter, capabilities: Deno.PointerValue): void {
+  getCapabilities(
+    adapter: Adapter,
+    capabilities:
+      | SurfaceCapabilities
+      | null
+      | ToSurfaceCapabilities
+      | Deno.PointerValue,
+  ): void {
     const result = lib.symbols.wgpuSurfaceGetCapabilities(
       this.pointer,
       adapter.pointer,
-      capabilities,
+      capabilities instanceof SurfaceCapabilities
+        ? capabilities.pointer
+        : U.duckIsPointer(capabilities)
+        ? capabilities
+        : SurfaceCapabilities.from(capabilities).pointer,
     );
     return result;
   }
@@ -12544,6 +15743,7 @@ export class Texture extends U.ClassBase {
   createView(
     descriptor?:
       | TextureViewDescriptor
+      | null
       | ToTextureViewDescriptor
       | Deno.PointerValue,
   ): TextureView {

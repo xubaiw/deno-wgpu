@@ -31,13 +31,12 @@ const queue = device.getQueue();
 const code = await Deno.readTextFile(
   new URL("./compute.wgsl", import.meta.url),
 );
-const wglsDescriptor = w.ShaderModuleWGSLDescriptor.from({
-  chain: { sType: w.SType.ShaderModuleWGSLDescriptor },
-  code: cstr(code),
-});
 const shaderModule = device.createShaderModule({
   label: cstr("compute.wgsl"),
-  nextInChain: wglsDescriptor.pointer,
+  nextInChain: {
+    chain: { sType: w.SType.ShaderModuleWGSLDescriptor },
+    code: cstr(code),
+  },
 });
 
 // Staging buffer
