@@ -19,9 +19,9 @@ const [, adapter] = await instance.requestAdapter(null);
 // Further usage...
 ```
 
-## Example
+A deno doc generated documentation can be found [here](https://doc.deno.land/https://denopkg.com/xubaiw/deno-wgpu@master/mod.ts). However, there is no comments.
 
-See [`./examples/compute.ts`](./examples/compute.ts) for the collatz example.
+Also see [`./examples/compute.ts`](./examples/compute.ts) for the collatz example.
 
 ## Credits
 
