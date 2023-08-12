@@ -78,3 +78,15 @@ class ReleaseRegistry {
 }
 
 export const registry = new ReleaseRegistry();
+
+/**
+ * See https://github.com/denoland/deno/issues/18146
+ */
+export function duckIsPointer(x: unknown): x is Deno.PointerValue {
+  if (typeof x == "object") {
+    if (x === null) return true;
+    return Object.keys(x).length == 0 && Object.getPrototypeOf(x) === null &&
+      Object.isExtensible(x) == false;
+  }
+  return false;
+}

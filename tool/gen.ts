@@ -43,9 +43,9 @@ type StructSpec = {
 
 type FieldSpec = {
   offset: number;
-  size?: number;
+  size: number;
   kind: string;
-  type?: string;
+  type: string;
 };
 
 /** Do not use Deno.NativeType make life easier */
@@ -289,14 +289,9 @@ function extractStructs({ tu, structs }: Ctx) {
           const name = cursor.getSpelling();
           const offset = cursor.getOffsetOfField() / 8;
           const kind = cursor.getType()!.getCanonicalType().getKindSpelling();
-          fields[name] = { offset, kind };
-          if (kind == "Record") {
-            fields[name]["type"] = cursor.getType()!.getSpelling();
-            fields[name]["size"] = cursor.getType()!.getSizeOf();
-          }
-          if (kind == "Enum") {
-            fields[name].type = cursor.getType()?.getSpelling();
-          }
+          const type = cursor.getType()!.getSpelling();
+          const size = cursor.getType()!.getSizeOf();
+          fields[name] = { offset, kind, type, size };
         }
         return CXChildVisitResult.CXChildVisit_Continue;
       });
@@ -323,10 +318,12 @@ function generateStruct(ctx: Ctx, name: string) {
   const size = spec.size;
   if (size < 0) return "";
   const properties = sep("\n\n")(
-    km(spec.fields, (fname) => genProperty(ctx, name, fname)),
+    km(spec.fields, (fname) => generateProperty(ctx, name, fname)),
   );
-  const encoder = generateStructEncoder(name);
+  const to = generateStructTo(ctx, name);
+  const from = generateStructFrom(ctx, name);
   return dedent`
+    ${to}
     export class ${nofix(name)} extends U.StructBase {
       dataview: DataView;
       constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
@@ -342,12 +339,27 @@ function generateStruct(ctx: Ctx, name: string) {
         }
       }
       ${properties}
-      ${encoder}
+      ${from}
     }
   `;
 }
 
-function genProperty(...args: [Ctx, string, string]) {
+function generateStructTo(ctx: Ctx, name: string) {
+  const fields = ctx.structs[name].fields;
+  const body = sep(";")(
+    km(
+      fields,
+      (fname) => `${fname}?: ${generateStructSetterType(ctx, name, fname)}`,
+    ),
+  );
+  return dedent`
+    export type To${nofix(name)} = undefined | {
+      ${body}
+    };
+  `;
+}
+
+function generateProperty(...args: [Ctx, string, string]) {
   // FIXME: use property field
   const getter = generateStructGetter(...args);
   const setter = generateStructSetter(...args);
@@ -377,10 +389,27 @@ function generateStructSetter(ctx: Ctx, sname: string, fname: string) {
   `;
 }
 
-function generateStructEncoder(name: string): string {
+function generateStructFrom(ctx: Ctx, name: string): string {
+  const fields = ctx.structs[name].fields;
+  const setters = (inner: string) =>
+    sep(";")(
+      km(
+        fields,
+        (fname) =>
+          `if (plain.${fname} !== undefined) ${inner}.${fname} = plain.${fname}`,
+      ),
+    );
   return dedent`
-    static from() {
-      // not implemented
+    static from(plain: To${nofix(name)}) {
+      const struct = new ${nofix(name)};
+      if (plain === undefined) return struct;
+      ${setters("struct")}
+      return struct;
+    }
+    set(plain: To${nofix(name)}) {
+      const struct = this;
+      if (plain === undefined) return struct;
+      ${setters("this")}
     }
   `;
 }
@@ -430,9 +459,17 @@ function genStructGetterResult(ctx: Ctx, name: string, fname: string) {
 }
 
 function generateStructSetterResult(ctx: Ctx, name: string, fname: string) {
-  const { offset, kind, size } = ctx.structs[name].fields[fname];
+  const { offset, kind, size, type } = ctx.structs[name].fields[fname];
   if (kind == "Record") {
-    return `new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, ${size}).set(new Uint8Array(value.dataview.buffer, value.dataview.byteOffset, value.dataview.byteLength))`;
+    return `
+      if (value instanceof ${nofix(type)}) {
+        const tv = this.dataview;
+        const vv = value.dataview;
+        new Uint8Array(tv.buffer, tv.byteOffset, ${size}).set(new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength))
+      } else {
+        this.${fname}.set(value);
+      }
+    `;
   }
   if (kind == "Pointer") {
     return `this.dataview.setBigUint64(${offset}, BigInt(Deno.UnsafePointer.value(value)), U.LE);`;
@@ -465,9 +502,9 @@ function generateStructSetterResult(ctx: Ctx, name: string, fname: string) {
 
 function generateStructSetterType(ctx: Ctx, name: string, fname: string) {
   const { kind, type } = ctx.structs[name].fields[fname];
-  if (kind == "Record") return nofix(type!);
+  if (kind == "Record") return `${nofix(type)} | To${nofix(type)}`;
   if (kind == "Pointer") return "Deno.PointerValue";
-  if (kind == "Enum") return `${nofix(type!)}`;
+  if (kind == "Enum") return `${nofix(type)}`;
   if (kind == "UInt") return "number";
   if (kind == "ULongLong") return "bigint | number";
   if (kind == "Bool") return "boolean | number | bigint";
@@ -586,9 +623,14 @@ function generateClassMethod(
   if (!hasCallback) {
     // ordinary function
     const params = sep(",")(spec.parameters.map((p, i) => {
+      // `this` is omitted in param
       if (i == 0) return null;
-      if (p.name == "userdata") return null;
-      return `${p.name}: ${translateTypeSpec(ctx, p)}`;
+      // the only struct parameter is optional
+      const optional =
+        spec.parameters.length == 2 && i == 1 && matchStruct(ctx, p.type)
+          ? "?"
+          : "";
+      return `${p.name}${optional}: ${translateTypeSpec(ctx, p, true)}`;
     }));
     const res = translateTypeSpec(ctx, spec.result);
     const body = generateFunctionBody(ctx, className, methodId);
@@ -598,48 +640,52 @@ function generateClassMethod(
       }
     `;
   } else {
-    return generateFunctionWithCallback(ctx, className, methodId);
+    return generateClassMethodWithCallback(ctx, className, methodId);
   }
 }
 
-function generateFunctionWithCallback(
+function generateClassMethodWithCallback(
   ctx: Ctx,
   arg2: string,
   arg3?: string,
 ): string {
-  const method = arg3 != null;
-  const functionId = method ? arg3 : arg2;
-  const spec = method ? ctx.classes[arg2][functionId] : ctx.functions[arg2];
-  const name = method
+  const isMethod = arg3 != null;
+  const functionId = isMethod ? arg3 : arg2;
+  const spec = isMethod ? ctx.classes[arg2][functionId] : ctx.functions[arg2];
+  const name = isMethod
     ? camelCase(nofix(arg3).replace(nofix(arg2), ""))
     : camelCase(nofix(arg2));
-  const prefix = method ? "" : `export function`;
+  const prefix = isMethod ? "" : `export function`;
   const idxCb = spec.parameters.findIndex((x) => x.name == "callback")!;
   const callbackSpec = ctx.callbacks[spec.parameters[idxCb].type];
-  const paramsBeforeCb = sep(",")(spec.parameters.map((p, i) => {
+  const paramsBefore = sep(",")(spec.parameters.map((p, i) => {
     if (i == 0) return null;
     if (i >= idxCb) return null;
-    if (p.name == "userdata") return null;
     return `${p.name}: ${translateTypeSpec(ctx, p)}`;
   }));
   const cbDef = translateTypeSpec(ctx, spec.parameters[idxCb]);
   const argBefore = sep(",")(
     spec.parameters.map((p, i) =>
-      method && i == 0
+      isMethod && i == 0
         ? `this.pointer`
         : i >= idxCb
         ? null
         : translateArgument(ctx, p)
     ),
   );
-  const datasetters = `[` + sep(",")(callbackSpec.parameters.map((cs, i) => {
-    return generateResultTransform(ctx, cs, method, `args[${i}]`);
+  // skip userdata
+  const callbackParams = callbackSpec.parameters.slice(
+    0,
+    callbackSpec.parameters.length - 1,
+  );
+  const datasetters = `[` + sep(",")(callbackParams.map((cs, i) => {
+    return generateResultTransform(ctx, cs, isMethod, `args[${i}]`);
   })) + `]`;
   const promisetypes = `[${
-    sep(",")(callbackSpec.parameters.map((cs) => translateTypeSpec(ctx, cs)))
+    sep(",")(callbackParams.map((cs) => translateTypeSpec(ctx, cs)))
   }]`;
   const acomma = idxCb != 0 ? "," : "";
-  const pcomma = method ? (idxCb != 1 ? "," : "") : acomma;
+  const pcomma = isMethod ? (idxCb != 1 ? "," : "") : acomma;
   const needPoll = name.includes("Async");
   const promiseImpl = needPoll
     ? `
@@ -664,11 +710,11 @@ function generateFunctionWithCallback(
         lib.symbols.${functionId}(${argBefore}${acomma} cb.pointer, null);
       `;
   return dedent`\
-    ${prefix} ${name}(${paramsBeforeCb}): Promise<${promisetypes}>;
-    ${prefix} ${name}(${paramsBeforeCb}${pcomma} callback: (...args: ${promisetypes}) => void): Deno.UnsafeCallback<typeof ${cbDef}>
-    ${prefix} ${name}(${paramsBeforeCb}${pcomma} callback: Deno.UnsafeCallback<typeof ${cbDef}>): void
-    ${prefix} ${name}(${paramsBeforeCb}${pcomma} callback: Deno.PointerValue): void
-    ${prefix} ${name}(${paramsBeforeCb}${pcomma} callback?: ((...args: ${promisetypes}) => void) | Deno.UnsafeCallback<typeof ${cbDef}> | Deno.PointerValue): void | Promise<${promisetypes}> | Deno.UnsafeCallback<typeof ${cbDef}> {
+    ${prefix} ${name}(${paramsBefore}): Promise<${promisetypes}>;
+    ${prefix} ${name}(${paramsBefore}${pcomma} callback: (...args: ${promisetypes}) => void): Deno.UnsafeCallback<typeof ${cbDef}>
+    ${prefix} ${name}(${paramsBefore}${pcomma} callback: Deno.UnsafeCallback<typeof ${cbDef}>): void
+    ${prefix} ${name}(${paramsBefore}${pcomma} callback: Deno.PointerValue): void
+    ${prefix} ${name}(${paramsBefore}${pcomma} callback?: ((...args: ${promisetypes}) => void) | Deno.UnsafeCallback<typeof ${cbDef}> | Deno.PointerValue): void | Promise<${promisetypes}> | Deno.UnsafeCallback<typeof ${cbDef}> {
       if (callback == null) {
         return new Promise((res) => {
           ${promiseImpl}
@@ -693,9 +739,13 @@ function generateFunction(ctx: Ctx, functionId: string): string {
   const name = camelCase(nofix(functionId));
   const hasCallback = spec.parameters.some((x) => x.name == "callback");
   if (!hasCallback) {
-    const params = sep(",")(spec.parameters.map((p) => {
-      if (p.name == "userdata") return null;
-      return `${p.name}: ${translateTypeSpec(ctx, p)}`;
+    const params = sep(",")(spec.parameters.map((p, i) => {
+      // the only struct parameter is optional
+      const optional =
+        spec.parameters.length == 1 && i == 0 && matchStruct(ctx, p.type)
+          ? "?"
+          : "";
+      return `${p.name}${optional}: ${translateTypeSpec(ctx, p, true)}`;
     }));
     const res = translateTypeSpec(ctx, spec.result);
     const body = generateFunctionBody(ctx, functionId);
@@ -705,8 +755,15 @@ function generateFunction(ctx: Ctx, functionId: string): string {
     }
   `;
   } else {
-    return generateFunctionWithCallback(ctx, functionId);
+    return generateClassMethodWithCallback(ctx, functionId);
   }
+}
+
+function matchStruct(ctx: Ctx, type: string): string | null {
+  const match = type.match(/^const (\w+) \*$/);
+  if (!match) return null;
+  if (match[1] in ctx.structs) return match[1];
+  return null;
 }
 
 function generateFunctionBody(ctx: Ctx, clsOrFn: string, optMId?: string) {
@@ -734,13 +791,18 @@ function generateFunctionBody(ctx: Ctx, clsOrFn: string, optMId?: string) {
   `;
 }
 
-function translateTypeSpec(ctx: Ctx, spec: TypeSpec): string {
+function translateTypeSpec(ctx: Ctx, spec: TypeSpec, allowptr = false): string {
   const { kind, type } = spec;
+  const orptr = allowptr ? "| Deno.PointerValue" : "";
   if (kind == "Enum") return nofix(type);
   if (kind == "Pointer") {
-    if (type in ctx.callbacks || type in ctx.classes) return nofix(type);
+    if (type in ctx.callbacks) return nofix(type);
+    if (type in ctx.classes) return nofix(type);
+    // struct
     const match = type.match(/^const (\w+) \*$/);
-    if (match && match[1] in ctx.structs) return nofix(match[1]);
+    if (match && match[1] in ctx.structs) {
+      return `${nofix(match[1])} | To${nofix(match[1])}` + orptr;
+    }
   }
   return translateKindToDeno(kind);
 }
@@ -755,9 +817,14 @@ function generateResultTransform(
   if (kind == "Bool") return `${inner} == 1`;
   if (kind == "Enum") return `${inner} as ${nofix(type!)}`;
   if (kind == "Pointer") {
+    // class
     if (type && type in ctx.classes) {
-      // creator
       return `new ${nofix(type)}(${inner} ${method ? ", this" : ""})`;
+    }
+    // struct
+    const match = type.match(/^const (\w+) \*$/);
+    if (match && match[1] in ctx.structs) {
+      return `new ${nofix(match[1])}(${inner})`;
     }
   }
   return inner;
@@ -767,9 +834,19 @@ function translateArgument(ctx: Ctx, spec: NamedTypeSpec): string {
   if (spec.name == "userdata") return "null";
   if (spec.kind == "Bool") return `${spec.name} ? 1 : 0`;
   if (spec.kind == "Pointer") {
-    if (spec.type in ctx.classes) return `${spec.name}.pointer`;
+    // class
+    if (spec.type in ctx.classes) {
+      return `${spec.name}.pointer`;
+    }
+    // struct
     const match = spec.type.match(/^const (\w+) \*$/);
-    if (match && match[1] in ctx.structs) return `${spec.name}.pointer`;
+    if (match && match[1] in ctx.structs) {
+      return `${spec.name} instanceof ${
+        nofix(match[1])
+      } ? ${spec.name}.pointer : U.duckIsPointer(${spec.name}) ? ${spec.name} : ${
+        nofix(match[1])
+      }.from(${spec.name}).pointer`;
+    }
   }
   return spec.name;
 }

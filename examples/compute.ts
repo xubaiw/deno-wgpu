@@ -10,19 +10,19 @@ if (Deno.args.length == 0) {
   console.log("Usage: pass in args to use custom numbers.");
   inputs = [1, 2, 3, 100];
 } else {
-  inputs = Deno.args.map(x => parseInt(x.trim()));
+  inputs = Deno.args.map((x) => parseInt(x.trim()));
 }
 console.log({ inputs });
 const numbers = Uint32Array.from(inputs);
 
 // Create Instance
-const instance = w.createInstance(new w.InstanceDescriptor());
+const instance = w.createInstance();
 
 // Request adapter
-const [, adapter] = await instance.requestAdapter(new w.RequestAdapterOptions());
+const [, adapter] = await instance.requestAdapter(undefined);
 
 // Request device
-const [, device] = await adapter.requestDevice(new w.DeviceDescriptor());
+const [, device] = await adapter.requestDevice(undefined);
 
 // Get queue
 const queue = device.getQueue();
@@ -31,75 +31,68 @@ const queue = device.getQueue();
 const code = await Deno.readTextFile(
   new URL("./compute.wgsl", import.meta.url),
 );
-const wglsDescriptor = new w.ShaderModuleWGSLDescriptor();
-wglsDescriptor.chain.sType = w.SType.ShaderModuleWGSLDescriptor;
-wglsDescriptor.code = cstr(code);
-const shaderModuleDescriptor = new w.ShaderModuleDescriptor();
-shaderModuleDescriptor.label = cstr("compute.wgsl");
-shaderModuleDescriptor.nextInChain = wglsDescriptor.pointer;
-const shaderModule = device.createShaderModule(shaderModuleDescriptor);
+const wglsDescriptor = w.ShaderModuleWGSLDescriptor.from({
+  chain: { sType: w.SType.ShaderModuleWGSLDescriptor },
+  code: cstr(code),
+});
+const shaderModule = device.createShaderModule({
+  label: cstr("compute.wgsl"),
+  nextInChain: wglsDescriptor.pointer,
+});
 
 // Staging buffer
-const stagingBufferDescriptor = new w.BufferDescriptor();
-stagingBufferDescriptor.label = cstr("staging_buffer");
-stagingBufferDescriptor.usage = w.BufferUsage.MapRead |
-  w.BufferUsage.CopyDst;
-stagingBufferDescriptor.size = numbers.byteLength;
-stagingBufferDescriptor.mappedAtCreation = false;
-const stagingBuffer = device.createBuffer(stagingBufferDescriptor);
+const stagingBuffer = device.createBuffer({
+  label: cstr("staging_buffer"),
+  usage: w.BufferUsage.MapRead | w.BufferUsage.CopyDst,
+  size: numbers.byteLength,
+  mappedAtCreation: false,
+});
 
 // Storage buffer
-const storageBufferDescriptor = new w.BufferDescriptor();
-storageBufferDescriptor.label = cstr("storage_buffer");
-storageBufferDescriptor.usage = w.BufferUsage.Storage |
-  w.BufferUsage.CopyDst | w.BufferUsage.CopySrc;
-storageBufferDescriptor.size = numbers.byteLength;
-storageBufferDescriptor.mappedAtCreation = false;
-const storageBuffer = device.createBuffer(storageBufferDescriptor);
+const storageBuffer = device.createBuffer({
+  label: cstr("storage_buffer"),
+  usage: w.BufferUsage.Storage |
+    w.BufferUsage.CopyDst | w.BufferUsage.CopySrc,
+  size: numbers.byteLength,
+  mappedAtCreation: false,
+});
 
 // compute pipeline
-const computePipelineDescriptor = new w.ComputePipelineDescriptor();
-computePipelineDescriptor.label = cstr("compute_pipeline");
-computePipelineDescriptor.compute.module = shaderModule.pointer;
-computePipelineDescriptor.compute.entryPoint = cstr("main");
-const computePipeline = device.createComputePipeline(
-  computePipelineDescriptor,
-);
+const computePipeline = device.createComputePipeline({
+  label: cstr("compute_pipeline"),
+  compute: {
+    module: shaderModule.pointer,
+    entryPoint: cstr("main"),
+  },
+});
 
 // bind group
 const bindGroupLayout = computePipeline.getBindGroupLayout(0);
-const bindGroupDescriptor = new w.BindGroupDescriptor();
-bindGroupDescriptor.label = cstr("bind_group");
-bindGroupDescriptor.layout = bindGroupLayout.pointer;
-bindGroupDescriptor.entryCount = 1;
-const entry = new w.BindGroupEntry();
-entry.binding = 0;
-entry.buffer = storageBuffer.pointer;
-entry.offset = 0;
-entry.size = numbers.byteLength;
-bindGroupDescriptor.entries = entry.pointer;
-const bindGroup = device.createBindGroup(bindGroupDescriptor);
+const entry = w.BindGroupEntry.from({
+  binding: 0,
+  buffer: storageBuffer.pointer,
+  offset: 0,
+  size: numbers.byteLength,
+});
+const bindGroup = device.createBindGroup({
+  label: cstr("bind_group"),
+  layout: bindGroupLayout.pointer,
+  entryCount: 1,
+  entries: entry.pointer,
+});
 
 // Command Encoder
-const commandEncoderDescriptor = new w.CommandEncoderDescriptor();
-commandEncoderDescriptor.label = cstr("command_encoder");
-const commandEncoder = device.createCommandEncoder(
-  commandEncoderDescriptor,
-);
+const commandEncoder = device.createCommandEncoder({
+  label: cstr("command_encoder"),
+});
 
 // Create compute pass and populate data
-const computePassDescriptor = new w.ComputePassDescriptor();
-computePassDescriptor.label = cstr("compute_pass");
-const computePassEncoder = commandEncoder.beginComputePass(
-  computePassDescriptor,
-);
+const computePassEncoder = commandEncoder.beginComputePass({
+  label: cstr("compute_pass"),
+});
 computePassEncoder.setPipeline(computePipeline);
 computePassEncoder.setBindGroup(0, bindGroup, 0, null);
-computePassEncoder.dispatchWorkgroups(
-  numbers.length,
-  1,
-  1,
-);
+computePassEncoder.dispatchWorkgroups(numbers.length, 1, 1);
 computePassEncoder.end();
 
 commandEncoder.copyBufferToBuffer(
@@ -111,9 +104,9 @@ commandEncoder.copyBufferToBuffer(
 );
 
 // Command Buffer
-const commandBufferDescriptor = new w.CommandBufferDescriptor();
-commandEncoderDescriptor.label = cstr("command_buffer");
-const commandBuffer = commandEncoder.finish(commandBufferDescriptor);
+const commandBuffer = commandEncoder.finish({
+  label: cstr("command_buffer")
+});
 
 // Write data to storage buffer
 queue.writeBuffer(

@@ -499,6 +499,18 @@ export enum CompositeAlphaMode {
   Inherit = 4,
 }
 
+export type ToAdapterProperties = undefined | {
+  nextInChain?: Deno.PointerValue;
+  vendorID?: number;
+  vendorName?: Deno.PointerValue;
+  architecture?: Deno.PointerValue;
+  deviceID?: number;
+  name?: Deno.PointerValue;
+  driverDescription?: Deno.PointerValue;
+  adapterType?: AdapterType;
+  backendType?: BackendType;
+};
+
 export class AdapterProperties extends U.StructBase {
   dataview: DataView;
   constructor(dataviewOrPtr?: DataView | NonNullable<Deno.PointerValue>) {
@@ -608,10 +620,52 @@ export class AdapterProperties extends U.StructBase {
     this.dataview.setUint32(60, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToAdapterProperties) {
+    const struct = new AdapterProperties();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.vendorID !== undefined) struct.vendorID = plain.vendorID;
+    if (plain.vendorName !== undefined) struct.vendorName = plain.vendorName;
+    if (plain.architecture !== undefined) {
+      struct.architecture = plain.architecture;
+    }
+    if (plain.deviceID !== undefined) struct.deviceID = plain.deviceID;
+    if (plain.name !== undefined) struct.name = plain.name;
+    if (plain.driverDescription !== undefined) {
+      struct.driverDescription = plain.driverDescription;
+    }
+    if (plain.adapterType !== undefined) struct.adapterType = plain.adapterType;
+    if (plain.backendType !== undefined) struct.backendType = plain.backendType;
+    return struct;
+  }
+  set(plain: ToAdapterProperties) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.vendorID !== undefined) this.vendorID = plain.vendorID;
+    if (plain.vendorName !== undefined) this.vendorName = plain.vendorName;
+    if (plain.architecture !== undefined) {
+      this.architecture = plain.architecture;
+    }
+    if (plain.deviceID !== undefined) this.deviceID = plain.deviceID;
+    if (plain.name !== undefined) this.name = plain.name;
+    if (plain.driverDescription !== undefined) {
+      this.driverDescription = plain.driverDescription;
+    }
+    if (plain.adapterType !== undefined) this.adapterType = plain.adapterType;
+    if (plain.backendType !== undefined) this.backendType = plain.backendType;
   }
 }
+
+export type ToBindGroupEntry = undefined | {
+  nextInChain?: Deno.PointerValue;
+  binding?: number;
+  buffer?: Deno.PointerValue;
+  offset?: bigint | number;
+  size?: bigint | number;
+  sampler?: Deno.PointerValue;
+  textureView?: Deno.PointerValue;
+};
 
 export class BindGroupEntry extends U.StructBase {
   dataview: DataView;
@@ -702,10 +756,36 @@ export class BindGroupEntry extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToBindGroupEntry) {
+    const struct = new BindGroupEntry();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.binding !== undefined) struct.binding = plain.binding;
+    if (plain.buffer !== undefined) struct.buffer = plain.buffer;
+    if (plain.offset !== undefined) struct.offset = plain.offset;
+    if (plain.size !== undefined) struct.size = plain.size;
+    if (plain.sampler !== undefined) struct.sampler = plain.sampler;
+    if (plain.textureView !== undefined) struct.textureView = plain.textureView;
+    return struct;
+  }
+  set(plain: ToBindGroupEntry) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.binding !== undefined) this.binding = plain.binding;
+    if (plain.buffer !== undefined) this.buffer = plain.buffer;
+    if (plain.offset !== undefined) this.offset = plain.offset;
+    if (plain.size !== undefined) this.size = plain.size;
+    if (plain.sampler !== undefined) this.sampler = plain.sampler;
+    if (plain.textureView !== undefined) this.textureView = plain.textureView;
   }
 }
+
+export type ToBlendComponent = undefined | {
+  operation?: BlendOperation;
+  srcFactor?: BlendFactor;
+  dstFactor?: BlendFactor;
+};
 
 export class BlendComponent extends U.StructBase {
   dataview: DataView;
@@ -748,10 +828,29 @@ export class BlendComponent extends U.StructBase {
     this.dataview.setUint32(8, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToBlendComponent) {
+    const struct = new BlendComponent();
+    if (plain === undefined) return struct;
+    if (plain.operation !== undefined) struct.operation = plain.operation;
+    if (plain.srcFactor !== undefined) struct.srcFactor = plain.srcFactor;
+    if (plain.dstFactor !== undefined) struct.dstFactor = plain.dstFactor;
+    return struct;
+  }
+  set(plain: ToBlendComponent) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.operation !== undefined) this.operation = plain.operation;
+    if (plain.srcFactor !== undefined) this.srcFactor = plain.srcFactor;
+    if (plain.dstFactor !== undefined) this.dstFactor = plain.dstFactor;
   }
 }
+
+export type ToBufferBindingLayout = undefined | {
+  nextInChain?: Deno.PointerValue;
+  type?: BufferBindingType;
+  hasDynamicOffset?: boolean | number | bigint;
+  minBindingSize?: bigint | number;
+};
 
 export class BufferBindingLayout extends U.StructBase {
   dataview: DataView;
@@ -806,10 +905,40 @@ export class BufferBindingLayout extends U.StructBase {
     this.dataview.setBigUint64(16, BigInt(value), U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToBufferBindingLayout) {
+    const struct = new BufferBindingLayout();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.type !== undefined) struct.type = plain.type;
+    if (plain.hasDynamicOffset !== undefined) {
+      struct.hasDynamicOffset = plain.hasDynamicOffset;
+    }
+    if (plain.minBindingSize !== undefined) {
+      struct.minBindingSize = plain.minBindingSize;
+    }
+    return struct;
+  }
+  set(plain: ToBufferBindingLayout) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.type !== undefined) this.type = plain.type;
+    if (plain.hasDynamicOffset !== undefined) {
+      this.hasDynamicOffset = plain.hasDynamicOffset;
+    }
+    if (plain.minBindingSize !== undefined) {
+      this.minBindingSize = plain.minBindingSize;
+    }
   }
 }
+
+export type ToBufferDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  usage?: number;
+  size?: bigint | number;
+  mappedAtCreation?: boolean | number | bigint;
+};
 
 export class BufferDescriptor extends U.StructBase {
   dataview: DataView;
@@ -876,10 +1005,37 @@ export class BufferDescriptor extends U.StructBase {
     this.dataview.setUint8(32, value ? 1 : 0);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToBufferDescriptor) {
+    const struct = new BufferDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.usage !== undefined) struct.usage = plain.usage;
+    if (plain.size !== undefined) struct.size = plain.size;
+    if (plain.mappedAtCreation !== undefined) {
+      struct.mappedAtCreation = plain.mappedAtCreation;
+    }
+    return struct;
+  }
+  set(plain: ToBufferDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.usage !== undefined) this.usage = plain.usage;
+    if (plain.size !== undefined) this.size = plain.size;
+    if (plain.mappedAtCreation !== undefined) {
+      this.mappedAtCreation = plain.mappedAtCreation;
+    }
   }
 }
+
+export type ToColor = undefined | {
+  r?: number;
+  g?: number;
+  b?: number;
+  a?: number;
+};
 
 export class Color extends U.StructBase {
   dataview: DataView;
@@ -930,10 +1086,29 @@ export class Color extends U.StructBase {
     this.dataview.setFloat64(24, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToColor) {
+    const struct = new Color();
+    if (plain === undefined) return struct;
+    if (plain.r !== undefined) struct.r = plain.r;
+    if (plain.g !== undefined) struct.g = plain.g;
+    if (plain.b !== undefined) struct.b = plain.b;
+    if (plain.a !== undefined) struct.a = plain.a;
+    return struct;
+  }
+  set(plain: ToColor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.r !== undefined) this.r = plain.r;
+    if (plain.g !== undefined) this.g = plain.g;
+    if (plain.b !== undefined) this.b = plain.b;
+    if (plain.a !== undefined) this.a = plain.a;
   }
 }
+
+export type ToCommandBufferDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+};
 
 export class CommandBufferDescriptor extends U.StructBase {
   dataview: DataView;
@@ -976,10 +1151,25 @@ export class CommandBufferDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToCommandBufferDescriptor) {
+    const struct = new CommandBufferDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    return struct;
+  }
+  set(plain: ToCommandBufferDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
   }
 }
+
+export type ToCommandEncoderDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+};
 
 export class CommandEncoderDescriptor extends U.StructBase {
   dataview: DataView;
@@ -1022,10 +1212,33 @@ export class CommandEncoderDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToCommandEncoderDescriptor) {
+    const struct = new CommandEncoderDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    return struct;
+  }
+  set(plain: ToCommandEncoderDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
   }
 }
+
+export type ToCompilationMessage = undefined | {
+  nextInChain?: Deno.PointerValue;
+  message?: Deno.PointerValue;
+  type?: CompilationMessageType;
+  lineNum?: bigint | number;
+  linePos?: bigint | number;
+  offset?: bigint | number;
+  length?: bigint | number;
+  utf16LinePos?: bigint | number;
+  utf16Offset?: bigint | number;
+  utf16Length?: bigint | number;
+};
 
 export class CompilationMessage extends U.StructBase {
   dataview: DataView;
@@ -1132,10 +1345,46 @@ export class CompilationMessage extends U.StructBase {
     this.dataview.setBigUint64(72, BigInt(value), U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToCompilationMessage) {
+    const struct = new CompilationMessage();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.message !== undefined) struct.message = plain.message;
+    if (plain.type !== undefined) struct.type = plain.type;
+    if (plain.lineNum !== undefined) struct.lineNum = plain.lineNum;
+    if (plain.linePos !== undefined) struct.linePos = plain.linePos;
+    if (plain.offset !== undefined) struct.offset = plain.offset;
+    if (plain.length !== undefined) struct.length = plain.length;
+    if (plain.utf16LinePos !== undefined) {
+      struct.utf16LinePos = plain.utf16LinePos;
+    }
+    if (plain.utf16Offset !== undefined) struct.utf16Offset = plain.utf16Offset;
+    if (plain.utf16Length !== undefined) struct.utf16Length = plain.utf16Length;
+    return struct;
+  }
+  set(plain: ToCompilationMessage) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.message !== undefined) this.message = plain.message;
+    if (plain.type !== undefined) this.type = plain.type;
+    if (plain.lineNum !== undefined) this.lineNum = plain.lineNum;
+    if (plain.linePos !== undefined) this.linePos = plain.linePos;
+    if (plain.offset !== undefined) this.offset = plain.offset;
+    if (plain.length !== undefined) this.length = plain.length;
+    if (plain.utf16LinePos !== undefined) {
+      this.utf16LinePos = plain.utf16LinePos;
+    }
+    if (plain.utf16Offset !== undefined) this.utf16Offset = plain.utf16Offset;
+    if (plain.utf16Length !== undefined) this.utf16Length = plain.utf16Length;
   }
 }
+
+export type ToComputePassTimestampWrite = undefined | {
+  querySet?: Deno.PointerValue;
+  queryIndex?: number;
+  location?: ComputePassTimestampLocation;
+};
 
 export class ComputePassTimestampWrite extends U.StructBase {
   dataview: DataView;
@@ -1182,10 +1431,28 @@ export class ComputePassTimestampWrite extends U.StructBase {
     this.dataview.setUint32(12, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToComputePassTimestampWrite) {
+    const struct = new ComputePassTimestampWrite();
+    if (plain === undefined) return struct;
+    if (plain.querySet !== undefined) struct.querySet = plain.querySet;
+    if (plain.queryIndex !== undefined) struct.queryIndex = plain.queryIndex;
+    if (plain.location !== undefined) struct.location = plain.location;
+    return struct;
+  }
+  set(plain: ToComputePassTimestampWrite) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.querySet !== undefined) this.querySet = plain.querySet;
+    if (plain.queryIndex !== undefined) this.queryIndex = plain.queryIndex;
+    if (plain.location !== undefined) this.location = plain.location;
   }
 }
+
+export type ToConstantEntry = undefined | {
+  nextInChain?: Deno.PointerValue;
+  key?: Deno.PointerValue;
+  value?: number;
+};
 
 export class ConstantEntry extends U.StructBase {
   dataview: DataView;
@@ -1236,10 +1503,28 @@ export class ConstantEntry extends U.StructBase {
     this.dataview.setFloat64(16, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToConstantEntry) {
+    const struct = new ConstantEntry();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.key !== undefined) struct.key = plain.key;
+    if (plain.value !== undefined) struct.value = plain.value;
+    return struct;
+  }
+  set(plain: ToConstantEntry) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.key !== undefined) this.key = plain.key;
+    if (plain.value !== undefined) this.value = plain.value;
   }
 }
+
+export type ToExtent3D = undefined | {
+  width?: number;
+  height?: number;
+  depthOrArrayLayers?: number;
+};
 
 export class Extent3D extends U.StructBase {
   dataview: DataView;
@@ -1282,10 +1567,30 @@ export class Extent3D extends U.StructBase {
     this.dataview.setUint32(8, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToExtent3D) {
+    const struct = new Extent3D();
+    if (plain === undefined) return struct;
+    if (plain.width !== undefined) struct.width = plain.width;
+    if (plain.height !== undefined) struct.height = plain.height;
+    if (plain.depthOrArrayLayers !== undefined) {
+      struct.depthOrArrayLayers = plain.depthOrArrayLayers;
+    }
+    return struct;
+  }
+  set(plain: ToExtent3D) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.width !== undefined) this.width = plain.width;
+    if (plain.height !== undefined) this.height = plain.height;
+    if (plain.depthOrArrayLayers !== undefined) {
+      this.depthOrArrayLayers = plain.depthOrArrayLayers;
+    }
   }
 }
+
+export type ToInstanceDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+};
 
 export class InstanceDescriptor extends U.StructBase {
   dataview: DataView;
@@ -1316,10 +1621,52 @@ export class InstanceDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToInstanceDescriptor) {
+    const struct = new InstanceDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    return struct;
+  }
+  set(plain: ToInstanceDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
   }
 }
+
+export type ToLimits = undefined | {
+  maxTextureDimension1D?: number;
+  maxTextureDimension2D?: number;
+  maxTextureDimension3D?: number;
+  maxTextureArrayLayers?: number;
+  maxBindGroups?: number;
+  maxBindingsPerBindGroup?: number;
+  maxDynamicUniformBuffersPerPipelineLayout?: number;
+  maxDynamicStorageBuffersPerPipelineLayout?: number;
+  maxSampledTexturesPerShaderStage?: number;
+  maxSamplersPerShaderStage?: number;
+  maxStorageBuffersPerShaderStage?: number;
+  maxStorageTexturesPerShaderStage?: number;
+  maxUniformBuffersPerShaderStage?: number;
+  maxUniformBufferBindingSize?: bigint | number;
+  maxStorageBufferBindingSize?: bigint | number;
+  minUniformBufferOffsetAlignment?: number;
+  minStorageBufferOffsetAlignment?: number;
+  maxVertexBuffers?: number;
+  maxBufferSize?: bigint | number;
+  maxVertexAttributes?: number;
+  maxVertexBufferArrayStride?: number;
+  maxInterStageShaderComponents?: number;
+  maxInterStageShaderVariables?: number;
+  maxColorAttachments?: number;
+  maxColorAttachmentBytesPerSample?: number;
+  maxComputeWorkgroupStorageSize?: number;
+  maxComputeInvocationsPerWorkgroup?: number;
+  maxComputeWorkgroupSizeX?: number;
+  maxComputeWorkgroupSizeY?: number;
+  maxComputeWorkgroupSizeZ?: number;
+  maxComputeWorkgroupsPerDimension?: number;
+};
 
 export class Limits extends U.StructBase {
   dataview: DataView;
@@ -1586,10 +1933,234 @@ export class Limits extends U.StructBase {
     this.dataview.setUint32(140, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToLimits) {
+    const struct = new Limits();
+    if (plain === undefined) return struct;
+    if (plain.maxTextureDimension1D !== undefined) {
+      struct.maxTextureDimension1D = plain.maxTextureDimension1D;
+    }
+    if (plain.maxTextureDimension2D !== undefined) {
+      struct.maxTextureDimension2D = plain.maxTextureDimension2D;
+    }
+    if (plain.maxTextureDimension3D !== undefined) {
+      struct.maxTextureDimension3D = plain.maxTextureDimension3D;
+    }
+    if (plain.maxTextureArrayLayers !== undefined) {
+      struct.maxTextureArrayLayers = plain.maxTextureArrayLayers;
+    }
+    if (plain.maxBindGroups !== undefined) {
+      struct.maxBindGroups = plain.maxBindGroups;
+    }
+    if (plain.maxBindingsPerBindGroup !== undefined) {
+      struct.maxBindingsPerBindGroup = plain.maxBindingsPerBindGroup;
+    }
+    if (plain.maxDynamicUniformBuffersPerPipelineLayout !== undefined) {
+      struct.maxDynamicUniformBuffersPerPipelineLayout =
+        plain.maxDynamicUniformBuffersPerPipelineLayout;
+    }
+    if (plain.maxDynamicStorageBuffersPerPipelineLayout !== undefined) {
+      struct.maxDynamicStorageBuffersPerPipelineLayout =
+        plain.maxDynamicStorageBuffersPerPipelineLayout;
+    }
+    if (plain.maxSampledTexturesPerShaderStage !== undefined) {
+      struct.maxSampledTexturesPerShaderStage =
+        plain.maxSampledTexturesPerShaderStage;
+    }
+    if (plain.maxSamplersPerShaderStage !== undefined) {
+      struct.maxSamplersPerShaderStage = plain.maxSamplersPerShaderStage;
+    }
+    if (plain.maxStorageBuffersPerShaderStage !== undefined) {
+      struct.maxStorageBuffersPerShaderStage =
+        plain.maxStorageBuffersPerShaderStage;
+    }
+    if (plain.maxStorageTexturesPerShaderStage !== undefined) {
+      struct.maxStorageTexturesPerShaderStage =
+        plain.maxStorageTexturesPerShaderStage;
+    }
+    if (plain.maxUniformBuffersPerShaderStage !== undefined) {
+      struct.maxUniformBuffersPerShaderStage =
+        plain.maxUniformBuffersPerShaderStage;
+    }
+    if (plain.maxUniformBufferBindingSize !== undefined) {
+      struct.maxUniformBufferBindingSize = plain.maxUniformBufferBindingSize;
+    }
+    if (plain.maxStorageBufferBindingSize !== undefined) {
+      struct.maxStorageBufferBindingSize = plain.maxStorageBufferBindingSize;
+    }
+    if (plain.minUniformBufferOffsetAlignment !== undefined) {
+      struct.minUniformBufferOffsetAlignment =
+        plain.minUniformBufferOffsetAlignment;
+    }
+    if (plain.minStorageBufferOffsetAlignment !== undefined) {
+      struct.minStorageBufferOffsetAlignment =
+        plain.minStorageBufferOffsetAlignment;
+    }
+    if (plain.maxVertexBuffers !== undefined) {
+      struct.maxVertexBuffers = plain.maxVertexBuffers;
+    }
+    if (plain.maxBufferSize !== undefined) {
+      struct.maxBufferSize = plain.maxBufferSize;
+    }
+    if (plain.maxVertexAttributes !== undefined) {
+      struct.maxVertexAttributes = plain.maxVertexAttributes;
+    }
+    if (plain.maxVertexBufferArrayStride !== undefined) {
+      struct.maxVertexBufferArrayStride = plain.maxVertexBufferArrayStride;
+    }
+    if (plain.maxInterStageShaderComponents !== undefined) {
+      struct.maxInterStageShaderComponents =
+        plain.maxInterStageShaderComponents;
+    }
+    if (plain.maxInterStageShaderVariables !== undefined) {
+      struct.maxInterStageShaderVariables = plain.maxInterStageShaderVariables;
+    }
+    if (plain.maxColorAttachments !== undefined) {
+      struct.maxColorAttachments = plain.maxColorAttachments;
+    }
+    if (plain.maxColorAttachmentBytesPerSample !== undefined) {
+      struct.maxColorAttachmentBytesPerSample =
+        plain.maxColorAttachmentBytesPerSample;
+    }
+    if (plain.maxComputeWorkgroupStorageSize !== undefined) {
+      struct.maxComputeWorkgroupStorageSize =
+        plain.maxComputeWorkgroupStorageSize;
+    }
+    if (plain.maxComputeInvocationsPerWorkgroup !== undefined) {
+      struct.maxComputeInvocationsPerWorkgroup =
+        plain.maxComputeInvocationsPerWorkgroup;
+    }
+    if (plain.maxComputeWorkgroupSizeX !== undefined) {
+      struct.maxComputeWorkgroupSizeX = plain.maxComputeWorkgroupSizeX;
+    }
+    if (plain.maxComputeWorkgroupSizeY !== undefined) {
+      struct.maxComputeWorkgroupSizeY = plain.maxComputeWorkgroupSizeY;
+    }
+    if (plain.maxComputeWorkgroupSizeZ !== undefined) {
+      struct.maxComputeWorkgroupSizeZ = plain.maxComputeWorkgroupSizeZ;
+    }
+    if (plain.maxComputeWorkgroupsPerDimension !== undefined) {
+      struct.maxComputeWorkgroupsPerDimension =
+        plain.maxComputeWorkgroupsPerDimension;
+    }
+    return struct;
+  }
+  set(plain: ToLimits) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.maxTextureDimension1D !== undefined) {
+      this.maxTextureDimension1D = plain.maxTextureDimension1D;
+    }
+    if (plain.maxTextureDimension2D !== undefined) {
+      this.maxTextureDimension2D = plain.maxTextureDimension2D;
+    }
+    if (plain.maxTextureDimension3D !== undefined) {
+      this.maxTextureDimension3D = plain.maxTextureDimension3D;
+    }
+    if (plain.maxTextureArrayLayers !== undefined) {
+      this.maxTextureArrayLayers = plain.maxTextureArrayLayers;
+    }
+    if (plain.maxBindGroups !== undefined) {
+      this.maxBindGroups = plain.maxBindGroups;
+    }
+    if (plain.maxBindingsPerBindGroup !== undefined) {
+      this.maxBindingsPerBindGroup = plain.maxBindingsPerBindGroup;
+    }
+    if (plain.maxDynamicUniformBuffersPerPipelineLayout !== undefined) {
+      this.maxDynamicUniformBuffersPerPipelineLayout =
+        plain.maxDynamicUniformBuffersPerPipelineLayout;
+    }
+    if (plain.maxDynamicStorageBuffersPerPipelineLayout !== undefined) {
+      this.maxDynamicStorageBuffersPerPipelineLayout =
+        plain.maxDynamicStorageBuffersPerPipelineLayout;
+    }
+    if (plain.maxSampledTexturesPerShaderStage !== undefined) {
+      this.maxSampledTexturesPerShaderStage =
+        plain.maxSampledTexturesPerShaderStage;
+    }
+    if (plain.maxSamplersPerShaderStage !== undefined) {
+      this.maxSamplersPerShaderStage = plain.maxSamplersPerShaderStage;
+    }
+    if (plain.maxStorageBuffersPerShaderStage !== undefined) {
+      this.maxStorageBuffersPerShaderStage =
+        plain.maxStorageBuffersPerShaderStage;
+    }
+    if (plain.maxStorageTexturesPerShaderStage !== undefined) {
+      this.maxStorageTexturesPerShaderStage =
+        plain.maxStorageTexturesPerShaderStage;
+    }
+    if (plain.maxUniformBuffersPerShaderStage !== undefined) {
+      this.maxUniformBuffersPerShaderStage =
+        plain.maxUniformBuffersPerShaderStage;
+    }
+    if (plain.maxUniformBufferBindingSize !== undefined) {
+      this.maxUniformBufferBindingSize = plain.maxUniformBufferBindingSize;
+    }
+    if (plain.maxStorageBufferBindingSize !== undefined) {
+      this.maxStorageBufferBindingSize = plain.maxStorageBufferBindingSize;
+    }
+    if (plain.minUniformBufferOffsetAlignment !== undefined) {
+      this.minUniformBufferOffsetAlignment =
+        plain.minUniformBufferOffsetAlignment;
+    }
+    if (plain.minStorageBufferOffsetAlignment !== undefined) {
+      this.minStorageBufferOffsetAlignment =
+        plain.minStorageBufferOffsetAlignment;
+    }
+    if (plain.maxVertexBuffers !== undefined) {
+      this.maxVertexBuffers = plain.maxVertexBuffers;
+    }
+    if (plain.maxBufferSize !== undefined) {
+      this.maxBufferSize = plain.maxBufferSize;
+    }
+    if (plain.maxVertexAttributes !== undefined) {
+      this.maxVertexAttributes = plain.maxVertexAttributes;
+    }
+    if (plain.maxVertexBufferArrayStride !== undefined) {
+      this.maxVertexBufferArrayStride = plain.maxVertexBufferArrayStride;
+    }
+    if (plain.maxInterStageShaderComponents !== undefined) {
+      this.maxInterStageShaderComponents = plain.maxInterStageShaderComponents;
+    }
+    if (plain.maxInterStageShaderVariables !== undefined) {
+      this.maxInterStageShaderVariables = plain.maxInterStageShaderVariables;
+    }
+    if (plain.maxColorAttachments !== undefined) {
+      this.maxColorAttachments = plain.maxColorAttachments;
+    }
+    if (plain.maxColorAttachmentBytesPerSample !== undefined) {
+      this.maxColorAttachmentBytesPerSample =
+        plain.maxColorAttachmentBytesPerSample;
+    }
+    if (plain.maxComputeWorkgroupStorageSize !== undefined) {
+      this.maxComputeWorkgroupStorageSize =
+        plain.maxComputeWorkgroupStorageSize;
+    }
+    if (plain.maxComputeInvocationsPerWorkgroup !== undefined) {
+      this.maxComputeInvocationsPerWorkgroup =
+        plain.maxComputeInvocationsPerWorkgroup;
+    }
+    if (plain.maxComputeWorkgroupSizeX !== undefined) {
+      this.maxComputeWorkgroupSizeX = plain.maxComputeWorkgroupSizeX;
+    }
+    if (plain.maxComputeWorkgroupSizeY !== undefined) {
+      this.maxComputeWorkgroupSizeY = plain.maxComputeWorkgroupSizeY;
+    }
+    if (plain.maxComputeWorkgroupSizeZ !== undefined) {
+      this.maxComputeWorkgroupSizeZ = plain.maxComputeWorkgroupSizeZ;
+    }
+    if (plain.maxComputeWorkgroupsPerDimension !== undefined) {
+      this.maxComputeWorkgroupsPerDimension =
+        plain.maxComputeWorkgroupsPerDimension;
+    }
   }
 }
+
+export type ToMultisampleState = undefined | {
+  nextInChain?: Deno.PointerValue;
+  count?: number;
+  mask?: number;
+  alphaToCoverageEnabled?: boolean | number | bigint;
+};
 
 export class MultisampleState extends U.StructBase {
   dataview: DataView;
@@ -1644,10 +2215,34 @@ export class MultisampleState extends U.StructBase {
     this.dataview.setUint8(16, value ? 1 : 0);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToMultisampleState) {
+    const struct = new MultisampleState();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.count !== undefined) struct.count = plain.count;
+    if (plain.mask !== undefined) struct.mask = plain.mask;
+    if (plain.alphaToCoverageEnabled !== undefined) {
+      struct.alphaToCoverageEnabled = plain.alphaToCoverageEnabled;
+    }
+    return struct;
+  }
+  set(plain: ToMultisampleState) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.count !== undefined) this.count = plain.count;
+    if (plain.mask !== undefined) this.mask = plain.mask;
+    if (plain.alphaToCoverageEnabled !== undefined) {
+      this.alphaToCoverageEnabled = plain.alphaToCoverageEnabled;
+    }
   }
 }
+
+export type ToOrigin3D = undefined | {
+  x?: number;
+  y?: number;
+  z?: number;
+};
 
 export class Origin3D extends U.StructBase {
   dataview: DataView;
@@ -1690,10 +2285,29 @@ export class Origin3D extends U.StructBase {
     this.dataview.setUint32(8, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToOrigin3D) {
+    const struct = new Origin3D();
+    if (plain === undefined) return struct;
+    if (plain.x !== undefined) struct.x = plain.x;
+    if (plain.y !== undefined) struct.y = plain.y;
+    if (plain.z !== undefined) struct.z = plain.z;
+    return struct;
+  }
+  set(plain: ToOrigin3D) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.x !== undefined) this.x = plain.x;
+    if (plain.y !== undefined) this.y = plain.y;
+    if (plain.z !== undefined) this.z = plain.z;
   }
 }
+
+export type ToPipelineLayoutDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  bindGroupLayoutCount?: bigint | number;
+  bindGroupLayouts?: Deno.PointerValue;
+};
 
 export class PipelineLayoutDescriptor extends U.StructBase {
   dataview: DataView;
@@ -1756,10 +2370,37 @@ export class PipelineLayoutDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToPipelineLayoutDescriptor) {
+    const struct = new PipelineLayoutDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.bindGroupLayoutCount !== undefined) {
+      struct.bindGroupLayoutCount = plain.bindGroupLayoutCount;
+    }
+    if (plain.bindGroupLayouts !== undefined) {
+      struct.bindGroupLayouts = plain.bindGroupLayouts;
+    }
+    return struct;
+  }
+  set(plain: ToPipelineLayoutDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.bindGroupLayoutCount !== undefined) {
+      this.bindGroupLayoutCount = plain.bindGroupLayoutCount;
+    }
+    if (plain.bindGroupLayouts !== undefined) {
+      this.bindGroupLayouts = plain.bindGroupLayouts;
+    }
   }
 }
+
+export type ToPrimitiveDepthClipControl = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  unclippedDepth?: boolean | number | bigint;
+};
 
 export class PrimitiveDepthClipControl extends U.StructBase {
   dataview: DataView;
@@ -1784,14 +2425,16 @@ export class PrimitiveDepthClipControl extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get unclippedDepth(): boolean {
@@ -1802,10 +2445,32 @@ export class PrimitiveDepthClipControl extends U.StructBase {
     this.dataview.setUint8(16, value ? 1 : 0);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToPrimitiveDepthClipControl) {
+    const struct = new PrimitiveDepthClipControl();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.unclippedDepth !== undefined) {
+      struct.unclippedDepth = plain.unclippedDepth;
+    }
+    return struct;
+  }
+  set(plain: ToPrimitiveDepthClipControl) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.unclippedDepth !== undefined) {
+      this.unclippedDepth = plain.unclippedDepth;
+    }
   }
 }
+
+export type ToPrimitiveState = undefined | {
+  nextInChain?: Deno.PointerValue;
+  topology?: PrimitiveTopology;
+  stripIndexFormat?: IndexFormat;
+  frontFace?: FrontFace;
+  cullMode?: CullMode;
+};
 
 export class PrimitiveState extends U.StructBase {
   dataview: DataView;
@@ -1868,10 +2533,39 @@ export class PrimitiveState extends U.StructBase {
     this.dataview.setUint32(20, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToPrimitiveState) {
+    const struct = new PrimitiveState();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.topology !== undefined) struct.topology = plain.topology;
+    if (plain.stripIndexFormat !== undefined) {
+      struct.stripIndexFormat = plain.stripIndexFormat;
+    }
+    if (plain.frontFace !== undefined) struct.frontFace = plain.frontFace;
+    if (plain.cullMode !== undefined) struct.cullMode = plain.cullMode;
+    return struct;
+  }
+  set(plain: ToPrimitiveState) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.topology !== undefined) this.topology = plain.topology;
+    if (plain.stripIndexFormat !== undefined) {
+      this.stripIndexFormat = plain.stripIndexFormat;
+    }
+    if (plain.frontFace !== undefined) this.frontFace = plain.frontFace;
+    if (plain.cullMode !== undefined) this.cullMode = plain.cullMode;
   }
 }
+
+export type ToQuerySetDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  type?: QueryType;
+  count?: number;
+  pipelineStatistics?: Deno.PointerValue;
+  pipelineStatisticsCount?: bigint | number;
+};
 
 export class QuerySetDescriptor extends U.StructBase {
   dataview: DataView;
@@ -1950,10 +2644,41 @@ export class QuerySetDescriptor extends U.StructBase {
     this.dataview.setBigUint64(32, BigInt(value), U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToQuerySetDescriptor) {
+    const struct = new QuerySetDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.type !== undefined) struct.type = plain.type;
+    if (plain.count !== undefined) struct.count = plain.count;
+    if (plain.pipelineStatistics !== undefined) {
+      struct.pipelineStatistics = plain.pipelineStatistics;
+    }
+    if (plain.pipelineStatisticsCount !== undefined) {
+      struct.pipelineStatisticsCount = plain.pipelineStatisticsCount;
+    }
+    return struct;
+  }
+  set(plain: ToQuerySetDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.type !== undefined) this.type = plain.type;
+    if (plain.count !== undefined) this.count = plain.count;
+    if (plain.pipelineStatistics !== undefined) {
+      this.pipelineStatistics = plain.pipelineStatistics;
+    }
+    if (plain.pipelineStatisticsCount !== undefined) {
+      this.pipelineStatisticsCount = plain.pipelineStatisticsCount;
+    }
   }
 }
+
+export type ToQueueDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+};
 
 export class QueueDescriptor extends U.StructBase {
   dataview: DataView;
@@ -1996,10 +2721,25 @@ export class QueueDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToQueueDescriptor) {
+    const struct = new QueueDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    return struct;
+  }
+  set(plain: ToQueueDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
   }
 }
+
+export type ToRenderBundleDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+};
 
 export class RenderBundleDescriptor extends U.StructBase {
   dataview: DataView;
@@ -2042,10 +2782,31 @@ export class RenderBundleDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToRenderBundleDescriptor) {
+    const struct = new RenderBundleDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    return struct;
+  }
+  set(plain: ToRenderBundleDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
   }
 }
+
+export type ToRenderBundleEncoderDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  colorFormatsCount?: bigint | number;
+  colorFormats?: Deno.PointerValue;
+  depthStencilFormat?: TextureFormat;
+  sampleCount?: number;
+  depthReadOnly?: boolean | number | bigint;
+  stencilReadOnly?: boolean | number | bigint;
+};
 
 export class RenderBundleEncoderDescriptor extends U.StructBase {
   dataview: DataView;
@@ -2140,10 +2901,64 @@ export class RenderBundleEncoderDescriptor extends U.StructBase {
     this.dataview.setUint8(41, value ? 1 : 0);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToRenderBundleEncoderDescriptor) {
+    const struct = new RenderBundleEncoderDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.colorFormatsCount !== undefined) {
+      struct.colorFormatsCount = plain.colorFormatsCount;
+    }
+    if (plain.colorFormats !== undefined) {
+      struct.colorFormats = plain.colorFormats;
+    }
+    if (plain.depthStencilFormat !== undefined) {
+      struct.depthStencilFormat = plain.depthStencilFormat;
+    }
+    if (plain.sampleCount !== undefined) struct.sampleCount = plain.sampleCount;
+    if (plain.depthReadOnly !== undefined) {
+      struct.depthReadOnly = plain.depthReadOnly;
+    }
+    if (plain.stencilReadOnly !== undefined) {
+      struct.stencilReadOnly = plain.stencilReadOnly;
+    }
+    return struct;
+  }
+  set(plain: ToRenderBundleEncoderDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.colorFormatsCount !== undefined) {
+      this.colorFormatsCount = plain.colorFormatsCount;
+    }
+    if (plain.colorFormats !== undefined) {
+      this.colorFormats = plain.colorFormats;
+    }
+    if (plain.depthStencilFormat !== undefined) {
+      this.depthStencilFormat = plain.depthStencilFormat;
+    }
+    if (plain.sampleCount !== undefined) this.sampleCount = plain.sampleCount;
+    if (plain.depthReadOnly !== undefined) {
+      this.depthReadOnly = plain.depthReadOnly;
+    }
+    if (plain.stencilReadOnly !== undefined) {
+      this.stencilReadOnly = plain.stencilReadOnly;
+    }
   }
 }
+
+export type ToRenderPassDepthStencilAttachment = undefined | {
+  view?: Deno.PointerValue;
+  depthLoadOp?: LoadOp;
+  depthStoreOp?: StoreOp;
+  depthClearValue?: number;
+  depthReadOnly?: boolean | number | bigint;
+  stencilLoadOp?: LoadOp;
+  stencilStoreOp?: StoreOp;
+  stencilClearValue?: number;
+  stencilReadOnly?: boolean | number | bigint;
+};
 
 export class RenderPassDepthStencilAttachment extends U.StructBase {
   dataview: DataView;
@@ -2238,10 +3053,67 @@ export class RenderPassDepthStencilAttachment extends U.StructBase {
     this.dataview.setUint8(36, value ? 1 : 0);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToRenderPassDepthStencilAttachment) {
+    const struct = new RenderPassDepthStencilAttachment();
+    if (plain === undefined) return struct;
+    if (plain.view !== undefined) struct.view = plain.view;
+    if (plain.depthLoadOp !== undefined) struct.depthLoadOp = plain.depthLoadOp;
+    if (plain.depthStoreOp !== undefined) {
+      struct.depthStoreOp = plain.depthStoreOp;
+    }
+    if (plain.depthClearValue !== undefined) {
+      struct.depthClearValue = plain.depthClearValue;
+    }
+    if (plain.depthReadOnly !== undefined) {
+      struct.depthReadOnly = plain.depthReadOnly;
+    }
+    if (plain.stencilLoadOp !== undefined) {
+      struct.stencilLoadOp = plain.stencilLoadOp;
+    }
+    if (plain.stencilStoreOp !== undefined) {
+      struct.stencilStoreOp = plain.stencilStoreOp;
+    }
+    if (plain.stencilClearValue !== undefined) {
+      struct.stencilClearValue = plain.stencilClearValue;
+    }
+    if (plain.stencilReadOnly !== undefined) {
+      struct.stencilReadOnly = plain.stencilReadOnly;
+    }
+    return struct;
+  }
+  set(plain: ToRenderPassDepthStencilAttachment) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.view !== undefined) this.view = plain.view;
+    if (plain.depthLoadOp !== undefined) this.depthLoadOp = plain.depthLoadOp;
+    if (plain.depthStoreOp !== undefined) {
+      this.depthStoreOp = plain.depthStoreOp;
+    }
+    if (plain.depthClearValue !== undefined) {
+      this.depthClearValue = plain.depthClearValue;
+    }
+    if (plain.depthReadOnly !== undefined) {
+      this.depthReadOnly = plain.depthReadOnly;
+    }
+    if (plain.stencilLoadOp !== undefined) {
+      this.stencilLoadOp = plain.stencilLoadOp;
+    }
+    if (plain.stencilStoreOp !== undefined) {
+      this.stencilStoreOp = plain.stencilStoreOp;
+    }
+    if (plain.stencilClearValue !== undefined) {
+      this.stencilClearValue = plain.stencilClearValue;
+    }
+    if (plain.stencilReadOnly !== undefined) {
+      this.stencilReadOnly = plain.stencilReadOnly;
+    }
   }
 }
+
+export type ToRenderPassDescriptorMaxDrawCount = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  maxDrawCount?: bigint | number;
+};
 
 export class RenderPassDescriptorMaxDrawCount extends U.StructBase {
   dataview: DataView;
@@ -2266,14 +3138,16 @@ export class RenderPassDescriptorMaxDrawCount extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get maxDrawCount(): bigint {
@@ -2284,10 +3158,30 @@ export class RenderPassDescriptorMaxDrawCount extends U.StructBase {
     this.dataview.setBigUint64(16, BigInt(value), U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToRenderPassDescriptorMaxDrawCount) {
+    const struct = new RenderPassDescriptorMaxDrawCount();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.maxDrawCount !== undefined) {
+      struct.maxDrawCount = plain.maxDrawCount;
+    }
+    return struct;
+  }
+  set(plain: ToRenderPassDescriptorMaxDrawCount) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.maxDrawCount !== undefined) {
+      this.maxDrawCount = plain.maxDrawCount;
+    }
   }
 }
+
+export type ToRenderPassTimestampWrite = undefined | {
+  querySet?: Deno.PointerValue;
+  queryIndex?: number;
+  location?: RenderPassTimestampLocation;
+};
 
 export class RenderPassTimestampWrite extends U.StructBase {
   dataview: DataView;
@@ -2334,10 +3228,30 @@ export class RenderPassTimestampWrite extends U.StructBase {
     this.dataview.setUint32(12, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToRenderPassTimestampWrite) {
+    const struct = new RenderPassTimestampWrite();
+    if (plain === undefined) return struct;
+    if (plain.querySet !== undefined) struct.querySet = plain.querySet;
+    if (plain.queryIndex !== undefined) struct.queryIndex = plain.queryIndex;
+    if (plain.location !== undefined) struct.location = plain.location;
+    return struct;
+  }
+  set(plain: ToRenderPassTimestampWrite) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.querySet !== undefined) this.querySet = plain.querySet;
+    if (plain.queryIndex !== undefined) this.queryIndex = plain.queryIndex;
+    if (plain.location !== undefined) this.location = plain.location;
   }
 }
+
+export type ToRequestAdapterOptions = undefined | {
+  nextInChain?: Deno.PointerValue;
+  compatibleSurface?: Deno.PointerValue;
+  powerPreference?: PowerPreference;
+  backendType?: BackendType;
+  forceFallbackAdapter?: boolean | number | bigint;
+};
 
 export class RequestAdapterOptions extends U.StructBase {
   dataview: DataView;
@@ -2404,10 +3318,43 @@ export class RequestAdapterOptions extends U.StructBase {
     this.dataview.setUint8(24, value ? 1 : 0);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToRequestAdapterOptions) {
+    const struct = new RequestAdapterOptions();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.compatibleSurface !== undefined) {
+      struct.compatibleSurface = plain.compatibleSurface;
+    }
+    if (plain.powerPreference !== undefined) {
+      struct.powerPreference = plain.powerPreference;
+    }
+    if (plain.backendType !== undefined) struct.backendType = plain.backendType;
+    if (plain.forceFallbackAdapter !== undefined) {
+      struct.forceFallbackAdapter = plain.forceFallbackAdapter;
+    }
+    return struct;
+  }
+  set(plain: ToRequestAdapterOptions) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.compatibleSurface !== undefined) {
+      this.compatibleSurface = plain.compatibleSurface;
+    }
+    if (plain.powerPreference !== undefined) {
+      this.powerPreference = plain.powerPreference;
+    }
+    if (plain.backendType !== undefined) this.backendType = plain.backendType;
+    if (plain.forceFallbackAdapter !== undefined) {
+      this.forceFallbackAdapter = plain.forceFallbackAdapter;
+    }
   }
 }
+
+export type ToSamplerBindingLayout = undefined | {
+  nextInChain?: Deno.PointerValue;
+  type?: SamplerBindingType;
+};
 
 export class SamplerBindingLayout extends U.StructBase {
   dataview: DataView;
@@ -2446,10 +3393,35 @@ export class SamplerBindingLayout extends U.StructBase {
     this.dataview.setUint32(8, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSamplerBindingLayout) {
+    const struct = new SamplerBindingLayout();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.type !== undefined) struct.type = plain.type;
+    return struct;
+  }
+  set(plain: ToSamplerBindingLayout) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.type !== undefined) this.type = plain.type;
   }
 }
+
+export type ToSamplerDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  addressModeU?: AddressMode;
+  addressModeV?: AddressMode;
+  addressModeW?: AddressMode;
+  magFilter?: FilterMode;
+  minFilter?: FilterMode;
+  mipmapFilter?: MipmapFilterMode;
+  lodMinClamp?: number;
+  lodMaxClamp?: number;
+  compare?: CompareFunction;
+  maxAnisotropy?: number;
+};
 
 export class SamplerDescriptor extends U.StructBase {
   dataview: DataView;
@@ -2572,10 +3544,66 @@ export class SamplerDescriptor extends U.StructBase {
     this.dataview.setUint16(52, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSamplerDescriptor) {
+    const struct = new SamplerDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.addressModeU !== undefined) {
+      struct.addressModeU = plain.addressModeU;
+    }
+    if (plain.addressModeV !== undefined) {
+      struct.addressModeV = plain.addressModeV;
+    }
+    if (plain.addressModeW !== undefined) {
+      struct.addressModeW = plain.addressModeW;
+    }
+    if (plain.magFilter !== undefined) struct.magFilter = plain.magFilter;
+    if (plain.minFilter !== undefined) struct.minFilter = plain.minFilter;
+    if (plain.mipmapFilter !== undefined) {
+      struct.mipmapFilter = plain.mipmapFilter;
+    }
+    if (plain.lodMinClamp !== undefined) struct.lodMinClamp = plain.lodMinClamp;
+    if (plain.lodMaxClamp !== undefined) struct.lodMaxClamp = plain.lodMaxClamp;
+    if (plain.compare !== undefined) struct.compare = plain.compare;
+    if (plain.maxAnisotropy !== undefined) {
+      struct.maxAnisotropy = plain.maxAnisotropy;
+    }
+    return struct;
+  }
+  set(plain: ToSamplerDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.addressModeU !== undefined) {
+      this.addressModeU = plain.addressModeU;
+    }
+    if (plain.addressModeV !== undefined) {
+      this.addressModeV = plain.addressModeV;
+    }
+    if (plain.addressModeW !== undefined) {
+      this.addressModeW = plain.addressModeW;
+    }
+    if (plain.magFilter !== undefined) this.magFilter = plain.magFilter;
+    if (plain.minFilter !== undefined) this.minFilter = plain.minFilter;
+    if (plain.mipmapFilter !== undefined) {
+      this.mipmapFilter = plain.mipmapFilter;
+    }
+    if (plain.lodMinClamp !== undefined) this.lodMinClamp = plain.lodMinClamp;
+    if (plain.lodMaxClamp !== undefined) this.lodMaxClamp = plain.lodMaxClamp;
+    if (plain.compare !== undefined) this.compare = plain.compare;
+    if (plain.maxAnisotropy !== undefined) {
+      this.maxAnisotropy = plain.maxAnisotropy;
+    }
   }
 }
+
+export type ToShaderModuleCompilationHint = undefined | {
+  nextInChain?: Deno.PointerValue;
+  entryPoint?: Deno.PointerValue;
+  layout?: Deno.PointerValue;
+};
 
 export class ShaderModuleCompilationHint extends U.StructBase {
   dataview: DataView;
@@ -2630,10 +3658,28 @@ export class ShaderModuleCompilationHint extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToShaderModuleCompilationHint) {
+    const struct = new ShaderModuleCompilationHint();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.entryPoint !== undefined) struct.entryPoint = plain.entryPoint;
+    if (plain.layout !== undefined) struct.layout = plain.layout;
+    return struct;
+  }
+  set(plain: ToShaderModuleCompilationHint) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.entryPoint !== undefined) this.entryPoint = plain.entryPoint;
+    if (plain.layout !== undefined) this.layout = plain.layout;
   }
 }
+
+export type ToShaderModuleSPIRVDescriptor = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  codeSize?: number;
+  code?: Deno.PointerValue;
+};
 
 export class ShaderModuleSPIRVDescriptor extends U.StructBase {
   dataview: DataView;
@@ -2658,14 +3704,16 @@ export class ShaderModuleSPIRVDescriptor extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get codeSize(): number {
@@ -2688,10 +3736,27 @@ export class ShaderModuleSPIRVDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToShaderModuleSPIRVDescriptor) {
+    const struct = new ShaderModuleSPIRVDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.codeSize !== undefined) struct.codeSize = plain.codeSize;
+    if (plain.code !== undefined) struct.code = plain.code;
+    return struct;
+  }
+  set(plain: ToShaderModuleSPIRVDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.codeSize !== undefined) this.codeSize = plain.codeSize;
+    if (plain.code !== undefined) this.code = plain.code;
   }
 }
+
+export type ToShaderModuleWGSLDescriptor = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  code?: Deno.PointerValue;
+};
 
 export class ShaderModuleWGSLDescriptor extends U.StructBase {
   dataview: DataView;
@@ -2716,14 +3781,16 @@ export class ShaderModuleWGSLDescriptor extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get code(): Deno.PointerValue {
@@ -2738,10 +3805,27 @@ export class ShaderModuleWGSLDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToShaderModuleWGSLDescriptor) {
+    const struct = new ShaderModuleWGSLDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.code !== undefined) struct.code = plain.code;
+    return struct;
+  }
+  set(plain: ToShaderModuleWGSLDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.code !== undefined) this.code = plain.code;
   }
 }
+
+export type ToStencilFaceState = undefined | {
+  compare?: CompareFunction;
+  failOp?: StencilOperation;
+  depthFailOp?: StencilOperation;
+  passOp?: StencilOperation;
+};
 
 export class StencilFaceState extends U.StructBase {
   dataview: DataView;
@@ -2792,10 +3876,31 @@ export class StencilFaceState extends U.StructBase {
     this.dataview.setUint32(12, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToStencilFaceState) {
+    const struct = new StencilFaceState();
+    if (plain === undefined) return struct;
+    if (plain.compare !== undefined) struct.compare = plain.compare;
+    if (plain.failOp !== undefined) struct.failOp = plain.failOp;
+    if (plain.depthFailOp !== undefined) struct.depthFailOp = plain.depthFailOp;
+    if (plain.passOp !== undefined) struct.passOp = plain.passOp;
+    return struct;
+  }
+  set(plain: ToStencilFaceState) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.compare !== undefined) this.compare = plain.compare;
+    if (plain.failOp !== undefined) this.failOp = plain.failOp;
+    if (plain.depthFailOp !== undefined) this.depthFailOp = plain.depthFailOp;
+    if (plain.passOp !== undefined) this.passOp = plain.passOp;
   }
 }
+
+export type ToStorageTextureBindingLayout = undefined | {
+  nextInChain?: Deno.PointerValue;
+  access?: StorageTextureAccess;
+  format?: TextureFormat;
+  viewDimension?: TextureViewDimension;
+};
 
 export class StorageTextureBindingLayout extends U.StructBase {
   dataview: DataView;
@@ -2850,10 +3955,33 @@ export class StorageTextureBindingLayout extends U.StructBase {
     this.dataview.setUint32(16, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToStorageTextureBindingLayout) {
+    const struct = new StorageTextureBindingLayout();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.access !== undefined) struct.access = plain.access;
+    if (plain.format !== undefined) struct.format = plain.format;
+    if (plain.viewDimension !== undefined) {
+      struct.viewDimension = plain.viewDimension;
+    }
+    return struct;
+  }
+  set(plain: ToStorageTextureBindingLayout) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.access !== undefined) this.access = plain.access;
+    if (plain.format !== undefined) this.format = plain.format;
+    if (plain.viewDimension !== undefined) {
+      this.viewDimension = plain.viewDimension;
+    }
   }
 }
+
+export type ToSurfaceDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+};
 
 export class SurfaceDescriptor extends U.StructBase {
   dataview: DataView;
@@ -2896,10 +4024,25 @@ export class SurfaceDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSurfaceDescriptor) {
+    const struct = new SurfaceDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    return struct;
+  }
+  set(plain: ToSurfaceDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
   }
 }
+
+export type ToSurfaceDescriptorFromAndroidNativeWindow = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  window?: Deno.PointerValue;
+};
 
 export class SurfaceDescriptorFromAndroidNativeWindow extends U.StructBase {
   dataview: DataView;
@@ -2924,14 +4067,16 @@ export class SurfaceDescriptorFromAndroidNativeWindow extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get window(): Deno.PointerValue {
@@ -2946,10 +4091,25 @@ export class SurfaceDescriptorFromAndroidNativeWindow extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSurfaceDescriptorFromAndroidNativeWindow) {
+    const struct = new SurfaceDescriptorFromAndroidNativeWindow();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.window !== undefined) struct.window = plain.window;
+    return struct;
+  }
+  set(plain: ToSurfaceDescriptorFromAndroidNativeWindow) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.window !== undefined) this.window = plain.window;
   }
 }
+
+export type ToSurfaceDescriptorFromCanvasHTMLSelector = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  selector?: Deno.PointerValue;
+};
 
 export class SurfaceDescriptorFromCanvasHTMLSelector extends U.StructBase {
   dataview: DataView;
@@ -2974,14 +4134,16 @@ export class SurfaceDescriptorFromCanvasHTMLSelector extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get selector(): Deno.PointerValue {
@@ -2996,10 +4158,25 @@ export class SurfaceDescriptorFromCanvasHTMLSelector extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSurfaceDescriptorFromCanvasHTMLSelector) {
+    const struct = new SurfaceDescriptorFromCanvasHTMLSelector();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.selector !== undefined) struct.selector = plain.selector;
+    return struct;
+  }
+  set(plain: ToSurfaceDescriptorFromCanvasHTMLSelector) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.selector !== undefined) this.selector = plain.selector;
   }
 }
+
+export type ToSurfaceDescriptorFromMetalLayer = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  layer?: Deno.PointerValue;
+};
 
 export class SurfaceDescriptorFromMetalLayer extends U.StructBase {
   dataview: DataView;
@@ -3024,14 +4201,16 @@ export class SurfaceDescriptorFromMetalLayer extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get layer(): Deno.PointerValue {
@@ -3046,10 +4225,26 @@ export class SurfaceDescriptorFromMetalLayer extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSurfaceDescriptorFromMetalLayer) {
+    const struct = new SurfaceDescriptorFromMetalLayer();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.layer !== undefined) struct.layer = plain.layer;
+    return struct;
+  }
+  set(plain: ToSurfaceDescriptorFromMetalLayer) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.layer !== undefined) this.layer = plain.layer;
   }
 }
+
+export type ToSurfaceDescriptorFromWaylandSurface = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  display?: Deno.PointerValue;
+  surface?: Deno.PointerValue;
+};
 
 export class SurfaceDescriptorFromWaylandSurface extends U.StructBase {
   dataview: DataView;
@@ -3074,14 +4269,16 @@ export class SurfaceDescriptorFromWaylandSurface extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get display(): Deno.PointerValue {
@@ -3108,10 +4305,28 @@ export class SurfaceDescriptorFromWaylandSurface extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSurfaceDescriptorFromWaylandSurface) {
+    const struct = new SurfaceDescriptorFromWaylandSurface();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.display !== undefined) struct.display = plain.display;
+    if (plain.surface !== undefined) struct.surface = plain.surface;
+    return struct;
+  }
+  set(plain: ToSurfaceDescriptorFromWaylandSurface) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.display !== undefined) this.display = plain.display;
+    if (plain.surface !== undefined) this.surface = plain.surface;
   }
 }
+
+export type ToSurfaceDescriptorFromWindowsHWND = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  hinstance?: Deno.PointerValue;
+  hwnd?: Deno.PointerValue;
+};
 
 export class SurfaceDescriptorFromWindowsHWND extends U.StructBase {
   dataview: DataView;
@@ -3136,14 +4351,16 @@ export class SurfaceDescriptorFromWindowsHWND extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get hinstance(): Deno.PointerValue {
@@ -3170,10 +4387,28 @@ export class SurfaceDescriptorFromWindowsHWND extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSurfaceDescriptorFromWindowsHWND) {
+    const struct = new SurfaceDescriptorFromWindowsHWND();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.hinstance !== undefined) struct.hinstance = plain.hinstance;
+    if (plain.hwnd !== undefined) struct.hwnd = plain.hwnd;
+    return struct;
+  }
+  set(plain: ToSurfaceDescriptorFromWindowsHWND) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.hinstance !== undefined) this.hinstance = plain.hinstance;
+    if (plain.hwnd !== undefined) this.hwnd = plain.hwnd;
   }
 }
+
+export type ToSurfaceDescriptorFromXcbWindow = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  connection?: Deno.PointerValue;
+  window?: number;
+};
 
 export class SurfaceDescriptorFromXcbWindow extends U.StructBase {
   dataview: DataView;
@@ -3198,14 +4433,16 @@ export class SurfaceDescriptorFromXcbWindow extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get connection(): Deno.PointerValue {
@@ -3228,10 +4465,28 @@ export class SurfaceDescriptorFromXcbWindow extends U.StructBase {
     this.dataview.setUint32(24, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSurfaceDescriptorFromXcbWindow) {
+    const struct = new SurfaceDescriptorFromXcbWindow();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.connection !== undefined) struct.connection = plain.connection;
+    if (plain.window !== undefined) struct.window = plain.window;
+    return struct;
+  }
+  set(plain: ToSurfaceDescriptorFromXcbWindow) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.connection !== undefined) this.connection = plain.connection;
+    if (plain.window !== undefined) this.window = plain.window;
   }
 }
+
+export type ToSurfaceDescriptorFromXlibWindow = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  display?: Deno.PointerValue;
+  window?: number;
+};
 
 export class SurfaceDescriptorFromXlibWindow extends U.StructBase {
   dataview: DataView;
@@ -3256,14 +4511,16 @@ export class SurfaceDescriptorFromXlibWindow extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get display(): Deno.PointerValue {
@@ -3286,10 +4543,32 @@ export class SurfaceDescriptorFromXlibWindow extends U.StructBase {
     this.dataview.setUint32(24, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSurfaceDescriptorFromXlibWindow) {
+    const struct = new SurfaceDescriptorFromXlibWindow();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.display !== undefined) struct.display = plain.display;
+    if (plain.window !== undefined) struct.window = plain.window;
+    return struct;
+  }
+  set(plain: ToSurfaceDescriptorFromXlibWindow) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.display !== undefined) this.display = plain.display;
+    if (plain.window !== undefined) this.window = plain.window;
   }
 }
+
+export type ToSwapChainDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  usage?: number;
+  format?: TextureFormat;
+  width?: number;
+  height?: number;
+  presentMode?: PresentMode;
+};
 
 export class SwapChainDescriptor extends U.StructBase {
   dataview: DataView;
@@ -3372,10 +4651,37 @@ export class SwapChainDescriptor extends U.StructBase {
     this.dataview.setUint32(32, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSwapChainDescriptor) {
+    const struct = new SwapChainDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.usage !== undefined) struct.usage = plain.usage;
+    if (plain.format !== undefined) struct.format = plain.format;
+    if (plain.width !== undefined) struct.width = plain.width;
+    if (plain.height !== undefined) struct.height = plain.height;
+    if (plain.presentMode !== undefined) struct.presentMode = plain.presentMode;
+    return struct;
+  }
+  set(plain: ToSwapChainDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.usage !== undefined) this.usage = plain.usage;
+    if (plain.format !== undefined) this.format = plain.format;
+    if (plain.width !== undefined) this.width = plain.width;
+    if (plain.height !== undefined) this.height = plain.height;
+    if (plain.presentMode !== undefined) this.presentMode = plain.presentMode;
   }
 }
+
+export type ToTextureBindingLayout = undefined | {
+  nextInChain?: Deno.PointerValue;
+  sampleType?: TextureSampleType;
+  viewDimension?: TextureViewDimension;
+  multisampled?: boolean | number | bigint;
+};
 
 export class TextureBindingLayout extends U.StructBase {
   dataview: DataView;
@@ -3430,10 +4736,39 @@ export class TextureBindingLayout extends U.StructBase {
     this.dataview.setUint8(16, value ? 1 : 0);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToTextureBindingLayout) {
+    const struct = new TextureBindingLayout();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.sampleType !== undefined) struct.sampleType = plain.sampleType;
+    if (plain.viewDimension !== undefined) {
+      struct.viewDimension = plain.viewDimension;
+    }
+    if (plain.multisampled !== undefined) {
+      struct.multisampled = plain.multisampled;
+    }
+    return struct;
+  }
+  set(plain: ToTextureBindingLayout) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.sampleType !== undefined) this.sampleType = plain.sampleType;
+    if (plain.viewDimension !== undefined) {
+      this.viewDimension = plain.viewDimension;
+    }
+    if (plain.multisampled !== undefined) {
+      this.multisampled = plain.multisampled;
+    }
   }
 }
+
+export type ToTextureDataLayout = undefined | {
+  nextInChain?: Deno.PointerValue;
+  offset?: bigint | number;
+  bytesPerRow?: number;
+  rowsPerImage?: number;
+};
 
 export class TextureDataLayout extends U.StructBase {
   dataview: DataView;
@@ -3488,10 +4823,40 @@ export class TextureDataLayout extends U.StructBase {
     this.dataview.setUint32(20, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToTextureDataLayout) {
+    const struct = new TextureDataLayout();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.offset !== undefined) struct.offset = plain.offset;
+    if (plain.bytesPerRow !== undefined) struct.bytesPerRow = plain.bytesPerRow;
+    if (plain.rowsPerImage !== undefined) {
+      struct.rowsPerImage = plain.rowsPerImage;
+    }
+    return struct;
+  }
+  set(plain: ToTextureDataLayout) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.offset !== undefined) this.offset = plain.offset;
+    if (plain.bytesPerRow !== undefined) this.bytesPerRow = plain.bytesPerRow;
+    if (plain.rowsPerImage !== undefined) {
+      this.rowsPerImage = plain.rowsPerImage;
+    }
   }
 }
+
+export type ToTextureViewDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  format?: TextureFormat;
+  dimension?: TextureViewDimension;
+  baseMipLevel?: number;
+  mipLevelCount?: number;
+  baseArrayLayer?: number;
+  arrayLayerCount?: number;
+  aspect?: TextureAspect;
+};
 
 export class TextureViewDescriptor extends U.StructBase {
   dataview: DataView;
@@ -3590,10 +4955,56 @@ export class TextureViewDescriptor extends U.StructBase {
     this.dataview.setUint32(40, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToTextureViewDescriptor) {
+    const struct = new TextureViewDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.format !== undefined) struct.format = plain.format;
+    if (plain.dimension !== undefined) struct.dimension = plain.dimension;
+    if (plain.baseMipLevel !== undefined) {
+      struct.baseMipLevel = plain.baseMipLevel;
+    }
+    if (plain.mipLevelCount !== undefined) {
+      struct.mipLevelCount = plain.mipLevelCount;
+    }
+    if (plain.baseArrayLayer !== undefined) {
+      struct.baseArrayLayer = plain.baseArrayLayer;
+    }
+    if (plain.arrayLayerCount !== undefined) {
+      struct.arrayLayerCount = plain.arrayLayerCount;
+    }
+    if (plain.aspect !== undefined) struct.aspect = plain.aspect;
+    return struct;
+  }
+  set(plain: ToTextureViewDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.format !== undefined) this.format = plain.format;
+    if (plain.dimension !== undefined) this.dimension = plain.dimension;
+    if (plain.baseMipLevel !== undefined) {
+      this.baseMipLevel = plain.baseMipLevel;
+    }
+    if (plain.mipLevelCount !== undefined) {
+      this.mipLevelCount = plain.mipLevelCount;
+    }
+    if (plain.baseArrayLayer !== undefined) {
+      this.baseArrayLayer = plain.baseArrayLayer;
+    }
+    if (plain.arrayLayerCount !== undefined) {
+      this.arrayLayerCount = plain.arrayLayerCount;
+    }
+    if (plain.aspect !== undefined) this.aspect = plain.aspect;
   }
 }
+
+export type ToVertexAttribute = undefined | {
+  format?: VertexFormat;
+  offset?: bigint | number;
+  shaderLocation?: number;
+};
 
 export class VertexAttribute extends U.StructBase {
   dataview: DataView;
@@ -3636,10 +5047,34 @@ export class VertexAttribute extends U.StructBase {
     this.dataview.setUint32(16, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToVertexAttribute) {
+    const struct = new VertexAttribute();
+    if (plain === undefined) return struct;
+    if (plain.format !== undefined) struct.format = plain.format;
+    if (plain.offset !== undefined) struct.offset = plain.offset;
+    if (plain.shaderLocation !== undefined) {
+      struct.shaderLocation = plain.shaderLocation;
+    }
+    return struct;
+  }
+  set(plain: ToVertexAttribute) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.format !== undefined) this.format = plain.format;
+    if (plain.offset !== undefined) this.offset = plain.offset;
+    if (plain.shaderLocation !== undefined) {
+      this.shaderLocation = plain.shaderLocation;
+    }
   }
 }
+
+export type ToBindGroupDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  layout?: Deno.PointerValue;
+  entryCount?: bigint | number;
+  entries?: Deno.PointerValue;
+};
 
 export class BindGroupDescriptor extends U.StructBase {
   dataview: DataView;
@@ -3714,10 +5149,36 @@ export class BindGroupDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToBindGroupDescriptor) {
+    const struct = new BindGroupDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.layout !== undefined) struct.layout = plain.layout;
+    if (plain.entryCount !== undefined) struct.entryCount = plain.entryCount;
+    if (plain.entries !== undefined) struct.entries = plain.entries;
+    return struct;
+  }
+  set(plain: ToBindGroupDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.layout !== undefined) this.layout = plain.layout;
+    if (plain.entryCount !== undefined) this.entryCount = plain.entryCount;
+    if (plain.entries !== undefined) this.entries = plain.entries;
   }
 }
+
+export type ToBindGroupLayoutEntry = undefined | {
+  nextInChain?: Deno.PointerValue;
+  binding?: number;
+  visibility?: number;
+  buffer?: BufferBindingLayout | ToBufferBindingLayout;
+  sampler?: SamplerBindingLayout | ToSamplerBindingLayout;
+  texture?: TextureBindingLayout | ToTextureBindingLayout;
+  storageTexture?: StorageTextureBindingLayout | ToStorageTextureBindingLayout;
+};
 
 export class BindGroupLayoutEntry extends U.StructBase {
   dataview: DataView;
@@ -3770,14 +5231,16 @@ export class BindGroupLayoutEntry extends U.StructBase {
     );
   }
 
-  set buffer(value: BufferBindingLayout) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 24).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set buffer(value: BufferBindingLayout | ToBufferBindingLayout) {
+    if (value instanceof BufferBindingLayout) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 24).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.buffer.set(value);
+    }
   }
 
   get sampler(): SamplerBindingLayout {
@@ -3786,14 +5249,16 @@ export class BindGroupLayoutEntry extends U.StructBase {
     );
   }
 
-  set sampler(value: SamplerBindingLayout) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set sampler(value: SamplerBindingLayout | ToSamplerBindingLayout) {
+    if (value instanceof SamplerBindingLayout) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.sampler.set(value);
+    }
   }
 
   get texture(): TextureBindingLayout {
@@ -3802,14 +5267,16 @@ export class BindGroupLayoutEntry extends U.StructBase {
     );
   }
 
-  set texture(value: TextureBindingLayout) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 24).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set texture(value: TextureBindingLayout | ToTextureBindingLayout) {
+    if (value instanceof TextureBindingLayout) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 24).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.texture.set(value);
+    }
   }
 
   get storageTexture(): StorageTextureBindingLayout {
@@ -3818,20 +5285,53 @@ export class BindGroupLayoutEntry extends U.StructBase {
     );
   }
 
-  set storageTexture(value: StorageTextureBindingLayout) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 24).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set storageTexture(
+    value: StorageTextureBindingLayout | ToStorageTextureBindingLayout,
+  ) {
+    if (value instanceof StorageTextureBindingLayout) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 24).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.storageTexture.set(value);
+    }
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToBindGroupLayoutEntry) {
+    const struct = new BindGroupLayoutEntry();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.binding !== undefined) struct.binding = plain.binding;
+    if (plain.visibility !== undefined) struct.visibility = plain.visibility;
+    if (plain.buffer !== undefined) struct.buffer = plain.buffer;
+    if (plain.sampler !== undefined) struct.sampler = plain.sampler;
+    if (plain.texture !== undefined) struct.texture = plain.texture;
+    if (plain.storageTexture !== undefined) {
+      struct.storageTexture = plain.storageTexture;
+    }
+    return struct;
+  }
+  set(plain: ToBindGroupLayoutEntry) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.binding !== undefined) this.binding = plain.binding;
+    if (plain.visibility !== undefined) this.visibility = plain.visibility;
+    if (plain.buffer !== undefined) this.buffer = plain.buffer;
+    if (plain.sampler !== undefined) this.sampler = plain.sampler;
+    if (plain.texture !== undefined) this.texture = plain.texture;
+    if (plain.storageTexture !== undefined) {
+      this.storageTexture = plain.storageTexture;
+    }
   }
 }
+
+export type ToBlendState = undefined | {
+  color?: BlendComponent | ToBlendComponent;
+  alpha?: BlendComponent | ToBlendComponent;
+};
 
 export class BlendState extends U.StructBase {
   dataview: DataView;
@@ -3856,14 +5356,16 @@ export class BlendState extends U.StructBase {
     );
   }
 
-  set color(value: BlendComponent) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 12).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set color(value: BlendComponent | ToBlendComponent) {
+    if (value instanceof BlendComponent) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 12).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.color.set(value);
+    }
   }
 
   get alpha(): BlendComponent {
@@ -3872,20 +5374,38 @@ export class BlendState extends U.StructBase {
     );
   }
 
-  set alpha(value: BlendComponent) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 12).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set alpha(value: BlendComponent | ToBlendComponent) {
+    if (value instanceof BlendComponent) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 12).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.alpha.set(value);
+    }
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToBlendState) {
+    const struct = new BlendState();
+    if (plain === undefined) return struct;
+    if (plain.color !== undefined) struct.color = plain.color;
+    if (plain.alpha !== undefined) struct.alpha = plain.alpha;
+    return struct;
+  }
+  set(plain: ToBlendState) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.color !== undefined) this.color = plain.color;
+    if (plain.alpha !== undefined) this.alpha = plain.alpha;
   }
 }
+
+export type ToCompilationInfo = undefined | {
+  nextInChain?: Deno.PointerValue;
+  messageCount?: bigint | number;
+  messages?: Deno.PointerValue;
+};
 
 export class CompilationInfo extends U.StructBase {
   dataview: DataView;
@@ -3936,10 +5456,33 @@ export class CompilationInfo extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToCompilationInfo) {
+    const struct = new CompilationInfo();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.messageCount !== undefined) {
+      struct.messageCount = plain.messageCount;
+    }
+    if (plain.messages !== undefined) struct.messages = plain.messages;
+    return struct;
+  }
+  set(plain: ToCompilationInfo) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.messageCount !== undefined) {
+      this.messageCount = plain.messageCount;
+    }
+    if (plain.messages !== undefined) this.messages = plain.messages;
   }
 }
+
+export type ToComputePassDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  timestampWriteCount?: bigint | number;
+  timestampWrites?: Deno.PointerValue;
+};
 
 export class ComputePassDescriptor extends U.StructBase {
   dataview: DataView;
@@ -4002,10 +5545,46 @@ export class ComputePassDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToComputePassDescriptor) {
+    const struct = new ComputePassDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.timestampWriteCount !== undefined) {
+      struct.timestampWriteCount = plain.timestampWriteCount;
+    }
+    if (plain.timestampWrites !== undefined) {
+      struct.timestampWrites = plain.timestampWrites;
+    }
+    return struct;
+  }
+  set(plain: ToComputePassDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.timestampWriteCount !== undefined) {
+      this.timestampWriteCount = plain.timestampWriteCount;
+    }
+    if (plain.timestampWrites !== undefined) {
+      this.timestampWrites = plain.timestampWrites;
+    }
   }
 }
+
+export type ToDepthStencilState = undefined | {
+  nextInChain?: Deno.PointerValue;
+  format?: TextureFormat;
+  depthWriteEnabled?: boolean | number | bigint;
+  depthCompare?: CompareFunction;
+  stencilFront?: StencilFaceState | ToStencilFaceState;
+  stencilBack?: StencilFaceState | ToStencilFaceState;
+  stencilReadMask?: number;
+  stencilWriteMask?: number;
+  depthBias?: number;
+  depthBiasSlopeScale?: number;
+  depthBiasClamp?: number;
+};
 
 export class DepthStencilState extends U.StructBase {
   dataview: DataView;
@@ -4066,14 +5645,16 @@ export class DepthStencilState extends U.StructBase {
     );
   }
 
-  set stencilFront(value: StencilFaceState) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set stencilFront(value: StencilFaceState | ToStencilFaceState) {
+    if (value instanceof StencilFaceState) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.stencilFront.set(value);
+    }
   }
 
   get stencilBack(): StencilFaceState {
@@ -4082,14 +5663,16 @@ export class DepthStencilState extends U.StructBase {
     );
   }
 
-  set stencilBack(value: StencilFaceState) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set stencilBack(value: StencilFaceState | ToStencilFaceState) {
+    if (value instanceof StencilFaceState) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.stencilBack.set(value);
+    }
   }
 
   get stencilReadMask(): number {
@@ -4132,10 +5715,72 @@ export class DepthStencilState extends U.StructBase {
     this.dataview.setFloat32(68, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToDepthStencilState) {
+    const struct = new DepthStencilState();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.format !== undefined) struct.format = plain.format;
+    if (plain.depthWriteEnabled !== undefined) {
+      struct.depthWriteEnabled = plain.depthWriteEnabled;
+    }
+    if (plain.depthCompare !== undefined) {
+      struct.depthCompare = plain.depthCompare;
+    }
+    if (plain.stencilFront !== undefined) {
+      struct.stencilFront = plain.stencilFront;
+    }
+    if (plain.stencilBack !== undefined) struct.stencilBack = plain.stencilBack;
+    if (plain.stencilReadMask !== undefined) {
+      struct.stencilReadMask = plain.stencilReadMask;
+    }
+    if (plain.stencilWriteMask !== undefined) {
+      struct.stencilWriteMask = plain.stencilWriteMask;
+    }
+    if (plain.depthBias !== undefined) struct.depthBias = plain.depthBias;
+    if (plain.depthBiasSlopeScale !== undefined) {
+      struct.depthBiasSlopeScale = plain.depthBiasSlopeScale;
+    }
+    if (plain.depthBiasClamp !== undefined) {
+      struct.depthBiasClamp = plain.depthBiasClamp;
+    }
+    return struct;
+  }
+  set(plain: ToDepthStencilState) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.format !== undefined) this.format = plain.format;
+    if (plain.depthWriteEnabled !== undefined) {
+      this.depthWriteEnabled = plain.depthWriteEnabled;
+    }
+    if (plain.depthCompare !== undefined) {
+      this.depthCompare = plain.depthCompare;
+    }
+    if (plain.stencilFront !== undefined) {
+      this.stencilFront = plain.stencilFront;
+    }
+    if (plain.stencilBack !== undefined) this.stencilBack = plain.stencilBack;
+    if (plain.stencilReadMask !== undefined) {
+      this.stencilReadMask = plain.stencilReadMask;
+    }
+    if (plain.stencilWriteMask !== undefined) {
+      this.stencilWriteMask = plain.stencilWriteMask;
+    }
+    if (plain.depthBias !== undefined) this.depthBias = plain.depthBias;
+    if (plain.depthBiasSlopeScale !== undefined) {
+      this.depthBiasSlopeScale = plain.depthBiasSlopeScale;
+    }
+    if (plain.depthBiasClamp !== undefined) {
+      this.depthBiasClamp = plain.depthBiasClamp;
+    }
   }
 }
+
+export type ToImageCopyBuffer = undefined | {
+  nextInChain?: Deno.PointerValue;
+  layout?: TextureDataLayout | ToTextureDataLayout;
+  buffer?: Deno.PointerValue;
+};
 
 export class ImageCopyBuffer extends U.StructBase {
   dataview: DataView;
@@ -4172,14 +5817,16 @@ export class ImageCopyBuffer extends U.StructBase {
     );
   }
 
-  set layout(value: TextureDataLayout) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 24).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set layout(value: TextureDataLayout | ToTextureDataLayout) {
+    if (value instanceof TextureDataLayout) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 24).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.layout.set(value);
+    }
   }
 
   get buffer(): Deno.PointerValue {
@@ -4194,10 +5841,30 @@ export class ImageCopyBuffer extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToImageCopyBuffer) {
+    const struct = new ImageCopyBuffer();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.layout !== undefined) struct.layout = plain.layout;
+    if (plain.buffer !== undefined) struct.buffer = plain.buffer;
+    return struct;
+  }
+  set(plain: ToImageCopyBuffer) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.layout !== undefined) this.layout = plain.layout;
+    if (plain.buffer !== undefined) this.buffer = plain.buffer;
   }
 }
+
+export type ToImageCopyTexture = undefined | {
+  nextInChain?: Deno.PointerValue;
+  texture?: Deno.PointerValue;
+  mipLevel?: number;
+  origin?: Origin3D | ToOrigin3D;
+  aspect?: TextureAspect;
+};
 
 export class ImageCopyTexture extends U.StructBase {
   dataview: DataView;
@@ -4254,14 +5921,16 @@ export class ImageCopyTexture extends U.StructBase {
     );
   }
 
-  set origin(value: Origin3D) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 12).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set origin(value: Origin3D | ToOrigin3D) {
+    if (value instanceof Origin3D) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 12).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.origin.set(value);
+    }
   }
 
   get aspect(): TextureAspect {
@@ -4272,10 +5941,34 @@ export class ImageCopyTexture extends U.StructBase {
     this.dataview.setUint32(32, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToImageCopyTexture) {
+    const struct = new ImageCopyTexture();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.texture !== undefined) struct.texture = plain.texture;
+    if (plain.mipLevel !== undefined) struct.mipLevel = plain.mipLevel;
+    if (plain.origin !== undefined) struct.origin = plain.origin;
+    if (plain.aspect !== undefined) struct.aspect = plain.aspect;
+    return struct;
+  }
+  set(plain: ToImageCopyTexture) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.texture !== undefined) this.texture = plain.texture;
+    if (plain.mipLevel !== undefined) this.mipLevel = plain.mipLevel;
+    if (plain.origin !== undefined) this.origin = plain.origin;
+    if (plain.aspect !== undefined) this.aspect = plain.aspect;
   }
 }
+
+export type ToProgrammableStageDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  module?: Deno.PointerValue;
+  entryPoint?: Deno.PointerValue;
+  constantCount?: bigint | number;
+  constants?: Deno.PointerValue;
+};
 
 export class ProgrammableStageDescriptor extends U.StructBase {
   dataview: DataView;
@@ -4350,10 +6043,38 @@ export class ProgrammableStageDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToProgrammableStageDescriptor) {
+    const struct = new ProgrammableStageDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.module !== undefined) struct.module = plain.module;
+    if (plain.entryPoint !== undefined) struct.entryPoint = plain.entryPoint;
+    if (plain.constantCount !== undefined) {
+      struct.constantCount = plain.constantCount;
+    }
+    if (plain.constants !== undefined) struct.constants = plain.constants;
+    return struct;
+  }
+  set(plain: ToProgrammableStageDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.module !== undefined) this.module = plain.module;
+    if (plain.entryPoint !== undefined) this.entryPoint = plain.entryPoint;
+    if (plain.constantCount !== undefined) {
+      this.constantCount = plain.constantCount;
+    }
+    if (plain.constants !== undefined) this.constants = plain.constants;
   }
 }
+
+export type ToRenderPassColorAttachment = undefined | {
+  view?: Deno.PointerValue;
+  resolveTarget?: Deno.PointerValue;
+  loadOp?: LoadOp;
+  storeOp?: StoreOp;
+  clearValue?: Color | ToColor;
+};
 
 export class RenderPassColorAttachment extends U.StructBase {
   dataview: DataView;
@@ -4418,20 +6139,47 @@ export class RenderPassColorAttachment extends U.StructBase {
     );
   }
 
-  set clearValue(value: Color) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set clearValue(value: Color | ToColor) {
+    if (value instanceof Color) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.clearValue.set(value);
+    }
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToRenderPassColorAttachment) {
+    const struct = new RenderPassColorAttachment();
+    if (plain === undefined) return struct;
+    if (plain.view !== undefined) struct.view = plain.view;
+    if (plain.resolveTarget !== undefined) {
+      struct.resolveTarget = plain.resolveTarget;
+    }
+    if (plain.loadOp !== undefined) struct.loadOp = plain.loadOp;
+    if (plain.storeOp !== undefined) struct.storeOp = plain.storeOp;
+    if (plain.clearValue !== undefined) struct.clearValue = plain.clearValue;
+    return struct;
+  }
+  set(plain: ToRenderPassColorAttachment) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.view !== undefined) this.view = plain.view;
+    if (plain.resolveTarget !== undefined) {
+      this.resolveTarget = plain.resolveTarget;
+    }
+    if (plain.loadOp !== undefined) this.loadOp = plain.loadOp;
+    if (plain.storeOp !== undefined) this.storeOp = plain.storeOp;
+    if (plain.clearValue !== undefined) this.clearValue = plain.clearValue;
   }
 }
+
+export type ToRequiredLimits = undefined | {
+  nextInChain?: Deno.PointerValue;
+  limits?: Limits | ToLimits;
+};
 
 export class RequiredLimits extends U.StructBase {
   dataview: DataView;
@@ -4468,20 +6216,39 @@ export class RequiredLimits extends U.StructBase {
     );
   }
 
-  set limits(value: Limits) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 144).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set limits(value: Limits | ToLimits) {
+    if (value instanceof Limits) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 144).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.limits.set(value);
+    }
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToRequiredLimits) {
+    const struct = new RequiredLimits();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.limits !== undefined) struct.limits = plain.limits;
+    return struct;
+  }
+  set(plain: ToRequiredLimits) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.limits !== undefined) this.limits = plain.limits;
   }
 }
+
+export type ToShaderModuleDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  hintCount?: bigint | number;
+  hints?: Deno.PointerValue;
+};
 
 export class ShaderModuleDescriptor extends U.StructBase {
   dataview: DataView;
@@ -4544,10 +6311,29 @@ export class ShaderModuleDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToShaderModuleDescriptor) {
+    const struct = new ShaderModuleDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.hintCount !== undefined) struct.hintCount = plain.hintCount;
+    if (plain.hints !== undefined) struct.hints = plain.hints;
+    return struct;
+  }
+  set(plain: ToShaderModuleDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.hintCount !== undefined) this.hintCount = plain.hintCount;
+    if (plain.hints !== undefined) this.hints = plain.hints;
   }
 }
+
+export type ToSupportedLimits = undefined | {
+  nextInChain?: Deno.PointerValue;
+  limits?: Limits | ToLimits;
+};
 
 export class SupportedLimits extends U.StructBase {
   dataview: DataView;
@@ -4584,20 +6370,45 @@ export class SupportedLimits extends U.StructBase {
     );
   }
 
-  set limits(value: Limits) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 144).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set limits(value: Limits | ToLimits) {
+    if (value instanceof Limits) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 144).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.limits.set(value);
+    }
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSupportedLimits) {
+    const struct = new SupportedLimits();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.limits !== undefined) struct.limits = plain.limits;
+    return struct;
+  }
+  set(plain: ToSupportedLimits) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.limits !== undefined) this.limits = plain.limits;
   }
 }
+
+export type ToTextureDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  usage?: number;
+  dimension?: TextureDimension;
+  size?: Extent3D | ToExtent3D;
+  format?: TextureFormat;
+  mipLevelCount?: number;
+  sampleCount?: number;
+  viewFormatCount?: bigint | number;
+  viewFormats?: Deno.PointerValue;
+};
 
 export class TextureDescriptor extends U.StructBase {
   dataview: DataView;
@@ -4662,14 +6473,16 @@ export class TextureDescriptor extends U.StructBase {
     );
   }
 
-  set size(value: Extent3D) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 12).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set size(value: Extent3D | ToExtent3D) {
+    if (value instanceof Extent3D) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 12).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.size.set(value);
+    }
   }
 
   get format(): TextureFormat {
@@ -4716,10 +6529,51 @@ export class TextureDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToTextureDescriptor) {
+    const struct = new TextureDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.usage !== undefined) struct.usage = plain.usage;
+    if (plain.dimension !== undefined) struct.dimension = plain.dimension;
+    if (plain.size !== undefined) struct.size = plain.size;
+    if (plain.format !== undefined) struct.format = plain.format;
+    if (plain.mipLevelCount !== undefined) {
+      struct.mipLevelCount = plain.mipLevelCount;
+    }
+    if (plain.sampleCount !== undefined) struct.sampleCount = plain.sampleCount;
+    if (plain.viewFormatCount !== undefined) {
+      struct.viewFormatCount = plain.viewFormatCount;
+    }
+    if (plain.viewFormats !== undefined) struct.viewFormats = plain.viewFormats;
+    return struct;
+  }
+  set(plain: ToTextureDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.usage !== undefined) this.usage = plain.usage;
+    if (plain.dimension !== undefined) this.dimension = plain.dimension;
+    if (plain.size !== undefined) this.size = plain.size;
+    if (plain.format !== undefined) this.format = plain.format;
+    if (plain.mipLevelCount !== undefined) {
+      this.mipLevelCount = plain.mipLevelCount;
+    }
+    if (plain.sampleCount !== undefined) this.sampleCount = plain.sampleCount;
+    if (plain.viewFormatCount !== undefined) {
+      this.viewFormatCount = plain.viewFormatCount;
+    }
+    if (plain.viewFormats !== undefined) this.viewFormats = plain.viewFormats;
   }
 }
+
+export type ToVertexBufferLayout = undefined | {
+  arrayStride?: bigint | number;
+  stepMode?: VertexStepMode;
+  attributeCount?: bigint | number;
+  attributes?: Deno.PointerValue;
+};
 
 export class VertexBufferLayout extends U.StructBase {
   dataview: DataView;
@@ -4774,10 +6628,35 @@ export class VertexBufferLayout extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToVertexBufferLayout) {
+    const struct = new VertexBufferLayout();
+    if (plain === undefined) return struct;
+    if (plain.arrayStride !== undefined) struct.arrayStride = plain.arrayStride;
+    if (plain.stepMode !== undefined) struct.stepMode = plain.stepMode;
+    if (plain.attributeCount !== undefined) {
+      struct.attributeCount = plain.attributeCount;
+    }
+    if (plain.attributes !== undefined) struct.attributes = plain.attributes;
+    return struct;
+  }
+  set(plain: ToVertexBufferLayout) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.arrayStride !== undefined) this.arrayStride = plain.arrayStride;
+    if (plain.stepMode !== undefined) this.stepMode = plain.stepMode;
+    if (plain.attributeCount !== undefined) {
+      this.attributeCount = plain.attributeCount;
+    }
+    if (plain.attributes !== undefined) this.attributes = plain.attributes;
   }
 }
+
+export type ToBindGroupLayoutDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  entryCount?: bigint | number;
+  entries?: Deno.PointerValue;
+};
 
 export class BindGroupLayoutDescriptor extends U.StructBase {
   dataview: DataView;
@@ -4840,10 +6719,31 @@ export class BindGroupLayoutDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToBindGroupLayoutDescriptor) {
+    const struct = new BindGroupLayoutDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.entryCount !== undefined) struct.entryCount = plain.entryCount;
+    if (plain.entries !== undefined) struct.entries = plain.entries;
+    return struct;
+  }
+  set(plain: ToBindGroupLayoutDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.entryCount !== undefined) this.entryCount = plain.entryCount;
+    if (plain.entries !== undefined) this.entries = plain.entries;
   }
 }
+
+export type ToColorTargetState = undefined | {
+  nextInChain?: Deno.PointerValue;
+  format?: TextureFormat;
+  blend?: Deno.PointerValue;
+  writeMask?: number;
+};
 
 export class ColorTargetState extends U.StructBase {
   dataview: DataView;
@@ -4902,10 +6802,31 @@ export class ColorTargetState extends U.StructBase {
     this.dataview.setUint32(24, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToColorTargetState) {
+    const struct = new ColorTargetState();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.format !== undefined) struct.format = plain.format;
+    if (plain.blend !== undefined) struct.blend = plain.blend;
+    if (plain.writeMask !== undefined) struct.writeMask = plain.writeMask;
+    return struct;
+  }
+  set(plain: ToColorTargetState) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.format !== undefined) this.format = plain.format;
+    if (plain.blend !== undefined) this.blend = plain.blend;
+    if (plain.writeMask !== undefined) this.writeMask = plain.writeMask;
   }
 }
+
+export type ToComputePipelineDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  layout?: Deno.PointerValue;
+  compute?: ProgrammableStageDescriptor | ToProgrammableStageDescriptor;
+};
 
 export class ComputePipelineDescriptor extends U.StructBase {
   dataview: DataView;
@@ -4966,20 +6887,49 @@ export class ComputePipelineDescriptor extends U.StructBase {
     );
   }
 
-  set compute(value: ProgrammableStageDescriptor) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 40).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set compute(
+    value: ProgrammableStageDescriptor | ToProgrammableStageDescriptor,
+  ) {
+    if (value instanceof ProgrammableStageDescriptor) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 40).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.compute.set(value);
+    }
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToComputePipelineDescriptor) {
+    const struct = new ComputePipelineDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.layout !== undefined) struct.layout = plain.layout;
+    if (plain.compute !== undefined) struct.compute = plain.compute;
+    return struct;
+  }
+  set(plain: ToComputePipelineDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.layout !== undefined) this.layout = plain.layout;
+    if (plain.compute !== undefined) this.compute = plain.compute;
   }
 }
+
+export type ToDeviceDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  requiredFeaturesCount?: bigint | number;
+  requiredFeatures?: Deno.PointerValue;
+  requiredLimits?: Deno.PointerValue;
+  defaultQueue?: QueueDescriptor | ToQueueDescriptor;
+  deviceLostCallback?: Deno.PointerValue;
+  deviceLostUserdata?: Deno.PointerValue;
+};
 
 export class DeviceDescriptor extends U.StructBase {
   dataview: DataView;
@@ -5060,14 +7010,16 @@ export class DeviceDescriptor extends U.StructBase {
     );
   }
 
-  set defaultQueue(value: QueueDescriptor) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set defaultQueue(value: QueueDescriptor | ToQueueDescriptor) {
+    if (value instanceof QueueDescriptor) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.defaultQueue.set(value);
+    }
   }
 
   get deviceLostCallback(): Deno.PointerValue {
@@ -5094,10 +7046,67 @@ export class DeviceDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToDeviceDescriptor) {
+    const struct = new DeviceDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.requiredFeaturesCount !== undefined) {
+      struct.requiredFeaturesCount = plain.requiredFeaturesCount;
+    }
+    if (plain.requiredFeatures !== undefined) {
+      struct.requiredFeatures = plain.requiredFeatures;
+    }
+    if (plain.requiredLimits !== undefined) {
+      struct.requiredLimits = plain.requiredLimits;
+    }
+    if (plain.defaultQueue !== undefined) {
+      struct.defaultQueue = plain.defaultQueue;
+    }
+    if (plain.deviceLostCallback !== undefined) {
+      struct.deviceLostCallback = plain.deviceLostCallback;
+    }
+    if (plain.deviceLostUserdata !== undefined) {
+      struct.deviceLostUserdata = plain.deviceLostUserdata;
+    }
+    return struct;
+  }
+  set(plain: ToDeviceDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.requiredFeaturesCount !== undefined) {
+      this.requiredFeaturesCount = plain.requiredFeaturesCount;
+    }
+    if (plain.requiredFeatures !== undefined) {
+      this.requiredFeatures = plain.requiredFeatures;
+    }
+    if (plain.requiredLimits !== undefined) {
+      this.requiredLimits = plain.requiredLimits;
+    }
+    if (plain.defaultQueue !== undefined) {
+      this.defaultQueue = plain.defaultQueue;
+    }
+    if (plain.deviceLostCallback !== undefined) {
+      this.deviceLostCallback = plain.deviceLostCallback;
+    }
+    if (plain.deviceLostUserdata !== undefined) {
+      this.deviceLostUserdata = plain.deviceLostUserdata;
+    }
   }
 }
+
+export type ToRenderPassDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  colorAttachmentCount?: bigint | number;
+  colorAttachments?: Deno.PointerValue;
+  depthStencilAttachment?: Deno.PointerValue;
+  occlusionQuerySet?: Deno.PointerValue;
+  timestampWriteCount?: bigint | number;
+  timestampWrites?: Deno.PointerValue;
+};
 
 export class RenderPassDescriptor extends U.StructBase {
   dataview: DataView;
@@ -5204,10 +7213,66 @@ export class RenderPassDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToRenderPassDescriptor) {
+    const struct = new RenderPassDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.colorAttachmentCount !== undefined) {
+      struct.colorAttachmentCount = plain.colorAttachmentCount;
+    }
+    if (plain.colorAttachments !== undefined) {
+      struct.colorAttachments = plain.colorAttachments;
+    }
+    if (plain.depthStencilAttachment !== undefined) {
+      struct.depthStencilAttachment = plain.depthStencilAttachment;
+    }
+    if (plain.occlusionQuerySet !== undefined) {
+      struct.occlusionQuerySet = plain.occlusionQuerySet;
+    }
+    if (plain.timestampWriteCount !== undefined) {
+      struct.timestampWriteCount = plain.timestampWriteCount;
+    }
+    if (plain.timestampWrites !== undefined) {
+      struct.timestampWrites = plain.timestampWrites;
+    }
+    return struct;
+  }
+  set(plain: ToRenderPassDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.colorAttachmentCount !== undefined) {
+      this.colorAttachmentCount = plain.colorAttachmentCount;
+    }
+    if (plain.colorAttachments !== undefined) {
+      this.colorAttachments = plain.colorAttachments;
+    }
+    if (plain.depthStencilAttachment !== undefined) {
+      this.depthStencilAttachment = plain.depthStencilAttachment;
+    }
+    if (plain.occlusionQuerySet !== undefined) {
+      this.occlusionQuerySet = plain.occlusionQuerySet;
+    }
+    if (plain.timestampWriteCount !== undefined) {
+      this.timestampWriteCount = plain.timestampWriteCount;
+    }
+    if (plain.timestampWrites !== undefined) {
+      this.timestampWrites = plain.timestampWrites;
+    }
   }
 }
+
+export type ToVertexState = undefined | {
+  nextInChain?: Deno.PointerValue;
+  module?: Deno.PointerValue;
+  entryPoint?: Deno.PointerValue;
+  constantCount?: bigint | number;
+  constants?: Deno.PointerValue;
+  bufferCount?: bigint | number;
+  buffers?: Deno.PointerValue;
+};
 
 export class VertexState extends U.StructBase {
   dataview: DataView;
@@ -5302,10 +7367,44 @@ export class VertexState extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToVertexState) {
+    const struct = new VertexState();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.module !== undefined) struct.module = plain.module;
+    if (plain.entryPoint !== undefined) struct.entryPoint = plain.entryPoint;
+    if (plain.constantCount !== undefined) {
+      struct.constantCount = plain.constantCount;
+    }
+    if (plain.constants !== undefined) struct.constants = plain.constants;
+    if (plain.bufferCount !== undefined) struct.bufferCount = plain.bufferCount;
+    if (plain.buffers !== undefined) struct.buffers = plain.buffers;
+    return struct;
+  }
+  set(plain: ToVertexState) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.module !== undefined) this.module = plain.module;
+    if (plain.entryPoint !== undefined) this.entryPoint = plain.entryPoint;
+    if (plain.constantCount !== undefined) {
+      this.constantCount = plain.constantCount;
+    }
+    if (plain.constants !== undefined) this.constants = plain.constants;
+    if (plain.bufferCount !== undefined) this.bufferCount = plain.bufferCount;
+    if (plain.buffers !== undefined) this.buffers = plain.buffers;
   }
 }
+
+export type ToFragmentState = undefined | {
+  nextInChain?: Deno.PointerValue;
+  module?: Deno.PointerValue;
+  entryPoint?: Deno.PointerValue;
+  constantCount?: bigint | number;
+  constants?: Deno.PointerValue;
+  targetCount?: bigint | number;
+  targets?: Deno.PointerValue;
+};
 
 export class FragmentState extends U.StructBase {
   dataview: DataView;
@@ -5400,10 +7499,45 @@ export class FragmentState extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToFragmentState) {
+    const struct = new FragmentState();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.module !== undefined) struct.module = plain.module;
+    if (plain.entryPoint !== undefined) struct.entryPoint = plain.entryPoint;
+    if (plain.constantCount !== undefined) {
+      struct.constantCount = plain.constantCount;
+    }
+    if (plain.constants !== undefined) struct.constants = plain.constants;
+    if (plain.targetCount !== undefined) struct.targetCount = plain.targetCount;
+    if (plain.targets !== undefined) struct.targets = plain.targets;
+    return struct;
+  }
+  set(plain: ToFragmentState) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.module !== undefined) this.module = plain.module;
+    if (plain.entryPoint !== undefined) this.entryPoint = plain.entryPoint;
+    if (plain.constantCount !== undefined) {
+      this.constantCount = plain.constantCount;
+    }
+    if (plain.constants !== undefined) this.constants = plain.constants;
+    if (plain.targetCount !== undefined) this.targetCount = plain.targetCount;
+    if (plain.targets !== undefined) this.targets = plain.targets;
   }
 }
+
+export type ToRenderPipelineDescriptor = undefined | {
+  nextInChain?: Deno.PointerValue;
+  label?: Deno.PointerValue;
+  layout?: Deno.PointerValue;
+  vertex?: VertexState | ToVertexState;
+  primitive?: PrimitiveState | ToPrimitiveState;
+  depthStencil?: Deno.PointerValue;
+  multisample?: MultisampleState | ToMultisampleState;
+  fragment?: Deno.PointerValue;
+};
 
 export class RenderPipelineDescriptor extends U.StructBase {
   dataview: DataView;
@@ -5464,14 +7598,16 @@ export class RenderPipelineDescriptor extends U.StructBase {
     );
   }
 
-  set vertex(value: VertexState) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 56).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set vertex(value: VertexState | ToVertexState) {
+    if (value instanceof VertexState) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 56).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.vertex.set(value);
+    }
   }
 
   get primitive(): PrimitiveState {
@@ -5480,14 +7616,16 @@ export class RenderPipelineDescriptor extends U.StructBase {
     );
   }
 
-  set primitive(value: PrimitiveState) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 24).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set primitive(value: PrimitiveState | ToPrimitiveState) {
+    if (value instanceof PrimitiveState) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 24).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.primitive.set(value);
+    }
   }
 
   get depthStencil(): Deno.PointerValue {
@@ -5508,14 +7646,16 @@ export class RenderPipelineDescriptor extends U.StructBase {
     );
   }
 
-  set multisample(value: MultisampleState) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 24).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set multisample(value: MultisampleState | ToMultisampleState) {
+    if (value instanceof MultisampleState) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 24).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.multisample.set(value);
+    }
   }
 
   get fragment(): Deno.PointerValue {
@@ -5530,10 +7670,41 @@ export class RenderPipelineDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToRenderPipelineDescriptor) {
+    const struct = new RenderPipelineDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) struct.label = plain.label;
+    if (plain.layout !== undefined) struct.layout = plain.layout;
+    if (plain.vertex !== undefined) struct.vertex = plain.vertex;
+    if (plain.primitive !== undefined) struct.primitive = plain.primitive;
+    if (plain.depthStencil !== undefined) {
+      struct.depthStencil = plain.depthStencil;
+    }
+    if (plain.multisample !== undefined) struct.multisample = plain.multisample;
+    if (plain.fragment !== undefined) struct.fragment = plain.fragment;
+    return struct;
+  }
+  set(plain: ToRenderPipelineDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.label !== undefined) this.label = plain.label;
+    if (plain.layout !== undefined) this.layout = plain.layout;
+    if (plain.vertex !== undefined) this.vertex = plain.vertex;
+    if (plain.primitive !== undefined) this.primitive = plain.primitive;
+    if (plain.depthStencil !== undefined) {
+      this.depthStencil = plain.depthStencil;
+    }
+    if (plain.multisample !== undefined) this.multisample = plain.multisample;
+    if (plain.fragment !== undefined) this.fragment = plain.fragment;
   }
 }
+
+export type ToChainedStruct = undefined | {
+  next?: Deno.PointerValue;
+  sType?: SType;
+};
 
 export class ChainedStruct extends U.StructBase {
   dataview: DataView;
@@ -5572,10 +7743,25 @@ export class ChainedStruct extends U.StructBase {
     this.dataview.setUint32(8, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToChainedStruct) {
+    const struct = new ChainedStruct();
+    if (plain === undefined) return struct;
+    if (plain.next !== undefined) struct.next = plain.next;
+    if (plain.sType !== undefined) struct.sType = plain.sType;
+    return struct;
+  }
+  set(plain: ToChainedStruct) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.next !== undefined) this.next = plain.next;
+    if (plain.sType !== undefined) this.sType = plain.sType;
   }
 }
+
+export type ToChainedStructOut = undefined | {
+  next?: Deno.PointerValue;
+  sType?: SType;
+};
 
 export class ChainedStructOut extends U.StructBase {
   dataview: DataView;
@@ -5614,10 +7800,28 @@ export class ChainedStructOut extends U.StructBase {
     this.dataview.setUint32(8, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToChainedStructOut) {
+    const struct = new ChainedStructOut();
+    if (plain === undefined) return struct;
+    if (plain.next !== undefined) struct.next = plain.next;
+    if (plain.sType !== undefined) struct.sType = plain.sType;
+    return struct;
+  }
+  set(plain: ToChainedStructOut) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.next !== undefined) this.next = plain.next;
+    if (plain.sType !== undefined) this.sType = plain.sType;
   }
 }
+
+export type ToInstanceExtras = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  backends?: number;
+  dx12ShaderCompiler?: Dx12Compiler;
+  dxilPath?: Deno.PointerValue;
+  dxcPath?: Deno.PointerValue;
+};
 
 export class InstanceExtras extends U.StructBase {
   dataview: DataView;
@@ -5642,14 +7846,16 @@ export class InstanceExtras extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get backends(): number {
@@ -5692,10 +7898,35 @@ export class InstanceExtras extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToInstanceExtras) {
+    const struct = new InstanceExtras();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.backends !== undefined) struct.backends = plain.backends;
+    if (plain.dx12ShaderCompiler !== undefined) {
+      struct.dx12ShaderCompiler = plain.dx12ShaderCompiler;
+    }
+    if (plain.dxilPath !== undefined) struct.dxilPath = plain.dxilPath;
+    if (plain.dxcPath !== undefined) struct.dxcPath = plain.dxcPath;
+    return struct;
+  }
+  set(plain: ToInstanceExtras) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.backends !== undefined) this.backends = plain.backends;
+    if (plain.dx12ShaderCompiler !== undefined) {
+      this.dx12ShaderCompiler = plain.dx12ShaderCompiler;
+    }
+    if (plain.dxilPath !== undefined) this.dxilPath = plain.dxilPath;
+    if (plain.dxcPath !== undefined) this.dxcPath = plain.dxcPath;
   }
 }
+
+export type ToDeviceExtras = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  tracePath?: Deno.PointerValue;
+};
 
 export class DeviceExtras extends U.StructBase {
   dataview: DataView;
@@ -5720,14 +7951,16 @@ export class DeviceExtras extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get tracePath(): Deno.PointerValue {
@@ -5742,10 +7975,25 @@ export class DeviceExtras extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToDeviceExtras) {
+    const struct = new DeviceExtras();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.tracePath !== undefined) struct.tracePath = plain.tracePath;
+    return struct;
+  }
+  set(plain: ToDeviceExtras) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.tracePath !== undefined) this.tracePath = plain.tracePath;
   }
 }
+
+export type ToRequiredLimitsExtras = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  maxPushConstantSize?: number;
+};
 
 export class RequiredLimitsExtras extends U.StructBase {
   dataview: DataView;
@@ -5770,14 +8018,16 @@ export class RequiredLimitsExtras extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get maxPushConstantSize(): number {
@@ -5788,10 +8038,29 @@ export class RequiredLimitsExtras extends U.StructBase {
     this.dataview.setUint32(16, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToRequiredLimitsExtras) {
+    const struct = new RequiredLimitsExtras();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.maxPushConstantSize !== undefined) {
+      struct.maxPushConstantSize = plain.maxPushConstantSize;
+    }
+    return struct;
+  }
+  set(plain: ToRequiredLimitsExtras) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.maxPushConstantSize !== undefined) {
+      this.maxPushConstantSize = plain.maxPushConstantSize;
+    }
   }
 }
+
+export type ToSupportedLimitsExtras = undefined | {
+  chain?: ChainedStructOut | ToChainedStructOut;
+  maxPushConstantSize?: number;
+};
 
 export class SupportedLimitsExtras extends U.StructBase {
   dataview: DataView;
@@ -5816,14 +8085,16 @@ export class SupportedLimitsExtras extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStructOut) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStructOut | ToChainedStructOut) {
+    if (value instanceof ChainedStructOut) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get maxPushConstantSize(): number {
@@ -5834,10 +8105,30 @@ export class SupportedLimitsExtras extends U.StructBase {
     this.dataview.setUint32(16, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSupportedLimitsExtras) {
+    const struct = new SupportedLimitsExtras();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.maxPushConstantSize !== undefined) {
+      struct.maxPushConstantSize = plain.maxPushConstantSize;
+    }
+    return struct;
+  }
+  set(plain: ToSupportedLimitsExtras) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.maxPushConstantSize !== undefined) {
+      this.maxPushConstantSize = plain.maxPushConstantSize;
+    }
   }
 }
+
+export type ToPushConstantRange = undefined | {
+  stages?: number;
+  start?: number;
+  end?: number;
+};
 
 export class PushConstantRange extends U.StructBase {
   dataview: DataView;
@@ -5880,10 +8171,28 @@ export class PushConstantRange extends U.StructBase {
     this.dataview.setUint32(8, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToPushConstantRange) {
+    const struct = new PushConstantRange();
+    if (plain === undefined) return struct;
+    if (plain.stages !== undefined) struct.stages = plain.stages;
+    if (plain.start !== undefined) struct.start = plain.start;
+    if (plain.end !== undefined) struct.end = plain.end;
+    return struct;
+  }
+  set(plain: ToPushConstantRange) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.stages !== undefined) this.stages = plain.stages;
+    if (plain.start !== undefined) this.start = plain.start;
+    if (plain.end !== undefined) this.end = plain.end;
   }
 }
+
+export type ToPipelineLayoutExtras = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  pushConstantRangeCount?: number;
+  pushConstantRanges?: Deno.PointerValue;
+};
 
 export class PipelineLayoutExtras extends U.StructBase {
   dataview: DataView;
@@ -5908,14 +8217,16 @@ export class PipelineLayoutExtras extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get pushConstantRangeCount(): number {
@@ -5938,10 +8249,35 @@ export class PipelineLayoutExtras extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToPipelineLayoutExtras) {
+    const struct = new PipelineLayoutExtras();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.pushConstantRangeCount !== undefined) {
+      struct.pushConstantRangeCount = plain.pushConstantRangeCount;
+    }
+    if (plain.pushConstantRanges !== undefined) {
+      struct.pushConstantRanges = plain.pushConstantRanges;
+    }
+    return struct;
+  }
+  set(plain: ToPipelineLayoutExtras) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.pushConstantRangeCount !== undefined) {
+      this.pushConstantRangeCount = plain.pushConstantRangeCount;
+    }
+    if (plain.pushConstantRanges !== undefined) {
+      this.pushConstantRanges = plain.pushConstantRanges;
+    }
   }
 }
+
+export type ToWrappedSubmissionIndex = undefined | {
+  queue?: Deno.PointerValue;
+  submissionIndex?: bigint | number;
+};
 
 export class WrappedSubmissionIndex extends U.StructBase {
   dataview: DataView;
@@ -5980,10 +8316,29 @@ export class WrappedSubmissionIndex extends U.StructBase {
     this.dataview.setBigUint64(8, BigInt(value), U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToWrappedSubmissionIndex) {
+    const struct = new WrappedSubmissionIndex();
+    if (plain === undefined) return struct;
+    if (plain.queue !== undefined) struct.queue = plain.queue;
+    if (plain.submissionIndex !== undefined) {
+      struct.submissionIndex = plain.submissionIndex;
+    }
+    return struct;
+  }
+  set(plain: ToWrappedSubmissionIndex) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.queue !== undefined) this.queue = plain.queue;
+    if (plain.submissionIndex !== undefined) {
+      this.submissionIndex = plain.submissionIndex;
+    }
   }
 }
+
+export type ToShaderDefine = undefined | {
+  name?: Deno.PointerValue;
+  value?: Deno.PointerValue;
+};
 
 export class ShaderDefine extends U.StructBase {
   dataview: DataView;
@@ -6026,10 +8381,28 @@ export class ShaderDefine extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToShaderDefine) {
+    const struct = new ShaderDefine();
+    if (plain === undefined) return struct;
+    if (plain.name !== undefined) struct.name = plain.name;
+    if (plain.value !== undefined) struct.value = plain.value;
+    return struct;
+  }
+  set(plain: ToShaderDefine) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.name !== undefined) this.name = plain.name;
+    if (plain.value !== undefined) this.value = plain.value;
   }
 }
+
+export type ToShaderModuleGLSLDescriptor = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  stage?: ShaderStage;
+  code?: Deno.PointerValue;
+  defineCount?: number;
+  defines?: Deno.PointerValue;
+};
 
 export class ShaderModuleGLSLDescriptor extends U.StructBase {
   dataview: DataView;
@@ -6054,14 +8427,16 @@ export class ShaderModuleGLSLDescriptor extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get stage(): ShaderStage {
@@ -6104,10 +8479,33 @@ export class ShaderModuleGLSLDescriptor extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToShaderModuleGLSLDescriptor) {
+    const struct = new ShaderModuleGLSLDescriptor();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.stage !== undefined) struct.stage = plain.stage;
+    if (plain.code !== undefined) struct.code = plain.code;
+    if (plain.defineCount !== undefined) struct.defineCount = plain.defineCount;
+    if (plain.defines !== undefined) struct.defines = plain.defines;
+    return struct;
+  }
+  set(plain: ToShaderModuleGLSLDescriptor) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.stage !== undefined) this.stage = plain.stage;
+    if (plain.code !== undefined) this.code = plain.code;
+    if (plain.defineCount !== undefined) this.defineCount = plain.defineCount;
+    if (plain.defines !== undefined) this.defines = plain.defines;
   }
 }
+
+export type ToStorageReport = undefined | {
+  numOccupied?: bigint | number;
+  numVacant?: bigint | number;
+  numError?: bigint | number;
+  elementSize?: bigint | number;
+};
 
 export class StorageReport extends U.StructBase {
   dataview: DataView;
@@ -6158,10 +8556,42 @@ export class StorageReport extends U.StructBase {
     this.dataview.setBigUint64(24, BigInt(value), U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToStorageReport) {
+    const struct = new StorageReport();
+    if (plain === undefined) return struct;
+    if (plain.numOccupied !== undefined) struct.numOccupied = plain.numOccupied;
+    if (plain.numVacant !== undefined) struct.numVacant = plain.numVacant;
+    if (plain.numError !== undefined) struct.numError = plain.numError;
+    if (plain.elementSize !== undefined) struct.elementSize = plain.elementSize;
+    return struct;
+  }
+  set(plain: ToStorageReport) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.numOccupied !== undefined) this.numOccupied = plain.numOccupied;
+    if (plain.numVacant !== undefined) this.numVacant = plain.numVacant;
+    if (plain.numError !== undefined) this.numError = plain.numError;
+    if (plain.elementSize !== undefined) this.elementSize = plain.elementSize;
   }
 }
+
+export type ToHubReport = undefined | {
+  adapters?: StorageReport | ToStorageReport;
+  devices?: StorageReport | ToStorageReport;
+  pipelineLayouts?: StorageReport | ToStorageReport;
+  shaderModules?: StorageReport | ToStorageReport;
+  bindGroupLayouts?: StorageReport | ToStorageReport;
+  bindGroups?: StorageReport | ToStorageReport;
+  commandBuffers?: StorageReport | ToStorageReport;
+  renderBundles?: StorageReport | ToStorageReport;
+  renderPipelines?: StorageReport | ToStorageReport;
+  computePipelines?: StorageReport | ToStorageReport;
+  querySets?: StorageReport | ToStorageReport;
+  buffers?: StorageReport | ToStorageReport;
+  textures?: StorageReport | ToStorageReport;
+  textureViews?: StorageReport | ToStorageReport;
+  samplers?: StorageReport | ToStorageReport;
+};
 
 export class HubReport extends U.StructBase {
   dataview: DataView;
@@ -6186,14 +8616,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set adapters(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set adapters(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.adapters.set(value);
+    }
   }
 
   get devices(): StorageReport {
@@ -6202,14 +8634,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set devices(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set devices(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.devices.set(value);
+    }
   }
 
   get pipelineLayouts(): StorageReport {
@@ -6218,14 +8652,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set pipelineLayouts(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set pipelineLayouts(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.pipelineLayouts.set(value);
+    }
   }
 
   get shaderModules(): StorageReport {
@@ -6234,14 +8670,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set shaderModules(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set shaderModules(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.shaderModules.set(value);
+    }
   }
 
   get bindGroupLayouts(): StorageReport {
@@ -6250,14 +8688,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set bindGroupLayouts(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set bindGroupLayouts(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.bindGroupLayouts.set(value);
+    }
   }
 
   get bindGroups(): StorageReport {
@@ -6266,14 +8706,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set bindGroups(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set bindGroups(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.bindGroups.set(value);
+    }
   }
 
   get commandBuffers(): StorageReport {
@@ -6282,14 +8724,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set commandBuffers(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set commandBuffers(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.commandBuffers.set(value);
+    }
   }
 
   get renderBundles(): StorageReport {
@@ -6298,14 +8742,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set renderBundles(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set renderBundles(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.renderBundles.set(value);
+    }
   }
 
   get renderPipelines(): StorageReport {
@@ -6314,14 +8760,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set renderPipelines(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set renderPipelines(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.renderPipelines.set(value);
+    }
   }
 
   get computePipelines(): StorageReport {
@@ -6330,14 +8778,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set computePipelines(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set computePipelines(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.computePipelines.set(value);
+    }
   }
 
   get querySets(): StorageReport {
@@ -6346,14 +8796,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set querySets(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set querySets(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.querySets.set(value);
+    }
   }
 
   get buffers(): StorageReport {
@@ -6362,14 +8814,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set buffers(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set buffers(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.buffers.set(value);
+    }
   }
 
   get textures(): StorageReport {
@@ -6378,14 +8832,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set textures(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set textures(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.textures.set(value);
+    }
   }
 
   get textureViews(): StorageReport {
@@ -6394,14 +8850,16 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set textureViews(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set textureViews(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.textureViews.set(value);
+    }
   }
 
   get samplers(): StorageReport {
@@ -6410,20 +8868,100 @@ export class HubReport extends U.StructBase {
     );
   }
 
-  set samplers(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set samplers(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.samplers.set(value);
+    }
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToHubReport) {
+    const struct = new HubReport();
+    if (plain === undefined) return struct;
+    if (plain.adapters !== undefined) struct.adapters = plain.adapters;
+    if (plain.devices !== undefined) struct.devices = plain.devices;
+    if (plain.pipelineLayouts !== undefined) {
+      struct.pipelineLayouts = plain.pipelineLayouts;
+    }
+    if (plain.shaderModules !== undefined) {
+      struct.shaderModules = plain.shaderModules;
+    }
+    if (plain.bindGroupLayouts !== undefined) {
+      struct.bindGroupLayouts = plain.bindGroupLayouts;
+    }
+    if (plain.bindGroups !== undefined) struct.bindGroups = plain.bindGroups;
+    if (plain.commandBuffers !== undefined) {
+      struct.commandBuffers = plain.commandBuffers;
+    }
+    if (plain.renderBundles !== undefined) {
+      struct.renderBundles = plain.renderBundles;
+    }
+    if (plain.renderPipelines !== undefined) {
+      struct.renderPipelines = plain.renderPipelines;
+    }
+    if (plain.computePipelines !== undefined) {
+      struct.computePipelines = plain.computePipelines;
+    }
+    if (plain.querySets !== undefined) struct.querySets = plain.querySets;
+    if (plain.buffers !== undefined) struct.buffers = plain.buffers;
+    if (plain.textures !== undefined) struct.textures = plain.textures;
+    if (plain.textureViews !== undefined) {
+      struct.textureViews = plain.textureViews;
+    }
+    if (plain.samplers !== undefined) struct.samplers = plain.samplers;
+    return struct;
+  }
+  set(plain: ToHubReport) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.adapters !== undefined) this.adapters = plain.adapters;
+    if (plain.devices !== undefined) this.devices = plain.devices;
+    if (plain.pipelineLayouts !== undefined) {
+      this.pipelineLayouts = plain.pipelineLayouts;
+    }
+    if (plain.shaderModules !== undefined) {
+      this.shaderModules = plain.shaderModules;
+    }
+    if (plain.bindGroupLayouts !== undefined) {
+      this.bindGroupLayouts = plain.bindGroupLayouts;
+    }
+    if (plain.bindGroups !== undefined) this.bindGroups = plain.bindGroups;
+    if (plain.commandBuffers !== undefined) {
+      this.commandBuffers = plain.commandBuffers;
+    }
+    if (plain.renderBundles !== undefined) {
+      this.renderBundles = plain.renderBundles;
+    }
+    if (plain.renderPipelines !== undefined) {
+      this.renderPipelines = plain.renderPipelines;
+    }
+    if (plain.computePipelines !== undefined) {
+      this.computePipelines = plain.computePipelines;
+    }
+    if (plain.querySets !== undefined) this.querySets = plain.querySets;
+    if (plain.buffers !== undefined) this.buffers = plain.buffers;
+    if (plain.textures !== undefined) this.textures = plain.textures;
+    if (plain.textureViews !== undefined) {
+      this.textureViews = plain.textureViews;
+    }
+    if (plain.samplers !== undefined) this.samplers = plain.samplers;
   }
 }
+
+export type ToGlobalReport = undefined | {
+  surfaces?: StorageReport | ToStorageReport;
+  backendType?: BackendType;
+  vulkan?: HubReport | ToHubReport;
+  metal?: HubReport | ToHubReport;
+  dx12?: HubReport | ToHubReport;
+  dx11?: HubReport | ToHubReport;
+  gl?: HubReport | ToHubReport;
+};
 
 export class GlobalReport extends U.StructBase {
   dataview: DataView;
@@ -6448,14 +8986,16 @@ export class GlobalReport extends U.StructBase {
     );
   }
 
-  set surfaces(value: StorageReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 32).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set surfaces(value: StorageReport | ToStorageReport) {
+    if (value instanceof StorageReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 32).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.surfaces.set(value);
+    }
   }
 
   get backendType(): BackendType {
@@ -6472,14 +9012,16 @@ export class GlobalReport extends U.StructBase {
     );
   }
 
-  set vulkan(value: HubReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 480).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set vulkan(value: HubReport | ToHubReport) {
+    if (value instanceof HubReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 480).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.vulkan.set(value);
+    }
   }
 
   get metal(): HubReport {
@@ -6488,14 +9030,16 @@ export class GlobalReport extends U.StructBase {
     );
   }
 
-  set metal(value: HubReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 480).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set metal(value: HubReport | ToHubReport) {
+    if (value instanceof HubReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 480).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.metal.set(value);
+    }
   }
 
   get dx12(): HubReport {
@@ -6504,14 +9048,16 @@ export class GlobalReport extends U.StructBase {
     );
   }
 
-  set dx12(value: HubReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 480).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set dx12(value: HubReport | ToHubReport) {
+    if (value instanceof HubReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 480).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.dx12.set(value);
+    }
   }
 
   get dx11(): HubReport {
@@ -6520,14 +9066,16 @@ export class GlobalReport extends U.StructBase {
     );
   }
 
-  set dx11(value: HubReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 480).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set dx11(value: HubReport | ToHubReport) {
+    if (value instanceof HubReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 480).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.dx11.set(value);
+    }
   }
 
   get gl(): HubReport {
@@ -6536,20 +9084,51 @@ export class GlobalReport extends U.StructBase {
     );
   }
 
-  set gl(value: HubReport) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 480).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set gl(value: HubReport | ToHubReport) {
+    if (value instanceof HubReport) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 480).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.gl.set(value);
+    }
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToGlobalReport) {
+    const struct = new GlobalReport();
+    if (plain === undefined) return struct;
+    if (plain.surfaces !== undefined) struct.surfaces = plain.surfaces;
+    if (plain.backendType !== undefined) struct.backendType = plain.backendType;
+    if (plain.vulkan !== undefined) struct.vulkan = plain.vulkan;
+    if (plain.metal !== undefined) struct.metal = plain.metal;
+    if (plain.dx12 !== undefined) struct.dx12 = plain.dx12;
+    if (plain.dx11 !== undefined) struct.dx11 = plain.dx11;
+    if (plain.gl !== undefined) struct.gl = plain.gl;
+    return struct;
+  }
+  set(plain: ToGlobalReport) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.surfaces !== undefined) this.surfaces = plain.surfaces;
+    if (plain.backendType !== undefined) this.backendType = plain.backendType;
+    if (plain.vulkan !== undefined) this.vulkan = plain.vulkan;
+    if (plain.metal !== undefined) this.metal = plain.metal;
+    if (plain.dx12 !== undefined) this.dx12 = plain.dx12;
+    if (plain.dx11 !== undefined) this.dx11 = plain.dx11;
+    if (plain.gl !== undefined) this.gl = plain.gl;
   }
 }
+
+export type ToSurfaceCapabilities = undefined | {
+  formatCount?: bigint | number;
+  formats?: Deno.PointerValue;
+  presentModeCount?: bigint | number;
+  presentModes?: Deno.PointerValue;
+  alphaModeCount?: bigint | number;
+  alphaModes?: Deno.PointerValue;
+};
 
 export class SurfaceCapabilities extends U.StructBase {
   dataview: DataView;
@@ -6628,10 +9207,47 @@ export class SurfaceCapabilities extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSurfaceCapabilities) {
+    const struct = new SurfaceCapabilities();
+    if (plain === undefined) return struct;
+    if (plain.formatCount !== undefined) struct.formatCount = plain.formatCount;
+    if (plain.formats !== undefined) struct.formats = plain.formats;
+    if (plain.presentModeCount !== undefined) {
+      struct.presentModeCount = plain.presentModeCount;
+    }
+    if (plain.presentModes !== undefined) {
+      struct.presentModes = plain.presentModes;
+    }
+    if (plain.alphaModeCount !== undefined) {
+      struct.alphaModeCount = plain.alphaModeCount;
+    }
+    if (plain.alphaModes !== undefined) struct.alphaModes = plain.alphaModes;
+    return struct;
+  }
+  set(plain: ToSurfaceCapabilities) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.formatCount !== undefined) this.formatCount = plain.formatCount;
+    if (plain.formats !== undefined) this.formats = plain.formats;
+    if (plain.presentModeCount !== undefined) {
+      this.presentModeCount = plain.presentModeCount;
+    }
+    if (plain.presentModes !== undefined) {
+      this.presentModes = plain.presentModes;
+    }
+    if (plain.alphaModeCount !== undefined) {
+      this.alphaModeCount = plain.alphaModeCount;
+    }
+    if (plain.alphaModes !== undefined) this.alphaModes = plain.alphaModes;
   }
 }
+
+export type ToSwapChainDescriptorExtras = undefined | {
+  chain?: ChainedStruct | ToChainedStruct;
+  alphaMode?: CompositeAlphaMode;
+  viewFormatCount?: bigint | number;
+  viewFormats?: Deno.PointerValue;
+};
 
 export class SwapChainDescriptorExtras extends U.StructBase {
   dataview: DataView;
@@ -6656,14 +9272,16 @@ export class SwapChainDescriptorExtras extends U.StructBase {
     );
   }
 
-  set chain(value: ChainedStruct) {
-    new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, 16).set(
-      new Uint8Array(
-        value.dataview.buffer,
-        value.dataview.byteOffset,
-        value.dataview.byteLength,
-      ),
-    );
+  set chain(value: ChainedStruct | ToChainedStruct) {
+    if (value instanceof ChainedStruct) {
+      const tv = this.dataview;
+      const vv = value.dataview;
+      new Uint8Array(tv.buffer, tv.byteOffset, 16).set(
+        new Uint8Array(vv.buffer, vv.byteOffset, vv.byteLength),
+      );
+    } else {
+      this.chain.set(value);
+    }
   }
 
   get alphaMode(): CompositeAlphaMode {
@@ -6694,10 +9312,33 @@ export class SwapChainDescriptorExtras extends U.StructBase {
     );
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToSwapChainDescriptorExtras) {
+    const struct = new SwapChainDescriptorExtras();
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) struct.chain = plain.chain;
+    if (plain.alphaMode !== undefined) struct.alphaMode = plain.alphaMode;
+    if (plain.viewFormatCount !== undefined) {
+      struct.viewFormatCount = plain.viewFormatCount;
+    }
+    if (plain.viewFormats !== undefined) struct.viewFormats = plain.viewFormats;
+    return struct;
+  }
+  set(plain: ToSwapChainDescriptorExtras) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.chain !== undefined) this.chain = plain.chain;
+    if (plain.alphaMode !== undefined) this.alphaMode = plain.alphaMode;
+    if (plain.viewFormatCount !== undefined) {
+      this.viewFormatCount = plain.viewFormatCount;
+    }
+    if (plain.viewFormats !== undefined) this.viewFormats = plain.viewFormats;
   }
 }
+
+export type ToInstanceEnumerateAdapterOptions = undefined | {
+  nextInChain?: Deno.PointerValue;
+  backends?: number;
+};
 
 export class InstanceEnumerateAdapterOptions extends U.StructBase {
   dataview: DataView;
@@ -6736,8 +9377,18 @@ export class InstanceEnumerateAdapterOptions extends U.StructBase {
     this.dataview.setUint32(8, value, U.LE);
   }
 
-  static from() {
-    // not implemented
+  static from(plain: ToInstanceEnumerateAdapterOptions) {
+    const struct = new InstanceEnumerateAdapterOptions();
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) struct.nextInChain = plain.nextInChain;
+    if (plain.backends !== undefined) struct.backends = plain.backends;
+    return struct;
+  }
+  set(plain: ToInstanceEnumerateAdapterOptions) {
+    const struct = this;
+    if (plain === undefined) return struct;
+    if (plain.nextInChain !== undefined) this.nextInChain = plain.nextInChain;
+    if (plain.backends !== undefined) this.backends = plain.backends;
   }
 }
 
@@ -6796,8 +9447,16 @@ export const LogCallback = {
   parameters: ["u32", "pointer", "pointer"],
 } as const;
 
-export function createInstance(descriptor: InstanceDescriptor): Instance {
-  const result = lib.symbols.wgpuCreateInstance(descriptor.pointer);
+export function createInstance(
+  descriptor?: InstanceDescriptor | ToInstanceDescriptor | Deno.PointerValue,
+): Instance {
+  const result = lib.symbols.wgpuCreateInstance(
+    descriptor instanceof InstanceDescriptor
+      ? descriptor.pointer
+      : U.duckIsPointer(descriptor)
+      ? descriptor
+      : InstanceDescriptor.from(descriptor).pointer,
+  );
   return new Instance(result);
 }
 
@@ -6817,11 +9476,9 @@ export function generateReport(
   return result;
 }
 
-export function setLogCallback(): Promise<
-  [LogLevel, Deno.PointerValue, Deno.PointerValue]
->;
+export function setLogCallback(): Promise<[LogLevel, Deno.PointerValue]>;
 export function setLogCallback(
-  callback: (...args: [LogLevel, Deno.PointerValue, Deno.PointerValue]) => void,
+  callback: (...args: [LogLevel, Deno.PointerValue]) => void,
 ): Deno.UnsafeCallback<typeof LogCallback>;
 export function setLogCallback(
   callback: Deno.UnsafeCallback<typeof LogCallback>,
@@ -6829,25 +9486,19 @@ export function setLogCallback(
 export function setLogCallback(callback: Deno.PointerValue): void;
 export function setLogCallback(
   callback?:
-    | ((...args: [LogLevel, Deno.PointerValue, Deno.PointerValue]) => void)
+    | ((...args: [LogLevel, Deno.PointerValue]) => void)
     | Deno.UnsafeCallback<typeof LogCallback>
     | Deno.PointerValue,
 ):
   | void
-  | Promise<[LogLevel, Deno.PointerValue, Deno.PointerValue]>
+  | Promise<[LogLevel, Deno.PointerValue]>
   | Deno.UnsafeCallback<typeof LogCallback> {
   if (callback == null) {
     return new Promise((res) => {
       const cb = new Deno.UnsafeCallback(
         LogCallback,
         (...args: U.CbParam<typeof LogCallback>) => {
-          res(
-            [args[0] as LogLevel, args[1], args[2]] as [
-              LogLevel,
-              Deno.PointerValue,
-              Deno.PointerValue,
-            ],
-          );
+          res([args[0] as LogLevel, args[1]] as [LogLevel, Deno.PointerValue]);
         },
       );
       lib.symbols.wgpuSetLogCallback(cb.pointer, null);
@@ -6858,7 +9509,7 @@ export function setLogCallback(
     const cb = new Deno.UnsafeCallback(
       LogCallback,
       (...args: U.CbParam<typeof LogCallback>) => {
-        callback(...[args[0] as LogLevel, args[1], args[2]]);
+        callback(...[args[0] as LogLevel, args[1]]);
       },
     );
     lib.symbols.wgpuSetLogCallback(cb.pointer, null);
@@ -6911,47 +9562,31 @@ export class Adapter extends U.ClassBase {
   }
 
   requestDevice(
-    descriptor: DeviceDescriptor,
-  ): Promise<
-    [RequestDeviceStatus, Device, Deno.PointerValue, Deno.PointerValue]
-  >;
+    descriptor: DeviceDescriptor | ToDeviceDescriptor,
+  ): Promise<[RequestDeviceStatus, Device, Deno.PointerValue]>;
   requestDevice(
-    descriptor: DeviceDescriptor,
+    descriptor: DeviceDescriptor | ToDeviceDescriptor,
     callback: (
-      ...args: [
-        RequestDeviceStatus,
-        Device,
-        Deno.PointerValue,
-        Deno.PointerValue,
-      ]
+      ...args: [RequestDeviceStatus, Device, Deno.PointerValue]
     ) => void,
   ): Deno.UnsafeCallback<typeof RequestDeviceCallback>;
   requestDevice(
-    descriptor: DeviceDescriptor,
+    descriptor: DeviceDescriptor | ToDeviceDescriptor,
     callback: Deno.UnsafeCallback<typeof RequestDeviceCallback>,
   ): void;
   requestDevice(
-    descriptor: DeviceDescriptor,
+    descriptor: DeviceDescriptor | ToDeviceDescriptor,
     callback: Deno.PointerValue,
   ): void;
   requestDevice(
-    descriptor: DeviceDescriptor,
+    descriptor: DeviceDescriptor | ToDeviceDescriptor,
     callback?:
-      | ((
-        ...args: [
-          RequestDeviceStatus,
-          Device,
-          Deno.PointerValue,
-          Deno.PointerValue,
-        ]
-      ) => void)
+      | ((...args: [RequestDeviceStatus, Device, Deno.PointerValue]) => void)
       | Deno.UnsafeCallback<typeof RequestDeviceCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<
-      [RequestDeviceStatus, Device, Deno.PointerValue, Deno.PointerValue]
-    >
+    | Promise<[RequestDeviceStatus, Device, Deno.PointerValue]>
     | Deno.UnsafeCallback<typeof RequestDeviceCallback> {
     if (callback == null) {
       return new Promise((res) => {
@@ -6963,19 +9598,17 @@ export class Adapter extends U.ClassBase {
                 args[0] as RequestDeviceStatus,
                 new Device(args[1], this),
                 args[2],
-                args[3],
-              ] as [
-                RequestDeviceStatus,
-                Device,
-                Deno.PointerValue,
-                Deno.PointerValue,
-              ],
+              ] as [RequestDeviceStatus, Device, Deno.PointerValue],
             );
           },
         );
         lib.symbols.wgpuAdapterRequestDevice(
           this.pointer,
-          descriptor.pointer,
+          descriptor instanceof DeviceDescriptor
+            ? descriptor.pointer
+            : U.duckIsPointer(descriptor)
+            ? descriptor
+            : DeviceDescriptor.from(descriptor).pointer,
           cb.pointer,
           null,
         );
@@ -6983,7 +9616,11 @@ export class Adapter extends U.ClassBase {
     } else if (callback instanceof Deno.UnsafeCallback) {
       lib.symbols.wgpuAdapterRequestDevice(
         this.pointer,
-        descriptor.pointer,
+        descriptor instanceof DeviceDescriptor
+          ? descriptor.pointer
+          : U.duckIsPointer(descriptor)
+          ? descriptor
+          : DeviceDescriptor.from(descriptor).pointer,
         callback.pointer,
         null,
       );
@@ -6995,13 +9632,16 @@ export class Adapter extends U.ClassBase {
             args[0] as RequestDeviceStatus,
             new Device(args[1], this),
             args[2],
-            args[3],
           ]);
         },
       );
       lib.symbols.wgpuAdapterRequestDevice(
         this.pointer,
-        descriptor.pointer,
+        descriptor instanceof DeviceDescriptor
+          ? descriptor.pointer
+          : U.duckIsPointer(descriptor)
+          ? descriptor
+          : DeviceDescriptor.from(descriptor).pointer,
         cb.pointer,
         null,
       );
@@ -7009,7 +9649,11 @@ export class Adapter extends U.ClassBase {
     } else {
       lib.symbols.wgpuAdapterRequestDevice(
         this.pointer,
-        descriptor.pointer,
+        descriptor instanceof DeviceDescriptor
+          ? descriptor.pointer
+          : U.duckIsPointer(descriptor)
+          ? descriptor
+          : DeviceDescriptor.from(descriptor).pointer,
         callback,
         null,
       );
@@ -7098,12 +9742,12 @@ export class Buffer extends U.ClassBase {
     mode: number,
     offset: number | bigint,
     size: number | bigint,
-  ): Promise<[BufferMapAsyncStatus, Deno.PointerValue]>;
+  ): Promise<[BufferMapAsyncStatus]>;
   mapAsync(
     mode: number,
     offset: number | bigint,
     size: number | bigint,
-    callback: (...args: [BufferMapAsyncStatus, Deno.PointerValue]) => void,
+    callback: (...args: [BufferMapAsyncStatus]) => void,
   ): Deno.UnsafeCallback<typeof BufferMapCallback>;
   mapAsync(
     mode: number,
@@ -7122,16 +9766,16 @@ export class Buffer extends U.ClassBase {
     offset: number | bigint,
     size: number | bigint,
     callback?:
-      | ((...args: [BufferMapAsyncStatus, Deno.PointerValue]) => void)
+      | ((...args: [BufferMapAsyncStatus]) => void)
       | Deno.UnsafeCallback<typeof BufferMapCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<[BufferMapAsyncStatus, Deno.PointerValue]>
+    | Promise<[BufferMapAsyncStatus]>
     | Deno.UnsafeCallback<typeof BufferMapCallback> {
     if (callback == null) {
       return new Promise((res) => {
-        let data: [BufferMapAsyncStatus, Deno.PointerValue];
+        let data: [BufferMapAsyncStatus];
         const device = this.findInFamily(Device);
         if (!device) {
           throw new Error(
@@ -7141,7 +9785,7 @@ export class Buffer extends U.ClassBase {
         const cb = new Deno.UnsafeCallback(
           BufferMapCallback,
           (...args: U.CbParam<typeof BufferMapCallback>) => {
-            data = [args[0] as BufferMapAsyncStatus, args[1]];
+            data = [args[0] as BufferMapAsyncStatus];
           },
         );
         lib.symbols.wgpuBufferMapAsync(
@@ -7172,7 +9816,7 @@ export class Buffer extends U.ClassBase {
       const cb = new Deno.UnsafeCallback(
         BufferMapCallback,
         (...args: U.CbParam<typeof BufferMapCallback>) => {
-          callback(...[args[0] as BufferMapAsyncStatus, args[1]]);
+          callback(...[args[0] as BufferMapAsyncStatus]);
         },
       );
       lib.symbols.wgpuBufferMapAsync(
@@ -7225,18 +9869,36 @@ export class CommandEncoder extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuCommandEncoderRelease]);
   }
 
-  beginComputePass(descriptor: ComputePassDescriptor): ComputePassEncoder {
+  beginComputePass(
+    descriptor?:
+      | ComputePassDescriptor
+      | ToComputePassDescriptor
+      | Deno.PointerValue,
+  ): ComputePassEncoder {
     const result = lib.symbols.wgpuCommandEncoderBeginComputePass(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof ComputePassDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : ComputePassDescriptor.from(descriptor).pointer,
     );
     return new ComputePassEncoder(result, this);
   }
 
-  beginRenderPass(descriptor: RenderPassDescriptor): RenderPassEncoder {
+  beginRenderPass(
+    descriptor?:
+      | RenderPassDescriptor
+      | ToRenderPassDescriptor
+      | Deno.PointerValue,
+  ): RenderPassEncoder {
     const result = lib.symbols.wgpuCommandEncoderBeginRenderPass(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof RenderPassDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : RenderPassDescriptor.from(descriptor).pointer,
     );
     return new RenderPassEncoder(result, this);
   }
@@ -7274,51 +9936,96 @@ export class CommandEncoder extends U.ClassBase {
   }
 
   copyBufferToTexture(
-    source: ImageCopyBuffer,
-    destination: ImageCopyTexture,
-    copySize: Extent3D,
+    source: ImageCopyBuffer | ToImageCopyBuffer | Deno.PointerValue,
+    destination: ImageCopyTexture | ToImageCopyTexture | Deno.PointerValue,
+    copySize: Extent3D | ToExtent3D | Deno.PointerValue,
   ): void {
     const result = lib.symbols.wgpuCommandEncoderCopyBufferToTexture(
       this.pointer,
-      source.pointer,
-      destination.pointer,
-      copySize.pointer,
+      source instanceof ImageCopyBuffer
+        ? source.pointer
+        : U.duckIsPointer(source)
+        ? source
+        : ImageCopyBuffer.from(source).pointer,
+      destination instanceof ImageCopyTexture
+        ? destination.pointer
+        : U.duckIsPointer(destination)
+        ? destination
+        : ImageCopyTexture.from(destination).pointer,
+      copySize instanceof Extent3D
+        ? copySize.pointer
+        : U.duckIsPointer(copySize)
+        ? copySize
+        : Extent3D.from(copySize).pointer,
     );
     return result;
   }
 
   copyTextureToBuffer(
-    source: ImageCopyTexture,
-    destination: ImageCopyBuffer,
-    copySize: Extent3D,
+    source: ImageCopyTexture | ToImageCopyTexture | Deno.PointerValue,
+    destination: ImageCopyBuffer | ToImageCopyBuffer | Deno.PointerValue,
+    copySize: Extent3D | ToExtent3D | Deno.PointerValue,
   ): void {
     const result = lib.symbols.wgpuCommandEncoderCopyTextureToBuffer(
       this.pointer,
-      source.pointer,
-      destination.pointer,
-      copySize.pointer,
+      source instanceof ImageCopyTexture
+        ? source.pointer
+        : U.duckIsPointer(source)
+        ? source
+        : ImageCopyTexture.from(source).pointer,
+      destination instanceof ImageCopyBuffer
+        ? destination.pointer
+        : U.duckIsPointer(destination)
+        ? destination
+        : ImageCopyBuffer.from(destination).pointer,
+      copySize instanceof Extent3D
+        ? copySize.pointer
+        : U.duckIsPointer(copySize)
+        ? copySize
+        : Extent3D.from(copySize).pointer,
     );
     return result;
   }
 
   copyTextureToTexture(
-    source: ImageCopyTexture,
-    destination: ImageCopyTexture,
-    copySize: Extent3D,
+    source: ImageCopyTexture | ToImageCopyTexture | Deno.PointerValue,
+    destination: ImageCopyTexture | ToImageCopyTexture | Deno.PointerValue,
+    copySize: Extent3D | ToExtent3D | Deno.PointerValue,
   ): void {
     const result = lib.symbols.wgpuCommandEncoderCopyTextureToTexture(
       this.pointer,
-      source.pointer,
-      destination.pointer,
-      copySize.pointer,
+      source instanceof ImageCopyTexture
+        ? source.pointer
+        : U.duckIsPointer(source)
+        ? source
+        : ImageCopyTexture.from(source).pointer,
+      destination instanceof ImageCopyTexture
+        ? destination.pointer
+        : U.duckIsPointer(destination)
+        ? destination
+        : ImageCopyTexture.from(destination).pointer,
+      copySize instanceof Extent3D
+        ? copySize.pointer
+        : U.duckIsPointer(copySize)
+        ? copySize
+        : Extent3D.from(copySize).pointer,
     );
     return result;
   }
 
-  finish(descriptor: CommandBufferDescriptor): CommandBuffer {
+  finish(
+    descriptor?:
+      | CommandBufferDescriptor
+      | ToCommandBufferDescriptor
+      | Deno.PointerValue,
+  ): CommandBuffer {
     const result = lib.symbols.wgpuCommandEncoderFinish(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof CommandBufferDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : CommandBufferDescriptor.from(descriptor).pointer,
     );
     return new CommandBuffer(result, this);
   }
@@ -7519,109 +10226,122 @@ export class Device extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuDeviceRelease]);
   }
 
-  createBindGroup(descriptor: BindGroupDescriptor): BindGroup {
+  createBindGroup(
+    descriptor?:
+      | BindGroupDescriptor
+      | ToBindGroupDescriptor
+      | Deno.PointerValue,
+  ): BindGroup {
     const result = lib.symbols.wgpuDeviceCreateBindGroup(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof BindGroupDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : BindGroupDescriptor.from(descriptor).pointer,
     );
     return new BindGroup(result, this);
   }
 
   createBindGroupLayout(
-    descriptor: BindGroupLayoutDescriptor,
+    descriptor?:
+      | BindGroupLayoutDescriptor
+      | ToBindGroupLayoutDescriptor
+      | Deno.PointerValue,
   ): BindGroupLayout {
     const result = lib.symbols.wgpuDeviceCreateBindGroupLayout(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof BindGroupLayoutDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : BindGroupLayoutDescriptor.from(descriptor).pointer,
     );
     return new BindGroupLayout(result, this);
   }
 
-  createBuffer(descriptor: BufferDescriptor): Buffer {
+  createBuffer(
+    descriptor?: BufferDescriptor | ToBufferDescriptor | Deno.PointerValue,
+  ): Buffer {
     const result = lib.symbols.wgpuDeviceCreateBuffer(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof BufferDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : BufferDescriptor.from(descriptor).pointer,
     );
     return new Buffer(result, this);
   }
 
-  createCommandEncoder(descriptor: CommandEncoderDescriptor): CommandEncoder {
+  createCommandEncoder(
+    descriptor?:
+      | CommandEncoderDescriptor
+      | ToCommandEncoderDescriptor
+      | Deno.PointerValue,
+  ): CommandEncoder {
     const result = lib.symbols.wgpuDeviceCreateCommandEncoder(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof CommandEncoderDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : CommandEncoderDescriptor.from(descriptor).pointer,
     );
     return new CommandEncoder(result, this);
   }
 
   createComputePipeline(
-    descriptor: ComputePipelineDescriptor,
+    descriptor?:
+      | ComputePipelineDescriptor
+      | ToComputePipelineDescriptor
+      | Deno.PointerValue,
   ): ComputePipeline {
     const result = lib.symbols.wgpuDeviceCreateComputePipeline(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof ComputePipelineDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : ComputePipelineDescriptor.from(descriptor).pointer,
     );
     return new ComputePipeline(result, this);
   }
 
   createComputePipelineAsync(
-    descriptor: ComputePipelineDescriptor,
-  ): Promise<
-    [
-      CreatePipelineAsyncStatus,
-      ComputePipeline,
-      Deno.PointerValue,
-      Deno.PointerValue,
-    ]
-  >;
+    descriptor: ComputePipelineDescriptor | ToComputePipelineDescriptor,
+  ): Promise<[CreatePipelineAsyncStatus, ComputePipeline, Deno.PointerValue]>;
   createComputePipelineAsync(
-    descriptor: ComputePipelineDescriptor,
+    descriptor: ComputePipelineDescriptor | ToComputePipelineDescriptor,
     callback: (
-      ...args: [
-        CreatePipelineAsyncStatus,
-        ComputePipeline,
-        Deno.PointerValue,
-        Deno.PointerValue,
-      ]
+      ...args: [CreatePipelineAsyncStatus, ComputePipeline, Deno.PointerValue]
     ) => void,
   ): Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback>;
   createComputePipelineAsync(
-    descriptor: ComputePipelineDescriptor,
+    descriptor: ComputePipelineDescriptor | ToComputePipelineDescriptor,
     callback: Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback>,
   ): void;
   createComputePipelineAsync(
-    descriptor: ComputePipelineDescriptor,
+    descriptor: ComputePipelineDescriptor | ToComputePipelineDescriptor,
     callback: Deno.PointerValue,
   ): void;
   createComputePipelineAsync(
-    descriptor: ComputePipelineDescriptor,
+    descriptor: ComputePipelineDescriptor | ToComputePipelineDescriptor,
     callback?:
       | ((
-        ...args: [
-          CreatePipelineAsyncStatus,
-          ComputePipeline,
-          Deno.PointerValue,
-          Deno.PointerValue,
-        ]
+        ...args: [CreatePipelineAsyncStatus, ComputePipeline, Deno.PointerValue]
       ) => void)
       | Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<
-      [
-        CreatePipelineAsyncStatus,
-        ComputePipeline,
-        Deno.PointerValue,
-        Deno.PointerValue,
-      ]
-    >
+    | Promise<[CreatePipelineAsyncStatus, ComputePipeline, Deno.PointerValue]>
     | Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback> {
     if (callback == null) {
       return new Promise((res) => {
         let data: [
           CreatePipelineAsyncStatus,
           ComputePipeline,
-          Deno.PointerValue,
           Deno.PointerValue,
         ];
         const device = this.findInFamily(Device);
@@ -7637,13 +10357,16 @@ export class Device extends U.ClassBase {
               args[0] as CreatePipelineAsyncStatus,
               new ComputePipeline(args[1], this),
               args[2],
-              args[3],
             ];
           },
         );
         lib.symbols.wgpuDeviceCreateComputePipelineAsync(
           this.pointer,
-          descriptor.pointer,
+          descriptor instanceof ComputePipelineDescriptor
+            ? descriptor.pointer
+            : U.duckIsPointer(descriptor)
+            ? descriptor
+            : ComputePipelineDescriptor.from(descriptor).pointer,
           cb.pointer,
           null,
         );
@@ -7657,7 +10380,11 @@ export class Device extends U.ClassBase {
     } else if (callback instanceof Deno.UnsafeCallback) {
       lib.symbols.wgpuDeviceCreateComputePipelineAsync(
         this.pointer,
-        descriptor.pointer,
+        descriptor instanceof ComputePipelineDescriptor
+          ? descriptor.pointer
+          : U.duckIsPointer(descriptor)
+          ? descriptor
+          : ComputePipelineDescriptor.from(descriptor).pointer,
         callback.pointer,
         null,
       );
@@ -7669,13 +10396,16 @@ export class Device extends U.ClassBase {
             args[0] as CreatePipelineAsyncStatus,
             new ComputePipeline(args[1], this),
             args[2],
-            args[3],
           ]);
         },
       );
       lib.symbols.wgpuDeviceCreateComputePipelineAsync(
         this.pointer,
-        descriptor.pointer,
+        descriptor instanceof ComputePipelineDescriptor
+          ? descriptor.pointer
+          : U.duckIsPointer(descriptor)
+          ? descriptor
+          : ComputePipelineDescriptor.from(descriptor).pointer,
         cb.pointer,
         null,
       );
@@ -7683,106 +10413,116 @@ export class Device extends U.ClassBase {
     } else {
       lib.symbols.wgpuDeviceCreateComputePipelineAsync(
         this.pointer,
-        descriptor.pointer,
+        descriptor instanceof ComputePipelineDescriptor
+          ? descriptor.pointer
+          : U.duckIsPointer(descriptor)
+          ? descriptor
+          : ComputePipelineDescriptor.from(descriptor).pointer,
         callback,
         null,
       );
     }
   }
 
-  createPipelineLayout(descriptor: PipelineLayoutDescriptor): PipelineLayout {
+  createPipelineLayout(
+    descriptor?:
+      | PipelineLayoutDescriptor
+      | ToPipelineLayoutDescriptor
+      | Deno.PointerValue,
+  ): PipelineLayout {
     const result = lib.symbols.wgpuDeviceCreatePipelineLayout(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof PipelineLayoutDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : PipelineLayoutDescriptor.from(descriptor).pointer,
     );
     return new PipelineLayout(result, this);
   }
 
-  createQuerySet(descriptor: QuerySetDescriptor): QuerySet {
+  createQuerySet(
+    descriptor?: QuerySetDescriptor | ToQuerySetDescriptor | Deno.PointerValue,
+  ): QuerySet {
     const result = lib.symbols.wgpuDeviceCreateQuerySet(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof QuerySetDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : QuerySetDescriptor.from(descriptor).pointer,
     );
     return new QuerySet(result, this);
   }
 
   createRenderBundleEncoder(
-    descriptor: RenderBundleEncoderDescriptor,
+    descriptor?:
+      | RenderBundleEncoderDescriptor
+      | ToRenderBundleEncoderDescriptor
+      | Deno.PointerValue,
   ): RenderBundleEncoder {
     const result = lib.symbols.wgpuDeviceCreateRenderBundleEncoder(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof RenderBundleEncoderDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : RenderBundleEncoderDescriptor.from(descriptor).pointer,
     );
     return new RenderBundleEncoder(result, this);
   }
 
-  createRenderPipeline(descriptor: RenderPipelineDescriptor): RenderPipeline {
+  createRenderPipeline(
+    descriptor?:
+      | RenderPipelineDescriptor
+      | ToRenderPipelineDescriptor
+      | Deno.PointerValue,
+  ): RenderPipeline {
     const result = lib.symbols.wgpuDeviceCreateRenderPipeline(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof RenderPipelineDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : RenderPipelineDescriptor.from(descriptor).pointer,
     );
     return new RenderPipeline(result, this);
   }
 
   createRenderPipelineAsync(
-    descriptor: RenderPipelineDescriptor,
-  ): Promise<
-    [
-      CreatePipelineAsyncStatus,
-      RenderPipeline,
-      Deno.PointerValue,
-      Deno.PointerValue,
-    ]
-  >;
+    descriptor: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
+  ): Promise<[CreatePipelineAsyncStatus, RenderPipeline, Deno.PointerValue]>;
   createRenderPipelineAsync(
-    descriptor: RenderPipelineDescriptor,
+    descriptor: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
     callback: (
-      ...args: [
-        CreatePipelineAsyncStatus,
-        RenderPipeline,
-        Deno.PointerValue,
-        Deno.PointerValue,
-      ]
+      ...args: [CreatePipelineAsyncStatus, RenderPipeline, Deno.PointerValue]
     ) => void,
   ): Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback>;
   createRenderPipelineAsync(
-    descriptor: RenderPipelineDescriptor,
+    descriptor: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
     callback: Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback>,
   ): void;
   createRenderPipelineAsync(
-    descriptor: RenderPipelineDescriptor,
+    descriptor: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
     callback: Deno.PointerValue,
   ): void;
   createRenderPipelineAsync(
-    descriptor: RenderPipelineDescriptor,
+    descriptor: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
     callback?:
       | ((
-        ...args: [
-          CreatePipelineAsyncStatus,
-          RenderPipeline,
-          Deno.PointerValue,
-          Deno.PointerValue,
-        ]
+        ...args: [CreatePipelineAsyncStatus, RenderPipeline, Deno.PointerValue]
       ) => void)
       | Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<
-      [
-        CreatePipelineAsyncStatus,
-        RenderPipeline,
-        Deno.PointerValue,
-        Deno.PointerValue,
-      ]
-    >
+    | Promise<[CreatePipelineAsyncStatus, RenderPipeline, Deno.PointerValue]>
     | Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback> {
     if (callback == null) {
       return new Promise((res) => {
         let data: [
           CreatePipelineAsyncStatus,
           RenderPipeline,
-          Deno.PointerValue,
           Deno.PointerValue,
         ];
         const device = this.findInFamily(Device);
@@ -7798,13 +10538,16 @@ export class Device extends U.ClassBase {
               args[0] as CreatePipelineAsyncStatus,
               new RenderPipeline(args[1], this),
               args[2],
-              args[3],
             ];
           },
         );
         lib.symbols.wgpuDeviceCreateRenderPipelineAsync(
           this.pointer,
-          descriptor.pointer,
+          descriptor instanceof RenderPipelineDescriptor
+            ? descriptor.pointer
+            : U.duckIsPointer(descriptor)
+            ? descriptor
+            : RenderPipelineDescriptor.from(descriptor).pointer,
           cb.pointer,
           null,
         );
@@ -7818,7 +10561,11 @@ export class Device extends U.ClassBase {
     } else if (callback instanceof Deno.UnsafeCallback) {
       lib.symbols.wgpuDeviceCreateRenderPipelineAsync(
         this.pointer,
-        descriptor.pointer,
+        descriptor instanceof RenderPipelineDescriptor
+          ? descriptor.pointer
+          : U.duckIsPointer(descriptor)
+          ? descriptor
+          : RenderPipelineDescriptor.from(descriptor).pointer,
         callback.pointer,
         null,
       );
@@ -7830,13 +10577,16 @@ export class Device extends U.ClassBase {
             args[0] as CreatePipelineAsyncStatus,
             new RenderPipeline(args[1], this),
             args[2],
-            args[3],
           ]);
         },
       );
       lib.symbols.wgpuDeviceCreateRenderPipelineAsync(
         this.pointer,
-        descriptor.pointer,
+        descriptor instanceof RenderPipelineDescriptor
+          ? descriptor.pointer
+          : U.duckIsPointer(descriptor)
+          ? descriptor
+          : RenderPipelineDescriptor.from(descriptor).pointer,
         cb.pointer,
         null,
       );
@@ -7844,45 +10594,74 @@ export class Device extends U.ClassBase {
     } else {
       lib.symbols.wgpuDeviceCreateRenderPipelineAsync(
         this.pointer,
-        descriptor.pointer,
+        descriptor instanceof RenderPipelineDescriptor
+          ? descriptor.pointer
+          : U.duckIsPointer(descriptor)
+          ? descriptor
+          : RenderPipelineDescriptor.from(descriptor).pointer,
         callback,
         null,
       );
     }
   }
 
-  createSampler(descriptor: SamplerDescriptor): Sampler {
+  createSampler(
+    descriptor?: SamplerDescriptor | ToSamplerDescriptor | Deno.PointerValue,
+  ): Sampler {
     const result = lib.symbols.wgpuDeviceCreateSampler(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof SamplerDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : SamplerDescriptor.from(descriptor).pointer,
     );
     return new Sampler(result, this);
   }
 
-  createShaderModule(descriptor: ShaderModuleDescriptor): ShaderModule {
+  createShaderModule(
+    descriptor?:
+      | ShaderModuleDescriptor
+      | ToShaderModuleDescriptor
+      | Deno.PointerValue,
+  ): ShaderModule {
     const result = lib.symbols.wgpuDeviceCreateShaderModule(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof ShaderModuleDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : ShaderModuleDescriptor.from(descriptor).pointer,
     );
     return new ShaderModule(result, this);
   }
 
   createSwapChain(
     surface: Surface,
-    descriptor: SwapChainDescriptor,
+    descriptor: SwapChainDescriptor | ToSwapChainDescriptor | Deno.PointerValue,
   ): SwapChain {
     const result = lib.symbols.wgpuDeviceCreateSwapChain(
       this.pointer,
       surface.pointer,
-      descriptor.pointer,
+      descriptor instanceof SwapChainDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : SwapChainDescriptor.from(descriptor).pointer,
     );
     return new SwapChain(result, this);
   }
 
-  createTexture(descriptor: TextureDescriptor): Texture {
+  createTexture(
+    descriptor?: TextureDescriptor | ToTextureDescriptor | Deno.PointerValue,
+  ): Texture {
     const result = lib.symbols.wgpuDeviceCreateTexture(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof TextureDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : TextureDescriptor.from(descriptor).pointer,
     );
     return new Texture(result, this);
   }
@@ -7915,22 +10694,20 @@ export class Device extends U.ClassBase {
     return result == 1;
   }
 
-  popErrorScope(): Promise<[ErrorType, Deno.PointerValue, Deno.PointerValue]>;
+  popErrorScope(): Promise<[ErrorType, Deno.PointerValue]>;
   popErrorScope(
-    callback: (
-      ...args: [ErrorType, Deno.PointerValue, Deno.PointerValue]
-    ) => void,
+    callback: (...args: [ErrorType, Deno.PointerValue]) => void,
   ): Deno.UnsafeCallback<typeof ErrorCallback>;
   popErrorScope(callback: Deno.UnsafeCallback<typeof ErrorCallback>): void;
   popErrorScope(callback: Deno.PointerValue): void;
   popErrorScope(
     callback?:
-      | ((...args: [ErrorType, Deno.PointerValue, Deno.PointerValue]) => void)
+      | ((...args: [ErrorType, Deno.PointerValue]) => void)
       | Deno.UnsafeCallback<typeof ErrorCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<[ErrorType, Deno.PointerValue, Deno.PointerValue]>
+    | Promise<[ErrorType, Deno.PointerValue]>
     | Deno.UnsafeCallback<typeof ErrorCallback> {
     if (callback == null) {
       return new Promise((res) => {
@@ -7938,11 +10715,7 @@ export class Device extends U.ClassBase {
           ErrorCallback,
           (...args: U.CbParam<typeof ErrorCallback>) => {
             res(
-              [args[0] as ErrorType, args[1], args[2]] as [
-                ErrorType,
-                Deno.PointerValue,
-                Deno.PointerValue,
-              ],
+              [args[0] as ErrorType, args[1]] as [ErrorType, Deno.PointerValue],
             );
           },
         );
@@ -7954,7 +10727,7 @@ export class Device extends U.ClassBase {
       const cb = new Deno.UnsafeCallback(
         ErrorCallback,
         (...args: U.CbParam<typeof ErrorCallback>) => {
-          callback(...[args[0] as ErrorType, args[1], args[2]]);
+          callback(...[args[0] as ErrorType, args[1]]);
         },
       );
       lib.symbols.wgpuDevicePopErrorScope(this.pointer, cb.pointer, null);
@@ -7974,13 +10747,9 @@ export class Device extends U.ClassBase {
     return result;
   }
 
-  setUncapturedErrorCallback(): Promise<
-    [ErrorType, Deno.PointerValue, Deno.PointerValue]
-  >;
+  setUncapturedErrorCallback(): Promise<[ErrorType, Deno.PointerValue]>;
   setUncapturedErrorCallback(
-    callback: (
-      ...args: [ErrorType, Deno.PointerValue, Deno.PointerValue]
-    ) => void,
+    callback: (...args: [ErrorType, Deno.PointerValue]) => void,
   ): Deno.UnsafeCallback<typeof ErrorCallback>;
   setUncapturedErrorCallback(
     callback: Deno.UnsafeCallback<typeof ErrorCallback>,
@@ -7988,12 +10757,12 @@ export class Device extends U.ClassBase {
   setUncapturedErrorCallback(callback: Deno.PointerValue): void;
   setUncapturedErrorCallback(
     callback?:
-      | ((...args: [ErrorType, Deno.PointerValue, Deno.PointerValue]) => void)
+      | ((...args: [ErrorType, Deno.PointerValue]) => void)
       | Deno.UnsafeCallback<typeof ErrorCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<[ErrorType, Deno.PointerValue, Deno.PointerValue]>
+    | Promise<[ErrorType, Deno.PointerValue]>
     | Deno.UnsafeCallback<typeof ErrorCallback> {
     if (callback == null) {
       return new Promise((res) => {
@@ -8001,11 +10770,7 @@ export class Device extends U.ClassBase {
           ErrorCallback,
           (...args: U.CbParam<typeof ErrorCallback>) => {
             res(
-              [args[0] as ErrorType, args[1], args[2]] as [
-                ErrorType,
-                Deno.PointerValue,
-                Deno.PointerValue,
-              ],
+              [args[0] as ErrorType, args[1]] as [ErrorType, Deno.PointerValue],
             );
           },
         );
@@ -8025,7 +10790,7 @@ export class Device extends U.ClassBase {
       const cb = new Deno.UnsafeCallback(
         ErrorCallback,
         (...args: U.CbParam<typeof ErrorCallback>) => {
-          callback(...[args[0] as ErrorType, args[1], args[2]]);
+          callback(...[args[0] as ErrorType, args[1]]);
         },
       );
       lib.symbols.wgpuDeviceSetUncapturedErrorCallback(
@@ -8043,11 +10808,21 @@ export class Device extends U.ClassBase {
     }
   }
 
-  poll(wait: boolean, wrappedSubmissionIndex: WrappedSubmissionIndex): boolean {
+  poll(
+    wait: boolean,
+    wrappedSubmissionIndex:
+      | WrappedSubmissionIndex
+      | ToWrappedSubmissionIndex
+      | Deno.PointerValue,
+  ): boolean {
     const result = lib.symbols.wgpuDevicePoll(
       this.pointer,
       wait ? 1 : 0,
-      wrappedSubmissionIndex.pointer,
+      wrappedSubmissionIndex instanceof WrappedSubmissionIndex
+        ? wrappedSubmissionIndex.pointer
+        : U.duckIsPointer(wrappedSubmissionIndex)
+        ? wrappedSubmissionIndex
+        : WrappedSubmissionIndex.from(wrappedSubmissionIndex).pointer,
     );
     return result == 1;
   }
@@ -8059,10 +10834,16 @@ export class Instance extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuInstanceRelease]);
   }
 
-  createSurface(descriptor: SurfaceDescriptor): Surface {
+  createSurface(
+    descriptor?: SurfaceDescriptor | ToSurfaceDescriptor | Deno.PointerValue,
+  ): Surface {
     const result = lib.symbols.wgpuInstanceCreateSurface(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof SurfaceDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : SurfaceDescriptor.from(descriptor).pointer,
     );
     return new Surface(result, this);
   }
@@ -8073,47 +10854,31 @@ export class Instance extends U.ClassBase {
   }
 
   requestAdapter(
-    options: RequestAdapterOptions,
-  ): Promise<
-    [RequestAdapterStatus, Adapter, Deno.PointerValue, Deno.PointerValue]
-  >;
+    options: RequestAdapterOptions | ToRequestAdapterOptions,
+  ): Promise<[RequestAdapterStatus, Adapter, Deno.PointerValue]>;
   requestAdapter(
-    options: RequestAdapterOptions,
+    options: RequestAdapterOptions | ToRequestAdapterOptions,
     callback: (
-      ...args: [
-        RequestAdapterStatus,
-        Adapter,
-        Deno.PointerValue,
-        Deno.PointerValue,
-      ]
+      ...args: [RequestAdapterStatus, Adapter, Deno.PointerValue]
     ) => void,
   ): Deno.UnsafeCallback<typeof RequestAdapterCallback>;
   requestAdapter(
-    options: RequestAdapterOptions,
+    options: RequestAdapterOptions | ToRequestAdapterOptions,
     callback: Deno.UnsafeCallback<typeof RequestAdapterCallback>,
   ): void;
   requestAdapter(
-    options: RequestAdapterOptions,
+    options: RequestAdapterOptions | ToRequestAdapterOptions,
     callback: Deno.PointerValue,
   ): void;
   requestAdapter(
-    options: RequestAdapterOptions,
+    options: RequestAdapterOptions | ToRequestAdapterOptions,
     callback?:
-      | ((
-        ...args: [
-          RequestAdapterStatus,
-          Adapter,
-          Deno.PointerValue,
-          Deno.PointerValue,
-        ]
-      ) => void)
+      | ((...args: [RequestAdapterStatus, Adapter, Deno.PointerValue]) => void)
       | Deno.UnsafeCallback<typeof RequestAdapterCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<
-      [RequestAdapterStatus, Adapter, Deno.PointerValue, Deno.PointerValue]
-    >
+    | Promise<[RequestAdapterStatus, Adapter, Deno.PointerValue]>
     | Deno.UnsafeCallback<typeof RequestAdapterCallback> {
     if (callback == null) {
       return new Promise((res) => {
@@ -8125,19 +10890,17 @@ export class Instance extends U.ClassBase {
                 args[0] as RequestAdapterStatus,
                 new Adapter(args[1], this),
                 args[2],
-                args[3],
-              ] as [
-                RequestAdapterStatus,
-                Adapter,
-                Deno.PointerValue,
-                Deno.PointerValue,
-              ],
+              ] as [RequestAdapterStatus, Adapter, Deno.PointerValue],
             );
           },
         );
         lib.symbols.wgpuInstanceRequestAdapter(
           this.pointer,
-          options.pointer,
+          options instanceof RequestAdapterOptions
+            ? options.pointer
+            : U.duckIsPointer(options)
+            ? options
+            : RequestAdapterOptions.from(options).pointer,
           cb.pointer,
           null,
         );
@@ -8145,7 +10908,11 @@ export class Instance extends U.ClassBase {
     } else if (callback instanceof Deno.UnsafeCallback) {
       lib.symbols.wgpuInstanceRequestAdapter(
         this.pointer,
-        options.pointer,
+        options instanceof RequestAdapterOptions
+          ? options.pointer
+          : U.duckIsPointer(options)
+          ? options
+          : RequestAdapterOptions.from(options).pointer,
         callback.pointer,
         null,
       );
@@ -8157,13 +10924,16 @@ export class Instance extends U.ClassBase {
             args[0] as RequestAdapterStatus,
             new Adapter(args[1], this),
             args[2],
-            args[3],
           ]);
         },
       );
       lib.symbols.wgpuInstanceRequestAdapter(
         this.pointer,
-        options.pointer,
+        options instanceof RequestAdapterOptions
+          ? options.pointer
+          : U.duckIsPointer(options)
+          ? options
+          : RequestAdapterOptions.from(options).pointer,
         cb.pointer,
         null,
       );
@@ -8171,7 +10941,11 @@ export class Instance extends U.ClassBase {
     } else {
       lib.symbols.wgpuInstanceRequestAdapter(
         this.pointer,
-        options.pointer,
+        options instanceof RequestAdapterOptions
+          ? options.pointer
+          : U.duckIsPointer(options)
+          ? options
+          : RequestAdapterOptions.from(options).pointer,
         callback,
         null,
       );
@@ -8179,12 +10953,19 @@ export class Instance extends U.ClassBase {
   }
 
   enumerateAdapters(
-    options: InstanceEnumerateAdapterOptions,
+    options:
+      | InstanceEnumerateAdapterOptions
+      | ToInstanceEnumerateAdapterOptions
+      | Deno.PointerValue,
     adapters: Deno.PointerValue,
   ): number | bigint {
     const result = lib.symbols.wgpuInstanceEnumerateAdapters(
       this.pointer,
-      options.pointer,
+      options instanceof InstanceEnumerateAdapterOptions
+        ? options.pointer
+        : U.duckIsPointer(options)
+        ? options
+        : InstanceEnumerateAdapterOptions.from(options).pointer,
       adapters,
     );
     return result;
@@ -8235,9 +11016,9 @@ export class Queue extends U.ClassBase {
     super(pointer, parent);
     U.registry.register(this, [pointer, lib.symbols.wgpuQueueRelease]);
   }
-  onSubmittedWorkDone(): Promise<[QueueWorkDoneStatus, Deno.PointerValue]>;
+  onSubmittedWorkDone(): Promise<[QueueWorkDoneStatus]>;
   onSubmittedWorkDone(
-    callback: (...args: [QueueWorkDoneStatus, Deno.PointerValue]) => void,
+    callback: (...args: [QueueWorkDoneStatus]) => void,
   ): Deno.UnsafeCallback<typeof QueueWorkDoneCallback>;
   onSubmittedWorkDone(
     callback: Deno.UnsafeCallback<typeof QueueWorkDoneCallback>,
@@ -8245,24 +11026,19 @@ export class Queue extends U.ClassBase {
   onSubmittedWorkDone(callback: Deno.PointerValue): void;
   onSubmittedWorkDone(
     callback?:
-      | ((...args: [QueueWorkDoneStatus, Deno.PointerValue]) => void)
+      | ((...args: [QueueWorkDoneStatus]) => void)
       | Deno.UnsafeCallback<typeof QueueWorkDoneCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<[QueueWorkDoneStatus, Deno.PointerValue]>
+    | Promise<[QueueWorkDoneStatus]>
     | Deno.UnsafeCallback<typeof QueueWorkDoneCallback> {
     if (callback == null) {
       return new Promise((res) => {
         const cb = new Deno.UnsafeCallback(
           QueueWorkDoneCallback,
           (...args: U.CbParam<typeof QueueWorkDoneCallback>) => {
-            res(
-              [args[0] as QueueWorkDoneStatus, args[1]] as [
-                QueueWorkDoneStatus,
-                Deno.PointerValue,
-              ],
-            );
+            res([args[0] as QueueWorkDoneStatus] as [QueueWorkDoneStatus]);
           },
         );
         lib.symbols.wgpuQueueOnSubmittedWorkDone(
@@ -8281,7 +11057,7 @@ export class Queue extends U.ClassBase {
       const cb = new Deno.UnsafeCallback(
         QueueWorkDoneCallback,
         (...args: U.CbParam<typeof QueueWorkDoneCallback>) => {
-          callback(...[args[0] as QueueWorkDoneStatus, args[1]]);
+          callback(...[args[0] as QueueWorkDoneStatus]);
         },
       );
       lib.symbols.wgpuQueueOnSubmittedWorkDone(this.pointer, cb.pointer, null);
@@ -8322,19 +11098,31 @@ export class Queue extends U.ClassBase {
   }
 
   writeTexture(
-    destination: ImageCopyTexture,
+    destination: ImageCopyTexture | ToImageCopyTexture | Deno.PointerValue,
     data: Deno.PointerValue,
     dataSize: number | bigint,
-    dataLayout: TextureDataLayout,
-    writeSize: Extent3D,
+    dataLayout: TextureDataLayout | ToTextureDataLayout | Deno.PointerValue,
+    writeSize: Extent3D | ToExtent3D | Deno.PointerValue,
   ): void {
     const result = lib.symbols.wgpuQueueWriteTexture(
       this.pointer,
-      destination.pointer,
+      destination instanceof ImageCopyTexture
+        ? destination.pointer
+        : U.duckIsPointer(destination)
+        ? destination
+        : ImageCopyTexture.from(destination).pointer,
       data,
       dataSize,
-      dataLayout.pointer,
-      writeSize.pointer,
+      dataLayout instanceof TextureDataLayout
+        ? dataLayout.pointer
+        : U.duckIsPointer(dataLayout)
+        ? dataLayout
+        : TextureDataLayout.from(dataLayout).pointer,
+      writeSize instanceof Extent3D
+        ? writeSize.pointer
+        : U.duckIsPointer(writeSize)
+        ? writeSize
+        : Extent3D.from(writeSize).pointer,
     );
     return result;
   }
@@ -8428,10 +11216,19 @@ export class RenderBundleEncoder extends U.ClassBase {
     return result;
   }
 
-  finish(descriptor: RenderBundleDescriptor): RenderBundle {
+  finish(
+    descriptor?:
+      | RenderBundleDescriptor
+      | ToRenderBundleDescriptor
+      | Deno.PointerValue,
+  ): RenderBundle {
     const result = lib.symbols.wgpuRenderBundleEncoderFinish(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof RenderBundleDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : RenderBundleDescriptor.from(descriptor).pointer,
     );
     return new RenderBundle(result, this);
   }
@@ -8674,10 +11471,14 @@ export class RenderPassEncoder extends U.ClassBase {
     return result;
   }
 
-  setBlendConstant(color: Color): void {
+  setBlendConstant(color?: Color | ToColor | Deno.PointerValue): void {
     const result = lib.symbols.wgpuRenderPassEncoderSetBlendConstant(
       this.pointer,
-      color.pointer,
+      color instanceof Color
+        ? color.pointer
+        : U.duckIsPointer(color)
+        ? color
+        : Color.from(color).pointer,
     );
     return result;
   }
@@ -8889,15 +11690,11 @@ export class ShaderModule extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuShaderModuleRelease]);
   }
   getCompilationInfo(): Promise<
-    [CompilationInfoRequestStatus, Deno.PointerValue, Deno.PointerValue]
+    [CompilationInfoRequestStatus, Deno.PointerValue]
   >;
   getCompilationInfo(
     callback: (
-      ...args: [
-        CompilationInfoRequestStatus,
-        Deno.PointerValue,
-        Deno.PointerValue,
-      ]
+      ...args: [CompilationInfoRequestStatus, Deno.PointerValue]
     ) => void,
   ): Deno.UnsafeCallback<typeof CompilationInfoCallback>;
   getCompilationInfo(
@@ -8906,20 +11703,12 @@ export class ShaderModule extends U.ClassBase {
   getCompilationInfo(callback: Deno.PointerValue): void;
   getCompilationInfo(
     callback?:
-      | ((
-        ...args: [
-          CompilationInfoRequestStatus,
-          Deno.PointerValue,
-          Deno.PointerValue,
-        ]
-      ) => void)
+      | ((...args: [CompilationInfoRequestStatus, Deno.PointerValue]) => void)
       | Deno.UnsafeCallback<typeof CompilationInfoCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<
-      [CompilationInfoRequestStatus, Deno.PointerValue, Deno.PointerValue]
-    >
+    | Promise<[CompilationInfoRequestStatus, Deno.PointerValue]>
     | Deno.UnsafeCallback<typeof CompilationInfoCallback> {
     if (callback == null) {
       return new Promise((res) => {
@@ -8927,9 +11716,8 @@ export class ShaderModule extends U.ClassBase {
           CompilationInfoCallback,
           (...args: U.CbParam<typeof CompilationInfoCallback>) => {
             res(
-              [args[0] as CompilationInfoRequestStatus, args[1], args[2]] as [
+              [args[0] as CompilationInfoRequestStatus, args[1]] as [
                 CompilationInfoRequestStatus,
-                Deno.PointerValue,
                 Deno.PointerValue,
               ],
             );
@@ -8951,11 +11739,7 @@ export class ShaderModule extends U.ClassBase {
       const cb = new Deno.UnsafeCallback(
         CompilationInfoCallback,
         (...args: U.CbParam<typeof CompilationInfoCallback>) => {
-          callback(...[
-            args[0] as CompilationInfoRequestStatus,
-            args[1],
-            args[2],
-          ]);
+          callback(...[args[0] as CompilationInfoRequestStatus, args[1]]);
         },
       );
       lib.symbols.wgpuShaderModuleGetCompilationInfo(
@@ -9026,10 +11810,19 @@ export class Texture extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuTextureRelease]);
   }
 
-  createView(descriptor: TextureViewDescriptor): TextureView {
+  createView(
+    descriptor?:
+      | TextureViewDescriptor
+      | ToTextureViewDescriptor
+      | Deno.PointerValue,
+  ): TextureView {
     const result = lib.symbols.wgpuTextureCreateView(
       this.pointer,
-      descriptor.pointer,
+      descriptor instanceof TextureViewDescriptor
+        ? descriptor.pointer
+        : U.duckIsPointer(descriptor)
+        ? descriptor
+        : TextureViewDescriptor.from(descriptor).pointer,
     );
     return new TextureView(result, this);
   }
