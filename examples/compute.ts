@@ -61,7 +61,7 @@ const storageBuffer = device.createBuffer({
 const computePipeline = device.createComputePipeline({
   label: cstr("compute_pipeline"),
   compute: {
-    module: shaderModule.pointer,
+    module: shaderModule,
     entryPoint: cstr("main"),
   },
 });
@@ -70,7 +70,7 @@ const computePipeline = device.createComputePipeline({
 const bindGroupLayout = computePipeline.getBindGroupLayout(0);
 const entry = w.BindGroupEntry.from({
   binding: 0,
-  buffer: storageBuffer.pointer,
+  buffer: storageBuffer,
   offset: 0,
   size: numbers.byteLength,
 });

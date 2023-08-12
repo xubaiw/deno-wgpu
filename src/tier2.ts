@@ -660,11 +660,11 @@ export class AdapterProperties extends U.StructBase {
 export type ToBindGroupEntry = undefined | {
   nextInChain?: Deno.PointerValue;
   binding?: number;
-  buffer?: Deno.PointerValue;
+  buffer?: Deno.PointerValue | Buffer;
   offset?: bigint | number;
   size?: bigint | number;
-  sampler?: Deno.PointerValue;
-  textureView?: Deno.PointerValue;
+  sampler?: Deno.PointerValue | Sampler;
+  textureView?: Deno.PointerValue | TextureView;
 };
 
 export class BindGroupEntry extends U.StructBase {
@@ -704,14 +704,20 @@ export class BindGroupEntry extends U.StructBase {
     this.dataview.setUint32(8, value, U.LE);
   }
 
-  get buffer(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
+  get buffer(): Buffer {
+    return new Buffer(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE)),
+    );
   }
 
-  set buffer(value: Deno.PointerValue) {
+  set buffer(value: Deno.PointerValue | Buffer) {
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof Buffer ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -732,26 +738,38 @@ export class BindGroupEntry extends U.StructBase {
     this.dataview.setBigUint64(32, BigInt(value), U.LE);
   }
 
-  get sampler(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
+  get sampler(): Sampler {
+    return new Sampler(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE)),
+    );
   }
 
-  set sampler(value: Deno.PointerValue) {
+  set sampler(value: Deno.PointerValue | Sampler) {
     this.dataview.setBigUint64(
       40,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof Sampler ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
 
-  get textureView(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(48, U.LE));
+  get textureView(): TextureView {
+    return new TextureView(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(48, U.LE)),
+    );
   }
 
-  set textureView(value: Deno.PointerValue) {
+  set textureView(value: Deno.PointerValue | TextureView) {
     this.dataview.setBigUint64(
       48,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof TextureView ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -1381,7 +1399,7 @@ export class CompilationMessage extends U.StructBase {
 }
 
 export type ToComputePassTimestampWrite = undefined | {
-  querySet?: Deno.PointerValue;
+  querySet?: Deno.PointerValue | QuerySet;
   queryIndex?: number;
   location?: ComputePassTimestampLocation;
 };
@@ -1403,14 +1421,20 @@ export class ComputePassTimestampWrite extends U.StructBase {
     }
   }
 
-  get querySet(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
+  get querySet(): QuerySet {
+    return new QuerySet(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE)),
+    );
   }
 
-  set querySet(value: Deno.PointerValue) {
+  set querySet(value: Deno.PointerValue | QuerySet) {
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof QuerySet ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -2949,7 +2973,7 @@ export class RenderBundleEncoderDescriptor extends U.StructBase {
 }
 
 export type ToRenderPassDepthStencilAttachment = undefined | {
-  view?: Deno.PointerValue;
+  view?: Deno.PointerValue | TextureView;
   depthLoadOp?: LoadOp;
   depthStoreOp?: StoreOp;
   depthClearValue?: number;
@@ -2977,14 +3001,20 @@ export class RenderPassDepthStencilAttachment extends U.StructBase {
     }
   }
 
-  get view(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
+  get view(): TextureView {
+    return new TextureView(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE)),
+    );
   }
 
-  set view(value: Deno.PointerValue) {
+  set view(value: Deno.PointerValue | TextureView) {
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof TextureView ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -3178,7 +3208,7 @@ export class RenderPassDescriptorMaxDrawCount extends U.StructBase {
 }
 
 export type ToRenderPassTimestampWrite = undefined | {
-  querySet?: Deno.PointerValue;
+  querySet?: Deno.PointerValue | QuerySet;
   queryIndex?: number;
   location?: RenderPassTimestampLocation;
 };
@@ -3200,14 +3230,20 @@ export class RenderPassTimestampWrite extends U.StructBase {
     }
   }
 
-  get querySet(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
+  get querySet(): QuerySet {
+    return new QuerySet(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE)),
+    );
   }
 
-  set querySet(value: Deno.PointerValue) {
+  set querySet(value: Deno.PointerValue | QuerySet) {
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof QuerySet ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -3247,7 +3283,7 @@ export class RenderPassTimestampWrite extends U.StructBase {
 
 export type ToRequestAdapterOptions = undefined | {
   nextInChain?: Deno.PointerValue;
-  compatibleSurface?: Deno.PointerValue;
+  compatibleSurface?: Deno.PointerValue | Surface;
   powerPreference?: PowerPreference;
   backendType?: BackendType;
   forceFallbackAdapter?: boolean | number | bigint;
@@ -3282,14 +3318,20 @@ export class RequestAdapterOptions extends U.StructBase {
     );
   }
 
-  get compatibleSurface(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
+  get compatibleSurface(): Surface {
+    return new Surface(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE)),
+    );
   }
 
-  set compatibleSurface(value: Deno.PointerValue) {
+  set compatibleSurface(value: Deno.PointerValue | Surface) {
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof Surface ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -3602,7 +3644,7 @@ export class SamplerDescriptor extends U.StructBase {
 export type ToShaderModuleCompilationHint = undefined | {
   nextInChain?: Deno.PointerValue;
   entryPoint?: Deno.PointerValue;
-  layout?: Deno.PointerValue;
+  layout?: Deno.PointerValue | PipelineLayout;
 };
 
 export class ShaderModuleCompilationHint extends U.StructBase {
@@ -3646,14 +3688,20 @@ export class ShaderModuleCompilationHint extends U.StructBase {
     );
   }
 
-  get layout(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
+  get layout(): PipelineLayout {
+    return new PipelineLayout(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE)),
+    );
   }
 
-  set layout(value: Deno.PointerValue) {
+  set layout(value: Deno.PointerValue | PipelineLayout) {
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof PipelineLayout ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -5071,7 +5119,7 @@ export class VertexAttribute extends U.StructBase {
 export type ToBindGroupDescriptor = undefined | {
   nextInChain?: Deno.PointerValue;
   label?: Deno.PointerValue;
-  layout?: Deno.PointerValue;
+  layout?: Deno.PointerValue | BindGroupLayout;
   entryCount?: bigint | number;
   entries?: Deno.PointerValue;
 };
@@ -5117,14 +5165,20 @@ export class BindGroupDescriptor extends U.StructBase {
     );
   }
 
-  get layout(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
+  get layout(): BindGroupLayout {
+    return new BindGroupLayout(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE)),
+    );
   }
 
-  set layout(value: Deno.PointerValue) {
+  set layout(value: Deno.PointerValue | BindGroupLayout) {
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof BindGroupLayout ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -5779,7 +5833,7 @@ export class DepthStencilState extends U.StructBase {
 export type ToImageCopyBuffer = undefined | {
   nextInChain?: Deno.PointerValue;
   layout?: TextureDataLayout | ToTextureDataLayout;
-  buffer?: Deno.PointerValue;
+  buffer?: Deno.PointerValue | Buffer;
 };
 
 export class ImageCopyBuffer extends U.StructBase {
@@ -5829,14 +5883,20 @@ export class ImageCopyBuffer extends U.StructBase {
     }
   }
 
-  get buffer(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
+  get buffer(): Buffer {
+    return new Buffer(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE)),
+    );
   }
 
-  set buffer(value: Deno.PointerValue) {
+  set buffer(value: Deno.PointerValue | Buffer) {
     this.dataview.setBigUint64(
       32,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof Buffer ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -5860,7 +5920,7 @@ export class ImageCopyBuffer extends U.StructBase {
 
 export type ToImageCopyTexture = undefined | {
   nextInChain?: Deno.PointerValue;
-  texture?: Deno.PointerValue;
+  texture?: Deno.PointerValue | Texture;
   mipLevel?: number;
   origin?: Origin3D | ToOrigin3D;
   aspect?: TextureAspect;
@@ -5895,14 +5955,20 @@ export class ImageCopyTexture extends U.StructBase {
     );
   }
 
-  get texture(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
+  get texture(): Texture {
+    return new Texture(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE)),
+    );
   }
 
-  set texture(value: Deno.PointerValue) {
+  set texture(value: Deno.PointerValue | Texture) {
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof Texture ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -5964,7 +6030,7 @@ export class ImageCopyTexture extends U.StructBase {
 
 export type ToProgrammableStageDescriptor = undefined | {
   nextInChain?: Deno.PointerValue;
-  module?: Deno.PointerValue;
+  module?: Deno.PointerValue | ShaderModule;
   entryPoint?: Deno.PointerValue;
   constantCount?: bigint | number;
   constants?: Deno.PointerValue;
@@ -5999,14 +6065,20 @@ export class ProgrammableStageDescriptor extends U.StructBase {
     );
   }
 
-  get module(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
+  get module(): ShaderModule {
+    return new ShaderModule(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE)),
+    );
   }
 
-  set module(value: Deno.PointerValue) {
+  set module(value: Deno.PointerValue | ShaderModule) {
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof ShaderModule ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -6069,8 +6141,8 @@ export class ProgrammableStageDescriptor extends U.StructBase {
 }
 
 export type ToRenderPassColorAttachment = undefined | {
-  view?: Deno.PointerValue;
-  resolveTarget?: Deno.PointerValue;
+  view?: Deno.PointerValue | TextureView;
+  resolveTarget?: Deno.PointerValue | TextureView;
   loadOp?: LoadOp;
   storeOp?: StoreOp;
   clearValue?: Color | ToColor;
@@ -6093,26 +6165,38 @@ export class RenderPassColorAttachment extends U.StructBase {
     }
   }
 
-  get view(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
+  get view(): TextureView {
+    return new TextureView(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE)),
+    );
   }
 
-  set view(value: Deno.PointerValue) {
+  set view(value: Deno.PointerValue | TextureView) {
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof TextureView ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
 
-  get resolveTarget(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
+  get resolveTarget(): TextureView {
+    return new TextureView(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE)),
+    );
   }
 
-  set resolveTarget(value: Deno.PointerValue) {
+  set resolveTarget(value: Deno.PointerValue | TextureView) {
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof TextureView ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -6824,7 +6908,7 @@ export class ColorTargetState extends U.StructBase {
 export type ToComputePipelineDescriptor = undefined | {
   nextInChain?: Deno.PointerValue;
   label?: Deno.PointerValue;
-  layout?: Deno.PointerValue;
+  layout?: Deno.PointerValue | PipelineLayout;
   compute?: ProgrammableStageDescriptor | ToProgrammableStageDescriptor;
 };
 
@@ -6869,14 +6953,20 @@ export class ComputePipelineDescriptor extends U.StructBase {
     );
   }
 
-  get layout(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
+  get layout(): PipelineLayout {
+    return new PipelineLayout(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE)),
+    );
   }
 
-  set layout(value: Deno.PointerValue) {
+  set layout(value: Deno.PointerValue | PipelineLayout) {
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof PipelineLayout ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -7103,7 +7193,7 @@ export type ToRenderPassDescriptor = undefined | {
   colorAttachmentCount?: bigint | number;
   colorAttachments?: Deno.PointerValue;
   depthStencilAttachment?: Deno.PointerValue;
-  occlusionQuerySet?: Deno.PointerValue;
+  occlusionQuerySet?: Deno.PointerValue | QuerySet;
   timestampWriteCount?: bigint | number;
   timestampWrites?: Deno.PointerValue;
 };
@@ -7181,14 +7271,20 @@ export class RenderPassDescriptor extends U.StructBase {
     );
   }
 
-  get occlusionQuerySet(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
+  get occlusionQuerySet(): QuerySet {
+    return new QuerySet(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE)),
+    );
   }
 
-  set occlusionQuerySet(value: Deno.PointerValue) {
+  set occlusionQuerySet(value: Deno.PointerValue | QuerySet) {
     this.dataview.setBigUint64(
       40,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof QuerySet ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -7266,7 +7362,7 @@ export class RenderPassDescriptor extends U.StructBase {
 
 export type ToVertexState = undefined | {
   nextInChain?: Deno.PointerValue;
-  module?: Deno.PointerValue;
+  module?: Deno.PointerValue | ShaderModule;
   entryPoint?: Deno.PointerValue;
   constantCount?: bigint | number;
   constants?: Deno.PointerValue;
@@ -7303,14 +7399,20 @@ export class VertexState extends U.StructBase {
     );
   }
 
-  get module(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
+  get module(): ShaderModule {
+    return new ShaderModule(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE)),
+    );
   }
 
-  set module(value: Deno.PointerValue) {
+  set module(value: Deno.PointerValue | ShaderModule) {
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof ShaderModule ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -7398,7 +7500,7 @@ export class VertexState extends U.StructBase {
 
 export type ToFragmentState = undefined | {
   nextInChain?: Deno.PointerValue;
-  module?: Deno.PointerValue;
+  module?: Deno.PointerValue | ShaderModule;
   entryPoint?: Deno.PointerValue;
   constantCount?: bigint | number;
   constants?: Deno.PointerValue;
@@ -7435,14 +7537,20 @@ export class FragmentState extends U.StructBase {
     );
   }
 
-  get module(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
+  get module(): ShaderModule {
+    return new ShaderModule(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE)),
+    );
   }
 
-  set module(value: Deno.PointerValue) {
+  set module(value: Deno.PointerValue | ShaderModule) {
     this.dataview.setBigUint64(
       8,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof ShaderModule ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -7531,7 +7639,7 @@ export class FragmentState extends U.StructBase {
 export type ToRenderPipelineDescriptor = undefined | {
   nextInChain?: Deno.PointerValue;
   label?: Deno.PointerValue;
-  layout?: Deno.PointerValue;
+  layout?: Deno.PointerValue | PipelineLayout;
   vertex?: VertexState | ToVertexState;
   primitive?: PrimitiveState | ToPrimitiveState;
   depthStencil?: Deno.PointerValue;
@@ -7580,14 +7688,20 @@ export class RenderPipelineDescriptor extends U.StructBase {
     );
   }
 
-  get layout(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
+  get layout(): PipelineLayout {
+    return new PipelineLayout(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE)),
+    );
   }
 
-  set layout(value: Deno.PointerValue) {
+  set layout(value: Deno.PointerValue | PipelineLayout) {
     this.dataview.setBigUint64(
       16,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof PipelineLayout ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }
@@ -8275,7 +8389,7 @@ export class PipelineLayoutExtras extends U.StructBase {
 }
 
 export type ToWrappedSubmissionIndex = undefined | {
-  queue?: Deno.PointerValue;
+  queue?: Deno.PointerValue | Queue;
   submissionIndex?: bigint | number;
 };
 
@@ -8296,14 +8410,20 @@ export class WrappedSubmissionIndex extends U.StructBase {
     }
   }
 
-  get queue(): Deno.PointerValue {
-    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
+  get queue(): Queue {
+    return new Queue(
+      Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE)),
+    );
   }
 
-  set queue(value: Deno.PointerValue) {
+  set queue(value: Deno.PointerValue | Queue) {
     this.dataview.setBigUint64(
       0,
-      BigInt(Deno.UnsafePointer.value(value)),
+      BigInt(
+        Deno.UnsafePointer.value(
+          value instanceof Queue ? value.pointer : value,
+        ),
+      ),
       U.LE,
     );
   }

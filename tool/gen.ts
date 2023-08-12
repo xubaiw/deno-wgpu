@@ -303,11 +303,11 @@ function extractStructs({ tu, structs }: Ctx) {
 
 function generateStructs(ctx: Ctx) {
   const { structs } = ctx;
-  const structdecl = sep("\n")(
+  const structsdecl = sep("\n")(
     km(structs, (sname) => generateStruct(ctx, sname)),
   );
   const text = dedent`
-    ${structdecl}
+    ${structsdecl}
   `;
   // actual write
   return text;
@@ -370,8 +370,8 @@ function generateProperty(...args: [Ctx, string, string]) {
 }
 
 function generateStructGetter(ctx: Ctx, sname: string, fname: string) {
-  const type = genStructGetterType(ctx, sname, fname);
-  const result = genStructGetterResult(ctx, sname, fname);
+  const type = generateStructGetterType(ctx, sname, fname);
+  const result = generateStructGetterResult(ctx, sname, fname);
   return dedent`
     get ${fname}(): ${type} {
       return ${result};
@@ -414,10 +414,14 @@ function generateStructFrom(ctx: Ctx, name: string): string {
   `;
 }
 
-function genStructGetterType(ctx: Ctx, name: string, fname: string) {
+function generateStructGetterType(ctx: Ctx, name: string, fname: string) {
   const { kind, type } = ctx.structs[name].fields[fname];
   if (kind == "Record") return nofix(type!);
-  if (kind == "Pointer") return "Deno.PointerValue";
+  if (kind == "Pointer") {
+    // class
+    if (type in ctx.classes) return nofix(type);
+    return "Deno.PointerValue";
+  }
   if (kind == "Enum") return `${nofix(type!)}`;
   if (kind == "UInt") return "number";
   if (kind == "ULongLong") return "bigint";
@@ -432,7 +436,7 @@ function genStructGetterType(ctx: Ctx, name: string, fname: string) {
   );
 }
 
-function genStructGetterResult(ctx: Ctx, name: string, fname: string) {
+function generateStructGetterResult(ctx: Ctx, name: string, fname: string) {
   const { offset, kind, type, size } = ctx.structs[name].fields[fname];
   if (kind == "Record") {
     return `new ${
@@ -440,7 +444,10 @@ function genStructGetterResult(ctx: Ctx, name: string, fname: string) {
     }(new DataView(this.dataview.buffer, this.dataview.byteOffset + ${offset}, ${size}))`;
   }
   if (kind == "Pointer") {
-    return `Deno.UnsafePointer.create(this.dataview.getBigUint64(${offset}, U.LE))`;
+    const inner =
+      `Deno.UnsafePointer.create(this.dataview.getBigUint64(${offset}, U.LE))`;
+    if (type in ctx.classes) return `new ${nofix(type)}(${inner})`;
+    return inner;
   }
   if (kind == "Enum") {
     return `this.dataview.getUint32(${offset}, U.LE) as ${nofix(type!)}`;
@@ -472,7 +479,12 @@ function generateStructSetterResult(ctx: Ctx, name: string, fname: string) {
     `;
   }
   if (kind == "Pointer") {
-    return `this.dataview.setBigUint64(${offset}, BigInt(Deno.UnsafePointer.value(value)), U.LE);`;
+    const setter = (inner: string) =>
+      `this.dataview.setBigUint64(${offset}, BigInt(Deno.UnsafePointer.value(${inner})), U.LE);`;
+    if (type in ctx.classes) {
+      return setter(`value instanceof ${nofix(type)} ? value.pointer : value`);
+    }
+    return setter("value");
   }
   if (kind == "Enum") {
     return `this.dataview.setUint32(${offset}, value, U.LE)`;
@@ -503,7 +515,10 @@ function generateStructSetterResult(ctx: Ctx, name: string, fname: string) {
 function generateStructSetterType(ctx: Ctx, name: string, fname: string) {
   const { kind, type } = ctx.structs[name].fields[fname];
   if (kind == "Record") return `${nofix(type)} | To${nofix(type)}`;
-  if (kind == "Pointer") return "Deno.PointerValue";
+  if (kind == "Pointer") {
+    if (type in ctx.classes) return `Deno.PointerValue | ${nofix(type)}`;
+    return `Deno.PointerValue`;
+  }
   if (kind == "Enum") return `${nofix(type)}`;
   if (kind == "UInt") return "number";
   if (kind == "ULongLong") return "bigint | number";
@@ -668,7 +683,9 @@ function generateClassMethodWithCallback(
   const paramsNoCb = sep(",")(spec.parameters.map((p, i) => {
     if (i == 0) return null;
     if (i >= idxCb) return null;
-    const optional = idxCb == 2 && i == 1 && matchStruct(ctx, p.type) ? "?" : ""
+    const optional = idxCb == 2 && i == 1 && matchStruct(ctx, p.type)
+      ? "?"
+      : "";
     return `${p.name}${optional}: ${translateTypeSpec(ctx, p)}`;
   }));
   const cbDef = translateTypeSpec(ctx, spec.parameters[idxCb]);
