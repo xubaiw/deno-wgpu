@@ -505,11 +505,11 @@ export type ToAdapterProperties = undefined | {
     [key: string]: any;
   };
   vendorID?: number;
-  vendorName?: Deno.PointerValue;
-  architecture?: Deno.PointerValue;
+  vendorName?: Deno.PointerValue | string;
+  architecture?: Deno.PointerValue | string;
   deviceID?: number;
-  name?: Deno.PointerValue;
-  driverDescription?: Deno.PointerValue;
+  name?: Deno.PointerValue | string;
+  driverDescription?: Deno.PointerValue | string;
   adapterType?: AdapterType;
   backendType?: BackendType;
 };
@@ -531,10 +531,8 @@ export class AdapterProperties extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStructOut | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStructOut(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -624,12 +622,11 @@ export class AdapterProperties extends U.StructBase {
   }
 
   get vendorName(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
-  set vendorName(value: Deno.PointerValue) {
-    const inner = value;
+  set vendorName(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       16,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -638,12 +635,11 @@ export class AdapterProperties extends U.StructBase {
   }
 
   get architecture(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
-  set architecture(value: Deno.PointerValue) {
-    const inner = value;
+  set architecture(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       24,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -660,12 +656,11 @@ export class AdapterProperties extends U.StructBase {
   }
 
   get name(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
   }
 
-  set name(value: Deno.PointerValue) {
-    const inner = value;
+  set name(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       40,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -674,12 +669,11 @@ export class AdapterProperties extends U.StructBase {
   }
 
   get driverDescription(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(48, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(48, U.LE));
   }
 
-  set driverDescription(value: Deno.PointerValue) {
-    const inner = value;
+  set driverDescription(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       48,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -769,10 +763,8 @@ export class BindGroupEntry extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -861,9 +853,8 @@ export class BindGroupEntry extends U.StructBase {
     this.dataview.setUint32(8, value, U.LE);
   }
 
-  get buffer(): Buffer {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return new Buffer(ptr);
+  get buffer(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set buffer(value: Deno.PointerValue | Buffer) {
@@ -891,9 +882,8 @@ export class BindGroupEntry extends U.StructBase {
     this.dataview.setBigUint64(32, BigInt(value), U.LE);
   }
 
-  get sampler(): Sampler {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
-    return new Sampler(ptr);
+  get sampler(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
   }
 
   set sampler(value: Deno.PointerValue | Sampler) {
@@ -905,9 +895,8 @@ export class BindGroupEntry extends U.StructBase {
     );
   }
 
-  get textureView(): TextureView {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(48, U.LE));
-    return new TextureView(ptr);
+  get textureView(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(48, U.LE));
   }
 
   set textureView(value: Deno.PointerValue | TextureView) {
@@ -1033,10 +1022,8 @@ export class BufferBindingLayout extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -1172,7 +1159,7 @@ export type ToBufferDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   usage?: number;
   size?: bigint | number;
   mappedAtCreation?: boolean | number | bigint;
@@ -1195,10 +1182,8 @@ export class BufferDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -1280,12 +1265,11 @@ export class BufferDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -1420,7 +1404,7 @@ export type ToCommandBufferDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
 };
 
 export class CommandBufferDescriptor extends U.StructBase {
@@ -1440,10 +1424,8 @@ export class CommandBufferDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -1525,12 +1507,11 @@ export class CommandBufferDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -1557,7 +1538,7 @@ export type ToCommandEncoderDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
 };
 
 export class CommandEncoderDescriptor extends U.StructBase {
@@ -1577,10 +1558,8 @@ export class CommandEncoderDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -1662,12 +1641,11 @@ export class CommandEncoderDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -1694,7 +1672,7 @@ export type ToCompilationMessage = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  message?: Deno.PointerValue;
+  message?: Deno.PointerValue | string;
   type?: CompilationMessageType;
   lineNum?: bigint | number;
   linePos?: bigint | number;
@@ -1722,10 +1700,8 @@ export class CompilationMessage extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -1807,12 +1783,11 @@ export class CompilationMessage extends U.StructBase {
   }
 
   get message(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set message(value: Deno.PointerValue) {
-    const inner = value;
+  set message(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -1941,9 +1916,8 @@ export class ComputePassTimestampWrite extends U.StructBase {
     }
   }
 
-  get querySet(): QuerySet {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    return new QuerySet(ptr);
+  get querySet(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set querySet(value: Deno.PointerValue | QuerySet) {
@@ -1992,7 +1966,7 @@ export type ToConstantEntry = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  key?: Deno.PointerValue;
+  key?: Deno.PointerValue | string;
   value?: number;
 };
 
@@ -2013,10 +1987,8 @@ export class ConstantEntry extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -2098,12 +2070,11 @@ export class ConstantEntry extends U.StructBase {
   }
 
   get key(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set key(value: Deno.PointerValue) {
-    const inner = value;
+  set key(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -2226,10 +2197,8 @@ export class InstanceDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -2869,10 +2838,8 @@ export class MultisampleState extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -3067,7 +3034,7 @@ export type ToPipelineLayoutDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   bindGroupLayoutCount?: bigint | number;
   bindGroupLayouts?: Deno.PointerValue;
 };
@@ -3089,10 +3056,8 @@ export class PipelineLayoutDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -3174,12 +3139,11 @@ export class PipelineLayoutDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -3196,8 +3160,7 @@ export class PipelineLayoutDescriptor extends U.StructBase {
   }
 
   get bindGroupLayouts(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set bindGroupLayouts(value: Deno.PointerValue) {
@@ -3330,10 +3293,8 @@ export class PrimitiveState extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -3475,7 +3436,7 @@ export type ToQuerySetDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   type?: QueryType;
   count?: number;
   pipelineStatistics?: Deno.PointerValue;
@@ -3499,10 +3460,8 @@ export class QuerySetDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -3584,12 +3543,11 @@ export class QuerySetDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -3614,8 +3572,7 @@ export class QuerySetDescriptor extends U.StructBase {
   }
 
   get pipelineStatistics(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set pipelineStatistics(value: Deno.PointerValue) {
@@ -3670,7 +3627,7 @@ export type ToQueueDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
 };
 
 export class QueueDescriptor extends U.StructBase {
@@ -3690,10 +3647,8 @@ export class QueueDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -3775,12 +3730,11 @@ export class QueueDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -3807,7 +3761,7 @@ export type ToRenderBundleDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
 };
 
 export class RenderBundleDescriptor extends U.StructBase {
@@ -3827,10 +3781,8 @@ export class RenderBundleDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -3912,12 +3864,11 @@ export class RenderBundleDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -3944,7 +3895,7 @@ export type ToRenderBundleEncoderDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   colorFormatsCount?: bigint | number;
   colorFormats?: Deno.PointerValue;
   depthStencilFormat?: TextureFormat;
@@ -3970,10 +3921,8 @@ export class RenderBundleEncoderDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -4055,12 +4004,11 @@ export class RenderBundleEncoderDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -4077,8 +4025,7 @@ export class RenderBundleEncoderDescriptor extends U.StructBase {
   }
 
   get colorFormats(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set colorFormats(value: Deno.PointerValue) {
@@ -4197,9 +4144,8 @@ export class RenderPassDepthStencilAttachment extends U.StructBase {
     }
   }
 
-  get view(): TextureView {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    return new TextureView(ptr);
+  get view(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set view(value: Deno.PointerValue | TextureView) {
@@ -4421,9 +4367,8 @@ export class RenderPassTimestampWrite extends U.StructBase {
     }
   }
 
-  get querySet(): QuerySet {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    return new QuerySet(ptr);
+  get querySet(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set querySet(value: Deno.PointerValue | QuerySet) {
@@ -4495,10 +4440,8 @@ export class RequestAdapterOptions extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -4579,9 +4522,8 @@ export class RequestAdapterOptions extends U.StructBase {
     );
   }
 
-  get compatibleSurface(): Surface {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return new Surface(ptr);
+  get compatibleSurface(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
   set compatibleSurface(value: Deno.PointerValue | Surface) {
@@ -4674,10 +4616,8 @@ export class SamplerBindingLayout extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -4785,7 +4725,7 @@ export type ToSamplerDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   addressModeU?: AddressMode;
   addressModeV?: AddressMode;
   addressModeW?: AddressMode;
@@ -4815,10 +4755,8 @@ export class SamplerDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -4900,12 +4838,11 @@ export class SamplerDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -5052,7 +4989,7 @@ export type ToShaderModuleCompilationHint = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  entryPoint?: Deno.PointerValue;
+  entryPoint?: Deno.PointerValue | string;
   layout?: Deno.PointerValue | PipelineLayout;
 };
 
@@ -5073,10 +5010,8 @@ export class ShaderModuleCompilationHint extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -5158,12 +5093,11 @@ export class ShaderModuleCompilationHint extends U.StructBase {
   }
 
   get entryPoint(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set entryPoint(value: Deno.PointerValue) {
-    const inner = value;
+  set entryPoint(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -5171,9 +5105,8 @@ export class ShaderModuleCompilationHint extends U.StructBase {
     );
   }
 
-  get layout(): PipelineLayout {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return new PipelineLayout(ptr);
+  get layout(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set layout(value: Deno.PointerValue | PipelineLayout) {
@@ -5252,8 +5185,7 @@ export class ShaderModuleSPIRVDescriptor extends U.StructBase {
   }
 
   get code(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set code(value: Deno.PointerValue) {
@@ -5283,7 +5215,7 @@ export class ShaderModuleSPIRVDescriptor extends U.StructBase {
 
 export type ToShaderModuleWGSLDescriptor = undefined | {
   chain?: ChainedStruct | ToChainedStruct;
-  code?: Deno.PointerValue;
+  code?: Deno.PointerValue | string;
 };
 
 export class ShaderModuleWGSLDescriptor extends U.StructBase {
@@ -5323,12 +5255,11 @@ export class ShaderModuleWGSLDescriptor extends U.StructBase {
   }
 
   get code(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
-  set code(value: Deno.PointerValue) {
-    const inner = value;
+  set code(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       16,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -5451,10 +5382,8 @@ export class StorageTextureBindingLayout extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -5586,7 +5515,7 @@ export type ToSurfaceDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
 };
 
 export class SurfaceDescriptor extends U.StructBase {
@@ -5606,10 +5535,8 @@ export class SurfaceDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -5691,12 +5618,11 @@ export class SurfaceDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -5760,8 +5686,7 @@ export class SurfaceDescriptorFromAndroidNativeWindow extends U.StructBase {
   }
 
   get window(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set window(value: Deno.PointerValue) {
@@ -5789,7 +5714,7 @@ export class SurfaceDescriptorFromAndroidNativeWindow extends U.StructBase {
 
 export type ToSurfaceDescriptorFromCanvasHTMLSelector = undefined | {
   chain?: ChainedStruct | ToChainedStruct;
-  selector?: Deno.PointerValue;
+  selector?: Deno.PointerValue | string;
 };
 
 export class SurfaceDescriptorFromCanvasHTMLSelector extends U.StructBase {
@@ -5829,12 +5754,11 @@ export class SurfaceDescriptorFromCanvasHTMLSelector extends U.StructBase {
   }
 
   get selector(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
-  set selector(value: Deno.PointerValue) {
-    const inner = value;
+  set selector(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       16,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -5898,8 +5822,7 @@ export class SurfaceDescriptorFromMetalLayer extends U.StructBase {
   }
 
   get layer(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set layer(value: Deno.PointerValue) {
@@ -5968,8 +5891,7 @@ export class SurfaceDescriptorFromWaylandSurface extends U.StructBase {
   }
 
   get display(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set display(value: Deno.PointerValue) {
@@ -5982,8 +5904,7 @@ export class SurfaceDescriptorFromWaylandSurface extends U.StructBase {
   }
 
   get surface(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set surface(value: Deno.PointerValue) {
@@ -6054,8 +5975,7 @@ export class SurfaceDescriptorFromWindowsHWND extends U.StructBase {
   }
 
   get hinstance(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set hinstance(value: Deno.PointerValue) {
@@ -6068,8 +5988,7 @@ export class SurfaceDescriptorFromWindowsHWND extends U.StructBase {
   }
 
   get hwnd(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set hwnd(value: Deno.PointerValue) {
@@ -6140,8 +6059,7 @@ export class SurfaceDescriptorFromXcbWindow extends U.StructBase {
   }
 
   get connection(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set connection(value: Deno.PointerValue) {
@@ -6220,8 +6138,7 @@ export class SurfaceDescriptorFromXlibWindow extends U.StructBase {
   }
 
   get display(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set display(value: Deno.PointerValue) {
@@ -6262,7 +6179,7 @@ export type ToSwapChainDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   usage?: number;
   format?: TextureFormat;
   width?: number;
@@ -6287,10 +6204,8 @@ export class SwapChainDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -6372,12 +6287,11 @@ export class SwapChainDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -6476,10 +6390,8 @@ export class TextureBindingLayout extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -6637,10 +6549,8 @@ export class TextureDataLayout extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -6772,7 +6682,7 @@ export type ToTextureViewDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   format?: TextureFormat;
   dimension?: TextureViewDimension;
   baseMipLevel?: number;
@@ -6799,10 +6709,8 @@ export class TextureViewDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -6884,12 +6792,11 @@ export class TextureViewDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -7069,7 +6976,7 @@ export type ToBindGroupDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   layout?: Deno.PointerValue | BindGroupLayout;
   entryCount?: bigint | number;
   entries?: Deno.PointerValue | BindGroupEntry | ToBindGroupEntry;
@@ -7092,10 +6999,8 @@ export class BindGroupDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -7177,12 +7082,11 @@ export class BindGroupDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -7190,9 +7094,8 @@ export class BindGroupDescriptor extends U.StructBase {
     );
   }
 
-  get layout(): BindGroupLayout {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return new BindGroupLayout(ptr);
+  get layout(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set layout(value: Deno.PointerValue | BindGroupLayout) {
@@ -7212,10 +7115,8 @@ export class BindGroupDescriptor extends U.StructBase {
     this.dataview.setBigUint64(24, BigInt(value), U.LE);
   }
 
-  get entries(): BindGroupEntry | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
-    if (ptr == null) return null;
-    else return new BindGroupEntry(ptr);
+  get entries(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
   }
 
   set entries(value: Deno.PointerValue | BindGroupEntry | ToBindGroupEntry) {
@@ -7281,10 +7182,8 @@ export class BindGroupLayoutEntry extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -7581,10 +7480,8 @@ export class CompilationInfo extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -7673,10 +7570,8 @@ export class CompilationInfo extends U.StructBase {
     this.dataview.setBigUint64(8, BigInt(value), U.LE);
   }
 
-  get messages(): CompilationMessage | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    if (ptr == null) return null;
-    else return new CompilationMessage(ptr);
+  get messages(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set messages(
@@ -7719,7 +7614,7 @@ export type ToComputePassDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   timestampWriteCount?: bigint | number;
   timestampWrites?:
     | Deno.PointerValue
@@ -7744,10 +7639,8 @@ export class ComputePassDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -7829,12 +7722,11 @@ export class ComputePassDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -7850,10 +7742,8 @@ export class ComputePassDescriptor extends U.StructBase {
     this.dataview.setBigUint64(16, BigInt(value), U.LE);
   }
 
-  get timestampWrites(): ComputePassTimestampWrite | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    if (ptr == null) return null;
-    else return new ComputePassTimestampWrite(ptr);
+  get timestampWrites(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set timestampWrites(
@@ -7934,10 +7824,8 @@ export class DepthStencilState extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -8204,10 +8092,8 @@ export class ImageCopyBuffer extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -8306,9 +8192,8 @@ export class ImageCopyBuffer extends U.StructBase {
     }
   }
 
-  get buffer(): Buffer {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
-    return new Buffer(ptr);
+  get buffer(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
   }
 
   set buffer(value: Deno.PointerValue | Buffer) {
@@ -8364,10 +8249,8 @@ export class ImageCopyTexture extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -8448,9 +8331,8 @@ export class ImageCopyTexture extends U.StructBase {
     );
   }
 
-  get texture(): Texture {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return new Texture(ptr);
+  get texture(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
   set texture(value: Deno.PointerValue | Texture) {
@@ -8522,7 +8404,7 @@ export type ToProgrammableStageDescriptor = undefined | {
     [key: string]: any;
   };
   module?: Deno.PointerValue | ShaderModule;
-  entryPoint?: Deno.PointerValue;
+  entryPoint?: Deno.PointerValue | string;
   constantCount?: bigint | number;
   constants?: Deno.PointerValue | ConstantEntry | ToConstantEntry;
 };
@@ -8544,10 +8426,8 @@ export class ProgrammableStageDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -8628,9 +8508,8 @@ export class ProgrammableStageDescriptor extends U.StructBase {
     );
   }
 
-  get module(): ShaderModule {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return new ShaderModule(ptr);
+  get module(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
   set module(value: Deno.PointerValue | ShaderModule) {
@@ -8643,12 +8522,11 @@ export class ProgrammableStageDescriptor extends U.StructBase {
   }
 
   get entryPoint(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
-  set entryPoint(value: Deno.PointerValue) {
-    const inner = value;
+  set entryPoint(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       16,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -8664,10 +8542,8 @@ export class ProgrammableStageDescriptor extends U.StructBase {
     this.dataview.setBigUint64(24, BigInt(value), U.LE);
   }
 
-  get constants(): ConstantEntry | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
-    if (ptr == null) return null;
-    else return new ConstantEntry(ptr);
+  get constants(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
   }
 
   set constants(value: Deno.PointerValue | ConstantEntry | ToConstantEntry) {
@@ -8732,9 +8608,8 @@ export class RenderPassColorAttachment extends U.StructBase {
     }
   }
 
-  get view(): TextureView {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    return new TextureView(ptr);
+  get view(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set view(value: Deno.PointerValue | TextureView) {
@@ -8746,9 +8621,8 @@ export class RenderPassColorAttachment extends U.StructBase {
     );
   }
 
-  get resolveTarget(): TextureView {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return new TextureView(ptr);
+  get resolveTarget(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
   set resolveTarget(value: Deno.PointerValue | TextureView) {
@@ -8843,10 +8717,8 @@ export class RequiredLimits extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -8964,7 +8836,7 @@ export type ToShaderModuleDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   hintCount?: bigint | number;
   hints?:
     | Deno.PointerValue
@@ -8989,10 +8861,8 @@ export class ShaderModuleDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -9074,12 +8944,11 @@ export class ShaderModuleDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -9095,10 +8964,8 @@ export class ShaderModuleDescriptor extends U.StructBase {
     this.dataview.setBigUint64(16, BigInt(value), U.LE);
   }
 
-  get hints(): ShaderModuleCompilationHint | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    if (ptr == null) return null;
-    else return new ShaderModuleCompilationHint(ptr);
+  get hints(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set hints(
@@ -9162,10 +9029,8 @@ export class SupportedLimits extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStructOut | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStructOut(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -9283,7 +9148,7 @@ export type ToTextureDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   usage?: number;
   dimension?: TextureDimension;
   size?: Extent3D | ToExtent3D;
@@ -9311,10 +9176,8 @@ export class TextureDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -9396,12 +9259,11 @@ export class TextureDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -9476,8 +9338,7 @@ export class TextureDescriptor extends U.StructBase {
   }
 
   get viewFormats(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(56, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(56, U.LE));
   }
 
   set viewFormats(value: Deno.PointerValue) {
@@ -9575,10 +9436,8 @@ export class VertexBufferLayout extends U.StructBase {
     this.dataview.setBigUint64(16, BigInt(value), U.LE);
   }
 
-  get attributes(): VertexAttribute | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    if (ptr == null) return null;
-    else return new VertexAttribute(ptr);
+  get attributes(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set attributes(
@@ -9623,7 +9482,7 @@ export type ToBindGroupLayoutDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   entryCount?: bigint | number;
   entries?: Deno.PointerValue | BindGroupLayoutEntry | ToBindGroupLayoutEntry;
 };
@@ -9645,10 +9504,8 @@ export class BindGroupLayoutDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -9730,12 +9587,11 @@ export class BindGroupLayoutDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -9751,10 +9607,8 @@ export class BindGroupLayoutDescriptor extends U.StructBase {
     this.dataview.setBigUint64(16, BigInt(value), U.LE);
   }
 
-  get entries(): BindGroupLayoutEntry | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    if (ptr == null) return null;
-    else return new BindGroupLayoutEntry(ptr);
+  get entries(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set entries(
@@ -9817,10 +9671,8 @@ export class ColorTargetState extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -9909,10 +9761,8 @@ export class ColorTargetState extends U.StructBase {
     this.dataview.setUint32(8, value, U.LE);
   }
 
-  get blend(): BlendState | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    if (ptr == null) return null;
-    else return new BlendState(ptr);
+  get blend(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set blend(value: Deno.PointerValue | BlendState | ToBlendState) {
@@ -9959,7 +9809,7 @@ export type ToComputePipelineDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   layout?: Deno.PointerValue | PipelineLayout;
   compute?: ProgrammableStageDescriptor | ToProgrammableStageDescriptor;
 };
@@ -9981,10 +9831,8 @@ export class ComputePipelineDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -10066,12 +9914,11 @@ export class ComputePipelineDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -10079,9 +9926,8 @@ export class ComputePipelineDescriptor extends U.StructBase {
     );
   }
 
-  get layout(): PipelineLayout {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return new PipelineLayout(ptr);
+  get layout(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set layout(value: Deno.PointerValue | PipelineLayout) {
@@ -10136,7 +9982,7 @@ export type ToDeviceDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   requiredFeaturesCount?: bigint | number;
   requiredFeatures?: Deno.PointerValue;
   requiredLimits?: Deno.PointerValue | RequiredLimits | ToRequiredLimits;
@@ -10162,10 +10008,8 @@ export class DeviceDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -10247,12 +10091,11 @@ export class DeviceDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -10269,8 +10112,7 @@ export class DeviceDescriptor extends U.StructBase {
   }
 
   get requiredFeatures(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set requiredFeatures(value: Deno.PointerValue) {
@@ -10282,10 +10124,8 @@ export class DeviceDescriptor extends U.StructBase {
     );
   }
 
-  get requiredLimits(): RequiredLimits | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
-    if (ptr == null) return null;
-    else return new RequiredLimits(ptr);
+  get requiredLimits(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
   }
 
   set requiredLimits(
@@ -10322,8 +10162,7 @@ export class DeviceDescriptor extends U.StructBase {
   }
 
   get deviceLostCallback(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(56, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(56, U.LE));
   }
 
   set deviceLostCallback(value: Deno.PointerValue) {
@@ -10336,8 +10175,7 @@ export class DeviceDescriptor extends U.StructBase {
   }
 
   get deviceLostUserdata(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(64, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(64, U.LE));
   }
 
   set deviceLostUserdata(value: Deno.PointerValue) {
@@ -10404,7 +10242,7 @@ export type ToRenderPassDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   colorAttachmentCount?: bigint | number;
   colorAttachments?:
     | Deno.PointerValue
@@ -10439,10 +10277,8 @@ export class RenderPassDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -10524,12 +10360,11 @@ export class RenderPassDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -10545,10 +10380,8 @@ export class RenderPassDescriptor extends U.StructBase {
     this.dataview.setBigUint64(16, BigInt(value), U.LE);
   }
 
-  get colorAttachments(): RenderPassColorAttachment | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    if (ptr == null) return null;
-    else return new RenderPassColorAttachment(ptr);
+  get colorAttachments(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set colorAttachments(
@@ -10569,10 +10402,8 @@ export class RenderPassDescriptor extends U.StructBase {
     );
   }
 
-  get depthStencilAttachment(): RenderPassDepthStencilAttachment | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
-    if (ptr == null) return null;
-    else return new RenderPassDepthStencilAttachment(ptr);
+  get depthStencilAttachment(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
   }
 
   set depthStencilAttachment(
@@ -10593,9 +10424,8 @@ export class RenderPassDescriptor extends U.StructBase {
     );
   }
 
-  get occlusionQuerySet(): QuerySet {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
-    return new QuerySet(ptr);
+  get occlusionQuerySet(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
   }
 
   set occlusionQuerySet(value: Deno.PointerValue | QuerySet) {
@@ -10615,10 +10445,8 @@ export class RenderPassDescriptor extends U.StructBase {
     this.dataview.setBigUint64(48, BigInt(value), U.LE);
   }
 
-  get timestampWrites(): RenderPassTimestampWrite | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(56, U.LE));
-    if (ptr == null) return null;
-    else return new RenderPassTimestampWrite(ptr);
+  get timestampWrites(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(56, U.LE));
   }
 
   set timestampWrites(
@@ -10695,7 +10523,7 @@ export type ToVertexState = undefined | {
     [key: string]: any;
   };
   module?: Deno.PointerValue | ShaderModule;
-  entryPoint?: Deno.PointerValue;
+  entryPoint?: Deno.PointerValue | string;
   constantCount?: bigint | number;
   constants?: Deno.PointerValue | ConstantEntry | ToConstantEntry;
   bufferCount?: bigint | number;
@@ -10719,10 +10547,8 @@ export class VertexState extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -10803,9 +10629,8 @@ export class VertexState extends U.StructBase {
     );
   }
 
-  get module(): ShaderModule {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return new ShaderModule(ptr);
+  get module(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
   set module(value: Deno.PointerValue | ShaderModule) {
@@ -10818,12 +10643,11 @@ export class VertexState extends U.StructBase {
   }
 
   get entryPoint(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
-  set entryPoint(value: Deno.PointerValue) {
-    const inner = value;
+  set entryPoint(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       16,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -10839,10 +10663,8 @@ export class VertexState extends U.StructBase {
     this.dataview.setBigUint64(24, BigInt(value), U.LE);
   }
 
-  get constants(): ConstantEntry | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
-    if (ptr == null) return null;
-    else return new ConstantEntry(ptr);
+  get constants(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
   }
 
   set constants(value: Deno.PointerValue | ConstantEntry | ToConstantEntry) {
@@ -10866,10 +10688,8 @@ export class VertexState extends U.StructBase {
     this.dataview.setBigUint64(40, BigInt(value), U.LE);
   }
 
-  get buffers(): VertexBufferLayout | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(48, U.LE));
-    if (ptr == null) return null;
-    else return new VertexBufferLayout(ptr);
+  get buffers(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(48, U.LE));
   }
 
   set buffers(
@@ -10921,7 +10741,7 @@ export type ToFragmentState = undefined | {
     [key: string]: any;
   };
   module?: Deno.PointerValue | ShaderModule;
-  entryPoint?: Deno.PointerValue;
+  entryPoint?: Deno.PointerValue | string;
   constantCount?: bigint | number;
   constants?: Deno.PointerValue | ConstantEntry | ToConstantEntry;
   targetCount?: bigint | number;
@@ -10945,10 +10765,8 @@ export class FragmentState extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -11029,9 +10847,8 @@ export class FragmentState extends U.StructBase {
     );
   }
 
-  get module(): ShaderModule {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return new ShaderModule(ptr);
+  get module(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
   set module(value: Deno.PointerValue | ShaderModule) {
@@ -11044,12 +10861,11 @@ export class FragmentState extends U.StructBase {
   }
 
   get entryPoint(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
-  set entryPoint(value: Deno.PointerValue) {
-    const inner = value;
+  set entryPoint(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       16,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -11065,10 +10881,8 @@ export class FragmentState extends U.StructBase {
     this.dataview.setBigUint64(24, BigInt(value), U.LE);
   }
 
-  get constants(): ConstantEntry | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
-    if (ptr == null) return null;
-    else return new ConstantEntry(ptr);
+  get constants(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
   }
 
   set constants(value: Deno.PointerValue | ConstantEntry | ToConstantEntry) {
@@ -11092,10 +10906,8 @@ export class FragmentState extends U.StructBase {
     this.dataview.setBigUint64(40, BigInt(value), U.LE);
   }
 
-  get targets(): ColorTargetState | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(48, U.LE));
-    if (ptr == null) return null;
-    else return new ColorTargetState(ptr);
+  get targets(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(48, U.LE));
   }
 
   set targets(
@@ -11146,7 +10958,7 @@ export type ToRenderPipelineDescriptor = undefined | {
     chain: ChainedStruct | ToChainedStruct;
     [key: string]: any;
   };
-  label?: Deno.PointerValue;
+  label?: Deno.PointerValue | string;
   layout?: Deno.PointerValue | PipelineLayout;
   vertex?: VertexState | ToVertexState;
   primitive?: PrimitiveState | ToPrimitiveState;
@@ -11172,10 +10984,8 @@ export class RenderPipelineDescriptor extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -11257,12 +11067,11 @@ export class RenderPipelineDescriptor extends U.StructBase {
   }
 
   get label(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set label(value: Deno.PointerValue) {
-    const inner = value;
+  set label(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -11270,9 +11079,8 @@ export class RenderPipelineDescriptor extends U.StructBase {
     );
   }
 
-  get layout(): PipelineLayout {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return new PipelineLayout(ptr);
+  get layout(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
   set layout(value: Deno.PointerValue | PipelineLayout) {
@@ -11320,12 +11128,8 @@ export class RenderPipelineDescriptor extends U.StructBase {
     }
   }
 
-  get depthStencil(): DepthStencilState | null {
-    const ptr = Deno.UnsafePointer.create(
-      this.dataview.getBigUint64(104, U.LE),
-    );
-    if (ptr == null) return null;
-    else return new DepthStencilState(ptr);
+  get depthStencil(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(104, U.LE));
   }
 
   set depthStencil(
@@ -11361,12 +11165,8 @@ export class RenderPipelineDescriptor extends U.StructBase {
     }
   }
 
-  get fragment(): FragmentState | null {
-    const ptr = Deno.UnsafePointer.create(
-      this.dataview.getBigUint64(136, U.LE),
-    );
-    if (ptr == null) return null;
-    else return new FragmentState(ptr);
+  get fragment(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(136, U.LE));
   }
 
   set fragment(value: Deno.PointerValue | FragmentState | ToFragmentState) {
@@ -11434,10 +11234,8 @@ export class ChainedStruct extends U.StructBase {
     }
   }
 
-  get next(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get next(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set next(value: Deno.PointerValue | ChainedStruct | ToChainedStruct) {
@@ -11497,10 +11295,8 @@ export class ChainedStructOut extends U.StructBase {
     }
   }
 
-  get next(): ChainedStructOut | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStructOut(ptr);
+  get next(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set next(value: Deno.PointerValue | ChainedStructOut | ToChainedStructOut) {
@@ -11542,8 +11338,8 @@ export type ToInstanceExtras = undefined | {
   chain?: ChainedStruct | ToChainedStruct;
   backends?: number;
   dx12ShaderCompiler?: Dx12Compiler;
-  dxilPath?: Deno.PointerValue;
-  dxcPath?: Deno.PointerValue;
+  dxilPath?: Deno.PointerValue | string;
+  dxcPath?: Deno.PointerValue | string;
 };
 
 export class InstanceExtras extends U.StructBase {
@@ -11599,12 +11395,11 @@ export class InstanceExtras extends U.StructBase {
   }
 
   get dxilPath(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
-  set dxilPath(value: Deno.PointerValue) {
-    const inner = value;
+  set dxilPath(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       24,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -11613,12 +11408,11 @@ export class InstanceExtras extends U.StructBase {
   }
 
   get dxcPath(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
   }
 
-  set dxcPath(value: Deno.PointerValue) {
-    const inner = value;
+  set dxcPath(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       32,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -11652,7 +11446,7 @@ export class InstanceExtras extends U.StructBase {
 
 export type ToDeviceExtras = undefined | {
   chain?: ChainedStruct | ToChainedStruct;
-  tracePath?: Deno.PointerValue;
+  tracePath?: Deno.PointerValue | string;
 };
 
 export class DeviceExtras extends U.StructBase {
@@ -11692,12 +11486,11 @@ export class DeviceExtras extends U.StructBase {
   }
 
   get tracePath(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(16, U.LE));
   }
 
-  set tracePath(value: Deno.PointerValue) {
-    const inner = value;
+  set tracePath(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       16,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -11969,10 +11762,8 @@ export class PipelineLayoutExtras extends U.StructBase {
     this.dataview.setUint32(16, value, U.LE);
   }
 
-  get pushConstantRanges(): PushConstantRange | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    if (ptr == null) return null;
-    else return new PushConstantRange(ptr);
+  get pushConstantRanges(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set pushConstantRanges(
@@ -12036,9 +11827,8 @@ export class WrappedSubmissionIndex extends U.StructBase {
     }
   }
 
-  get queue(): Queue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    return new Queue(ptr);
+  get queue(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set queue(value: Deno.PointerValue | Queue) {
@@ -12077,8 +11867,8 @@ export class WrappedSubmissionIndex extends U.StructBase {
 }
 
 export type ToShaderDefine = undefined | {
-  name?: Deno.PointerValue;
-  value?: Deno.PointerValue;
+  name?: Deno.PointerValue | string;
+  value?: Deno.PointerValue | string;
 };
 
 export class ShaderDefine extends U.StructBase {
@@ -12099,12 +11889,11 @@ export class ShaderDefine extends U.StructBase {
   }
 
   get name(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
-  set name(value: Deno.PointerValue) {
-    const inner = value;
+  set name(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       0,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -12113,12 +11902,11 @@ export class ShaderDefine extends U.StructBase {
   }
 
   get value(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
-  set value(value: Deno.PointerValue) {
-    const inner = value;
+  set value(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       8,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -12143,7 +11931,7 @@ export class ShaderDefine extends U.StructBase {
 export type ToShaderModuleGLSLDescriptor = undefined | {
   chain?: ChainedStruct | ToChainedStruct;
   stage?: ShaderStage;
-  code?: Deno.PointerValue;
+  code?: Deno.PointerValue | string;
   defineCount?: number;
   defines?: Deno.PointerValue | ShaderDefine | ToShaderDefine;
 };
@@ -12193,12 +11981,11 @@ export class ShaderModuleGLSLDescriptor extends U.StructBase {
   }
 
   get code(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
-  set code(value: Deno.PointerValue) {
-    const inner = value;
+  set code(value: Deno.PointerValue | string) {
+    const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + " "));
     this.dataview.setBigUint64(
       24,
       BigInt(Deno.UnsafePointer.value(inner)),
@@ -12214,10 +12001,8 @@ export class ShaderModuleGLSLDescriptor extends U.StructBase {
     this.dataview.setUint32(32, value, U.LE);
   }
 
-  get defines(): ShaderDefine | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
-    if (ptr == null) return null;
-    else return new ShaderDefine(ptr);
+  get defines(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
   }
 
   set defines(value: Deno.PointerValue | ShaderDefine | ToShaderDefine) {
@@ -12906,8 +12691,7 @@ export class SurfaceCapabilities extends U.StructBase {
   }
 
   get formats(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(8, U.LE));
   }
 
   set formats(value: Deno.PointerValue) {
@@ -12928,8 +12712,7 @@ export class SurfaceCapabilities extends U.StructBase {
   }
 
   get presentModes(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(24, U.LE));
   }
 
   set presentModes(value: Deno.PointerValue) {
@@ -12950,8 +12733,7 @@ export class SurfaceCapabilities extends U.StructBase {
   }
 
   get alphaModes(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(40, U.LE));
   }
 
   set alphaModes(value: Deno.PointerValue) {
@@ -13057,8 +12839,7 @@ export class SwapChainDescriptorExtras extends U.StructBase {
   }
 
   get viewFormats(): Deno.PointerValue {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
-    return ptr;
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(32, U.LE));
   }
 
   set viewFormats(value: Deno.PointerValue) {
@@ -13117,10 +12898,8 @@ export class InstanceEnumerateAdapterOptions extends U.StructBase {
     }
   }
 
-  get nextInChain(): ChainedStruct | null {
-    const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
-    if (ptr == null) return null;
-    else return new ChainedStruct(ptr);
+  get nextInChain(): Deno.PointerValue {
+    return Deno.UnsafePointer.create(this.dataview.getBigUint64(0, U.LE));
   }
 
   set nextInChain(
@@ -13297,9 +13076,12 @@ export function createInstance(
 
 export function getProcAddress(
   device: Device,
-  procName: Deno.PointerValue,
+  procName: string | null,
 ): Deno.PointerValue {
-  const result = lib.symbols.wgpuGetProcAddress(device.pointer, procName);
+  const result = lib.symbols.wgpuGetProcAddress(
+    device.pointer,
+    Deno.UnsafePointer.of(new TextEncoder().encode(procName + " ")),
+  );
   return result;
 }
 
@@ -13318,9 +13100,9 @@ export function generateReport(
   return result;
 }
 
-export function setLogCallback(): Promise<[LogLevel, Deno.PointerValue]>;
+export function setLogCallback(): Promise<[LogLevel, string | null]>;
 export function setLogCallback(
-  callback: (...args: [LogLevel, Deno.PointerValue]) => void,
+  callback: (...args: [LogLevel, string | null]) => void,
 ): Deno.UnsafeCallback<typeof LogCallback>;
 export function setLogCallback(
   callback: Deno.UnsafeCallback<typeof LogCallback>,
@@ -13328,19 +13110,24 @@ export function setLogCallback(
 export function setLogCallback(callback: Deno.PointerValue): void;
 export function setLogCallback(
   callback?:
-    | ((...args: [LogLevel, Deno.PointerValue]) => void)
+    | ((...args: [LogLevel, string | null]) => void)
     | Deno.UnsafeCallback<typeof LogCallback>
     | Deno.PointerValue,
 ):
   | void
-  | Promise<[LogLevel, Deno.PointerValue]>
+  | Promise<[LogLevel, string | null]>
   | Deno.UnsafeCallback<typeof LogCallback> {
   if (callback == null) {
     return new Promise((res) => {
       const cb = new Deno.UnsafeCallback(
         LogCallback,
         (...args: U.CbParam<typeof LogCallback>) => {
-          res([args[0] as LogLevel, args[1]]);
+          res([
+            args[0] as LogLevel,
+            args[1] === null
+              ? null
+              : Deno.UnsafePointerView.getCString(args[1]),
+          ]);
         },
       );
       lib.symbols.wgpuSetLogCallback(cb.pointer, null);
@@ -13351,7 +13138,10 @@ export function setLogCallback(
     const cb = new Deno.UnsafeCallback(
       LogCallback,
       (...args: U.CbParam<typeof LogCallback>) => {
-        callback(...[args[0] as LogLevel, args[1]]);
+        callback(...[
+          args[0] as LogLevel,
+          args[1] === null ? null : Deno.UnsafePointerView.getCString(args[1]),
+        ]);
       },
     );
     lib.symbols.wgpuSetLogCallback(cb.pointer, null);
@@ -13424,12 +13214,10 @@ export class Adapter extends U.ClassBase {
 
   requestDevice(
     descriptor?: DeviceDescriptor | null,
-  ): Promise<[RequestDeviceStatus, Device, Deno.PointerValue]>;
+  ): Promise<[RequestDeviceStatus, Device, string | null]>;
   requestDevice(
     descriptor: DeviceDescriptor | null,
-    callback: (
-      ...args: [RequestDeviceStatus, Device, Deno.PointerValue]
-    ) => void,
+    callback: (...args: [RequestDeviceStatus, Device, string | null]) => void,
   ): Deno.UnsafeCallback<typeof RequestDeviceCallback>;
   requestDevice(
     descriptor: DeviceDescriptor | null,
@@ -13442,12 +13230,12 @@ export class Adapter extends U.ClassBase {
   requestDevice(
     descriptor: DeviceDescriptor | null,
     callback?:
-      | ((...args: [RequestDeviceStatus, Device, Deno.PointerValue]) => void)
+      | ((...args: [RequestDeviceStatus, Device, string | null]) => void)
       | Deno.UnsafeCallback<typeof RequestDeviceCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<[RequestDeviceStatus, Device, Deno.PointerValue]>
+    | Promise<[RequestDeviceStatus, Device, string | null]>
     | Deno.UnsafeCallback<typeof RequestDeviceCallback> {
     if (callback == null) {
       return new Promise((res) => {
@@ -13457,7 +13245,9 @@ export class Adapter extends U.ClassBase {
             res([
               args[0] as RequestDeviceStatus,
               new Device(args[1], this),
-              args[2],
+              args[2] === null
+                ? null
+                : Deno.UnsafePointerView.getCString(args[2]),
             ]);
           },
         );
@@ -13490,7 +13280,9 @@ export class Adapter extends U.ClassBase {
           callback(...[
             args[0] as RequestDeviceStatus,
             new Device(args[1], this),
-            args[2],
+            args[2] === null
+              ? null
+              : Deno.UnsafePointerView.getCString(args[2]),
           ]);
         },
       );
@@ -13526,8 +13318,11 @@ export class BindGroup extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuBindGroupRelease]);
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuBindGroupSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuBindGroupSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 }
@@ -13541,8 +13336,11 @@ export class BindGroupLayout extends U.ClassBase {
     ]);
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuBindGroupLayoutSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuBindGroupLayoutSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 }
@@ -13699,8 +13497,11 @@ export class Buffer extends U.ClassBase {
     }
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuBufferSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuBufferSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 
@@ -13716,8 +13517,11 @@ export class CommandBuffer extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuCommandBufferRelease]);
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuCommandBufferSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuCommandBufferSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 }
@@ -13900,10 +13704,10 @@ export class CommandEncoder extends U.ClassBase {
     return new CommandBuffer(result, this);
   }
 
-  insertDebugMarker(markerLabel: Deno.PointerValue): void {
+  insertDebugMarker(markerLabel: string | null): void {
     const result = lib.symbols.wgpuCommandEncoderInsertDebugMarker(
       this.pointer,
-      markerLabel,
+      Deno.UnsafePointer.of(new TextEncoder().encode(markerLabel + " ")),
     );
     return result;
   }
@@ -13913,10 +13717,10 @@ export class CommandEncoder extends U.ClassBase {
     return result;
   }
 
-  pushDebugGroup(groupLabel: Deno.PointerValue): void {
+  pushDebugGroup(groupLabel: string | null): void {
     const result = lib.symbols.wgpuCommandEncoderPushDebugGroup(
       this.pointer,
-      groupLabel,
+      Deno.UnsafePointer.of(new TextEncoder().encode(groupLabel + " ")),
     );
     return result;
   }
@@ -13939,8 +13743,11 @@ export class CommandEncoder extends U.ClassBase {
     return result;
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuCommandEncoderSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuCommandEncoderSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 
@@ -14011,10 +13818,10 @@ export class ComputePassEncoder extends U.ClassBase {
     return result;
   }
 
-  insertDebugMarker(markerLabel: Deno.PointerValue): void {
+  insertDebugMarker(markerLabel: string | null): void {
     const result = lib.symbols.wgpuComputePassEncoderInsertDebugMarker(
       this.pointer,
-      markerLabel,
+      Deno.UnsafePointer.of(new TextEncoder().encode(markerLabel + " ")),
     );
     return result;
   }
@@ -14026,10 +13833,10 @@ export class ComputePassEncoder extends U.ClassBase {
     return result;
   }
 
-  pushDebugGroup(groupLabel: Deno.PointerValue): void {
+  pushDebugGroup(groupLabel: string | null): void {
     const result = lib.symbols.wgpuComputePassEncoderPushDebugGroup(
       this.pointer,
-      groupLabel,
+      Deno.UnsafePointer.of(new TextEncoder().encode(groupLabel + " ")),
     );
     return result;
   }
@@ -14050,10 +13857,10 @@ export class ComputePassEncoder extends U.ClassBase {
     return result;
   }
 
-  setLabel(label: Deno.PointerValue): void {
+  setLabel(label: string | null): void {
     const result = lib.symbols.wgpuComputePassEncoderSetLabel(
       this.pointer,
-      label,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
     );
     return result;
   }
@@ -14084,8 +13891,11 @@ export class ComputePipeline extends U.ClassBase {
     return new BindGroupLayout(result, this);
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuComputePipelineSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuComputePipelineSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 }
@@ -14188,11 +13998,11 @@ export class Device extends U.ClassBase {
 
   createComputePipelineAsync(
     descriptor?: ComputePipelineDescriptor | null,
-  ): Promise<[CreatePipelineAsyncStatus, ComputePipeline, Deno.PointerValue]>;
+  ): Promise<[CreatePipelineAsyncStatus, ComputePipeline, string | null]>;
   createComputePipelineAsync(
     descriptor: ComputePipelineDescriptor | null,
     callback: (
-      ...args: [CreatePipelineAsyncStatus, ComputePipeline, Deno.PointerValue]
+      ...args: [CreatePipelineAsyncStatus, ComputePipeline, string | null]
     ) => void,
   ): Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback>;
   createComputePipelineAsync(
@@ -14207,21 +14017,17 @@ export class Device extends U.ClassBase {
     descriptor: ComputePipelineDescriptor | null,
     callback?:
       | ((
-        ...args: [CreatePipelineAsyncStatus, ComputePipeline, Deno.PointerValue]
+        ...args: [CreatePipelineAsyncStatus, ComputePipeline, string | null]
       ) => void)
       | Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<[CreatePipelineAsyncStatus, ComputePipeline, Deno.PointerValue]>
+    | Promise<[CreatePipelineAsyncStatus, ComputePipeline, string | null]>
     | Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback> {
     if (callback == null) {
       return new Promise((res) => {
-        let data: [
-          CreatePipelineAsyncStatus,
-          ComputePipeline,
-          Deno.PointerValue,
-        ];
+        let data: [CreatePipelineAsyncStatus, ComputePipeline, string | null];
         const device = this.findInFamily(Device);
         if (!device) {
           throw new Error(
@@ -14234,7 +14040,9 @@ export class Device extends U.ClassBase {
             data = [
               args[0] as CreatePipelineAsyncStatus,
               new ComputePipeline(args[1], this),
-              args[2],
+              args[2] === null
+                ? null
+                : Deno.UnsafePointerView.getCString(args[2]),
             ];
           },
         );
@@ -14273,7 +14081,9 @@ export class Device extends U.ClassBase {
           callback(...[
             args[0] as CreatePipelineAsyncStatus,
             new ComputePipeline(args[1], this),
-            args[2],
+            args[2] === null
+              ? null
+              : Deno.UnsafePointerView.getCString(args[2]),
           ]);
         },
       );
@@ -14376,11 +14186,11 @@ export class Device extends U.ClassBase {
 
   createRenderPipelineAsync(
     descriptor?: RenderPipelineDescriptor | null,
-  ): Promise<[CreatePipelineAsyncStatus, RenderPipeline, Deno.PointerValue]>;
+  ): Promise<[CreatePipelineAsyncStatus, RenderPipeline, string | null]>;
   createRenderPipelineAsync(
     descriptor: RenderPipelineDescriptor | null,
     callback: (
-      ...args: [CreatePipelineAsyncStatus, RenderPipeline, Deno.PointerValue]
+      ...args: [CreatePipelineAsyncStatus, RenderPipeline, string | null]
     ) => void,
   ): Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback>;
   createRenderPipelineAsync(
@@ -14395,21 +14205,17 @@ export class Device extends U.ClassBase {
     descriptor: RenderPipelineDescriptor | null,
     callback?:
       | ((
-        ...args: [CreatePipelineAsyncStatus, RenderPipeline, Deno.PointerValue]
+        ...args: [CreatePipelineAsyncStatus, RenderPipeline, string | null]
       ) => void)
       | Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<[CreatePipelineAsyncStatus, RenderPipeline, Deno.PointerValue]>
+    | Promise<[CreatePipelineAsyncStatus, RenderPipeline, string | null]>
     | Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback> {
     if (callback == null) {
       return new Promise((res) => {
-        let data: [
-          CreatePipelineAsyncStatus,
-          RenderPipeline,
-          Deno.PointerValue,
-        ];
+        let data: [CreatePipelineAsyncStatus, RenderPipeline, string | null];
         const device = this.findInFamily(Device);
         if (!device) {
           throw new Error(
@@ -14422,7 +14228,9 @@ export class Device extends U.ClassBase {
             data = [
               args[0] as CreatePipelineAsyncStatus,
               new RenderPipeline(args[1], this),
-              args[2],
+              args[2] === null
+                ? null
+                : Deno.UnsafePointerView.getCString(args[2]),
             ];
           },
         );
@@ -14461,7 +14269,9 @@ export class Device extends U.ClassBase {
           callback(...[
             args[0] as CreatePipelineAsyncStatus,
             new RenderPipeline(args[1], this),
-            args[2],
+            args[2] === null
+              ? null
+              : Deno.UnsafePointerView.getCString(args[2]),
           ]);
         },
       );
@@ -14601,27 +14411,32 @@ export class Device extends U.ClassBase {
     return result == 1;
   }
 
-  popErrorScope(): Promise<[ErrorType, Deno.PointerValue]>;
+  popErrorScope(): Promise<[ErrorType, string | null]>;
   popErrorScope(
-    callback: (...args: [ErrorType, Deno.PointerValue]) => void,
+    callback: (...args: [ErrorType, string | null]) => void,
   ): Deno.UnsafeCallback<typeof ErrorCallback>;
   popErrorScope(callback: Deno.UnsafeCallback<typeof ErrorCallback>): void;
   popErrorScope(callback: Deno.PointerValue): void;
   popErrorScope(
     callback?:
-      | ((...args: [ErrorType, Deno.PointerValue]) => void)
+      | ((...args: [ErrorType, string | null]) => void)
       | Deno.UnsafeCallback<typeof ErrorCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<[ErrorType, Deno.PointerValue]>
+    | Promise<[ErrorType, string | null]>
     | Deno.UnsafeCallback<typeof ErrorCallback> {
     if (callback == null) {
       return new Promise((res) => {
         const cb = new Deno.UnsafeCallback(
           ErrorCallback,
           (...args: U.CbParam<typeof ErrorCallback>) => {
-            res([args[0] as ErrorType, args[1]]);
+            res([
+              args[0] as ErrorType,
+              args[1] === null
+                ? null
+                : Deno.UnsafePointerView.getCString(args[1]),
+            ]);
           },
         );
         lib.symbols.wgpuDevicePopErrorScope(this.pointer, cb.pointer, null);
@@ -14632,7 +14447,12 @@ export class Device extends U.ClassBase {
       const cb = new Deno.UnsafeCallback(
         ErrorCallback,
         (...args: U.CbParam<typeof ErrorCallback>) => {
-          callback(...[args[0] as ErrorType, args[1]]);
+          callback(...[
+            args[0] as ErrorType,
+            args[1] === null
+              ? null
+              : Deno.UnsafePointerView.getCString(args[1]),
+          ]);
         },
       );
       lib.symbols.wgpuDevicePopErrorScope(this.pointer, cb.pointer, null);
@@ -14647,14 +14467,17 @@ export class Device extends U.ClassBase {
     return result;
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuDeviceSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuDeviceSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 
-  setUncapturedErrorCallback(): Promise<[ErrorType, Deno.PointerValue]>;
+  setUncapturedErrorCallback(): Promise<[ErrorType, string | null]>;
   setUncapturedErrorCallback(
-    callback: (...args: [ErrorType, Deno.PointerValue]) => void,
+    callback: (...args: [ErrorType, string | null]) => void,
   ): Deno.UnsafeCallback<typeof ErrorCallback>;
   setUncapturedErrorCallback(
     callback: Deno.UnsafeCallback<typeof ErrorCallback>,
@@ -14662,19 +14485,24 @@ export class Device extends U.ClassBase {
   setUncapturedErrorCallback(callback: Deno.PointerValue): void;
   setUncapturedErrorCallback(
     callback?:
-      | ((...args: [ErrorType, Deno.PointerValue]) => void)
+      | ((...args: [ErrorType, string | null]) => void)
       | Deno.UnsafeCallback<typeof ErrorCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<[ErrorType, Deno.PointerValue]>
+    | Promise<[ErrorType, string | null]>
     | Deno.UnsafeCallback<typeof ErrorCallback> {
     if (callback == null) {
       return new Promise((res) => {
         const cb = new Deno.UnsafeCallback(
           ErrorCallback,
           (...args: U.CbParam<typeof ErrorCallback>) => {
-            res([args[0] as ErrorType, args[1]]);
+            res([
+              args[0] as ErrorType,
+              args[1] === null
+                ? null
+                : Deno.UnsafePointerView.getCString(args[1]),
+            ]);
           },
         );
         lib.symbols.wgpuDeviceSetUncapturedErrorCallback(
@@ -14693,7 +14521,12 @@ export class Device extends U.ClassBase {
       const cb = new Deno.UnsafeCallback(
         ErrorCallback,
         (...args: U.CbParam<typeof ErrorCallback>) => {
-          callback(...[args[0] as ErrorType, args[1]]);
+          callback(...[
+            args[0] as ErrorType,
+            args[1] === null
+              ? null
+              : Deno.UnsafePointerView.getCString(args[1]),
+          ]);
         },
       );
       lib.symbols.wgpuDeviceSetUncapturedErrorCallback(
@@ -14763,12 +14596,10 @@ export class Instance extends U.ClassBase {
 
   requestAdapter(
     options?: RequestAdapterOptions | null,
-  ): Promise<[RequestAdapterStatus, Adapter, Deno.PointerValue]>;
+  ): Promise<[RequestAdapterStatus, Adapter, string | null]>;
   requestAdapter(
     options: RequestAdapterOptions | null,
-    callback: (
-      ...args: [RequestAdapterStatus, Adapter, Deno.PointerValue]
-    ) => void,
+    callback: (...args: [RequestAdapterStatus, Adapter, string | null]) => void,
   ): Deno.UnsafeCallback<typeof RequestAdapterCallback>;
   requestAdapter(
     options: RequestAdapterOptions | null,
@@ -14781,12 +14612,12 @@ export class Instance extends U.ClassBase {
   requestAdapter(
     options: RequestAdapterOptions | null,
     callback?:
-      | ((...args: [RequestAdapterStatus, Adapter, Deno.PointerValue]) => void)
+      | ((...args: [RequestAdapterStatus, Adapter, string | null]) => void)
       | Deno.UnsafeCallback<typeof RequestAdapterCallback>
       | Deno.PointerValue,
   ):
     | void
-    | Promise<[RequestAdapterStatus, Adapter, Deno.PointerValue]>
+    | Promise<[RequestAdapterStatus, Adapter, string | null]>
     | Deno.UnsafeCallback<typeof RequestAdapterCallback> {
     if (callback == null) {
       return new Promise((res) => {
@@ -14796,7 +14627,9 @@ export class Instance extends U.ClassBase {
             res([
               args[0] as RequestAdapterStatus,
               new Adapter(args[1], this),
-              args[2],
+              args[2] === null
+                ? null
+                : Deno.UnsafePointerView.getCString(args[2]),
             ]);
           },
         );
@@ -14829,7 +14662,9 @@ export class Instance extends U.ClassBase {
           callback(...[
             args[0] as RequestAdapterStatus,
             new Adapter(args[1], this),
-            args[2],
+            args[2] === null
+              ? null
+              : Deno.UnsafePointerView.getCString(args[2]),
           ]);
         },
       );
@@ -14885,8 +14720,11 @@ export class PipelineLayout extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuPipelineLayoutRelease]);
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuPipelineLayoutSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuPipelineLayoutSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 }
@@ -14912,8 +14750,11 @@ export class QuerySet extends U.ClassBase {
     return result as QueryType;
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuQuerySetSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuQuerySetSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 }
@@ -14974,8 +14815,11 @@ export class Queue extends U.ClassBase {
     }
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuQueueSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuQueueSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 
@@ -15061,8 +14905,11 @@ export class RenderBundle extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuRenderBundleRelease]);
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuRenderBundleSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuRenderBundleSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 }
@@ -15149,10 +14996,10 @@ export class RenderBundleEncoder extends U.ClassBase {
     return new RenderBundle(result, this);
   }
 
-  insertDebugMarker(markerLabel: Deno.PointerValue): void {
+  insertDebugMarker(markerLabel: string | null): void {
     const result = lib.symbols.wgpuRenderBundleEncoderInsertDebugMarker(
       this.pointer,
-      markerLabel,
+      Deno.UnsafePointer.of(new TextEncoder().encode(markerLabel + " ")),
     );
     return result;
   }
@@ -15164,10 +15011,10 @@ export class RenderBundleEncoder extends U.ClassBase {
     return result;
   }
 
-  pushDebugGroup(groupLabel: Deno.PointerValue): void {
+  pushDebugGroup(groupLabel: string | null): void {
     const result = lib.symbols.wgpuRenderBundleEncoderPushDebugGroup(
       this.pointer,
-      groupLabel,
+      Deno.UnsafePointer.of(new TextEncoder().encode(groupLabel + " ")),
     );
     return result;
   }
@@ -15204,10 +15051,10 @@ export class RenderBundleEncoder extends U.ClassBase {
     return result;
   }
 
-  setLabel(label: Deno.PointerValue): void {
+  setLabel(label: string | null): void {
     const result = lib.symbols.wgpuRenderBundleEncoderSetLabel(
       this.pointer,
-      label,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
     );
     return result;
   }
@@ -15350,10 +15197,10 @@ export class RenderPassEncoder extends U.ClassBase {
     return result;
   }
 
-  insertDebugMarker(markerLabel: Deno.PointerValue): void {
+  insertDebugMarker(markerLabel: string | null): void {
     const result = lib.symbols.wgpuRenderPassEncoderInsertDebugMarker(
       this.pointer,
-      markerLabel,
+      Deno.UnsafePointer.of(new TextEncoder().encode(markerLabel + " ")),
     );
     return result;
   }
@@ -15363,10 +15210,10 @@ export class RenderPassEncoder extends U.ClassBase {
     return result;
   }
 
-  pushDebugGroup(groupLabel: Deno.PointerValue): void {
+  pushDebugGroup(groupLabel: string | null): void {
     const result = lib.symbols.wgpuRenderPassEncoderPushDebugGroup(
       this.pointer,
-      groupLabel,
+      Deno.UnsafePointer.of(new TextEncoder().encode(groupLabel + " ")),
     );
     return result;
   }
@@ -15415,10 +15262,10 @@ export class RenderPassEncoder extends U.ClassBase {
     return result;
   }
 
-  setLabel(label: Deno.PointerValue): void {
+  setLabel(label: string | null): void {
     const result = lib.symbols.wgpuRenderPassEncoderSetLabel(
       this.pointer,
-      label,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
     );
     return result;
   }
@@ -15582,8 +15429,11 @@ export class RenderPipeline extends U.ClassBase {
     return new BindGroupLayout(result, this);
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuRenderPipelineSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuRenderPipelineSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 }
@@ -15594,8 +15444,11 @@ export class Sampler extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuSamplerRelease]);
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuSamplerSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuSamplerSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 }
@@ -15676,8 +15529,11 @@ export class ShaderModule extends U.ClassBase {
     }
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuShaderModuleSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuShaderModuleSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 }
@@ -15803,8 +15659,11 @@ export class Texture extends U.ClassBase {
     return result;
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuTextureSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuTextureSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 }
@@ -15815,8 +15674,11 @@ export class TextureView extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuTextureViewRelease]);
   }
 
-  setLabel(label: Deno.PointerValue): void {
-    const result = lib.symbols.wgpuTextureViewSetLabel(this.pointer, label);
+  setLabel(label: string | null): void {
+    const result = lib.symbols.wgpuTextureViewSetLabel(
+      this.pointer,
+      Deno.UnsafePointer.of(new TextEncoder().encode(label + " ")),
+    );
     return result;
   }
 }

@@ -426,15 +426,7 @@ function generateStructFrom(ctx: Ctx, name: string): string {
 function generateStructGetterType(ctx: Ctx, name: string, fname: string) {
   const { kind, type } = ctx.structs[name].fields[fname];
   if (kind == "Record") return nofix(type!);
-  if (kind == "Pointer") {
-    // class
-    if (type in ctx.classes) return nofix(type);
-    // struct
-    const match = matchStruct(ctx, type);
-    if (match) return nofix(match) + `| null`;
-    // default
-    return "Deno.PointerValue";
-  }
+  if (kind == "Pointer") return "Deno.PointerValue";
   if (kind == "Enum") return `${nofix(type!)}`;
   if (kind == "UInt") return "number";
   if (kind == "ULongLong") return "bigint";
@@ -457,18 +449,7 @@ function generateStructGetterBody(ctx: Ctx, name: string, fname: string) {
     }(new DataView(this.dataview.buffer, this.dataview.byteOffset + ${offset}, ${size}))`;
   }
   if (kind == "Pointer") {
-    const forward =
-      `const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(${offset}, U.LE));`;
-    // class
-    if (type in ctx.classes) return forward + `return new ${nofix(type)}(ptr);`;
-    // struct
-    const match = matchStruct(ctx, type);
-    if (match) {
-      return forward +
-        `if (ptr == null) return null; else return new ${nofix(match)}(ptr);`;
-    }
-    // default
-    return forward + `return ptr;`;
+    return `return Deno.UnsafePointer.create(this.dataview.getBigUint64(${offset}, U.LE));`;
   }
   if (kind == "Enum") {
     return `return this.dataview.getUint32(${offset}, U.LE) as ${nofix(type!)}`;
@@ -514,6 +495,8 @@ function generateStructSetterType(ctx: Ctx, name: string, fname: string) {
       // default struct
       return `Deno.PointerValue | ${nofix(match)} | To${nofix(match)}`;
     }
+    // string
+    if (type == "const char *") return `Deno.PointerValue | string`;
     // default
     return `Deno.PointerValue`;
   }
@@ -583,6 +566,12 @@ function generateStructSetterBody(ctx: Ctx, name: string, fname: string) {
         `const inner = value instanceof U.StructBase ? value.pointer : U.duckIsPointer(value) ? value : ${
           nofix(match)
         }.from(value).pointer`,
+      );
+    }
+    // string
+    if (type == "const char *") {
+      return withsetinner(
+        `const inner = Deno.UnsafePointer.of(new TextEncoder().encode(value + "\0"));`,
       );
     }
     // default
@@ -906,7 +895,9 @@ function translateTypeSpec(
   const orptr = singletype ? "| Deno.PointerValue" : "";
   if (kind == "Enum") return nofix(type);
   if (kind == "Pointer") {
+    // callback
     if (type in ctx.callbacks) return nofix(type);
+    // class
     if (type in ctx.classes) return nofix(type);
     // struct
     const match = matchStruct(ctx, type);
@@ -915,6 +906,8 @@ function translateTypeSpec(
         (singletype ? `| To${nofix(match)}` : "") +
         orptr;
     }
+    // string
+    if (type == "const char *") return "string | null";
   }
   return translateKindToDeno(kind);
 }
@@ -930,13 +923,17 @@ function generateResultTransform(
   if (kind == "Enum") return `${inner} as ${nofix(type!)}`;
   if (kind == "Pointer") {
     // class
-    if (type && type in ctx.classes) {
+    if (type in ctx.classes) {
       return `new ${nofix(type)}(${inner} ${method ? ", this" : ""})`;
     }
     // struct
     const match = matchStruct(ctx, type);
     if (match) {
       return `${inner} === null ? null : new ${nofix(match)}(${inner})`;
+    }
+    // string
+    if (type == "const char *") {
+      return `${inner} === null ? null : Deno.UnsafePointerView.getCString(${inner})`;
     }
   }
   return inner;
@@ -958,6 +955,10 @@ function translateArgument(ctx: Ctx, spec: NamedTypeSpec): string {
       } ? ${spec.name}.pointer : U.duckIsPointer(${spec.name}) ? ${spec.name} : ${
         nofix(match)
       }.from(${spec.name}).pointer`;
+    }
+    // string
+    if (spec.type == "const char *") {
+      return `Deno.UnsafePointer.of(new TextEncoder().encode(${spec.name} + "\0"))`;
     }
   }
   return spec.name;

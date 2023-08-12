@@ -28,20 +28,17 @@ const [, device] = await adapter.requestDevice();
 const queue = device.getQueue();
 
 // Create shader module
-const code = await Deno.readTextFile(
-  new URL("./compute.wgsl", import.meta.url),
-);
 const shaderModule = device.createShaderModule({
-  label: cstr("compute.wgsl"),
+  label: "compute.wgsl",
   nextInChain: {
     chain: { sType: w.SType.ShaderModuleWGSLDescriptor },
-    code: cstr(code),
+    code: await Deno.readTextFile(new URL("./compute.wgsl", import.meta.url)),
   },
 });
 
 // Staging buffer
 const stagingBuffer = device.createBuffer({
-  label: cstr("staging_buffer"),
+  label: "staging_buffer",
   usage: w.BufferUsage.MapRead | w.BufferUsage.CopyDst,
   size: numbers.byteLength,
   mappedAtCreation: false,
@@ -49,7 +46,7 @@ const stagingBuffer = device.createBuffer({
 
 // Storage buffer
 const storageBuffer = device.createBuffer({
-  label: cstr("storage_buffer"),
+  label: "storage_buffer",
   usage: w.BufferUsage.Storage |
     w.BufferUsage.CopyDst | w.BufferUsage.CopySrc,
   size: numbers.byteLength,
@@ -58,17 +55,17 @@ const storageBuffer = device.createBuffer({
 
 // compute pipeline
 const computePipeline = device.createComputePipeline({
-  label: cstr("compute_pipeline"),
+  label: "compute_pipeline",
   compute: {
     module: shaderModule,
-    entryPoint: cstr("main"),
+    entryPoint: "main",
   },
 });
 
 // bind group
 const bindGroupLayout = computePipeline.getBindGroupLayout(0);
 const bindGroup = device.createBindGroup({
-  label: cstr("bind_group"),
+  label: "bind_group",
   layout: bindGroupLayout,
   entryCount: 1,
   entries: {
@@ -81,12 +78,12 @@ const bindGroup = device.createBindGroup({
 
 // Command Encoder
 const commandEncoder = device.createCommandEncoder({
-  label: cstr("command_encoder"),
+  label: "command_encoder",
 });
 
 // Create compute pass and populate data
 const computePassEncoder = commandEncoder.beginComputePass({
-  label: cstr("compute_pass"),
+  label: "compute_pass",
 });
 computePassEncoder.setPipeline(computePipeline);
 computePassEncoder.setBindGroup(0, bindGroup, 0, null);
@@ -103,7 +100,7 @@ commandEncoder.copyBufferToBuffer(
 
 // Command Buffer
 const commandBuffer = commandEncoder.finish({
-  label: cstr("command_buffer"),
+  label: "command_buffer",
 });
 
 // Write data to storage buffer
@@ -126,11 +123,6 @@ if (outputs) {
 }
 
 // Below are utility functions
-
-// TODO: how to manage buffer ref count in struct
-function cstr(text: string) {
-  return Deno.UnsafePointer.of(new TextEncoder().encode(text + "\0"));
-}
 
 // TODO: builtin easier double pointer (**obj) creation
 function pp(...objs: Deno.PointerValue[]): Deno.PointerValue {
