@@ -6796,8 +6796,8 @@ export const LogCallback = {
   parameters: ["u32", "pointer", "pointer"],
 } as const;
 
-export function createInstance(descriptor: Deno.PointerValue): Instance {
-  const result = lib.symbols.wgpuCreateInstance(descriptor);
+export function createInstance(descriptor: InstanceDescriptor): Instance {
+  const result = lib.symbols.wgpuCreateInstance(descriptor.pointer);
   return new Instance(result);
 }
 
@@ -6911,12 +6911,12 @@ export class Adapter extends U.ClassBase {
   }
 
   requestDevice(
-    descriptor: Deno.PointerValue,
+    descriptor: DeviceDescriptor,
   ): Promise<
     [RequestDeviceStatus, Device, Deno.PointerValue, Deno.PointerValue]
   >;
   requestDevice(
-    descriptor: Deno.PointerValue,
+    descriptor: DeviceDescriptor,
     callback: (
       ...args: [
         RequestDeviceStatus,
@@ -6927,15 +6927,15 @@ export class Adapter extends U.ClassBase {
     ) => void,
   ): Deno.UnsafeCallback<typeof RequestDeviceCallback>;
   requestDevice(
-    descriptor: Deno.PointerValue,
+    descriptor: DeviceDescriptor,
     callback: Deno.UnsafeCallback<typeof RequestDeviceCallback>,
   ): void;
   requestDevice(
-    descriptor: Deno.PointerValue,
+    descriptor: DeviceDescriptor,
     callback: Deno.PointerValue,
   ): void;
   requestDevice(
-    descriptor: Deno.PointerValue,
+    descriptor: DeviceDescriptor,
     callback?:
       | ((
         ...args: [
@@ -6975,7 +6975,7 @@ export class Adapter extends U.ClassBase {
         );
         lib.symbols.wgpuAdapterRequestDevice(
           this.pointer,
-          descriptor,
+          descriptor.pointer,
           cb.pointer,
           null,
         );
@@ -6983,7 +6983,7 @@ export class Adapter extends U.ClassBase {
     } else if (callback instanceof Deno.UnsafeCallback) {
       lib.symbols.wgpuAdapterRequestDevice(
         this.pointer,
-        descriptor,
+        descriptor.pointer,
         callback.pointer,
         null,
       );
@@ -7001,7 +7001,7 @@ export class Adapter extends U.ClassBase {
       );
       lib.symbols.wgpuAdapterRequestDevice(
         this.pointer,
-        descriptor,
+        descriptor.pointer,
         cb.pointer,
         null,
       );
@@ -7009,7 +7009,7 @@ export class Adapter extends U.ClassBase {
     } else {
       lib.symbols.wgpuAdapterRequestDevice(
         this.pointer,
-        descriptor,
+        descriptor.pointer,
         callback,
         null,
       );
@@ -7225,18 +7225,18 @@ export class CommandEncoder extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuCommandEncoderRelease]);
   }
 
-  beginComputePass(descriptor: Deno.PointerValue): ComputePassEncoder {
+  beginComputePass(descriptor: ComputePassDescriptor): ComputePassEncoder {
     const result = lib.symbols.wgpuCommandEncoderBeginComputePass(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new ComputePassEncoder(result, this);
   }
 
-  beginRenderPass(descriptor: Deno.PointerValue): RenderPassEncoder {
+  beginRenderPass(descriptor: RenderPassDescriptor): RenderPassEncoder {
     const result = lib.symbols.wgpuCommandEncoderBeginRenderPass(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new RenderPassEncoder(result, this);
   }
@@ -7274,51 +7274,51 @@ export class CommandEncoder extends U.ClassBase {
   }
 
   copyBufferToTexture(
-    source: Deno.PointerValue,
-    destination: Deno.PointerValue,
-    copySize: Deno.PointerValue,
+    source: ImageCopyBuffer,
+    destination: ImageCopyTexture,
+    copySize: Extent3D,
   ): void {
     const result = lib.symbols.wgpuCommandEncoderCopyBufferToTexture(
       this.pointer,
-      source,
-      destination,
-      copySize,
+      source.pointer,
+      destination.pointer,
+      copySize.pointer,
     );
     return result;
   }
 
   copyTextureToBuffer(
-    source: Deno.PointerValue,
-    destination: Deno.PointerValue,
-    copySize: Deno.PointerValue,
+    source: ImageCopyTexture,
+    destination: ImageCopyBuffer,
+    copySize: Extent3D,
   ): void {
     const result = lib.symbols.wgpuCommandEncoderCopyTextureToBuffer(
       this.pointer,
-      source,
-      destination,
-      copySize,
+      source.pointer,
+      destination.pointer,
+      copySize.pointer,
     );
     return result;
   }
 
   copyTextureToTexture(
-    source: Deno.PointerValue,
-    destination: Deno.PointerValue,
-    copySize: Deno.PointerValue,
+    source: ImageCopyTexture,
+    destination: ImageCopyTexture,
+    copySize: Extent3D,
   ): void {
     const result = lib.symbols.wgpuCommandEncoderCopyTextureToTexture(
       this.pointer,
-      source,
-      destination,
-      copySize,
+      source.pointer,
+      destination.pointer,
+      copySize.pointer,
     );
     return result;
   }
 
-  finish(descriptor: Deno.PointerValue): CommandBuffer {
+  finish(descriptor: CommandBufferDescriptor): CommandBuffer {
     const result = lib.symbols.wgpuCommandEncoderFinish(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new CommandBuffer(result, this);
   }
@@ -7519,45 +7519,52 @@ export class Device extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuDeviceRelease]);
   }
 
-  createBindGroup(descriptor: Deno.PointerValue): BindGroup {
+  createBindGroup(descriptor: BindGroupDescriptor): BindGroup {
     const result = lib.symbols.wgpuDeviceCreateBindGroup(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new BindGroup(result, this);
   }
 
-  createBindGroupLayout(descriptor: Deno.PointerValue): BindGroupLayout {
+  createBindGroupLayout(
+    descriptor: BindGroupLayoutDescriptor,
+  ): BindGroupLayout {
     const result = lib.symbols.wgpuDeviceCreateBindGroupLayout(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new BindGroupLayout(result, this);
   }
 
-  createBuffer(descriptor: Deno.PointerValue): Buffer {
-    const result = lib.symbols.wgpuDeviceCreateBuffer(this.pointer, descriptor);
+  createBuffer(descriptor: BufferDescriptor): Buffer {
+    const result = lib.symbols.wgpuDeviceCreateBuffer(
+      this.pointer,
+      descriptor.pointer,
+    );
     return new Buffer(result, this);
   }
 
-  createCommandEncoder(descriptor: Deno.PointerValue): CommandEncoder {
+  createCommandEncoder(descriptor: CommandEncoderDescriptor): CommandEncoder {
     const result = lib.symbols.wgpuDeviceCreateCommandEncoder(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new CommandEncoder(result, this);
   }
 
-  createComputePipeline(descriptor: Deno.PointerValue): ComputePipeline {
+  createComputePipeline(
+    descriptor: ComputePipelineDescriptor,
+  ): ComputePipeline {
     const result = lib.symbols.wgpuDeviceCreateComputePipeline(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new ComputePipeline(result, this);
   }
 
   createComputePipelineAsync(
-    descriptor: Deno.PointerValue,
+    descriptor: ComputePipelineDescriptor,
   ): Promise<
     [
       CreatePipelineAsyncStatus,
@@ -7567,7 +7574,7 @@ export class Device extends U.ClassBase {
     ]
   >;
   createComputePipelineAsync(
-    descriptor: Deno.PointerValue,
+    descriptor: ComputePipelineDescriptor,
     callback: (
       ...args: [
         CreatePipelineAsyncStatus,
@@ -7578,15 +7585,15 @@ export class Device extends U.ClassBase {
     ) => void,
   ): Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback>;
   createComputePipelineAsync(
-    descriptor: Deno.PointerValue,
+    descriptor: ComputePipelineDescriptor,
     callback: Deno.UnsafeCallback<typeof CreateComputePipelineAsyncCallback>,
   ): void;
   createComputePipelineAsync(
-    descriptor: Deno.PointerValue,
+    descriptor: ComputePipelineDescriptor,
     callback: Deno.PointerValue,
   ): void;
   createComputePipelineAsync(
-    descriptor: Deno.PointerValue,
+    descriptor: ComputePipelineDescriptor,
     callback?:
       | ((
         ...args: [
@@ -7636,7 +7643,7 @@ export class Device extends U.ClassBase {
         );
         lib.symbols.wgpuDeviceCreateComputePipelineAsync(
           this.pointer,
-          descriptor,
+          descriptor.pointer,
           cb.pointer,
           null,
         );
@@ -7650,7 +7657,7 @@ export class Device extends U.ClassBase {
     } else if (callback instanceof Deno.UnsafeCallback) {
       lib.symbols.wgpuDeviceCreateComputePipelineAsync(
         this.pointer,
-        descriptor,
+        descriptor.pointer,
         callback.pointer,
         null,
       );
@@ -7668,7 +7675,7 @@ export class Device extends U.ClassBase {
       );
       lib.symbols.wgpuDeviceCreateComputePipelineAsync(
         this.pointer,
-        descriptor,
+        descriptor.pointer,
         cb.pointer,
         null,
       );
@@ -7676,49 +7683,49 @@ export class Device extends U.ClassBase {
     } else {
       lib.symbols.wgpuDeviceCreateComputePipelineAsync(
         this.pointer,
-        descriptor,
+        descriptor.pointer,
         callback,
         null,
       );
     }
   }
 
-  createPipelineLayout(descriptor: Deno.PointerValue): PipelineLayout {
+  createPipelineLayout(descriptor: PipelineLayoutDescriptor): PipelineLayout {
     const result = lib.symbols.wgpuDeviceCreatePipelineLayout(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new PipelineLayout(result, this);
   }
 
-  createQuerySet(descriptor: Deno.PointerValue): QuerySet {
+  createQuerySet(descriptor: QuerySetDescriptor): QuerySet {
     const result = lib.symbols.wgpuDeviceCreateQuerySet(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new QuerySet(result, this);
   }
 
   createRenderBundleEncoder(
-    descriptor: Deno.PointerValue,
+    descriptor: RenderBundleEncoderDescriptor,
   ): RenderBundleEncoder {
     const result = lib.symbols.wgpuDeviceCreateRenderBundleEncoder(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new RenderBundleEncoder(result, this);
   }
 
-  createRenderPipeline(descriptor: Deno.PointerValue): RenderPipeline {
+  createRenderPipeline(descriptor: RenderPipelineDescriptor): RenderPipeline {
     const result = lib.symbols.wgpuDeviceCreateRenderPipeline(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new RenderPipeline(result, this);
   }
 
   createRenderPipelineAsync(
-    descriptor: Deno.PointerValue,
+    descriptor: RenderPipelineDescriptor,
   ): Promise<
     [
       CreatePipelineAsyncStatus,
@@ -7728,7 +7735,7 @@ export class Device extends U.ClassBase {
     ]
   >;
   createRenderPipelineAsync(
-    descriptor: Deno.PointerValue,
+    descriptor: RenderPipelineDescriptor,
     callback: (
       ...args: [
         CreatePipelineAsyncStatus,
@@ -7739,15 +7746,15 @@ export class Device extends U.ClassBase {
     ) => void,
   ): Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback>;
   createRenderPipelineAsync(
-    descriptor: Deno.PointerValue,
+    descriptor: RenderPipelineDescriptor,
     callback: Deno.UnsafeCallback<typeof CreateRenderPipelineAsyncCallback>,
   ): void;
   createRenderPipelineAsync(
-    descriptor: Deno.PointerValue,
+    descriptor: RenderPipelineDescriptor,
     callback: Deno.PointerValue,
   ): void;
   createRenderPipelineAsync(
-    descriptor: Deno.PointerValue,
+    descriptor: RenderPipelineDescriptor,
     callback?:
       | ((
         ...args: [
@@ -7797,7 +7804,7 @@ export class Device extends U.ClassBase {
         );
         lib.symbols.wgpuDeviceCreateRenderPipelineAsync(
           this.pointer,
-          descriptor,
+          descriptor.pointer,
           cb.pointer,
           null,
         );
@@ -7811,7 +7818,7 @@ export class Device extends U.ClassBase {
     } else if (callback instanceof Deno.UnsafeCallback) {
       lib.symbols.wgpuDeviceCreateRenderPipelineAsync(
         this.pointer,
-        descriptor,
+        descriptor.pointer,
         callback.pointer,
         null,
       );
@@ -7829,7 +7836,7 @@ export class Device extends U.ClassBase {
       );
       lib.symbols.wgpuDeviceCreateRenderPipelineAsync(
         this.pointer,
-        descriptor,
+        descriptor.pointer,
         cb.pointer,
         null,
       );
@@ -7837,42 +7844,45 @@ export class Device extends U.ClassBase {
     } else {
       lib.symbols.wgpuDeviceCreateRenderPipelineAsync(
         this.pointer,
-        descriptor,
+        descriptor.pointer,
         callback,
         null,
       );
     }
   }
 
-  createSampler(descriptor: Deno.PointerValue): Sampler {
+  createSampler(descriptor: SamplerDescriptor): Sampler {
     const result = lib.symbols.wgpuDeviceCreateSampler(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new Sampler(result, this);
   }
 
-  createShaderModule(descriptor: Deno.PointerValue): ShaderModule {
+  createShaderModule(descriptor: ShaderModuleDescriptor): ShaderModule {
     const result = lib.symbols.wgpuDeviceCreateShaderModule(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new ShaderModule(result, this);
   }
 
-  createSwapChain(surface: Surface, descriptor: Deno.PointerValue): SwapChain {
+  createSwapChain(
+    surface: Surface,
+    descriptor: SwapChainDescriptor,
+  ): SwapChain {
     const result = lib.symbols.wgpuDeviceCreateSwapChain(
       this.pointer,
       surface.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new SwapChain(result, this);
   }
 
-  createTexture(descriptor: Deno.PointerValue): Texture {
+  createTexture(descriptor: TextureDescriptor): Texture {
     const result = lib.symbols.wgpuDeviceCreateTexture(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new Texture(result, this);
   }
@@ -8033,11 +8043,11 @@ export class Device extends U.ClassBase {
     }
   }
 
-  poll(wait: boolean, wrappedSubmissionIndex: Deno.PointerValue): boolean {
+  poll(wait: boolean, wrappedSubmissionIndex: WrappedSubmissionIndex): boolean {
     const result = lib.symbols.wgpuDevicePoll(
       this.pointer,
       wait ? 1 : 0,
-      wrappedSubmissionIndex,
+      wrappedSubmissionIndex.pointer,
     );
     return result == 1;
   }
@@ -8049,10 +8059,10 @@ export class Instance extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuInstanceRelease]);
   }
 
-  createSurface(descriptor: Deno.PointerValue): Surface {
+  createSurface(descriptor: SurfaceDescriptor): Surface {
     const result = lib.symbols.wgpuInstanceCreateSurface(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new Surface(result, this);
   }
@@ -8063,12 +8073,12 @@ export class Instance extends U.ClassBase {
   }
 
   requestAdapter(
-    options: Deno.PointerValue,
+    options: RequestAdapterOptions,
   ): Promise<
     [RequestAdapterStatus, Adapter, Deno.PointerValue, Deno.PointerValue]
   >;
   requestAdapter(
-    options: Deno.PointerValue,
+    options: RequestAdapterOptions,
     callback: (
       ...args: [
         RequestAdapterStatus,
@@ -8079,12 +8089,15 @@ export class Instance extends U.ClassBase {
     ) => void,
   ): Deno.UnsafeCallback<typeof RequestAdapterCallback>;
   requestAdapter(
-    options: Deno.PointerValue,
+    options: RequestAdapterOptions,
     callback: Deno.UnsafeCallback<typeof RequestAdapterCallback>,
   ): void;
-  requestAdapter(options: Deno.PointerValue, callback: Deno.PointerValue): void;
   requestAdapter(
-    options: Deno.PointerValue,
+    options: RequestAdapterOptions,
+    callback: Deno.PointerValue,
+  ): void;
+  requestAdapter(
+    options: RequestAdapterOptions,
     callback?:
       | ((
         ...args: [
@@ -8124,7 +8137,7 @@ export class Instance extends U.ClassBase {
         );
         lib.symbols.wgpuInstanceRequestAdapter(
           this.pointer,
-          options,
+          options.pointer,
           cb.pointer,
           null,
         );
@@ -8132,7 +8145,7 @@ export class Instance extends U.ClassBase {
     } else if (callback instanceof Deno.UnsafeCallback) {
       lib.symbols.wgpuInstanceRequestAdapter(
         this.pointer,
-        options,
+        options.pointer,
         callback.pointer,
         null,
       );
@@ -8150,7 +8163,7 @@ export class Instance extends U.ClassBase {
       );
       lib.symbols.wgpuInstanceRequestAdapter(
         this.pointer,
-        options,
+        options.pointer,
         cb.pointer,
         null,
       );
@@ -8158,7 +8171,7 @@ export class Instance extends U.ClassBase {
     } else {
       lib.symbols.wgpuInstanceRequestAdapter(
         this.pointer,
-        options,
+        options.pointer,
         callback,
         null,
       );
@@ -8166,12 +8179,12 @@ export class Instance extends U.ClassBase {
   }
 
   enumerateAdapters(
-    options: Deno.PointerValue,
+    options: InstanceEnumerateAdapterOptions,
     adapters: Deno.PointerValue,
   ): number | bigint {
     const result = lib.symbols.wgpuInstanceEnumerateAdapters(
       this.pointer,
-      options,
+      options.pointer,
       adapters,
     );
     return result;
@@ -8309,19 +8322,19 @@ export class Queue extends U.ClassBase {
   }
 
   writeTexture(
-    destination: Deno.PointerValue,
+    destination: ImageCopyTexture,
     data: Deno.PointerValue,
     dataSize: number | bigint,
-    dataLayout: Deno.PointerValue,
-    writeSize: Deno.PointerValue,
+    dataLayout: TextureDataLayout,
+    writeSize: Extent3D,
   ): void {
     const result = lib.symbols.wgpuQueueWriteTexture(
       this.pointer,
-      destination,
+      destination.pointer,
       data,
       dataSize,
-      dataLayout,
-      writeSize,
+      dataLayout.pointer,
+      writeSize.pointer,
     );
     return result;
   }
@@ -8415,10 +8428,10 @@ export class RenderBundleEncoder extends U.ClassBase {
     return result;
   }
 
-  finish(descriptor: Deno.PointerValue): RenderBundle {
+  finish(descriptor: RenderBundleDescriptor): RenderBundle {
     const result = lib.symbols.wgpuRenderBundleEncoderFinish(
       this.pointer,
-      descriptor,
+      descriptor.pointer,
     );
     return new RenderBundle(result, this);
   }
@@ -8661,10 +8674,10 @@ export class RenderPassEncoder extends U.ClassBase {
     return result;
   }
 
-  setBlendConstant(color: Deno.PointerValue): void {
+  setBlendConstant(color: Color): void {
     const result = lib.symbols.wgpuRenderPassEncoderSetBlendConstant(
       this.pointer,
-      color,
+      color.pointer,
     );
     return result;
   }
@@ -9013,8 +9026,11 @@ export class Texture extends U.ClassBase {
     U.registry.register(this, [pointer, lib.symbols.wgpuTextureRelease]);
   }
 
-  createView(descriptor: Deno.PointerValue): TextureView {
-    const result = lib.symbols.wgpuTextureCreateView(this.pointer, descriptor);
+  createView(descriptor: TextureViewDescriptor): TextureView {
+    const result = lib.symbols.wgpuTextureCreateView(
+      this.pointer,
+      descriptor.pointer,
+    );
     return new TextureView(result, this);
   }
 

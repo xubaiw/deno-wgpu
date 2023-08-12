@@ -549,12 +549,10 @@ function generateErgos(ctx: Ctx) {
   const { classes, functions } = ctx;
   const fns = sep("\n")(km(functions, (x) => generateFunction(ctx, x)));
   const cls = sep("\n")(km(classes, (x) => generateClass(ctx, x)));
-  const text = dedent`
+  return dedent`
     ${fns}
     ${cls}
   `;
-  // actual write
-  return text;
 }
 
 function generateClass(ctx: Ctx, className: string) {
@@ -590,9 +588,9 @@ function generateClassMethod(
     const params = sep(",")(spec.parameters.map((p, i) => {
       if (i == 0) return null;
       if (p.name == "userdata") return null;
-      return `${p.name}: ${translateTypeSpecFunctionType(ctx, p)}`;
+      return `${p.name}: ${translateTypeSpec(ctx, p)}`;
     }));
-    const res = translateTypeSpecFunctionType(ctx, spec.result);
+    const res = translateTypeSpec(ctx, spec.result);
     const body = generateFunctionBody(ctx, className, methodId);
     return dedent`
       ${name}(${params}): ${res} {
@@ -622,9 +620,9 @@ function generateFunctionWithCallback(
     if (i == 0) return null;
     if (i >= idxCb) return null;
     if (p.name == "userdata") return null;
-    return `${p.name}: ${translateTypeSpecFunctionType(ctx, p)}`;
+    return `${p.name}: ${translateTypeSpec(ctx, p)}`;
   }));
-  const cbDef = translateTypeSpecFunctionType(ctx, spec.parameters[idxCb]);
+  const cbDef = translateTypeSpec(ctx, spec.parameters[idxCb]);
   const argBefore = sep(",")(
     spec.parameters.map((p, i) =>
       method && i == 0
@@ -638,9 +636,7 @@ function generateFunctionWithCallback(
     return generateResultTransform(ctx, cs, method, `args[${i}]`);
   })) + `]`;
   const promisetypes = `[${
-    sep(",")(callbackSpec.parameters.map((cs) =>
-      translateTypeSpecFunctionType(ctx, cs)
-    ))
+    sep(",")(callbackSpec.parameters.map((cs) => translateTypeSpec(ctx, cs)))
   }]`;
   const acomma = idxCb != 0 ? "," : "";
   const pcomma = method ? (idxCb != 1 ? "," : "") : acomma;
@@ -699,9 +695,9 @@ function generateFunction(ctx: Ctx, functionId: string): string {
   if (!hasCallback) {
     const params = sep(",")(spec.parameters.map((p) => {
       if (p.name == "userdata") return null;
-      return `${p.name}: ${translateTypeSpecFunctionType(ctx, p)}`;
+      return `${p.name}: ${translateTypeSpec(ctx, p)}`;
     }));
-    const res = translateTypeSpecFunctionType(ctx, spec.result);
+    const res = translateTypeSpec(ctx, spec.result);
     const body = generateFunctionBody(ctx, functionId);
     return dedent`\
     export function ${name}(${params}): ${res} {
@@ -738,11 +734,13 @@ function generateFunctionBody(ctx: Ctx, clsOrFn: string, optMId?: string) {
   `;
 }
 
-function translateTypeSpecFunctionType(ctx: Ctx, spec: TypeSpec): string {
+function translateTypeSpec(ctx: Ctx, spec: TypeSpec): string {
   const { kind, type } = spec;
   if (kind == "Enum") return nofix(type);
   if (kind == "Pointer") {
     if (type in ctx.callbacks || type in ctx.classes) return nofix(type);
+    const match = type.match(/^const (\w+) \*$/);
+    if (match && match[1] in ctx.structs) return nofix(match[1]);
   }
   return translateKindToDeno(kind);
 }
@@ -769,9 +767,9 @@ function translateArgument(ctx: Ctx, spec: NamedTypeSpec): string {
   if (spec.name == "userdata") return "null";
   if (spec.kind == "Bool") return `${spec.name} ? 1 : 0`;
   if (spec.kind == "Pointer") {
-    if (spec.type in ctx.classes || spec.type in ctx.structs) {
-      return `${spec.name}.pointer`;
-    }
+    if (spec.type in ctx.classes) return `${spec.name}.pointer`;
+    const match = spec.type.match(/^const (\w+) \*$/);
+    if (match && match[1] in ctx.structs) return `${spec.name}.pointer`;
   }
   return spec.name;
 }

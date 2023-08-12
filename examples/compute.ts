@@ -16,15 +16,13 @@ console.log({ inputs });
 const numbers = Uint32Array.from(inputs);
 
 // Create Instance
-const instanceDescriptor = new w.InstanceDescriptor();
-const instance = w.createInstance(instanceDescriptor.pointer);
+const instance = w.createInstance(new w.InstanceDescriptor());
 
 // Request adapter
-const [, adapter] = await instance.requestAdapter(null);
+const [, adapter] = await instance.requestAdapter(new w.RequestAdapterOptions());
 
 // Request device
-const deviceDescriptor = new w.DeviceDescriptor();
-const [, device] = await adapter.requestDevice(deviceDescriptor.pointer);
+const [, device] = await adapter.requestDevice(new w.DeviceDescriptor());
 
 // Get queue
 const queue = device.getQueue();
@@ -39,7 +37,7 @@ wglsDescriptor.code = cstr(code);
 const shaderModuleDescriptor = new w.ShaderModuleDescriptor();
 shaderModuleDescriptor.label = cstr("compute.wgsl");
 shaderModuleDescriptor.nextInChain = wglsDescriptor.pointer;
-const shaderModule = device.createShaderModule(shaderModuleDescriptor.pointer);
+const shaderModule = device.createShaderModule(shaderModuleDescriptor);
 
 // Staging buffer
 const stagingBufferDescriptor = new w.BufferDescriptor();
@@ -48,7 +46,7 @@ stagingBufferDescriptor.usage = w.BufferUsage.MapRead |
   w.BufferUsage.CopyDst;
 stagingBufferDescriptor.size = numbers.byteLength;
 stagingBufferDescriptor.mappedAtCreation = false;
-const stagingBuffer = device.createBuffer(stagingBufferDescriptor.pointer);
+const stagingBuffer = device.createBuffer(stagingBufferDescriptor);
 
 // Storage buffer
 const storageBufferDescriptor = new w.BufferDescriptor();
@@ -57,7 +55,7 @@ storageBufferDescriptor.usage = w.BufferUsage.Storage |
   w.BufferUsage.CopyDst | w.BufferUsage.CopySrc;
 storageBufferDescriptor.size = numbers.byteLength;
 storageBufferDescriptor.mappedAtCreation = false;
-const storageBuffer = device.createBuffer(storageBufferDescriptor.pointer);
+const storageBuffer = device.createBuffer(storageBufferDescriptor);
 
 // compute pipeline
 const computePipelineDescriptor = new w.ComputePipelineDescriptor();
@@ -65,7 +63,7 @@ computePipelineDescriptor.label = cstr("compute_pipeline");
 computePipelineDescriptor.compute.module = shaderModule.pointer;
 computePipelineDescriptor.compute.entryPoint = cstr("main");
 const computePipeline = device.createComputePipeline(
-  computePipelineDescriptor.pointer,
+  computePipelineDescriptor,
 );
 
 // bind group
@@ -80,20 +78,20 @@ entry.buffer = storageBuffer.pointer;
 entry.offset = 0;
 entry.size = numbers.byteLength;
 bindGroupDescriptor.entries = entry.pointer;
-const bindGroup = device.createBindGroup(bindGroupDescriptor.pointer);
+const bindGroup = device.createBindGroup(bindGroupDescriptor);
 
 // Command Encoder
 const commandEncoderDescriptor = new w.CommandEncoderDescriptor();
 commandEncoderDescriptor.label = cstr("command_encoder");
 const commandEncoder = device.createCommandEncoder(
-  commandEncoderDescriptor.pointer,
+  commandEncoderDescriptor,
 );
 
 // Create compute pass and populate data
 const computePassDescriptor = new w.ComputePassDescriptor();
 computePassDescriptor.label = cstr("compute_pass");
 const computePassEncoder = commandEncoder.beginComputePass(
-  computePassDescriptor.pointer,
+  computePassDescriptor,
 );
 computePassEncoder.setPipeline(computePipeline);
 computePassEncoder.setBindGroup(0, bindGroup, 0, null);
@@ -115,7 +113,7 @@ commandEncoder.copyBufferToBuffer(
 // Command Buffer
 const commandBufferDescriptor = new w.CommandBufferDescriptor();
 commandEncoderDescriptor.label = cstr("command_buffer");
-const commandBuffer = commandEncoder.finish(commandBufferDescriptor.pointer);
+const commandBuffer = commandEncoder.finish(commandBufferDescriptor);
 
 // Write data to storage buffer
 queue.writeBuffer(
