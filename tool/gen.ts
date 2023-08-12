@@ -371,10 +371,10 @@ function generateProperty(...args: [Ctx, string, string]) {
 
 function generateStructGetter(ctx: Ctx, sname: string, fname: string) {
   const type = generateStructGetterType(ctx, sname, fname);
-  const result = generateStructGetterResult(ctx, sname, fname);
+  const body = generateStructGetterBody(ctx, sname, fname);
   return dedent`
     get ${fname}(): ${type} {
-      return ${result};
+      ${body};
     }
   `;
 }
@@ -420,6 +420,10 @@ function generateStructGetterType(ctx: Ctx, name: string, fname: string) {
   if (kind == "Pointer") {
     // class
     if (type in ctx.classes) return nofix(type);
+    // struct
+    const match = matchStruct(ctx, type);
+    if (match) return nofix(match) + `| null`;
+    // default
     return "Deno.PointerValue";
   }
   if (kind == "Enum") return `${nofix(type!)}`;
@@ -436,32 +440,76 @@ function generateStructGetterType(ctx: Ctx, name: string, fname: string) {
   );
 }
 
-function generateStructGetterResult(ctx: Ctx, name: string, fname: string) {
+function generateStructGetterBody(ctx: Ctx, name: string, fname: string) {
   const { offset, kind, type, size } = ctx.structs[name].fields[fname];
   if (kind == "Record") {
-    return `new ${
+    return `return new ${
       nofix(type!)
     }(new DataView(this.dataview.buffer, this.dataview.byteOffset + ${offset}, ${size}))`;
   }
   if (kind == "Pointer") {
-    const inner =
-      `Deno.UnsafePointer.create(this.dataview.getBigUint64(${offset}, U.LE))`;
-    if (type in ctx.classes) return `new ${nofix(type)}(${inner})`;
-    return inner;
+    const forward =
+      `const ptr = Deno.UnsafePointer.create(this.dataview.getBigUint64(${offset}, U.LE));`;
+    // class
+    if (type in ctx.classes) return forward + `return new ${nofix(type)}(ptr);`;
+    // struct
+    const match = matchStruct(ctx, type);
+    if (match) {
+      return forward +
+        `if (ptr == null) return null; else return new ${nofix(match)}(ptr);`;
+    }
+    // default
+    return forward + `return ptr;`;
   }
   if (kind == "Enum") {
-    return `this.dataview.getUint32(${offset}, U.LE) as ${nofix(type!)}`;
+    return `return this.dataview.getUint32(${offset}, U.LE) as ${nofix(type!)}`;
   }
-  if (kind == "UInt") return `this.dataview.getUint32(${offset}, U.LE)`;
-  if (kind == "ULongLong") return `this.dataview.getBigUint64(${offset}, U.LE)`;
-  if (kind == "Bool") return `this.dataview.getUint8(${offset}) == 1`;
-  if (kind == "Double") return `this.dataview.getFloat64(${offset}, U.LE)`;
-  if (kind == "ULong") return `this.dataview.getBigUint64(${offset}, U.LE)`;
-  if (kind == "Float") return `this.dataview.getFloat32(${offset}, U.LE)`;
-  if (kind == "UShort") return `this.dataview.getUint16(${offset}, U.LE)`;
-  if (kind == "Int") return `this.dataview.getInt32(${offset}, U.LE)`;
+  if (kind == "UInt") return `return this.dataview.getUint32(${offset}, U.LE)`;
+  if (kind == "ULongLong") {
+    return `return this.dataview.getBigUint64(${offset}, U.LE)`;
+  }
+  if (kind == "Bool") return `return this.dataview.getUint8(${offset}) == 1`;
+  if (kind == "Double") {
+    return `return this.dataview.getFloat64(${offset}, U.LE)`;
+  }
+  if (kind == "ULong") {
+    return `return this.dataview.getBigUint64(${offset}, U.LE)`;
+  }
+  if (kind == "Float") {
+    return `return this.dataview.getFloat32(${offset}, U.LE)`;
+  }
+  if (kind == "UShort") {
+    return `return this.dataview.getUint16(${offset}, U.LE)`;
+  }
+  if (kind == "Int") return `return this.dataview.getInt32(${offset}, U.LE)`;
   throw new Error(
     `getter result: kind ${kind} in ${name}.${fname} not implemented`,
+  );
+}
+
+function generateStructSetterType(ctx: Ctx, name: string, fname: string) {
+  const { kind, type } = ctx.structs[name].fields[fname];
+  if (kind == "Record") return `${nofix(type)} | To${nofix(type)}`;
+  if (kind == "Pointer") {
+    // class
+    if (type in ctx.classes) return `Deno.PointerValue | ${nofix(type)}`;
+    // struct
+    const match = matchStruct(ctx, type);
+    if (match) return `Deno.PointerValue | ${nofix(match)} | To${nofix(match)}`;
+    // default
+    return `Deno.PointerValue`;
+  }
+  if (kind == "Enum") return `${nofix(type)}`;
+  if (kind == "UInt") return "number";
+  if (kind == "ULongLong") return "bigint | number";
+  if (kind == "Bool") return "boolean | number | bigint";
+  if (kind == "Double") return "number";
+  if (kind == "ULong") return "bigint | number";
+  if (kind == "Float") return "number";
+  if (kind == "UShort") return "number";
+  if (kind == "Int") return "number";
+  throw new Error(
+    `setter type: kind ${kind} in ${name}.${fname} not implemented`,
   );
 }
 
@@ -481,9 +529,18 @@ function generateStructSetterResult(ctx: Ctx, name: string, fname: string) {
   if (kind == "Pointer") {
     const setter = (inner: string) =>
       `this.dataview.setBigUint64(${offset}, BigInt(Deno.UnsafePointer.value(${inner})), U.LE);`;
+    // class
     if (type in ctx.classes) {
       return setter(`value instanceof ${nofix(type)} ? value.pointer : value`);
     }
+    // struct
+    const match = matchStruct(ctx, type);
+    if (match) {
+      return setter(
+        `value instanceof ${nofix(match)} ? value.pointer : U.duckIsPointer(value) ? value : ${nofix(match)}.from(value).pointer`,
+      );
+    }
+    // default
     return setter("value");
   }
   if (kind == "Enum") {
@@ -509,27 +566,6 @@ function generateStructSetterResult(ctx: Ctx, name: string, fname: string) {
   if (kind == "Int") return `this.dataview.setInt32(${offset}, value, U.LE)`;
   throw new Error(
     `setter result: kind ${kind} in ${name}.${fname} not implemented`,
-  );
-}
-
-function generateStructSetterType(ctx: Ctx, name: string, fname: string) {
-  const { kind, type } = ctx.structs[name].fields[fname];
-  if (kind == "Record") return `${nofix(type)} | To${nofix(type)}`;
-  if (kind == "Pointer") {
-    if (type in ctx.classes) return `Deno.PointerValue | ${nofix(type)}`;
-    return `Deno.PointerValue`;
-  }
-  if (kind == "Enum") return `${nofix(type)}`;
-  if (kind == "UInt") return "number";
-  if (kind == "ULongLong") return "bigint | number";
-  if (kind == "Bool") return "boolean | number | bigint";
-  if (kind == "Double") return "number";
-  if (kind == "ULong") return "bigint | number";
-  if (kind == "Float") return "number";
-  if (kind == "UShort") return "number";
-  if (kind == "Int") return "number";
-  throw new Error(
-    `setter type: kind ${kind} in ${name}.${fname} not implemented`,
   );
 }
 

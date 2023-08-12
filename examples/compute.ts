@@ -68,17 +68,16 @@ const computePipeline = device.createComputePipeline({
 
 // bind group
 const bindGroupLayout = computePipeline.getBindGroupLayout(0);
-const entry = w.BindGroupEntry.from({
-  binding: 0,
-  buffer: storageBuffer,
-  offset: 0,
-  size: numbers.byteLength,
-});
 const bindGroup = device.createBindGroup({
   label: cstr("bind_group"),
-  layout: bindGroupLayout.pointer,
+  layout: bindGroupLayout,
   entryCount: 1,
-  entries: entry.pointer,
+  entries: {
+    binding: 0,
+    buffer: storageBuffer,
+    offset: 0,
+    size: numbers.byteLength,
+  },
 });
 
 // Command Encoder
@@ -105,7 +104,7 @@ commandEncoder.copyBufferToBuffer(
 
 // Command Buffer
 const commandBuffer = commandEncoder.finish({
-  label: cstr("command_buffer")
+  label: cstr("command_buffer"),
 });
 
 // Write data to storage buffer
