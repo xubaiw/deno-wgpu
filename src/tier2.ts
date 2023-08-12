@@ -9562,7 +9562,7 @@ export class Adapter extends U.ClassBase {
   }
 
   requestDevice(
-    descriptor: DeviceDescriptor | ToDeviceDescriptor,
+    descriptor?: DeviceDescriptor | ToDeviceDescriptor,
   ): Promise<[RequestDeviceStatus, Device, Deno.PointerValue]>;
   requestDevice(
     descriptor: DeviceDescriptor | ToDeviceDescriptor,
@@ -10309,7 +10309,7 @@ export class Device extends U.ClassBase {
   }
 
   createComputePipelineAsync(
-    descriptor: ComputePipelineDescriptor | ToComputePipelineDescriptor,
+    descriptor?: ComputePipelineDescriptor | ToComputePipelineDescriptor,
   ): Promise<[CreatePipelineAsyncStatus, ComputePipeline, Deno.PointerValue]>;
   createComputePipelineAsync(
     descriptor: ComputePipelineDescriptor | ToComputePipelineDescriptor,
@@ -10490,7 +10490,7 @@ export class Device extends U.ClassBase {
   }
 
   createRenderPipelineAsync(
-    descriptor: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
+    descriptor?: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
   ): Promise<[CreatePipelineAsyncStatus, RenderPipeline, Deno.PointerValue]>;
   createRenderPipelineAsync(
     descriptor: RenderPipelineDescriptor | ToRenderPipelineDescriptor,
@@ -10854,7 +10854,7 @@ export class Instance extends U.ClassBase {
   }
 
   requestAdapter(
-    options: RequestAdapterOptions | ToRequestAdapterOptions,
+    options?: RequestAdapterOptions | ToRequestAdapterOptions,
   ): Promise<[RequestAdapterStatus, Adapter, Deno.PointerValue]>;
   requestAdapter(
     options: RequestAdapterOptions | ToRequestAdapterOptions,

@@ -9,16 +9,15 @@ Wgpu-native binding for Deno.
 `deno-wgpu` is not published to `deno.land`. You can import it from `denopkg.com`:
 
 ```ts
-import * as W from "https://denopkg.com/xubaiw/deno-wgpu/mod.ts";
+import { createInstance } from "https://denopkg.com/xubaiw/deno-wgpu/mod.ts";
 
-const instance = W.createInstance();
-
-const [, adapter] = await instance.requestAdapter(undefined);
+const instance = createInstance();
+const [, adapter] = await instance.requestAdapter();
 
 // Further usage...
 ```
 
-A deno doc generated documentation can be found [here](https://doc.deno.land/https://denopkg.com/xubaiw/deno-wgpu@master/mod.ts). However, there is no comments.
+A deno doc generated documentation can be found [here](https://doc.deno.land/https://denopkg.com/xubaiw/deno-wgpu@master/mod.ts). However, there is almost no comments.
 
 Also see [`./examples/compute.ts`](./examples/compute.ts) for the collatz example.
 

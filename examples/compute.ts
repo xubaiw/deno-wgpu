@@ -19,10 +19,10 @@ const numbers = Uint32Array.from(inputs);
 const instance = w.createInstance();
 
 // Request adapter
-const [, adapter] = await instance.requestAdapter(undefined);
+const [, adapter] = await instance.requestAdapter();
 
 // Request device
-const [, device] = await adapter.requestDevice(undefined);
+const [, device] = await adapter.requestDevice();
 
 // Get queue
 const queue = device.getQueue();

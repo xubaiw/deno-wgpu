@@ -659,9 +659,17 @@ function generateClassMethodWithCallback(
   const idxCb = spec.parameters.findIndex((x) => x.name == "callback")!;
   const callbackSpec = ctx.callbacks[spec.parameters[idxCb].type];
   const paramsBefore = sep(",")(spec.parameters.map((p, i) => {
+    // FIXME: this actually should only work for method, but the only callbacked function does not has params before
     if (i == 0) return null;
     if (i >= idxCb) return null;
     return `${p.name}: ${translateTypeSpec(ctx, p)}`;
+  }));
+  // when there is no cb, allow optional struct
+  const paramsNoCb = sep(",")(spec.parameters.map((p, i) => {
+    if (i == 0) return null;
+    if (i >= idxCb) return null;
+    const optional = idxCb == 2 && i == 1 && matchStruct(ctx, p.type) ? "?" : ""
+    return `${p.name}${optional}: ${translateTypeSpec(ctx, p)}`;
   }));
   const cbDef = translateTypeSpec(ctx, spec.parameters[idxCb]);
   const argBefore = sep(",")(
@@ -710,7 +718,7 @@ function generateClassMethodWithCallback(
         lib.symbols.${functionId}(${argBefore}${acomma} cb.pointer, null);
       `;
   return dedent`\
-    ${prefix} ${name}(${paramsBefore}): Promise<${promisetypes}>;
+    ${prefix} ${name}(${paramsNoCb}): Promise<${promisetypes}>;
     ${prefix} ${name}(${paramsBefore}${pcomma} callback: (...args: ${promisetypes}) => void): Deno.UnsafeCallback<typeof ${cbDef}>
     ${prefix} ${name}(${paramsBefore}${pcomma} callback: Deno.UnsafeCallback<typeof ${cbDef}>): void
     ${prefix} ${name}(${paramsBefore}${pcomma} callback: Deno.PointerValue): void
