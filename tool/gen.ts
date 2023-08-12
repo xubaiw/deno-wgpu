@@ -187,7 +187,7 @@ function translateKindToDenoNative(kind: string) {
 async function writeTier2(ctx: Ctx) {
   const { dir } = ctx;
   const enums = generateEnums(ctx);
-  const structs = genStructs(ctx);
+  const structs = generateStructs(ctx);
   const callbacks = generateCallbacks(ctx);
   const ergos = generateErgos(ctx);
   const text = dedent`
@@ -259,7 +259,7 @@ type SCtx = {
   structs: Record<string, StructSpec>;
 };
 
-function genStructs(ctx: Ctx) {
+function generateStructs(ctx: Ctx) {
   const { tu, dir } = ctx;
   const structs: Record<string, any> = {};
   // visit
@@ -335,15 +335,15 @@ function genStruct(ctx: SCtx, structName: string) {
 
 function genProperty(...args: [SCtx, string, string]) {
   // FIXME: use property field
-  const getter = genGetter(...args);
-  const setter = genSetter(...args);
+  const getter = generateStructGetter(...args);
+  const setter = generateStructSetter(...args);
   return dedent`
     ${getter}
     ${setter}
   `;
 }
 
-function genGetter(ctx: SCtx, sname: string, fname: string) {
+function generateStructGetter(ctx: SCtx, sname: string, fname: string) {
   const type = genStructGetterType(ctx, sname, fname);
   const result = genStructGetterResult(ctx, sname, fname);
   return dedent`
@@ -353,9 +353,9 @@ function genGetter(ctx: SCtx, sname: string, fname: string) {
   `;
 }
 
-function genSetter(ctx: SCtx, sname: string, fname: string) {
-  const type = genSetterType(ctx, sname, fname);
-  const result = genSetterResult(ctx, sname, fname);
+function generateStructSetter(ctx: SCtx, sname: string, fname: string) {
+  const type = generateStructSetterType(ctx, sname, fname);
+  const result = generateStructSetterResult(ctx, sname, fname);
   return `
     set ${fname}(value: ${type}) {
       ${result};
@@ -415,7 +415,7 @@ function genStructGetterResult(ctx: SCtx, name: string, fname: string) {
   );
 }
 
-function genSetterResult(ctx: SCtx, name: string, fname: string) {
+function generateStructSetterResult(ctx: SCtx, name: string, fname: string) {
   const { offset, kind, size } = ctx.structs[name].fields[fname];
   if (kind == "Record") {
     return `new Uint8Array(this.dataview.buffer, this.dataview.byteOffset, ${size}).set(new Uint8Array(value.dataview.buffer, value.dataview.byteOffset, value.dataview.byteLength))`;
@@ -449,11 +449,11 @@ function genSetterResult(ctx: SCtx, name: string, fname: string) {
   );
 }
 
-function genSetterType(ctx: SCtx, name: string, fname: string) {
+function generateStructSetterType(ctx: SCtx, name: string, fname: string) {
   const { kind, type } = ctx.structs[name].fields[fname];
   if (kind == "Record") return nofix(type!);
   if (kind == "Pointer") return "Deno.PointerValue";
-  if (kind == "Enum") return `${nofix(type!)} | number`;
+  if (kind == "Enum") return `${nofix(type!)}`;
   if (kind == "UInt") return "number";
   if (kind == "ULongLong") return "bigint | number";
   if (kind == "Bool") return "boolean | number | bigint";
