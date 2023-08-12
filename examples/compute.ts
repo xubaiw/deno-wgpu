@@ -34,7 +34,7 @@ const code = await Deno.readTextFile(
   new URL("./compute.wgsl", import.meta.url),
 );
 const wglsDescriptor = new w.ShaderModuleWGSLDescriptor();
-wglsDescriptor.chain.sType = w.SType.SType_ShaderModuleWGSLDescriptor;
+wglsDescriptor.chain.sType = w.SType.ShaderModuleWGSLDescriptor;
 wglsDescriptor.code = cstr(code);
 const shaderModuleDescriptor = new w.ShaderModuleDescriptor();
 shaderModuleDescriptor.label = cstr("compute.wgsl");
@@ -44,8 +44,8 @@ const shaderModule = device.createShaderModule(shaderModuleDescriptor.pointer);
 // Staging buffer
 const stagingBufferDescriptor = new w.BufferDescriptor();
 stagingBufferDescriptor.label = cstr("staging_buffer");
-stagingBufferDescriptor.usage = w.BufferUsage.BufferUsage_MapRead |
-  w.BufferUsage.BufferUsage_CopyDst;
+stagingBufferDescriptor.usage = w.BufferUsage.MapRead |
+  w.BufferUsage.CopyDst;
 stagingBufferDescriptor.size = numbers.byteLength;
 stagingBufferDescriptor.mappedAtCreation = false;
 const stagingBuffer = device.createBuffer(stagingBufferDescriptor.pointer);
@@ -53,8 +53,8 @@ const stagingBuffer = device.createBuffer(stagingBufferDescriptor.pointer);
 // Storage buffer
 const storageBufferDescriptor = new w.BufferDescriptor();
 storageBufferDescriptor.label = cstr("storage_buffer");
-storageBufferDescriptor.usage = w.BufferUsage.BufferUsage_Storage |
-  w.BufferUsage.BufferUsage_CopyDst | w.BufferUsage.BufferUsage_CopySrc;
+storageBufferDescriptor.usage = w.BufferUsage.Storage |
+  w.BufferUsage.CopyDst | w.BufferUsage.CopySrc;
 storageBufferDescriptor.size = numbers.byteLength;
 storageBufferDescriptor.mappedAtCreation = false;
 const storageBuffer = device.createBuffer(storageBufferDescriptor.pointer);
@@ -127,7 +127,7 @@ queue.writeBuffer(
 
 // Summit and command and map result back to cpu
 queue.submit(1, pp(commandBuffer.pointer));
-await stagingBuffer.mapAsync(w.MapMode.MapMode_Read, 0, numbers.byteLength);
+await stagingBuffer.mapAsync(w.MapMode.Read, 0, numbers.byteLength);
 
 // Print outputs
 const outputs = stagingBuffer.getMappedRange(0, numbers.byteLength);

@@ -1,4 +1,9 @@
-/// <reference types="../../vendor/deno.unstable.d.ts" />
+/**
+ * @file This file works as util for src/tier2.ts
+ */
+/// <reference types="../vendor/deno.unstable.d.ts" />
+
+import { endianness } from "https://deno.land/std@0.177.0/node/os.ts";
 
 export type CbDef = Deno.UnsafeCallbackDefinition;
 export type CbFn<D extends CbDef> = Deno.UnsafeCallbackFunction<
@@ -42,3 +47,34 @@ export abstract class StructBase {
     return pView;
   }
 }
+
+export const LE = endianness() == "LE" ? true : false;
+
+class ReleaseRegistry {
+  private map = new Map<
+    WeakRef<object>,
+    [Deno.PointerValue, (ptr: Deno.PointerValue) => void]
+  >();
+  private registry: FinalizationRegistry<
+    [Deno.PointerValue, (ptr: Deno.PointerValue) => void]
+  >;
+  constructor() {
+    // on gc, FR functions
+    this.registry = new FinalizationRegistry(([ptr, release]) => release(ptr));
+    // on Deno "unload", release all objects that have not been gc.
+    addEventListener("unload", () => {
+      for (const [ref, [ptr, release]] of this.map.entries()) {
+        if (ref.deref()) release(ptr);
+      }
+    });
+  }
+  register(
+    obj: object,
+    ptrRelease: [Deno.PointerValue, (ptr: Deno.PointerValue) => void],
+  ) {
+    this.map.set(new WeakRef(obj), ptrRelease);
+    this.registry.register(obj, ptrRelease);
+  }
+}
+
+export const registry = new ReleaseRegistry();

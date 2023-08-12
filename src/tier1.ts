@@ -1,4 +1,4 @@
-import { prepare } from "../util/prepare.ts";
+import { prepare } from "./prepare.ts";
 const libPath = await prepare();
 export default Deno.dlopen(libPath, {
   "wgpuCreateInstance": { "result": "pointer", "parameters": ["pointer"] },
