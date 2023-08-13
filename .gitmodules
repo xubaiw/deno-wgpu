@@ -1,0 +1,3 @@
+[submodule "ng/dawn"]
+	path = ng/dawn
+	url = https://dawn.googlesource.com/dawn
