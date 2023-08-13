@@ -29,7 +29,6 @@ const queue = device.getQueue();
 
 // Create shader module
 const shaderModule = device.createShaderModule({
-  label: "compute.wgsl",
   nextInChain: {
     chain: { sType: w.SType.ShaderModuleWGSLDescriptor },
     code: await Deno.readTextFile(new URL("./compute.wgsl", import.meta.url)),
@@ -38,7 +37,6 @@ const shaderModule = device.createShaderModule({
 
 // Staging buffer
 const stagingBuffer = device.createBuffer({
-  label: "staging_buffer",
   usage: w.BufferUsage.MapRead | w.BufferUsage.CopyDst,
   size: numbers.byteLength,
   mappedAtCreation: false,
@@ -46,7 +44,6 @@ const stagingBuffer = device.createBuffer({
 
 // Storage buffer
 const storageBuffer = device.createBuffer({
-  label: "storage_buffer",
   usage: w.BufferUsage.Storage |
     w.BufferUsage.CopyDst | w.BufferUsage.CopySrc,
   size: numbers.byteLength,
@@ -55,7 +52,6 @@ const storageBuffer = device.createBuffer({
 
 // compute pipeline
 const computePipeline = device.createComputePipeline({
-  label: "compute_pipeline",
   compute: {
     module: shaderModule,
     entryPoint: "main",
@@ -65,7 +61,6 @@ const computePipeline = device.createComputePipeline({
 // bind group
 const bindGroupLayout = computePipeline.getBindGroupLayout(0);
 const bindGroup = device.createBindGroup({
-  label: "bind_group",
   layout: bindGroupLayout,
   entryCount: 1,
   entries: {
@@ -77,14 +72,10 @@ const bindGroup = device.createBindGroup({
 });
 
 // Command Encoder
-const commandEncoder = device.createCommandEncoder({
-  label: "command_encoder",
-});
+const commandEncoder = device.createCommandEncoder();
 
 // Create compute pass and populate data
-const computePassEncoder = commandEncoder.beginComputePass({
-  label: "compute_pass",
-});
+const computePassEncoder = commandEncoder.beginComputePass();
 computePassEncoder.setPipeline(computePipeline);
 computePassEncoder.setBindGroup(0, bindGroup, 0, null);
 computePassEncoder.dispatchWorkgroups(numbers.length, 1, 1);
@@ -99,9 +90,7 @@ commandEncoder.copyBufferToBuffer(
 );
 
 // Command Buffer
-const commandBuffer = commandEncoder.finish({
-  label: "command_buffer",
-});
+const commandBuffer = commandEncoder.finish();
 
 // Write data to storage buffer
 queue.writeBuffer(
